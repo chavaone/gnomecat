@@ -70,70 +70,49 @@ namespace ValaCAT.FileProject
 	/*
 	 * Represents a instace of each message to be translated.
 	 */
-	public class Message : Object
+	public abstract class Message : Object
 	{
 
 		/*--------------------------- PROPERTIES ----------------------------*/
 
-		/*
+		/**
 		 * File which is the owner of this message.
 		 */
-		public File owner_file {get; private set;}
+		public File owner_file {get; private set; default = null;}
 
-		/*
-		 * Original singular string which has to be translated.
-		 */
-		public string original_string_singular {get {return original_strings.get_at(0);}}
-
-		/*
-		 * Original plural string which has to be translated.
-		 */
-		public string original_string_plural {get {return original_strings.get_at(1);} default = null;}
-
-		/*
-		 * Context of this message.
-		 */
-		public string context {get; private set; default = null;}
-
-		/*
-		 * Translator comments.
-		 */
-		public string translator_comments {get; set; default = null;}
-
-		/*
-		 * Extracted comments from code.
-		 */
-		public string extracted_comments {get; private set; default = null;}
-
-		/*
+		/**
 		 * State of the message.
 		 */
-		public MessageState state {get; private set; default = MessageState.OBSOLETE;}
+		public MessageState state {get;
+					protected set
+						{
+							MessageState aux = this.state;
+							state = value;
+							this.changed_state(aux,value);
+						}
+					default = MessageState.OBSOLETE;}
 
 		/*
 		 * List of tips that this message has.
 		 */
-		public ArrayList<MessageTip> tips {get; private set;}
-
-
-		/*------------------------- PRIVATE VARIABLES ------------------------*/
-
-		private ArrayList<string> original_strings;
-		private ArrayList<string> translated_strings;
+		public ArrayList<MessageTip> tips {get; private set; default = null;}
 
 
 		/*---------------------------- CONSTRUCTORS --------------------------*/
 
 		/*
 		 * Contructor for Message objects.
+		 *
+		 * @param owner_file
 		 */
-		public Message ()
+		public Message (File owner_file)
 		{
-			this.original_strings = new ArrayList<string> ();
+			this.owner_file = owner_file;
 			this.tips = new ArrayList<MessageTip> ();
-			this.translated_strings = new ArrayList<string> ();
 		}
 
+
+		/*------------------------------ SIGNALS -----------------------------*/
 
 		/**
 		 * Signal for modified translations.
@@ -143,10 +122,30 @@ namespace ValaCAT.FileProject
 		 * @param old_string Previous translation if any.
 		 * @param new_string New translation if any.
 		 */
-		public signal void modified_translation (Message modified_message
-											int index,
+		public signal void modified_translation (int index,
 											string? old_string,
 											string? new_string);
+
+		/**
+		 * Signal emited when the state of a message changes.
+		 */
+		public signal void changed_state (MessageState old_state,
+										MessageState new_state);
+
+		/**
+		 * Signal emited when a new tip is added to this message.
+		 *
+		 * @param tip Added tip.
+		 */
+		public signal void added_tip (MessageTip tip);
+
+		/**
+		 * Signal emited when a new tip is deleted from this message.
+		 *
+		 * @param tip Deleted tip.
+		 */
+		public signal void removed_tip (MessageTip tip);
+
 
 
 		/*----------------------------- METHODS ------------------------------*/
@@ -158,11 +157,7 @@ namespace ValaCAT.FileProject
 		 * @param index Number of the requested translation.
 		 * @return The translated string.
 		 */
-		public string get_translation (int index)
-		{
-			//TODO: check index < number of plurals.
-			return translated_strings.get_at(index);
-		}
+		public abstract string get_translation (int index);
 
 		/*
 		 * Modifies the translated string that has the number
@@ -173,15 +168,8 @@ namespace ValaCAT.FileProject
 		 * @return The previous string or \\null\\ if there
 		 * 	isn't previous string
 		 */
-		public string set_translation (	int index,
-										string translation)
-		{
-			//TODO: check index < number of translations
-			string old_string = translated_strings.get(index);
-			translated_strings.set(index,translation);
-			this.modified_translation(this, index, old_string, translation);
-			return old_string;
-		}
+		public abstract set_translation (int index,
+										string translation);
 
 		/*
 		 * Method which adds a MessageTip to this message.
@@ -190,7 +178,8 @@ namespace ValaCAT.FileProject
 		 */
 		public void add_tip (MessageTip tip)
 		{
-			return tips.add(tip);
+			tips.add(tip);
+			this.added_tip(tip);
 		}
 
 		/*
@@ -201,122 +190,105 @@ namespace ValaCAT.FileProject
 		 */
 		public void remove_tip (MessageTip tip)
 		{
-			return tips.remove(tip);
+			tips.remove(tip);
+			this.removed_tip(tip);
 		}
-	}
-
-	/**
-	 * Header of a file.
-	 */
-	public class Header : Object
-	{
-		//TODO
 	}
 
 
 	/**
 	 * Represents a File that stores messages to be translated.
 	 */
-	public class File : Object
+	public abstract class File : Object
 	{
 
 		/*---------------------------- PROPERTIES --------------------------*/
 
 		/*
-		 * Default file extension.
+		 * Project which belongs this file or \\null\\ if there is no project.
 		 */
-		public string file_extension {get; private set; default = null;}
+		public Project project {get; protected set; default = null;}
 
 		/*
+		 * List of messages.
+		 */
+		public ArrayList<Message> messages {get; protected set; default = null;}
+
+		/**
 		 * Path to the original file.
 		 */
-		public string file_path {get; private set; default = null;}
+		public string file_path {get; protected set;}
 
-		/*
-		 * Number of fuzzy messages of this file.
+		/**
+		 * Number of untranlated messages.
 		 */
-		public int number_of_fuzzy
+		public int number_of_untranslated
 			{
 				get
 				{
-					if (! valid_cache )
-						set_number_of_fuzzy ();
-					return cache_number_of_fuzzy;
+					return cache_number_of_untranslated;
 				}
-				default = 0;
 			}
 
-		/*
+		/**
 		 * Number of translated messages.
 		 */
 		public int number_of_translated
 			{
 				get
 				{
-					if (! valid_cache )
-						set_number_of_translated ();
 					return cache_number_of_translated;
 				}
-				default = 0;
 			}
 
-		/*
+		/**
+		 * Number of fuzzy messages.
+		 */
+		public int number_of_fuzzy
+			{
+				get
+				{
+					return cache_number_of_fuzzy;
+				}
+			}
+
+		/**
 		 * Total number of messages.
 		 */
 		public int number_of_messages
 			{
 				get
-				{	//FIXME: obsolete messages are in this list too.
-					return messages.size();
-				}
-			}
-
-		/*
-		 * Total number of messages.
-		 */
-		public int number_of_untranslated
-			{
-				get
 				{
-					return number_of_messages - number_of_translated - number_of_fuzzy;
+					return cache_number_of_untranslated +
+						cache_number_of_translated +
+						cache_number_of_fuzzy;
 				}
 			}
 
-		/*
-		 * Project which belongs this file or \\null\\ if there is no project.
-		 */
-		public Project project {get; private set; default = null;}
-
-		/*
-		 * List of messages.
-		 */
-		public ArrayList<Message> messages {get; private set;}
-
-		/*
-		 * Header of this file.
-		 */
-		public Header header {get; private set;}
 
 		/*------------------------- PRIVATE VARIABLES --------------------------*/
 
-		private bool file_changed;
-		private int autosave_timeout;
+		private int cache_number_of_untranslated;
 		private int cache_number_of_fuzzy;
 		private int cache_number_of_translated;
-		private bool valid_cache;
 
 
 		/*---------------------------- CONSTRUCTORS --------------------------*/
 
-		/*
-		 * General contructor. Initializes the messages list.
+		/**
+		 * Simple constructor. Initializes an empty isntance.
 		 */
 		public File ()
 		{
 			this.full(null,null);
 		}
 
+		/**
+		 * Creates a new File using the file path
+		 *	provided as parameter.
+		 */
 		public File.with_file_path (string file_path)
+			throws FileParserNotFoundError
 		{
 			this.full(file_path, null);
 		}
@@ -329,9 +301,18 @@ namespace ValaCAT.FileProject
 		public File.full (string? file_path, Project? proj)
 		{
 			this.messages = new ArrayList<string>();
+
 			this.file_path = file_path;
+			if(file_path != null)
+				this.parse_file(file_path);
+
 			this.project = proj;
+
 		}
+
+
+		/*------------------------------ SIGNAL -----------------------------*/
+
 
 		/*------------------------------ METHODS -----------------------------*/
 
@@ -343,7 +324,19 @@ namespace ValaCAT.FileProject
 		public void add_message (Message m)
 		{
 			this.messages.add(m);
-			//TODO: update total, translated, untranslated and fuzzy counts.
+			this.connect_message(m);
+
+			switch (m.state) //Updates file statistics.
+			{
+			case TRANSLATED:
+				this.cache_number_of_translated++;
+
+			case UNTRANSLATED:
+				this.cache_number_of_untranslated++;
+
+			case FUZZY:
+				this.cache_number_of_fuzzy++;
+			}
 		}
 
 		/**
@@ -354,15 +347,81 @@ namespace ValaCAT.FileProject
 		public void remove_message (Message m)
 		{
 			this.messages.remove(m);
-			//TODO: update total, translated, untranslated and fuzzy counts.
+			this.disconnect_message(m);
+
+			switch (m.state) //Updates file statistics.
+			{
+			case TRANSLATED:
+				this.cache_number_of_translated--;
+
+			case UNTRANSLATED:
+				this.cache_number_of_untranslated--;
+
+			case FUZZY:
+				this.cache_number_of_fuzzy--;
+			}
 		}
+
+		/**
+		 * Method that rebuild file statistics about number
+		 *	of fuzzy, translated and untranslated.
+		 */
+		protected void rebuild_numbers_cache ()
+		{
+			this.cache_number_of_translated = 0;
+			this.cache_number_of_fuzzy = 0;
+			this.cache_number_of_untranslated = 0;
+
+			foreach (Message m in this.messages)
+			{
+				switch (m.state)
+				{
+				case TRANSLATED:
+					this.cache_number_of_translated++;
+
+				case UNTRANSLATED:
+					this.cache_number_of_untranslated++;
+
+				case FUZZY:
+					this.cache_number_of_fuzzy++;
+				}
+			}
+		}
+
+		/**
+		 *
+		 */
+		private void connect_message (Message m)
+		{
+			//TODO
+		}
+
+		/**
+		 *
+		 */
+		private void disconnect_message (Message m)
+		{
+			//TODO
+		}
+
+		/**
+		 * Method that saves the instance of this File into
+		 *	a file indicated as parameter.
+		 */
+		public abstract void save_file (string file_path);
+
+		/**
+		 * Method that parses a file in order to populate
+		 *	this instance of File.
+		 */
+		public abstract void parse_file (string path);
 	}
 
 
 	/*
 	 * Project that contains files.
 	 */
-	public class Project : Configurable
+	public class Project : Object
 	{
 
 		/*---------------------------- PROPERTIES ----------------------------*/
@@ -375,19 +434,12 @@ namespace ValaCAT.FileProject
 		/**
 		 * Name of the project.
 		 */
-		public string name
-			{
-				get
-				{
-					return this.get_own_config("name") as string;
-				}
-			}
+		public string name {get; protected set;}
 
 
 		/*------------------------- PRIVATE VARIABLES ------------------------*/
 
 		private string config_file_path;
-		private ProjectSettings project_settings;
 
 
 		/*--------------------------- CONSTRUCTORS ---------------------------*/
@@ -420,23 +472,6 @@ namespace ValaCAT.FileProject
 		/*------------------------------ METHODS -----------------------------*/
 
 		/**
-		 *
-		 */
-		public override Object get_own_config (string key)
-		{
-			return project_settings.get_value(key);
-		}
-
-		/**
-		 *
-		 */
-		public override Object set_own_config (string key,
-									Object new_value)
-		{
-			return project_settings.set_value (key, new_value);
-		}
-
-		/**
 		 * Explores the project directory searching compatible files and
 		 *	it adds them to the project.
 		 */
@@ -452,6 +487,15 @@ namespace ValaCAT.FileProject
 		private void add_file (File f)
 		{
 			this.files.add(f);
+		}
+
+
+		/**
+		 *
+		 */
+		private void remove_file (File f)
+		{
+		 	this.files.remove(f);
 		}
 	}
 
