@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<template class="HeaderBar" parent="GtkHeaderBar">
+		<property name="visible">True</property>
+		<property name="can_focus">False</property>
+		<property name="title"></property>
+
+		<!--ELEMENTS BEFORE THE TITLE-->
+		<child>
+			<object class="GtkMenuButton" id="openmenubutton">
+				<property name="visible">True</property>
+				<property name="can_focus">True</property>
+				<property name="receives_default">True</property>
+				<property name="popup">openmenu</property>
+				<property name="halign">start</property>
+				<property name="direction">down</property>
+				<child>
+					<object class="GtkBox" id="open_button_hbox">
+						<property name="visible">True</property>
+						<property name="orientation">horizontal</property>
+						<property name="spacing">5</property>
+						<child>
+							<object class="GtkLabel" id="open_button_label">
+								<property name="visible">True</property>
+								<property name="label">Open</property>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkVSeparator" id="open_button_separator"></object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">False</property>
+								<property name="position">1</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkImage" id="open_button_image">
+								<property name="visible">True</property>
+								<property name="icon_size">1</property>
+								<property name="icon_name">go-down-symbolic</property>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">2</property>
+							</packing>
+						</child>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack-type">start</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkButton" id="savebutton">
+				<property name="valign">center</property>
+				<property name="can_focus">True</property>
+				<style>
+					<class name="image-button"/>
+				</style>
+				<child>
+					<object class="GtkImage" id="save_button_image">
+						<property name="visible">True</property>
+						<property name="icon_size">1</property>
+						<property name="icon_name">document-save-symbolic</property>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack_type">start</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkButton" id="undobutton">
+				<property name="valign">center</property>
+				<property name="can_focus">True</property>
+				<style>
+					<class name="image-button"/>
+				</style>
+				<child>
+					<object class="GtkImage" id="undo_button_image">
+						<property name="visible">True</property>
+						<property name="icon_size">1</property>
+						<property name="icon_name">edit-undo-symbolic</property>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack_type">start</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkButton" id="redobutton">
+				<property name="valign">center</property>
+				<property name="can_focus">True</property>
+				<style>
+					<class name="image-button"/>
+				</style>
+				<child>
+					<object class="GtkImage" id="redo_button_image">
+						<property name="visible">True</property>
+						<property name="icon_size">1</property>
+						<property name="icon_name">edit-redo-symbolic</property>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack_type">start</property>
+			</packing>
+		</child>
+
+		<!--ELEMENTS AFTER THE TITLE-->
+		<child>
+			<object class="GtkButton" id="searchbutton">
+				<property name="valign">center</property>
+				<property name="can_focus">True</property>
+				<style>
+					<class name="image-button"/>
+				</style>
+				<child>
+					<object class="GtkImage" id="search_button_image">
+						<property name="visible">True</property>
+						<property name="icon_size">1</property>
+						<property name="icon_name">edit-find-symbolic</property>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack_type">end</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkMenuButton" id="viewmenubutton">
+				<property name="visible">True</property>
+				<property name="can_focus">True</property>
+				<property name="receives_default">True</property>
+				<property name="popup">viewmenu</property>
+				<property name="direction">down</property>
+				<style>
+					<class name="image-button"/>
+				</style>
+				<child>
+					<object class="GtkImage" id="view_button_image">
+						<property name="visible">True</property>
+						<property name="icon_size">1</property>
+						<property name="icon_name">insert-image-symbolic</property>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack-type">end</property>
+			</packing>
+		</child>
+		<child>
+			<object class="GtkMenuButton" id="settingsmenubutton">
+				<property name="visible">True</property>
+				<property name="can_focus">True</property>
+				<property name="receives_default">True</property>
+				<property name="popup">settingsmenu</property>
+				<property name="halign">end</property>
+				<property name="direction">down</property>
+				<style>
+					<class name="image-button"/>
+				</style>
+				<child>
+					<object class="GtkImage" id="settings_button_image">
+						<property name="visible">True</property>
+						<property name="icon_size">1</property>
+						<property name="icon_name">emblem-system-symbolic</property>
+					</object>
+				</child>
+			</object>
+			<packing>
+				<property name="pack-type">end</property>
+			</packing>
+		</child>
+	</template>
+</interface>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/info/aquelando/valacat">
+    <file compressed="true" preprocess="xml-stripblanks">headerbar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">menu.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">statusbar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">messagelistrow.ui</file>
+  </gresource>
+</gresources>
