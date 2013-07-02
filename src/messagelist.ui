@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="MesageListField" parent="GtkListBoxRow">
+  <template class="MesageListRow" parent="GtkListBoxRow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="spacing">7</property>
@@ -59,6 +59,12 @@
         <property name="padding">2</property>
         <property name="position">0</property>
       </packing>
+    </child>
+  </template>
+  <template class="MessageListWidget" parent="GdlDockItem">
+    <child>
+      <object class="ListBox" id="messages_list_box">
+      </object>
     </child>
   </template>
 </interface>
