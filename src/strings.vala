@@ -27,6 +27,22 @@ namespace ValaCAT.String
 		 * @return The string without any markup.
 		 */
 		public abstract string get_raw_string ();
+
+		/**
+		 * Method that disables the first filter of this MessageString.
+		 *
+		 * Default implementation, it does nothing.
+		 */
+		public virtual void disable ()
+		{}
+
+		/**
+		 * Method that disables all filters of this MessageString.
+		 *
+		 * Default implemementation, it does nothing.
+		 */
+		public virtual void recursive_disable ()
+		{}
 	}
 
 
@@ -91,9 +107,14 @@ namespace ValaCAT.String
 	public abstract class Filter : MessageString
 	{
 
+		/**
+		 *
+		 */
+		public MessageString base_message_string {get; set;}
+
 		/*------------------------- PRIVATE VARIABLES ------------------------*/
 
-		private MessageString base_message_string;
+		private bool enabled;
 
 
 		/*---------------------------- CONSTRUCTOR -----------------------------*/
@@ -104,9 +125,18 @@ namespace ValaCAT.String
 		 *
 		 * @param initial_message Instance of the base string.
 		 */
-		public Filter (MessageString initial_message)
+		public Filter.with_base_message (MessageString initial_message)
 		{
 			this.base_message_string = initial_message;
+			this.enabled = true;
+		}
+
+		/**
+		 * Creates a new filter without asigning a base message.
+		 */
+		public Filter ()
+		{
+			this.with_base_message(null);
 		}
 
 
@@ -124,7 +154,7 @@ namespace ValaCAT.String
 		public override string get_string ()
 		{
 			string aux_str = base_message_string.get_string();
-			return this.filter(aux_str);
+			return enabled ? this.filter(aux_str) : aux_str;
 		}
 
 		/**
@@ -137,6 +167,25 @@ namespace ValaCAT.String
 		{
 			return this.base_message_string.get_raw_string();
 		}
+
+		/**
+		 * Method that disables this filter.
+		 *
+		 * Implements a logical delete. If cascade is set then
+		 *	the logical delete is recursive.
+		 *
+		 * @param cascade Boolean value that indicates if the
+		 *		disable must be recursive.
+		 */
+		public override void disable (bool cascade)
+		{
+			this.enabled = false;
+			if (cascade)
+			{
+				this.base_message_string.disable(true);
+			}
+		}
+
 
 		/**
 		 * Method that modifies the string provided as parameter.
