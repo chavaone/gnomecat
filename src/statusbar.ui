@@ -157,4 +157,9 @@
       </packing>
     </child>
   </template>
+  <template class="ProfilesListStore" parent="ListStore">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+  </template>
 </interface>
