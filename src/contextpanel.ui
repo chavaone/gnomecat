@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.6 -->
+  <template id="ContextPanel" parent="GdlDockItem">
+    <child>
+      <object class="GtkTextView" id="context_textview">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="editable">False</property>
+        <property name="left_margin">5</property>
+      </object>
+    </child>
+  </template>
+</interface>
