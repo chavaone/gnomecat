@@ -1,5 +1,6 @@
 using Gtk;
 using Gee;
+using ValaCAT.Profiles;
 
 namespace ValaCAT.StatusBar
 {
@@ -18,7 +19,7 @@ namespace ValaCAT.StatusBar
 		[GtkChild]
 		private Label statusbar_label_file_info;
 		[GtkChild]
-		private Separator statusbar_separator1;
+		private Separator statusbar_separator2;
 		[GtkChild]
 		private Box project_status_box;
 		[GtkChild]
@@ -28,6 +29,7 @@ namespace ValaCAT.StatusBar
 		[GtkChild]
 		private Label statusbar_label_insert;
 		private ProfilesListStore profiles;
+		private int active;
 
 		/**
 		 * Signal emmited when a profile is selected on the Profiles ComboBox
@@ -116,7 +118,7 @@ namespace ValaCAT.StatusBar
 		 */
 		public void set_insertion_mode ()
 		{
-			this.statusbar_label_insert.set_text = "INS"; //TODO: add gettext
+			this.statusbar_label_insert.set_text("INS"); //TODO: add gettext
 		}
 
 		/**
@@ -125,7 +127,7 @@ namespace ValaCAT.StatusBar
 		 */
 		public void set_overwrite_mode ()
 		{
-			this.statusbar_label_insert.set_text = "OVR";
+			this.statusbar_label_insert.set_text("OVR");
 		}
 	}
 
@@ -174,7 +176,7 @@ namespace ValaCAT.StatusBar
 		 */
 		public Profile get_profile_by_index (int index)
 		{
-			returns profiles.get(index);
+			return profiles.get(index);
 		}
 	}
 }

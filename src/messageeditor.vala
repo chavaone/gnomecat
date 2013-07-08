@@ -1,6 +1,7 @@
 using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
+using ValaCAT.String;
 
 namespace ValaCAT.MessageEditor
 {
@@ -9,7 +10,7 @@ namespace ValaCAT.MessageEditor
 	 * Editing pannel widget.
 	 */
 	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditor.ui")]
-	public class MessageEditorWidget : DockItem
+	public class MessageEditorWidget : DockItem, ChangedMessageSensible
 	{
 		[GtkChild]
 		private Notebook plurals_notebook;
@@ -17,21 +18,23 @@ namespace ValaCAT.MessageEditor
 		public MessageEditorWidget ()
 		{}
 
-		public set_message (Message m)
+		public void set_message (Message m)
 		{
+			int i;
 			this.clean_tabs();
 			//TODO: Add gettext integration.
 			var auxtab = new MessageEditorTab("Singular", m.get_original_singular(), m.get_translation(0));
-			foreach (MessageTip t in m.get_tips_plural_form(i-1))
+			foreach (MessageTip t in m.get_tips_plural_form(0))
 				auxtab.add_tip(t);
 			this.add_tab(auxtab);
 
 			if ( m.has_plural() )
 			{
-				for(int i = m.get_language().get_number_of_plurals(); i > 1; i--)
+				int num_plurals = m.get_language().get_number_of_plurals();
+				for(i = 1; i < num_plurals; i++)
 				{
 					string label = "Plural:"; //TODO: add language plural tags and gettext.
-					var auxtab = new MessageEditorTab(label,m.get_original_plural(), m.get_translation(i-1));
+					auxtab = new MessageEditorTab(label,m.get_original_plural(), m.get_translation(i-1));
 					foreach (MessageTip t in m.get_tips_plural_form(i-1))
 						auxtab.add_tip(t);
 					this.add_tab(auxtab);
@@ -41,8 +44,14 @@ namespace ValaCAT.MessageEditor
 
 		private void add_tab (MessageEditorTab t)
 		{
-			this.plurals_notebook.append_page(t, t.get_label());
+			this.plurals_notebook.append_page(t, t.label);
 		}
+
+		private void clean_tabs ()
+		{
+			//TODO
+		}
+
 	}
 
 	/**
@@ -130,7 +139,7 @@ namespace ValaCAT.MessageEditor
 		 */
 		public void disable_filters_original_string ()
 		{
-			this.original_text.recursive_disable();
+			this.original_text.disable(true);
 			this.update_textviews();
 		}
 
@@ -139,14 +148,14 @@ namespace ValaCAT.MessageEditor
 		 */
 		public void disable_filters_translation_string ()
 		{
-			this.tranlation_text.recursive_disable();
+			this.tranlation_text.disable(true);
 			this.update_textviews();
 		}
 
 		private void update_textviews ()
 		{
-			this.textview_original_text.set_text(this.original_text.get_string());
-			this.textview_translated_text.set_text(this.tranlation_text.get_string());
+			this.textview_original_text.buffer.set_text(this.original_text.get_string());
+			this.textview_translated_text.buffer.set_text(this.tranlation_text.get_string());
 		}
 	}
 
@@ -172,12 +181,15 @@ namespace ValaCAT.MessageEditor
 		{
 			switch (t.level)
 			{
-			case ERROR:
+			case TipLevel.ERROR:
 				icon.icon_name = "dialog-error-symbolic";
-			case WARNING:
+				break;
+			case TipLevel.WARNING:
 				icon.icon_name = "dialog-warning-symbolic";
-			case INFO:
+				break;
+			case TipLevel.INFO:
 				icon.icon_name = "dialog-information-symbolic";
+				break;
 			}
 			icon.tooltip_text = t.description;
 			this.tip = t;

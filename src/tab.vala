@@ -1,6 +1,11 @@
 
 
-namespace ValaCat.Tabs
+using Gdl;
+using Gtk;
+using ValaCAT.FileProject;
+
+
+namespace ValaCAT.Tabs
 {
 	/**
 	 * Generic tab.
@@ -17,16 +22,16 @@ namespace ValaCat.Tabs
 		public Tab ()
 		{
 			this.dockbar.master = dock;
-			this.layout_managet = new DockLayout(dock);
+			this.layout_manager = new DockLayout(dock);
 		}
 
 
-		public bool load_layout (string file)
+		public void load_layout (string file)
 		{
 			this.layout_manager.load_from_file(file);
 		}
 
-		public bool save_layout (string file)
+		public void save_layout (string file)
 		{
 			this.layout_manager.save_to_file(file);
 		}
@@ -40,7 +45,7 @@ namespace ValaCat.Tabs
 
 	public class FileTab : Tab
 	{
-		public FileTab (File f)
+		public FileTab (ValaCAT.FileProject.File f)
 		{
 			base();
 		}

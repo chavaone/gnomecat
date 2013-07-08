@@ -1,10 +1,15 @@
 
 
 using Gee;
-using ValaCAT.Settings;
+using ValaCAT.Languages;
 
 namespace ValaCAT.FileProject
 {
+
+	errordomain FileError
+	{
+		PARSER_NOT_FOUND
+	}
 
 	/*
 	 * Enum for the levels of Message Tips.
@@ -83,14 +88,17 @@ namespace ValaCAT.FileProject
 		/**
 		 * State of the message.
 		 */
-		public MessageState state {get;
-					protected set
-						{
-							MessageState aux = this.state;
-							state = value;
-							this.changed_state(aux,value);
-						}
-					default = MessageState.OBSOLETE;}
+		public MessageState state
+		{
+			get {return this.state;}
+			protected set
+				{
+					MessageState aux = this.state;
+					state = value;
+					this.changed_state(aux,value);
+				}
+			default = MessageState.OBSOLETE;
+		}
 
 		/*
 		 * List of tips that this message has.
@@ -146,9 +154,35 @@ namespace ValaCAT.FileProject
 		 */
 		public signal void removed_tip (MessageTip tip);
 
+		/**
+		 * Signal emited when the message changed.
+		 */
+		public signal void message_changed ();
 
 
 		/*----------------------------- METHODS ------------------------------*/
+
+		/**
+		 * Method that returns the language of this message.
+		 */
+		public abstract Language get_language ();
+
+		/**
+		 * Method that indicates if this string has or has not
+		 *	a plural form.
+		 */
+		public abstract bool has_plural ();
+
+		/**
+		 * Returns the originals singular text of this message.
+		 */
+		public abstract string get_original_singular ();
+
+		/**
+		 * Returns the original plural text of this message or
+		 *	\\null\\ if there is no plural.
+		 */
+		public abstract string get_original_plural ();
 
 		/*
 		 * Gets the translated string that has the number
@@ -168,8 +202,8 @@ namespace ValaCAT.FileProject
 		 * @return The previous string or \\null\\ if there
 		 * 	isn't previous string
 		 */
-		public abstract set_translation (int index,
-										string translation);
+		public abstract void set_translation (int index,
+											string translation);
 
 		/*
 		 * Method which adds a MessageTip to this message.
@@ -192,6 +226,16 @@ namespace ValaCAT.FileProject
 		{
 			tips.remove(tip);
 			this.removed_tip(tip);
+		}
+
+		/**
+		 * Method that returns the tips corresponding the plural form provided as parameter.
+		 *
+		 */
+		public ArrayList<MessageTip> get_tips_plural_form (int plural_form)
+		{
+			//TODO
+			return null;
 		}
 	}
 
@@ -288,7 +332,7 @@ namespace ValaCAT.FileProject
 		 *	provided as parameter.
 		 */
 		public File.with_file_path (string file_path)
-			throws FileParserNotFoundError
+			throws FileError
 		{
 			this.full(file_path, null);
 		}
@@ -300,7 +344,7 @@ namespace ValaCAT.FileProject
 
 		public File.full (string? file_path, Project? proj)
 		{
-			this.messages = new ArrayList<string>();
+			this.messages = new ArrayList<Message>();
 
 			this.file_path = file_path;
 			if(file_path != null)
@@ -311,10 +355,8 @@ namespace ValaCAT.FileProject
 		}
 
 
-		/*------------------------------ SIGNAL -----------------------------*/
-
-
 		/*------------------------------ METHODS -----------------------------*/
+
 
 		/**
 		 * Method that adds a new message to the file.
@@ -328,14 +370,15 @@ namespace ValaCAT.FileProject
 
 			switch (m.state) //Updates file statistics.
 			{
-			case TRANSLATED:
+			case MessageState.TRANSLATED:
 				this.cache_number_of_translated++;
-
-			case UNTRANSLATED:
+				break;
+			case MessageState.UNTRANSLATED:
 				this.cache_number_of_untranslated++;
-
-			case FUZZY:
+				break;
+			case MessageState.FUZZY:
 				this.cache_number_of_fuzzy++;
+				break;
 			}
 		}
 
@@ -351,14 +394,15 @@ namespace ValaCAT.FileProject
 
 			switch (m.state) //Updates file statistics.
 			{
-			case TRANSLATED:
+			case MessageState.TRANSLATED:
 				this.cache_number_of_translated--;
-
-			case UNTRANSLATED:
+				break;
+			case MessageState.UNTRANSLATED:
 				this.cache_number_of_untranslated--;
-
-			case FUZZY:
+				break;
+			case MessageState.FUZZY:
 				this.cache_number_of_fuzzy--;
+				break;
 			}
 		}
 
@@ -376,14 +420,15 @@ namespace ValaCAT.FileProject
 			{
 				switch (m.state)
 				{
-				case TRANSLATED:
+				case MessageState.TRANSLATED:
 					this.cache_number_of_translated++;
-
-				case UNTRANSLATED:
+					break;
+				case MessageState.UNTRANSLATED:
 					this.cache_number_of_untranslated++;
-
-				case FUZZY:
+					break;
+				case MessageState.FUZZY:
 					this.cache_number_of_fuzzy++;
+					break;
 				}
 			}
 		}
@@ -415,6 +460,11 @@ namespace ValaCAT.FileProject
 		 *	this instance of File.
 		 */
 		public abstract void parse_file (string path);
+
+		/**
+		 * Method that returns the number of plurals of this file.
+		 */
+		public abstract int number_of_plurals ();
 	}
 
 
@@ -452,8 +502,8 @@ namespace ValaCAT.FileProject
 		public Project (string config_file)
 		{
 			this.config_file_path = config_file;
-			this.project_settings = new ProjectSettings();
-			this.project_settings.parse(config_file);
+			//this.project_settings = new ProjectSettings(); //FIXME
+			//this.project_settings.parse(config_file);
 			this.files = new ArrayList<File>();
 			this.scan_files();
 		}

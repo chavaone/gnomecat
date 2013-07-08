@@ -16,7 +16,7 @@ namespace ValaCAT.MessageList
 		[GtkChild]
 		private ListBox messages_list_box;
 
-		public MessageList() {}
+		public MessageListWidget() {}
 
 		public void add_message (Message m)
 		{
@@ -28,7 +28,7 @@ namespace ValaCAT.MessageList
 	 *
 	 */
 	[GtkTemplate (ui = "/info/aquelando/valacat/messagelist.ui")]
-	public class MesageListRow : ListBoxRow
+	public class MessageListRow : ListBoxRow
 	{
 
 		/* ------------------- CONSTRUCTOR ----------------------- */
@@ -79,15 +79,18 @@ namespace ValaCAT.MessageList
 
 			switch (this.message.state)
 			{
-			case TRASLATED:
+			case MessageState.TRANSLATED:
 				status_icon_name = "";
 				status_tooltip_text = "Translated"; //TODO: Add gettext.
-			case UNTRANSLATED:
+				break;
+			case MessageState.UNTRANSLATED:
 				status_icon_name = "";
 				status_tooltip_text = "Untraslated";
-			case FUZZY:
+				break;
+			case MessageState.FUZZY:
 				status_icon_name = "";
 				status_tooltip_text = "Fuzzy";
+				break;
 			}
 
 			this.listboxrow_state_image.icon_name = status_icon_name;
@@ -96,16 +99,19 @@ namespace ValaCAT.MessageList
 			this.listboxrow_original.set_text(this.message.get_original_singular());
 			this.listboxrow_translation.set_text(this.message.get_translation(0));
 
-			for (MessageTip t in this.message.tips)
+			foreach (MessageTip t in this.message.tips)
 			{
 				switch (t.level)
 				{
-				case INFO:
+				case TipLevel.INFO:
 					number_info_tips++;
-				case ERROR:
+					break;
+				case TipLevel.ERROR:
 					number_error_tips++;
-				case WARNING:
+					break;
+				case TipLevel.WARNING:
 					number_warning_tips++;
+					break;
 				}
 			}
 
@@ -118,12 +124,14 @@ namespace ValaCAT.MessageList
 			if (number_warning_tips > 0)
 			{
 				this.listboxrow_warning_image.visible = true;
-				this.listboxrow_warning_image.tooltip_text = "There are %i warning tips.".printf(number_warning_tips);;
+				this.listboxrow_warning_image.tooltip_text = "There are %i warning tips.".printf(number_warning_tips);
 			}
 
 			if (number_error_tips > 0)
 			{
 				this.listboxrow_error_image.visible = true;
-				this.listboxrow_error_image.tooltip_text = "There are %i error tips.".printf(number_error_tips);;
+				this.listboxrow_error_image.tooltip_text = "There are %i error tips.".printf(number_error_tips);
+			}
 	}
+}
 }

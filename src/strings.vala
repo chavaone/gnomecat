@@ -32,16 +32,11 @@ namespace ValaCAT.String
 		 * Method that disables the first filter of this MessageString.
 		 *
 		 * Default implementation, it does nothing.
-		 */
-		public virtual void disable ()
-		{}
-
-		/**
-		 * Method that disables all filters of this MessageString.
 		 *
-		 * Default implemementation, it does nothing.
+		 * @param cascade Boolean value that indicates if the
+		 *		disable must be recursive.
 		 */
-		public virtual void recursive_disable ()
+		public virtual void disable (bool cascade)
 		{}
 	}
 
@@ -125,7 +120,7 @@ namespace ValaCAT.String
 		 *
 		 * @param initial_message Instance of the base string.
 		 */
-		public Filter.with_base_message (MessageString initial_message)
+		public Filter.with_base_message (MessageString? initial_message)
 		{
 			this.base_message_string = initial_message;
 			this.enabled = true;
