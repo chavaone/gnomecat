@@ -3,7 +3,7 @@ using Gtk;
 using ValaCAT.FileProject;
 using ValaCAT.String;
 
-namespace ValaCAT.MessageEditor
+namespace ValaCAT.UI
 {
 
 	/**
@@ -14,6 +14,7 @@ namespace ValaCAT.MessageEditor
 	{
 		[GtkChild]
 		private Notebook plurals_notebook;
+		private Message message;
 
 		public MessageEditorWidget ()
 		{}
@@ -33,13 +34,14 @@ namespace ValaCAT.MessageEditor
 				int num_plurals = m.get_language().get_number_of_plurals();
 				for(i = 1; i < num_plurals; i++)
 				{
-					string label = "Plural:"; //TODO: add language plural tags and gettext.
+					string label = "Plural %i".printf(i); //TODO: add language plural tags and gettext.
 					auxtab = new MessageEditorTab(label,m.get_original_plural(), m.get_translation(i-1));
 					foreach (MessageTip t in m.get_tips_plural_form(i-1))
 						auxtab.add_tip(t);
 					this.add_tab(auxtab);
 				}
 			}
+			this.message = m;
 		}
 
 		private void add_tab (MessageEditorTab t)
@@ -49,7 +51,11 @@ namespace ValaCAT.MessageEditor
 
 		private void clean_tabs ()
 		{
-			//TODO
+			int number_of_tabs = this.plurals_notebook.get_n_pages();
+			for(int i=0;i<number_of_tabs;i++)
+			{
+				this.plurals_notebook.remove_page(0);
+			}
 		}
 
 	}
@@ -57,7 +63,7 @@ namespace ValaCAT.MessageEditor
 	/**
 	 * Editor pannel tabs.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditor.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditortab.ui")]
 	public class MessageEditorTab : Box
 	{
 
@@ -162,7 +168,7 @@ namespace ValaCAT.MessageEditor
 	/**
 	 * Rows of the tips displaying box.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditor.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditortabtiprow.ui")]
 	public class MessageTipRow : ListBoxRow
 	{
 
