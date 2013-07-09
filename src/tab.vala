@@ -5,18 +5,20 @@ using Gtk;
 using ValaCAT.FileProject;
 
 
-namespace ValaCAT.Tabs
+namespace ValaCAT.UI
 {
 	/**
 	 * Generic tab.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messagelist.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/tab.ui")]
 	public abstract class Tab : Box
 	{
+		public Label label {get; private set;}
+
 		[GtkChild]
-		private Dock dock;
+		private Gdl.Dock dock;
 		[GtkChild]
-		private DockBar dockbar;
+		private Gdl.DockBar dockbar;
 		private DockLayout layout_manager;
 
 		public Tab ()
@@ -24,7 +26,6 @@ namespace ValaCAT.Tabs
 			this.dockbar.master = dock;
 			this.layout_manager = new DockLayout(dock);
 		}
-
 
 		public void load_layout (string file)
 		{
@@ -45,9 +46,32 @@ namespace ValaCAT.Tabs
 
 	public class FileTab : Tab
 	{
-		public FileTab (ValaCAT.FileProject.File f)
+		private MessageListWidget message_list;
+		private MessageEditorWidget message_editor;
+		private ContextPanel context_pannel;
+
+		public FileTab (ValaCAT.FileProject.File? f)
 		{
 			base();
+			this.message_list = new MessageListWidget();
+			foreach (Message m in f.messages)
+			{
+				this.message_list.add_message(m);
+			}
+			this.add_item(this.message_list, DockPlacement.CENTER);
+
+			this.message_editor = new MessageEditorWidget();
+			this.message_editor.set_message(f.messages.get(0));
+			this.add_item(this.message_editor, DockPlacement.BOTTOM);
+
+			this.context_pannel = new ContextPanel();
+			this.context_pannel.set_message(f.messages.get(0));
+			this.add_item(this.context_pannel,DockPlacement.RIGHT);
+
+			this.message_list.message_selected.connect ( (source, message) => {
+				this.context_pannel.set_message(message);
+				this.message_editor.set_message(message);
+				});
 		}
 	}
 
