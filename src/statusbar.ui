@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="StatusBar" parent="GtkBox">
+  <template class="ValaCATUIStatusBar" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="spacing">10</property>
@@ -156,10 +156,5 @@
         <property name="position">5</property>
       </packing>
     </child>
-  </template>
-  <template class="ProfilesListStore" parent="ListStore">
-    <columns>
-      <column type="gchararray"/>
-    </columns>
   </template>
 </interface>

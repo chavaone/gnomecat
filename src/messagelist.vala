@@ -3,7 +3,7 @@ using Gtk;
 using Gdl;
 using ValaCAT.FileProject;
 
-namespace ValaCAT.MessageList
+namespace ValaCAT.UI
 {
 
 	/**
@@ -16,7 +16,13 @@ namespace ValaCAT.MessageList
 		[GtkChild]
 		private ListBox messages_list_box;
 
-		public MessageListWidget() {}
+		public signal void message_selected (Message m);
+
+		public MessageListWidget()
+		{
+			this.show();
+			this.messages_list_box.row_selected.connect ( (source, row) => {this.message_selected((row as MessageListRow).message);});
+		}
 
 		public void add_message (Message m)
 		{
@@ -27,7 +33,7 @@ namespace ValaCAT.MessageList
 	/**
 	 *
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messagelist.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/messagelistrow.ui")]
 	public class MessageListRow : ListBoxRow
 	{
 
@@ -80,15 +86,15 @@ namespace ValaCAT.MessageList
 			switch (this.message.state)
 			{
 			case MessageState.TRANSLATED:
-				status_icon_name = "";
+				status_icon_name = "emblem-default-symbolic";
 				status_tooltip_text = "Translated"; //TODO: Add gettext.
 				break;
 			case MessageState.UNTRANSLATED:
-				status_icon_name = "";
+				status_icon_name = "window-close-symbolic";
 				status_tooltip_text = "Untraslated";
 				break;
 			case MessageState.FUZZY:
-				status_icon_name = "";
+				status_icon_name = "dialog-question-symbolic";
 				status_tooltip_text = "Fuzzy";
 				break;
 			}
@@ -132,6 +138,6 @@ namespace ValaCAT.MessageList
 				this.listboxrow_error_image.visible = true;
 				this.listboxrow_error_image.tooltip_text = "There are %i error tips.".printf(number_error_tips);
 			}
+		}
 	}
-}
 }
