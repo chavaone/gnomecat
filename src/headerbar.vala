@@ -2,11 +2,13 @@
 using Gtk;
 
 
-namespace ValaCAT.HeaderBar
+namespace ValaCAT.UI
 {
 
 	[GtkTemplate (ui = "/info/aquelando/valacat/headerbar.ui")]
-	public class MenuBar : Gtk.HeaderBar
+	public class HeaderBar : Gtk.HeaderBar
 	{
+		public HeaderBar ()
+		{}
 	}
 }

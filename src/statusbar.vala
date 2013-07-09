@@ -1,8 +1,9 @@
 using Gtk;
 using Gee;
 using ValaCAT.Profiles;
+using ValaCAT.UI;
 
-namespace ValaCAT.StatusBar
+namespace ValaCAT.UI
 {
 
 	[GtkTemplate (ui = "/info/aquelando/valacat/statusbar.ui")]
@@ -131,7 +132,7 @@ namespace ValaCAT.StatusBar
 		}
 	}
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/statusbar.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/statusbarprofileslist.ui")]
 	public class ProfilesListStore : ListStore
 	{
 

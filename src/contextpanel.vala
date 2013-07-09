@@ -2,8 +2,9 @@
 
 using Gtk;
 using Gdl;
+using ValaCAT.FileProject;
 
-namespace ValaCAT.ContextPanel
+namespace ValaCAT.UI
 {
 
 	[GtkTemplate (ui = "/info/aquelando/valacat/contextpanel.ui")]
@@ -12,9 +13,9 @@ namespace ValaCAT.ContextPanel
 		[GtkChild]
 		private TextView context_textview;
 
-		public DockItem () {}
+		public ContextPanel () {}
 
-		public override void set_message (Message m)
+		public void set_message (Message m)
 		{
 			this.context_textview.buffer.text = m == null ? "" : m.get_context();
 		}
