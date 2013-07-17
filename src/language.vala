@@ -1,4 +1,5 @@
 
+using Gee;
 namespace ValaCAT.Languages
 {
 
@@ -26,7 +27,7 @@ namespace ValaCAT.Languages
 
 
 
-		private static ArrayList<PluralForm> instances;
+		private static HashMap<int,PluralForm> plural_forms;
 
 
 		/**
@@ -60,11 +61,32 @@ namespace ValaCAT.Languages
 		{
 			if(instances == null)
 				lazy_init();
-			return instances.get(id);
+			return plural_forms.get(id);
 		}
 
 		private void lazy_init ()
 		{
+			plural_forms = new HashMap<int, PluralForm>();
+
+			var parser = new Json.Parser ();
+			parser.load_from_data (); //TODO
+			var root_object = parser.get_root ().get_object ();
+
+			foreach (var form in root_object.get_array_member ("forms").get_elements ())
+			{
+	            var form_object = form.get_object ();
+
+	            int id = form_object.get_int_member ("id");
+	            string expression = lang_object.get_string_member ("expression");
+	            int number_of_plurals = form_object.get_int_member ("id");
+	            ArrayList<string> tags = new ArrayList<string> ();
+
+	            foreach (var tag in form_object.get_array_member ("tags").get_elements ())
+	            {
+	            	var tag_object = tag.get_object ();
+	            	tags.set(tag_object.get_int_member ("number"), tag_object.get_string_member ("tag"));
+	            }
+        	}
 		}
 	}
 
@@ -114,7 +136,8 @@ namespace ValaCAT.Languages
 			parser.load_from_data (); //TODO
 			var root_object = parser.get_root ().get_object ();
 
-			foreach (var lang in root_object.get_array_member ("languages").get_elements ()) {
+			foreach (var lang in root_object.get_array_member ("languages").get_elements ())
+			{
 	            var lang_object = lang.get_object ();
 
 	            string name = lang_object.get_string_member("name");
@@ -130,8 +153,7 @@ namespace ValaCAT.Languages
 	            {
 	            	languages.set(code, new Language(name, code, null));
 	            }
-
-        }
+        	}
 		}
 	}
 }
