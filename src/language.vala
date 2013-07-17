@@ -1,9 +1,11 @@
 
 using Gee;
+using Json;
+
 namespace ValaCAT.Languages
 {
 
-	public class PluralForm : Object
+	public class PluralForm : GLib.Object
 	{
 		/**
 		 *
@@ -26,14 +28,23 @@ namespace ValaCAT.Languages
 		public ArrayList<string> plural_tags {get; private set;}
 
 
-
 		private static HashMap<int,PluralForm> plural_forms;
 
 
 		/**
+		 * Constructor for plural forms.
 		 *
+		 * @param id Id of this plural form.
+		 * @param number_of_plurals Number of plurals
+		 * @param expression Expression containig the number of
+		 *	plurals and the C expressions to distinguish among
+		 *	plural forms.
+		 * @param plural_tags Distinguishable names for each plural form.
 		 */
-		public PluralForm.full(int number_of_plurals, string expresion, ArrayList<string> plural_tags)
+		public PluralForm ( int id,
+							int number_of_plurals,
+						 	string expresion,
+						 	ArrayList<string> plural_tags)
 		{
 			this.number_of_plurals = number_of_plurals;
 			this.expresion = expresion;
@@ -59,39 +70,50 @@ namespace ValaCAT.Languages
 		 */
 		public static PluralForm get_plural_from_id (int id)
 		{
-			if(instances == null)
+			if(plural_forms == null)
 				lazy_init();
 			return plural_forms.get(id);
 		}
 
-		private void lazy_init ()
+		/**
+		 * Method that initializes the instances of the
+		 *	existent plural forms.
+		 */
+		private static void lazy_init ()
 		{
 			plural_forms = new HashMap<int, PluralForm>();
 
-			var parser = new Json.Parser ();
-			parser.load_from_data (); //TODO
-			var root_object = parser.get_root ().get_object ();
+			try{
+				var parser = new Json.Parser ();
+				parser.load_from_data (""); //TODO
+				var root_object = parser.get_root ().get_object ();
 
-			foreach (var form in root_object.get_array_member ("forms").get_elements ())
-			{
-	            var form_object = form.get_object ();
+				foreach (var form in root_object.get_array_member ("forms").get_elements ())
+				{
+		            var form_object = form.get_object ();
 
-	            int id = form_object.get_int_member ("id");
-	            string expression = lang_object.get_string_member ("expression");
-	            int number_of_plurals = form_object.get_int_member ("id");
-	            ArrayList<string> tags = new ArrayList<string> ();
+		            int id = int.parse(form_object.get_int_member ("id").to_string());
+		            string expression = form_object.get_string_member ("expression");
+		            int number_of_plurals = int.parse(form_object.get_int_member ("id").to_string());
+		            ArrayList<string> tags = new ArrayList<string> ();
 
-	            foreach (var tag in form_object.get_array_member ("tags").get_elements ())
-	            {
-	            	var tag_object = tag.get_object ();
-	            	tags.set(tag_object.get_int_member ("number"), tag_object.get_string_member ("tag"));
-	            }
-        	}
+		            foreach (var tag in form_object.get_array_member ("tags").get_elements ())
+		            {
+		            	var tag_object = tag.get_object ();
+		            	tags.set(int.parse(tag_object.get_int_member ("number").to_string ()), tag_object.get_string_member ("tag"));
+		            }
+
+		            plural_forms.set(id, new PluralForm(id, number_of_plurals, expression, tags));
+	        	}
+	        } catch (Error e) {
+	        	//TODO: print some error info.
+	        }
+
 		}
 	}
 
 
-	public class Language : Object
+	public class Language : GLib.Object
 	{
 
 		public static HashMap<string,Language> languages {get; private set;}
@@ -128,32 +150,35 @@ namespace ValaCAT.Languages
 			return this.plural_form.get_plural_form_tag(plural);
 		}
 
-		private void lazy_init ()
+		private static void lazy_init ()
 		{
 			languages = new HashMap<string, Language>();
 
-			var parser = new Json.Parser ();
-			parser.load_from_data (); //TODO
-			var root_object = parser.get_root ().get_object ();
+			try {
+				var parser = new Json.Parser ();
+				parser.load_from_data (""); //TODO
+				var root_object = parser.get_root ().get_object ();
 
-			foreach (var lang in root_object.get_array_member ("languages").get_elements ())
-			{
-	            var lang_object = lang.get_object ();
+				foreach (var lang in root_object.get_array_member ("languages").get_elements ())
+				{
+		            var lang_object = lang.get_object ();
 
-	            string name = lang_object.get_string_member("name");
-	            string code = lang_object.get_string_member("code");
+		            string name = lang_object.get_string_member("name");
+		            string code = lang_object.get_string_member("code");
 
-	            if ( lang_object.has_member("pluralform") )
-	            {
-	            	int plural_form_id = lang_object.get_int_member("pluralform");
-	            	PluralForm plural_form_instance = PluralForm.get_plural_from_id(plural_form_id);
-	            	languages.set(code, new Language(name, code, plural_form_instance));
-	            }
-	            else
-	            {
-	            	languages.set(code, new Language(name, code, null));
-	            }
-        	}
+		            if ( lang_object.has_member("pluralform") )
+		            {
+		            	int plural_form_id = int.parse(lang_object.get_int_member("pluralform").to_string());
+		            	languages.set(code, new Language(name, code, plural_form_id));
+		            }
+		            else
+		            {
+		            	languages.set(code, new Language(name, code, null));
+		            }
+	        	}
+        	} catch (Error e) {
+	        	//TODO: print some error info.
+	        }
 		}
 	}
 }
