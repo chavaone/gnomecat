@@ -24,7 +24,8 @@ namespace ValaCAT.UI
 			int i;
 			this.clean_tabs();
 			//TODO: Add gettext integration.
-			var auxtab = new MessageEditorTab("Singular", m.get_original_singular(), m.get_translation(0));
+			string label = "Singular (%s)".printf(m.get_language().get_plural_form_tag(0));
+			var auxtab = new MessageEditorTab(label, m.get_original_singular(), m.get_translation(0));
 			foreach (MessageTip t in m.get_tips_plural_form(0))
 				auxtab.add_tip(t);
 			this.add_tab(auxtab);
@@ -34,9 +35,9 @@ namespace ValaCAT.UI
 				int num_plurals = m.get_language().get_number_of_plurals();
 				for(i = 1; i < num_plurals; i++)
 				{
-					string label = "Plural %i".printf(i); //TODO: add language plural tags and gettext.
-					auxtab = new MessageEditorTab(label,m.get_original_plural(), m.get_translation(i-1));
-					foreach (MessageTip t in m.get_tips_plural_form(i-1))
+					label = "Plural %i (%s)".printf(i,m.get_language().get_plural_form_tag(i)); //TODO: add language plural tags and gettext.
+					auxtab = new MessageEditorTab(label,m.get_original_plural(), m.get_translation(i));
+					foreach (MessageTip t in m.get_tips_plural_form(i))
 						auxtab.add_tip(t);
 					this.add_tab(auxtab);
 				}

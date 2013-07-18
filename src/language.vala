@@ -20,12 +20,12 @@ namespace ValaCAT.Languages
 		/**
 		 *
 		 */
-		public string expresion {get; private set;}
+		public string expression {get; private set;}
 
 		/**
 		 *
 		 */
-		public ArrayList<string> plural_tags {get; private set;}
+		public HashMap<int, string> plural_tags {get; private set;}
 
 
 		private static HashMap<int,PluralForm> plural_forms;
@@ -43,11 +43,12 @@ namespace ValaCAT.Languages
 		 */
 		public PluralForm ( int id,
 							int number_of_plurals,
-						 	string expresion,
-						 	ArrayList<string> plural_tags)
+						 	string expression,
+						 	HashMap<int, string> plural_tags)
 		{
+			this.id = id;
 			this.number_of_plurals = number_of_plurals;
-			this.expresion = expresion;
+			this.expression = expression;
 			this.plural_tags = plural_tags;
 		}
 
@@ -72,7 +73,8 @@ namespace ValaCAT.Languages
 		{
 			if(plural_forms == null)
 				lazy_init();
-			return plural_forms.get(id);
+			var p = plural_forms.get(id);
+			return p;
 		}
 
 		/**
@@ -84,8 +86,9 @@ namespace ValaCAT.Languages
 			plural_forms = new HashMap<int, PluralForm>();
 
 			try{
+
 				var parser = new Json.Parser ();
-				parser.load_from_data (""); //TODO
+				parser.load_from_file ("../res/plurals.json");
 				var root_object = parser.get_root ().get_object ();
 
 				foreach (var form in root_object.get_array_member ("forms").get_elements ())
@@ -94,8 +97,8 @@ namespace ValaCAT.Languages
 
 		            int id = int.parse(form_object.get_int_member ("id").to_string());
 		            string expression = form_object.get_string_member ("expression");
-		            int number_of_plurals = int.parse(form_object.get_int_member ("id").to_string());
-		            ArrayList<string> tags = new ArrayList<string> ();
+		            int number_of_plurals = int.parse(form_object.get_int_member ("number_of_plurals").to_string());
+		            HashMap<int,string> tags = new HashMap<int,string> ();
 
 		            foreach (var tag in form_object.get_array_member ("tags").get_elements ())
 		            {
@@ -105,8 +108,9 @@ namespace ValaCAT.Languages
 
 		            plural_forms.set(id, new PluralForm(id, number_of_plurals, expression, tags));
 	        	}
+
 	        } catch (Error e) {
-	        	//TODO: print some error info.
+	        	stderr.printf("ERROR: %s\n", e.message);
 	        }
 
 		}
@@ -128,24 +132,26 @@ namespace ValaCAT.Languages
 		{
 			if(languages == null)
 				lazy_init();
-			languages.get(code);
+			return languages.get(code);
 		}
 
 		public Language (string code, string name, int? pluralform)
 		{
 			this.name = name;
 			this.code = code;
-			this.plural_form = PluralForm.get_plural_from_id(pluralform);
+			this.plural_form = pluralform == null ? null : PluralForm.get_plural_from_id(pluralform);
 		}
 
 		public int get_number_of_plurals ()
 		{
+			if (plural_form == null)
+				return 1;
 			return plural_form.number_of_plurals;
 		}
 
 		public string? get_plural_form_tag (int plural)
 		{
-			if (this.plural_form == null)
+			if (plural_form == null)
 				return null;
 			return this.plural_form.get_plural_form_tag(plural);
 		}
@@ -156,7 +162,7 @@ namespace ValaCAT.Languages
 
 			try {
 				var parser = new Json.Parser ();
-				parser.load_from_data (""); //TODO
+				parser.load_from_file ("/home/ch01/valacat/res/languages.json");
 				var root_object = parser.get_root ().get_object ();
 
 				foreach (var lang in root_object.get_array_member ("languages").get_elements ())
@@ -169,15 +175,16 @@ namespace ValaCAT.Languages
 		            if ( lang_object.has_member("pluralform") )
 		            {
 		            	int plural_form_id = int.parse(lang_object.get_int_member("pluralform").to_string());
-		            	languages.set(code, new Language(name, code, plural_form_id));
+		            	languages.set(code, new Language(code, name, plural_form_id));
 		            }
 		            else
 		            {
-		            	languages.set(code, new Language(name, code, null));
+		            	languages.set(code, new Language(code, name, null));
 		            }
 	        	}
         	} catch (Error e) {
 	        	//TODO: print some error info.
+	        	stderr.printf("ERROR: %s\n",e.message);
 	        }
 		}
 	}

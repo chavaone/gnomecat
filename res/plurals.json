@@ -7,11 +7,11 @@
 		"tags" : [
 			{
 			"number" : 0,
-			"tag" : ""
+			"tag" : "Equal to 0 or 1"
 			},
 			{
 			"number" : 1,
-			"tag" : ""
+			"tag" : "Greater than 1"
 			}
 		]
 	},
@@ -75,11 +75,11 @@
 			},
 			{
 			"number" : 1,
-			"tag" : ""
+			"tag" : "Equal to 1"
 			},
 			{
 			"number" : 2,
-			"tag" : ""
+			"tag" : "Between 2 and 4 (included)"
 			}
 		]
 	},
@@ -220,15 +220,15 @@
 		"tags" : [
 			{
 			"number" : 0,
-			"tag" : ""
+			"tag" : "Equal to 1"
 			},
 			{
 			"number" : 1,
-			"tag" : ""
+			"tag" : "Ending in 2, 3 or 4"
 			},
 			{
 			"number" : 2,
-			"tag" : ""
+			"tag" : "Other numbers"
 			}
 		]
 	},
@@ -262,11 +262,11 @@
 		"tags" : [
 			{
 			"number" : 0,
-			"tag" : ""
+			"tag" : "Ending in 1 but not in 11"
 			},
 			{
 			"number" : 1,
-			"tag" : ""
+			"tag" : "Equal to 0"
 			},
 			{
 			"number" : 2,
@@ -281,15 +281,15 @@
 		"tags" : [
 			{
 			"number" : 0,
-			"tag" : ""
+			"tag" : "Equal to 1"
 			},
 			{
 			"number" : 1,
-			"tag" : ""
+			"tag" : "0 or ending in a number between 0 and 20"
 			},
 			{
 			"number" : 2,
-			"tag" : ""
+			"tag" : "Other Numbers"
 			}
 		]
 	},
@@ -342,12 +342,12 @@
 		"tags" : [
 			{
 			"number" : 0,
-			"tag" : ""
+			"tag" : "Equal to 1"
 			},
 			{
 			"number" : 1,
-			"tag" : ""
+			"tag" : "0 or greater than 1"
 			}
 		]
-	},]
+	}]
 }

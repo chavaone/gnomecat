@@ -2,743 +2,657 @@
 	"languages" : [
 	{
 		"code" : "ab",
-		"name" : "Abkhazian",
-		"pluralform" :  },
+		"name" : "Abkhazian"},
 	{
 		"code" : "aa",
-		"name" : "Afar",
-		"pluralform" :  },
+		"name" : "Afar"},
 	{
 		"code" : "af",
 		"name" : "Afrikaans",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ak",
-		"name" : "Akan",
-		"pluralform" :  },
+		"name" : "Akan"},
 	{
 		"code" : "sq",
 		"name" : "Albanian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "am",
 		"name" : "Amharic",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "ar",
 		"name" : "Arabic",
-		"pluralform" : 5 },
+		"pluralform" : 5},
 	{
 		"code" : "an",
 		"name" : "Aragonese",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "hy",
 		"name" : "Armenian",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "as",
 		"name" : "Assamese",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "av",
-		"name" : "Avaric",
-		"pluralform" :  },
+		"name" : "Avaric"},
 	{
 		"code" : "ae",
-		"name" : "Avestan",
-		"pluralform" :  },
+		"name" : "Avestan"},
 	{
 		"code" : "ay",
-		"name" : "Aymara",
-		"pluralform" :  },
+		"name" : "Aymara"},
 	{
 		"code" : "az",
 		"name" : "Azerbaijani",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "bm",
-		"name" : "Bambara",
-		"pluralform" :  },
+		"name" : "Bambara"},
 	{
 		"code" : "ba",
-		"name" : "Bashkir",
-		"pluralform" :  },
+		"name" : "Bashkir"},
 	{
 		"code" : "eu",
 		"name" : "Basque",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "be",
 		"name" : "Belarusian",
-		"pluralform" : 1 },
+		"pluralform" : 1},
 	{
 		"code" : "bn",
 		"name" : "Bengali",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "bh",
-		"name" : "Bihari languages",
-		"pluralform" :  },
+		"name" : "Bihari languages"},
 	{
 		"code" : "bi",
-		"name" : "Bislama",
-		"pluralform" :  },
+		"name" : "Bislama"},
 	{
 		"code" : "nb",
-		"name" : "Bokmål, Norwegian; Norwegian Bokmål",
-		"pluralform" :  },
+		"name" : "Bokmål, Norwegian; Norwegian Bokmål"},
 	{
 		"code" : "bs",
 		"name" : "Bosnian",
-		"pluralform" : 1 },
+		"pluralform" : 1},
 	{
 		"code" : "br",
 		"name" : "Breton",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "bg",
 		"name" : "Bulgarian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "my",
 		"name" : "Burmese",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "ca",
 		"name" : "Catalan; Valencian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "km",
 		"name" : "Central Khmer",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "ch",
-		"name" : "Chamorro",
-		"pluralform" :  },
+		"name" : "Chamorro"},
 	{
 		"code" : "ce",
-		"name" : "Chechen",
-		"pluralform" :  },
+		"name" : "Chechen"},
 	{
 		"code" : "ny",
-		"name" : "Chichewa; Chewa; Nyanja",
-		"pluralform" :  },
+		"name" : "Chichewa; Chewa; Nyanja"},
 	{
 		"code" : "zh",
-		"name" : "Chinese",
-		"pluralform" :  },
+		"name" : "Chinese"},
 	{
 		"code" : "cu",
-		"name" : "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic",
-		"pluralform" :  },
+		"name" : "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic"},
 	{
 		"code" : "cv",
-		"name" : "Chuvash",
-		"pluralform" :  },
+		"name" : "Chuvash"},
 	{
 		"code" : "kw",
-		"name" : "Cornish",
-		"pluralform" :  },
+		"name" : "Cornish"},
 	{
 		"code" : "co",
-		"name" : "Corsican",
-		"pluralform" :  },
+		"name" : "Corsican"},
 	{
 		"code" : "cr",
-		"name" : "Cree",
-		"pluralform" :  },
+		"name" : "Cree"},
 	{
 		"code" : "hr",
 		"name" : "Croatian",
-		"pluralform" : 1 },
+		"pluralform" : 1},
 	{
 		"code" : "cs",
 		"name" : "Czech",
-		"pluralform" : 6 },
+		"pluralform" : 6},
 	{
 		"code" : "da",
 		"name" : "Danish",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "dv",
-		"name" : "Divehi; Dhivehi; Maldivian",
-		"pluralform" :  },
+		"name" : "Divehi; Dhivehi; Maldivian"},
 	{
 		"code" : "nl",
 		"name" : "Dutch; Flemish",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "dz",
 		"name" : "Dzongkha",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "en",
-		"name" : "English",
-		"pluralform" :  },
+		"name" : "English"},
 	{
 		"code" : "eo",
 		"name" : "Esperanto",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "et",
 		"name" : "Estonian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ee",
-		"name" : "Ewe",
-		"pluralform" :  },
+		"name" : "Ewe"},
 	{
 		"code" : "fo",
-		"name" : "Faroese",
-		"pluralform" :  },
+		"name" : "Faroese"},
 	{
 		"code" : "fj",
-		"name" : "Fijian",
-		"pluralform" :  },
+		"name" : "Fijian"},
 	{
 		"code" : "fi",
 		"name" : "Finnish",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "fr",
 		"name" : "French",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "ff",
-		"name" : "Fulah",
-		"pluralform" :  },
+		"name" : "Fulah"},
 	{
 		"code" : "gd",
-		"name" : "Gaelic; Scottish Gaelic",
-		"pluralform" :  },
+		"name" : "Gaelic; Scottish Gaelic"},
 	{
 		"code" : "gl",
 		"name" : "Galician",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "lg",
 		"name" : "Ganda",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ka",
 		"name" : "Georgian",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "de",
 		"name" : "German",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "el",
 		"name" : "Greek, Modern (1453-)",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "gn",
-		"name" : "Guarani",
-		"pluralform" :  },
+		"name" : "Guarani"},
 	{
 		"code" : "gu",
 		"name" : "Gujarati",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ht",
-		"name" : "Haitian; Haitian Creole",
-		"pluralform" :  },
+		"name" : "Haitian; Haitian Creole"},
 	{
 		"code" : "ha",
 		"name" : "Hausa",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "he",
 		"name" : "Hebrew",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "hz",
-		"name" : "Herero",
-		"pluralform" :  },
+		"name" : "Herero"},
 	{
 		"code" : "hi",
 		"name" : "Hindi",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ho",
-		"name" : "Hiri Motu",
-		"pluralform" :  },
+		"name" : "Hiri Motu"},
 	{
 		"code" : "hu",
 		"name" : "Hungarian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "is",
 		"name" : "Icelandic",
-		"pluralform" : 16 },
+		"pluralform" : 16},
 	{
 		"code" : "io",
 		"name" : "Ido",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ig",
-		"name" : "Igbo",
-		"pluralform" :  },
+		"name" : "Igbo"},
 	{
 		"code" : "id",
 		"name" : "Indonesian",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "ia",
-		"name" : "Interlingua (International Auxiliary Language Association)",
-		"pluralform" :  },
+		"name" : "Interlingua (International Auxiliary Language Association)"},
 	{
 		"code" : "ie",
-		"name" : "Interlingue; Occidental",
-		"pluralform" :  },
+		"name" : "Interlingue; Occidental"},
 	{
 		"code" : "iu",
-		"name" : "Inuktitut",
-		"pluralform" :  },
+		"name" : "Inuktitut"},
 	{
 		"code" : "ik",
-		"name" : "Inupiaq",
-		"pluralform" :  },
+		"name" : "Inupiaq"},
 	{
 		"code" : "ga",
 		"name" : "Irish",
-		"pluralform" : 15 },
+		"pluralform" : 15},
 	{
 		"code" : "it",
 		"name" : "Italian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ja",
 		"name" : "Japanese",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "jv",
-		"name" : "Javanese",
-		"pluralform" :  },
+		"name" : "Javanese"},
 	{
 		"code" : "kl",
-		"name" : "Kalaallisut; Greenlandic",
-		"pluralform" :  },
+		"name" : "Kalaallisut; Greenlandic"},
 	{
 		"code" : "kn",
 		"name" : "Kannada",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "kr",
-		"name" : "Kanuri",
-		"pluralform" :  },
+		"name" : "Kanuri"},
 	{
 		"code" : "ks",
 		"name" : "Kashmiri",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "kk",
 		"name" : "Kazakh",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "ki",
-		"name" : "Kikuyu; Gikuyu",
-		"pluralform" :  },
+		"name" : "Kikuyu; Gikuyu"},
 	{
 		"code" : "rw",
 		"name" : "Kinyarwanda",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ky",
 		"name" : "Kirghiz; Kyrgyz",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "kv",
-		"name" : "Komi",
-		"pluralform" :  },
+		"name" : "Komi"},
 	{
 		"code" : "kg",
 		"name" : "Kongo",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "ko",
 		"name" : "Korean",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "kj",
-		"name" : "Kuanyama; Kwanyama",
-		"pluralform" :  },
+		"name" : "Kuanyama; Kwanyama"},
 	{
 		"code" : "ku",
 		"name" : "Kurdish",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "lo",
 		"name" : "Lao",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "la",
-		"name" : "Latin",
-		"pluralform" :  },
+		"name" : "Latin"},
 	{
 		"code" : "lv",
 		"name" : "Latvian",
-		"pluralform" : 13 },
+		"pluralform" : 13},
 	{
 		"code" : "li",
-		"name" : "Limburgan; Limburger; Limburgish",
-		"pluralform" :  },
+		"name" : "Limburgan; Limburger; Limburgish"},
 	{
 		"code" : "ln",
-		"name" : "Lingala",
-		"pluralform" :  },
+		"name" : "Lingala"},
 	{
 		"code" : "lt",
 		"name" : "Lithuanian",
-		"pluralform" : 9 },
+		"pluralform" : 9},
 	{
 		"code" : "lu",
-		"name" : "Luba-Katanga",
-		"pluralform" :  },
+		"name" : "Luba-Katanga"},
 	{
 		"code" : "lb",
-		"name" : "Luxembourgish; Letzeburgesch",
-		"pluralform" :  },
+		"name" : "Luxembourgish; Letzeburgesch"},
 	{
 		"code" : "mk",
 		"name" : "Macedonian",
-		"pluralform" : 8 },
+		"pluralform" : 8},
 	{
 		"code" : "mg",
 		"name" : "Malagasy",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "ms",
 		"name" : "Malay",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "ml",
 		"name" : "Malayalam",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "mt",
-		"name" : "Maltese",
-		"pluralform" :  },
+		"name" : "Maltese"},
 	{
 		"code" : "gv",
 		"name" : "Manx",
-		"pluralform" : 2 },
+		"pluralform" : 2},
 	{
 		"code" : "mi",
 		"name" : "Maori",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "mr",
 		"name" : "Marathi",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "mh",
-		"name" : "Marshallese",
-		"pluralform" :  },
+		"name" : "Marshallese"},
 	{
 		"code" : "mo",
-		"name" : "Moldavian; Moldovan",
-		"pluralform" :  },
+		"name" : "Moldavian; Moldovan"},
 	{
 		"code" : "mn",
 		"name" : "Mongolian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "na",
-		"name" : "Nauru",
-		"pluralform" :  },
+		"name" : "Nauru"},
 	{
 		"code" : "nv",
-		"name" : "Navajo; Navaho",
-		"pluralform" :  },
+		"name" : "Navajo; Navaho"},
 	{
 		"code" : "nd",
-		"name" : "Ndebele, North; North Ndebele",
-		"pluralform" :  },
+		"name" : "Ndebele, North; North Ndebele"},
 	{
 		"code" : "nr",
-		"name" : "Ndebele, South; South Ndebele",
-		"pluralform" :  },
+		"name" : "Ndebele, South; South Ndebele"},
 	{
 		"code" : "ng",
-		"name" : "Ndonga",
-		"pluralform" :  },
+		"name" : "Ndonga"},
 	{
 		"code" : "ne",
 		"name" : "Nepali",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "se",
-		"name" : "Northern Sami",
-		"pluralform" :  },
+		"name" : "Northern Sami"},
 	{
 		"code" : "no",
 		"name" : "Norwegian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "nn",
-		"name" : "Norwegian Nynorsk; Nynorsk, Norwegian",
-		"pluralform" :  },
+		"name" : "Norwegian Nynorsk; Nynorsk, Norwegian"},
 	{
 		"code" : "oc",
 		"name" : "Occitan (post 1500)",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "oj",
-		"name" : "Ojibwa",
-		"pluralform" :  },
+		"name" : "Ojibwa"},
 	{
 		"code" : "or",
 		"name" : "Oriya",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "om",
-		"name" : "Oromo",
-		"pluralform" :  },
+		"name" : "Oromo"},
 	{
 		"code" : "os",
 		"name" : "Ossetian; Ossetic",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "pi",
-		"name" : "Pali",
-		"pluralform" :  },
+		"name" : "Pali"},
 	{
 		"code" : "pa",
 		"name" : "Panjabi; Punjabi",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "fa",
 		"name" : "Persian",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "pl",
 		"name" : "Polish",
-		"pluralform" : 11 },
+		"pluralform" : 11},
 	{
 		"code" : "pt",
 		"name" : "Portuguese",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ps",
-		"name" : "Pushto; Pashto",
-		"pluralform" :  },
+		"name" : "Pushto; Pashto"},
 	{
 		"code" : "qu",
-		"name" : "Quechua",
-		"pluralform" :  },
+		"name" : "Quechua"},
 	{
 		"code" : "ro",
 		"name" : "Romanian",
-		"pluralform" : 14 },
+		"pluralform" : 14},
 	{
 		"code" : "rm",
-		"name" : "Romansh",
-		"pluralform" :  },
+		"name" : "Romansh"},
 	{
 		"code" : "rn",
-		"name" : "Rundi",
-		"pluralform" :  },
+		"name" : "Rundi"},
 	{
 		"code" : "ru",
 		"name" : "Russian",
-		"pluralform" : 1 },
+		"pluralform" : 1},
 	{
 		"code" : "sm",
-		"name" : "Samoan",
-		"pluralform" :  },
+		"name" : "Samoan"},
 	{
 		"code" : "sg",
-		"name" : "Sango",
-		"pluralform" :  },
+		"name" : "Sango"},
 	{
 		"code" : "sa",
-		"name" : "Sanskrit",
-		"pluralform" :  },
+		"name" : "Sanskrit"},
 	{
 		"code" : "sc",
-		"name" : "Sardinian",
-		"pluralform" :  },
+		"name" : "Sardinian"},
 	{
 		"code" : "sr",
 		"name" : "Serbian",
-		"pluralform" : 10 },
+		"pluralform" : 10},
 	{
 		"code" : "sn",
-		"name" : "Shona",
-		"pluralform" :  },
+		"name" : "Shona"},
 	{
 		"code" : "ii",
-		"name" : "Sichuan Yi; Nuosu",
-		"pluralform" :  },
+		"name" : "Sichuan Yi; Nuosu"},
 	{
 		"code" : "sd",
-		"name" : "Sindhi",
-		"pluralform" :  },
+		"name" : "Sindhi"},
 	{
 		"code" : "si",
 		"name" : "Sinhala; Sinhalese",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "sk",
 		"name" : "Slovak",
-		"pluralform" : 4 },
+		"pluralform" : 4},
 	{
 		"code" : "sl",
 		"name" : "Slovenian",
-		"pluralform" : 7 },
+		"pluralform" : 7},
 	{
 		"code" : "so",
-		"name" : "Somali",
-		"pluralform" :  },
+		"name" : "Somali"},
 	{
 		"code" : "st",
-		"name" : "Sotho, Southern",
-		"pluralform" :  },
+		"name" : "Sotho, Southern"},
 	{
 		"code" : "es",
 		"name" : "Spanish; Castilian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "su",
-		"name" : "Sundanese",
-		"pluralform" :  },
+		"name" : "Sundanese"},
 	{
 		"code" : "sw",
 		"name" : "Swahili",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ss",
-		"name" : "Swati",
-		"pluralform" :  },
+		"name" : "Swati"},
 	{
 		"code" : "sv",
 		"name" : "Swedish",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "tl",
 		"name" : "Tagalog",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "ty",
-		"name" : "Tahitian",
-		"pluralform" :  },
+		"name" : "Tahitian"},
 	{
 		"code" : "tg",
 		"name" : "Tajik",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ta",
 		"name" : "Tamil",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "tt",
 		"name" : "Tatar",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "te",
 		"name" : "Telugu",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "th",
 		"name" : "Thai",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "bo",
-		"name" : "Tibetan",
-		"pluralform" :  },
+		"name" : "Tibetan"},
 	{
 		"code" : "ti",
-		"name" : "Tigrinya",
-		"pluralform" :  },
+		"name" : "Tigrinya"},
 	{
 		"code" : "to",
-		"name" : "Tonga (Tonga Islands)",
-		"pluralform" :  },
+		"name" : "Tonga (Tonga Islands)"},
 	{
 		"code" : "ts",
 		"name" : "Tsonga",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "tn",
-		"name" : "Tswana",
-		"pluralform" :  },
+		"name" : "Tswana"},
 	{
 		"code" : "tr",
 		"name" : "Turkish",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "tk",
 		"name" : "Turkmen",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "tw",
-		"name" : "Twi",
-		"pluralform" :  },
+		"name" : "Twi"},
 	{
 		"code" : "ug",
 		"name" : "Uighur; Uyghur",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "uk",
 		"name" : "Ukrainian",
-		"pluralform" : 1 },
+		"pluralform" : 1},
 	{
 		"code" : "ur",
 		"name" : "Urdu",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "uz",
 		"name" : "Uzbek",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "ve",
-		"name" : "Venda",
-		"pluralform" :  },
+		"name" : "Venda"},
 	{
 		"code" : "vi",
 		"name" : "Vietnamese",
-		"pluralform" : 3 },
+		"pluralform" : 3},
 	{
 		"code" : "vo",
-		"name" : "Volapük",
-		"pluralform" :  },
+		"name" : "Volapük"},
 	{
 		"code" : "wa",
 		"name" : "Walloon",
-		"pluralform" : 0 },
+		"pluralform" : 0},
 	{
 		"code" : "cy",
 		"name" : "Welsh",
-		"pluralform" : 12 },
+		"pluralform" : 12},
 	{
 		"code" : "fy",
 		"name" : "Western Frisian",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "wo",
-		"name" : "Wolof",
-		"pluralform" :  },
+		"name" : "Wolof"},
 	{
 		"code" : "xh",
 		"name" : "Xhosa",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "yi",
-		"name" : "Yiddish",
-		"pluralform" :  },
+		"name" : "Yiddish"},
 	{
 		"code" : "yo",
 		"name" : "Yoruba",
-		"pluralform" : 17 },
+		"pluralform" : 17},
 	{
 		"code" : "za",
-		"name" : "Zhuang; Chuang",
-		"pluralform" :  },
+		"name" : "Zhuang; Chuang"},
 	{
 		"code" : "zu",
 		"name" : "Zulu",
-		"pluralform" : 17 }
+		"pluralform" : 17}
 	]
 }
