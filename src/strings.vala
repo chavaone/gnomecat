@@ -38,6 +38,9 @@ namespace ValaCAT.String
 		 */
 		public virtual void disable (bool cascade)
 		{}
+
+		public virtual void enable ()
+		{}
 	}
 
 
@@ -179,6 +182,14 @@ namespace ValaCAT.String
 			{
 				this.base_message_string.disable(true);
 			}
+		}
+
+		/**
+		 *
+		 */
+		public override void enable ()
+		{
+			this.enabled = true;
 		}
 
 

@@ -3,18 +3,12 @@
   <template class="ValaCATUIMessageTipRow" parent="GtkListBoxRow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="orientation">vertical</property>
     <child>
       <object class="GtkImage" id="icon">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="pixel_size">20</property>
       </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
     </child>
   </template>
 </interface>

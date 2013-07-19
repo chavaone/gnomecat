@@ -102,6 +102,19 @@ namespace ValaCAT.UI
 			this.original_text = new BaseString (original);
 			this.tranlation_text = new BaseString (translation);
 			this.update_textviews();
+
+			this.tips_box.row_activated.connect ((source, row) => {
+				print ("Tip activado!!");
+				this.disable_filters_original_string();
+				this.disable_filters_translation_string();
+				Filter filter_original = (row as MessageTipRow).tip.filter_original;
+				Filter filter_translation = (row as MessageTipRow).tip.filter_translation;
+				if(filter_original != null)
+					filter_original.enable();
+				if(filter_translation != null)
+					filter_translation.enable();
+				this.update_textviews();
+			});
 		}
 
 
@@ -112,6 +125,19 @@ namespace ValaCAT.UI
 		 */
 		public void add_tip (MessageTip t)
 		{
+			this.tips_box.add(new MessageTipRow(t));
+			if(t.filter_original != null)
+			{
+				this.add_filter_original_string(t.filter_original);
+			}
+
+			if(t.filter_translation != null)
+			{
+				this.add_filter_translation_string (t.filter_translation);
+			}
+
+			this.disable_filters_original_string ();
+			this.disable_filters_translation_string ();
 		}
 
 		/**
@@ -119,6 +145,14 @@ namespace ValaCAT.UI
 		 */
 		public void remove_tip (MessageTip t)
 		{
+			foreach (Widget w in this.tips_box.get_children())
+			{
+				if ((w as MessageTipRow).tip == t)
+				{
+					this.tips_box.remove(w);
+					return;
+				}
+			}
 		}
 
 		/**

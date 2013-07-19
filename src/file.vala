@@ -2,6 +2,7 @@
 
 using Gee;
 using ValaCAT.Languages;
+using ValaCAT.String;
 
 namespace ValaCAT.FileProject
 {
@@ -47,15 +48,44 @@ namespace ValaCAT.FileProject
 		 */
 		public TipLevel level {get; private set;}
 
+		/**
+		 * Filter that can be added to the original string.
+		 */
+		public Filter filter_original {get; private set;}
+
+		/**
+		 * Filter that can be added to the translated string.
+		 */
+		public Filter filter_translation {get; private set;}
+
+		/**
+		 * Plural form this tip references.
+		 */
+		public int plural_number {get; private set;}
+
+
 		/*---------------------------- CONSTRUCTORS --------------------------*/
 
+		/**
+		 * Contructor.
+		 *
+		 * @param name
+		 * @param description
+		 * @param level
+		 * @param filter_original
+		 * @param filter_translation
+		 */
 		public MessageTip (string name,
 				string? description,
-				TipLevel? level)
+				TipLevel? level,
+				Filter? filter_original=null,
+				Filter? filter_translation=null)
 		{
 			this.name = name;
 			this.description = description;
 			this.level = level == null ? TipLevel.INFO : level;
+			this.filter_original = filter_original;
+			this.filter_translation = filter_translation;
 		}
 	}
 
@@ -90,14 +120,9 @@ namespace ValaCAT.FileProject
 		 */
 		public MessageState state
 		{
-			get {return this.state;}
-			protected set
-				{
-					MessageState aux = this.state;
-					state = value;
-					this.changed_state(aux,value);
-				}
-			default = MessageState.OBSOLETE;
+			get;
+			protected set;
+			default = MessageState.TRANSLATED;
 		}
 
 		/*
@@ -205,6 +230,13 @@ namespace ValaCAT.FileProject
 		public abstract void set_translation (int index,
 											string translation);
 
+		/**
+		 * Method that returns a string containing additional
+		 * information of this message such as context, translator
+		 * comments, etc.
+		 */
+		 public abstract string get_context ();
+
 		/*
 		 * Method which adds a MessageTip to this message.
 		 *
@@ -235,7 +267,7 @@ namespace ValaCAT.FileProject
 		public ArrayList<MessageTip> get_tips_plural_form (int plural_form)
 		{
 			//TODO
-			return null;
+			return this.tips;
 		}
 	}
 
