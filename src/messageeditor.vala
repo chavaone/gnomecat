@@ -104,15 +104,16 @@ namespace ValaCAT.UI
 			this.update_textviews();
 
 			this.tips_box.row_activated.connect ((source, row) => {
-				print ("Tip activado!!");
+
 				this.disable_filters_original_string();
 				this.disable_filters_translation_string();
-				Filter filter_original = (row as MessageTipRow).tip.filter_original;
-				Filter filter_translation = (row as MessageTipRow).tip.filter_translation;
-				if(filter_original != null)
-					filter_original.enable();
-				if(filter_translation != null)
-					filter_translation.enable();
+
+				foreach (Filter f in (row as MessageTipRow).tip.filters_original)
+					f.enable();
+
+				foreach (Filter f in (row as MessageTipRow).tip.filters_translation)
+					f.enable();
+
 				this.update_textviews();
 			});
 		}
@@ -126,17 +127,15 @@ namespace ValaCAT.UI
 		public void add_tip (MessageTip t)
 		{
 			this.tips_box.add(new MessageTipRow(t));
-			if(t.filter_original != null)
-			{
-				this.add_filter_original_string(t.filter_original);
-			}
 
-			if(t.filter_translation != null)
-			{
-				this.add_filter_translation_string (t.filter_translation);
-			}
+			foreach (Filter f in t.filters_original)
+				this.add_filter_original_string (f);
 
 			this.disable_filters_original_string ();
+
+			foreach (Filter f in t.filters_translation)
+				this.add_filter_translation_string (f);
+
 			this.disable_filters_translation_string ();
 		}
 
@@ -232,8 +231,8 @@ namespace ValaCAT.UI
 				icon.icon_name = "dialog-information-symbolic";
 				break;
 			}
-			icon.tooltip_text = t.description;
-			this.tip = t;
+			icon.tooltip_text = t.name + ": " + t.description;
+			tip = t;
 		}
 	}
 

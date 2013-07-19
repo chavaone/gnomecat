@@ -51,12 +51,12 @@ namespace ValaCAT.FileProject
 		/**
 		 * Filter that can be added to the original string.
 		 */
-		public Filter filter_original {get; private set;}
+		public ArrayList<Filter> filters_original {get; private set;}
 
 		/**
 		 * Filter that can be added to the translated string.
 		 */
-		public Filter filter_translation {get; private set;}
+		public ArrayList<Filter> filters_translation {get; private set;}
 
 		/**
 		 * Plural form this tip references.
@@ -77,15 +77,15 @@ namespace ValaCAT.FileProject
 		 */
 		public MessageTip (string name,
 				string? description,
-				TipLevel? level,
-				Filter? filter_original=null,
-				Filter? filter_translation=null)
+				TipLevel level,
+				ArrayList<Filter>? filter_original=null,
+				ArrayList<Filter>? filter_translation=null)
 		{
 			this.name = name;
 			this.description = description;
-			this.level = level == null ? TipLevel.INFO : level;
-			this.filter_original = filter_original;
-			this.filter_translation = filter_translation;
+			this.level = level;
+			this.filters_original = filters_original != null ? filters_original : new ArrayList<Filter>();
+			this.filters_translation = filters_translation != null ? filters_translation : new ArrayList<Filter>();
 		}
 	}
 
@@ -266,8 +266,15 @@ namespace ValaCAT.FileProject
 		 */
 		public ArrayList<MessageTip> get_tips_plural_form (int plural_form)
 		{
-			//TODO
-			return this.tips;
+			ArrayList<MessageTip> aux = new ArrayList<MessageTip>();
+
+			foreach (MessageTip t in this.tips)
+			{
+				if(t.plural_number == plural_form)
+					aux.add(t);
+			}
+
+			return aux;
 		}
 	}
 
