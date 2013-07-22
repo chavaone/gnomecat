@@ -143,8 +143,11 @@ namespace ValaCAT.Iterators
 	public class ORFileIterator : FileIterator
 	{
 
+		public ArrayList<FileIterator> iterators {get; private set;}
+
 		public ORFileIterator (ArrayList<FileIterator> iterators)
 		{
+			this.iterators = iterators;
 		}
 
 
@@ -153,12 +156,12 @@ namespace ValaCAT.Iterators
 			//DO NOTHING
 		}
 
-		public override Message next ()
+		protected override bool check_condition (Message m)
 		{
-		}
-
-		public override Message previous ()
-		{
+			foreach (FileIterator fi in iterators)
+				if(fi.check_condition(m))
+					return true;
+			return false;
 		}
 	}
 
