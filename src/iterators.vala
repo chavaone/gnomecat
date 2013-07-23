@@ -151,6 +151,8 @@ namespace ValaCAT.Iterators
 	{
 		public abstract R? next ();
 		public abstract R? previous ();
+		public abstract void last ();
+		public abstract void first ();
 		public abstract void set_element (E element);
 	}
 
@@ -186,9 +188,8 @@ namespace ValaCAT.Iterators
 		public override void set_element (File f)
 		{
 			this.file = f;
-			this.current_index = 0;
-			this.visited = false;
 			this.messages = f == null ? null : f.messages;
+			this.first();
 		}
 
 
@@ -232,9 +233,23 @@ namespace ValaCAT.Iterators
 		}
 
 
+		public override void first ()
+		{
+			this.current_index = 0;
+			this.visited = false;
+		}
+
+		public override void last ()
+		{
+			this.current_index = this.messages.size - 1;
+			this.visited = false;
+		}
+
 		private bool check_condition (Message m)
 		{
-			return this.filter != null ? this.filter.check(m) : false;
+			return 	this.filter != null ?
+					this.filter.check(m) :
+					false;
 		}
 
 
@@ -256,7 +271,7 @@ namespace ValaCAT.Iterators
 	/**
 	 *
 	 */
-	public abstract class MessageIterator : Iterator<Message, MessageMark>
+	public class MessageIterator : Iterator<Message, MessageMark>
 	{
 		public Message message {get; private set;}
 		public string search_string {get; private set;}
@@ -283,6 +298,16 @@ namespace ValaCAT.Iterators
 		{
 			marks_index--;
 			return marks_index < 0 ? null : this.marks.get(marks_index);
+		}
+
+		public override void first ()
+		{
+			marks_index = 0;
+		}
+
+		public override void last ()
+		{
+			marks_index = this.marks.size - 1;
 		}
 
 		public override void set_element (Message element)
