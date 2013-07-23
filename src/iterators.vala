@@ -1,7 +1,147 @@
+
+using Gee;
 using ValaCAT.FileProject;
 
 namespace ValaCAT.Iterators
 {
+
+	/**
+	 * Object that marks a certain string in a message.
+	 */
+	public class MessageMark : Object
+	{
+		/**
+		 * Message that references.
+		 */
+		public Message message {get; private set;}
+
+		/**
+		 *
+		 */
+		public int plural_number {get; private set;}
+
+		/**
+		 *
+		 */
+		public bool is_original {get; private set;}
+
+		/**
+		 *
+		 */
+		public int index {get; private set;}
+
+		/**
+		 *
+		 */
+		public int length {get; private set;}
+
+
+		public MessageMark (Message m, int plural_number, bool is_original, int index, int length)
+		{
+			this.message = m;
+			this.plural_number = plural_number;
+			this.is_original = is_original;
+			this.index = index;
+			this.length = length;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public abstract class IteratorFilter<E> : Object
+	{
+		public abstract bool check (E element);
+	}
+
+
+	/**
+	 *
+	 */
+	public class TranslatedFilter : IteratorFilter<Message>
+	{
+		public override bool check (Message element)
+		{
+			return m.state == MessageState.TRANSLATED;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public class UntranslatedFilter : IteratorFilter<Message>
+	{
+		public override bool check (Message element)
+		{
+			return m.state == MessageState.UNTRANSLATED;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public class FuzzyFilter : IteratorFilter<Message>
+	{
+		public override bool check (Message element)
+		{
+			return m.state == MessageState.FUZZY;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public class ORMessageFilter : IteratorFilter<Message>
+	{
+
+		public ArrayList<IteratorFilter<Message>> filters {get; private set;}
+
+		public ORFilter (ArrayList<IteratorFilter<Message>> filters)
+		{
+			this.filters = filters;
+		}
+
+		public override bool check (Message m)
+		{
+			foreach (MessageFilter mf in filters)
+				if (mf.check(m))
+					return true;
+			return false;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public class OriginalFilter : IteratorFilter<MessageMark>
+	{
+		public override bool check (MessageMark mm)
+		{
+			return mm.is_original;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public class TranslationFilter : IteratorFilter<MessageMark>
+	{
+		public override bool check (MessageMark mm)
+		{
+			return ! mm.is_original;
+		}
+	}
+
+	/**
+	 *
+	 */
+	public class AllMessageMarkFilter : IteratorFilter<MessageMark>
+		{
+		public override bool check (MessageMark mm)
+		{
+			return true;
+		}
+	}
 
 	/**
 	 * Generic class for iterators. It iterates over
@@ -17,76 +157,12 @@ namespace ValaCAT.Iterators
 
 	/**
 	 *
-	 */
-	public abstract class MessageFilter : Object
-	{
-		public abstract bool check (Message m);
-	}
-
-	/**
-	 *
-	 */
-	public class TranslatedFilter : MessageFilter
-	{
-		public override bool check (Message m)
-		{
-			return m.state == MessageState.TRANSLATED;
-		}
-	}
-
-	/**
-	 *
-	 */
-	public class UntranslatedFilter : MessageFilter
-	{
-		public override bool check (Message m)
-		{
-			return m.state == MessageState.UNTRANSLATED;
-		}
-	}
-
-	/**
-	 *
-	 */
-	public class FuzzyFilter : MessageFilter
-	{
-		public override bool check (Message m)
-		{
-			return m.state == MessageState.FUZZY;
-		}
-	}
-
-	/**
-	 *
-	 */
-	public class ORFilter : MessageFilter
-	{
-
-		public ArrayList<MessageFilter> filters {get; private set;}
-
-		public ORFilter (ArrayList<MessageFilter> filters)
-		{
-			this.filters = filters;
-		}
-
-		public override bool check (Message m)
-		{
-			foreach (MessageFilter mf in filters)
-				if (mf.check(m))
-					return true;
-			return false;
-		}
-	}
-
-
-	/**
-	 *
 	 *
 	 */
 	public abstract class FileIterator : Iterator<File, Message>
 	{
 		public File file {get; private set;}
-		public MessageFilter filter {get; private set;}
+		public IteratorFilter<Message> filter {get; private set;}
 
 
 		private int current_index;
@@ -100,7 +176,7 @@ namespace ValaCAT.Iterators
 		}
 
 
-		public FileIterator.with_filter(File f, MessageFilter mf)
+		public FileIterator.with_filter(File f, IteratorFilter<Message> mf)
 		{
 			this.set_element(f);
 			this.filter = mf;
@@ -158,7 +234,7 @@ namespace ValaCAT.Iterators
 
 		private bool check_condition (Message m)
 		{
-			return this.filter != null ? this.filter.check(m) : true;
+			return this.filter != null ? this.filter.check(m) : false;
 		}
 
 
@@ -183,33 +259,18 @@ namespace ValaCAT.Iterators
 	public abstract class MessageIterator : Iterator<Message, MessageMark>
 	{
 		public Message message {get; private set;}
-
-		public MessageIterator (Message msg)
-		{
-			this.set_element(msg);
-		}
-
-		public abstract MessageMark? next ();
-		public abstract MessageMark? previous ();
-
-		public override void set_element (Message element)
-		{
-			this.message = element;
-		}
-	}
-
-	public class OriginalStringMessageIterator : MessageIterator
-	{
 		public string search_string {get; private set;}
 
 		private ArrayList<MessageMark> marks;
-		private int marks_index = -1;
+		private int marks_index;
+		private IteratorFilter<MessageMark> filter;
 
-		public OriginalStringMessageIterator ( Message msg, string search_string)
+		public MessageIterator (Message msg, string search_string, IteratorFilter<MessageMark> filter)
 		{
 			this.search_string = search_string;
 			this.set_element(msg);
 			this.marks = new ArrayList<MessageMark> ();
+			this.filter = filter;
 		}
 
 		public override MessageMark? next ()
@@ -222,6 +283,14 @@ namespace ValaCAT.Iterators
 		{
 			marks_index--;
 			return marks_index < 0 ? null : this.marks.get(marks_index);
+		}
+
+		public override void set_element (Message element)
+		{
+			this.message = element;
+			this.marks.clear();
+			this.get_marks();
+			this.marks_index = -1;
 		}
 
 		private void get_marks ()
@@ -229,110 +298,49 @@ namespace ValaCAT.Iterators
 			int index = 0;
 			while ((index = this.message.get_original_singular().index_of(this.search_string, index)) != -1)
 			{
-				this.marks.add(new MessageMark(this.message, 0, true, index, this.search_string.char_count()));
+				MessageMark mm = new MessageMark(this.message, 0, true, index, this.search_string.char_count());
+				if(this.check_mark(mm))
+					this.marks.add(mm);
 			}
 
-			if (this.message.has_plural())
-			{
-				while ((index = this.message.get_original_plural().index_of(this.search_string, index)) != -1)
-				{
-					this.marks.add(new MessageMark(this.message, 1, true, index, this.search_string.char_count()));
-				}
-			}
-		}
-	}
-
-
-	public class TranslatedStringMessageIterator : MessageIterator
-	{
-		public string search_string {get; private set;}
-
-		private ArrayList<MessageMark> marks;
-		private int marks_index = -1;
-
-		public TranslatedStringMessageIterator ( Message msg, string search_string)
-		{
-			this.search_string = search_string;
-			this.set_element(msg);
-			this.marks = new ArrayList<MessageMark> ();
-			this.get_marks();
-		}
-
-		public override MessageMark? next ()
-		{
-			marks_index++;
-			return marks_index < marks.size ? this.marks.get(marks_index) : null;
-		}
-
-		public override MessageMark? previous ()
-		{
-			marks_index--;
-			return marks_index < 0 ? null : this.marks.get(marks_index);
-		}
-
-		private void get_marks ()
-		{
-			int index = 0;
+			index = 0;
 			while ((index = this.message.get_translation(0).index_of(this.search_string, index)) != -1)
 			{
-				this.marks.add(new MessageMark(this.message, 0, false, index, this.search_string.char_count()));
+				MessageMark mm = new MessageMark(this.message, 0, false, index, this.search_string.char_count());
+				if(this.check_mark(mm))
+					this.marks.add(mm);
 			}
 
 			if (this.message.has_plural())
 			{
+				index = 0;
+				while ((index = this.message.get_original_plural().index_of(this.search_string, index)) != -1)
+				{
+					MessageMark mm = new MessageMark(this.message, 1, true, index, this.search_string.char_count());
+					if(this.check_mark(mm))
+						this.marks.add(mm);
+				}
+
 				for(int plural_number = 1; plural_number < message.file.number_of_plurals (); i++)
 				{
+					index = 0;
 					string message_string = this.message.get_translation(plural_number);
 					if (message_string != null)
 					{
 						while ((index = message_string.index_of(this.search_string, index)) != -1)
 						{
-							this.marks.add(new MessageMark(this.message, plural_number, false, index, this.search_string.char_count()));
+							MessageMark mm = new MessageMark(this.message, plural_number, false, index, this.search_string.char_count());
+							if(this.check_mark(mm))
+								this.marks.add(mm);
 						}
 					}
 				}
 			}
 		}
-	}
 
-	/**
-	 * Object that marks a certain string in a message.
-	 */
-	public class MessageMark : Object
-	{
-		/**
-		 * Message that references.
-		 */
-		public Message message {get; private set;}
-
-		/**
-		 *
-		 */
-		public int plural_number {get; private set;}
-
-		/**
-		 *
-		 */
-		public bool is_original {get; private set;}
-
-		/**
-		 *
-		 */
-		public int index {get; private set;}
-
-		/**
-		 *
-		 */
-		public int length {get; private set;}
-
-
-		public MessageMark (Message m, int plural_number, bool is_original, int index, int length)
+		private bool check_mark (MessageMark mm)
 		{
-			this.message = m;
-			this.plural_number = plural_number;
-			this.is_original = is_original;
-			this.index = index;
-			this.length = length;
+			return this.filter == null ? false : this.filter.check(mm);
 		}
 	}
 
