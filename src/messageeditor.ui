@@ -3,6 +3,7 @@
   <!-- interface-requires gtk+ 3.0 -->
   <template class="ValaCATUIMessageEditorWidget" parent="GdlDockItem">
     <property name="can_focus">False</property>
+    <property name="preferred_height">100</property>
     <child>
       <object class="GtkNotebook" id="plurals_notebook">
         <property name="visible">True</property>
