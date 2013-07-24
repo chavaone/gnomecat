@@ -151,6 +151,7 @@ namespace ValaCAT.Iterators
 	{
 		public abstract R? next ();
 		public abstract R? previous ();
+		public abstract R  get_current_element ();
 		public abstract void last ();
 		public abstract void first ();
 		public abstract void set_element (E element);
@@ -245,6 +246,11 @@ namespace ValaCAT.Iterators
 			this.visited = false;
 		}
 
+		public override Message get_current_element ()
+		{
+			return this.messages.get(this.current_index);
+		}
+
 		private bool check_condition (Message m)
 		{
 			return 	this.filter != null ?
@@ -297,7 +303,7 @@ namespace ValaCAT.Iterators
 		public override MessageMark? previous ()
 		{
 			marks_index--;
-			return marks_index < 0 ? null : this.marks.get(marks_index);
+			return this.get_current_element ();
 		}
 
 		public override void first ()
@@ -308,6 +314,11 @@ namespace ValaCAT.Iterators
 		public override void last ()
 		{
 			marks_index = this.marks.size - 1;
+		}
+
+		public override MessageMark get_current_element ()
+		{
+			return marks_index < 0 ? null : this.marks.get(marks_index);
 		}
 
 		public override void set_element (Message element)

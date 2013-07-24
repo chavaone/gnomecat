@@ -31,25 +31,54 @@ namespace ValaCAT.UI
 		[GtkChild]
 		private Gtk.CheckButton checkbutton_wrap_around;
 
+		private ValaCAT.UI.Window window;
+
 		[GtkCallback]
 		private void search_clicked (Button b)
 		{
+			ini_search(false,true);
 		}
 
 		[GtkCallback]
 		private void replace_clicked (Button b)
 		{
+			ini_search(true,true);
 		}
 
 		[GtkCallback]
 		private void replace_all_clicked (Button b)
 		{
+			ini_search(true,false);
 		}
 
 		[GtkCallback]
 		private void close_search_dialog (Widget w)
 		{
 			this.visible = false;
+		}
+
+		private void ini_search (bool replace, bool stop)
+		{
+
+			if (checkbutton_search_project.active)
+			{
+				this.window.active_search = new ProjectSearch();
+			}
+			else
+			{
+				this.window.active_search = new FileSearch (this.window.get_active_tab(),
+															checkbutton_translated_messages.active,
+															checkbutton_untranslated_messages.active,
+															checkbutton_fuzzy_messages.active,
+															checkbutton_translated.active,
+															checkbutton_original.active,
+															replace,
+															stop,
+															entry_search.get_text (),
+															entry_replace.get_text ());
+			}
+
+			this.window.active_search.next_item();
 		}
 
 	}
@@ -60,9 +89,15 @@ namespace ValaCAT.Search
 {
 	public abstract class Search : Object
 	{
+		public abstract string get_search_text ();
+
+		public abstract string get_replace_text ();
+
 		public abstract void next_item ();
 
 		public abstract void previous_item ();
+
+		public abstract void replace ();
 	}
 
 
@@ -84,7 +119,7 @@ namespace ValaCAT.Search
 						 string search_text,
 						 string replace_text)
 		{
-			ArrayList<MessageFilter> filters;
+			ArrayList<IteratorFilter<Message>> filters;
 			if (translated)
 				file_iterators.add(new TranslatedFilter ());
 
@@ -180,6 +215,27 @@ namespace ValaCAT.Search
 						editor_tab.add_filter_translation_string(new MessageMarkFilter (mm));
 					}
 				}
+			}
+		}
+
+		public void replace ()
+		{
+			MessageMark mm = this.message_iterator.get_current_element();
+			replace_intern(mm);
+		}
+
+		private void replace_intern (MessageMark mm)
+		{
+			if (mm.is_original)
+			{
+				return;
+			}
+			else
+			{
+				string original_string = mm.message.get_translation(mm.plural_number);
+				mm.message.set_translation(mm.plural_number,
+					original_string.substring (0,mm.index) + this.replace_text +
+					original_string.substring (mm.index + mm.length));
 			}
 		}
 	}
