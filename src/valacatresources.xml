@@ -12,5 +12,6 @@
 	<file compressed="true" preprocess="xml-stripblanks">contextpanel.ui</file>
 	<file compressed="true" preprocess="xml-stripblanks">tab.ui</file>
 	<file compressed="true" preprocess="xml-stripblanks">window.ui</file>
+  <file compressed="true" preprocess="xml-stripblanks">searchdialog.ui</file>
   </gresource>
 </gresources>

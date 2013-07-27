@@ -3,6 +3,7 @@
 using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
+using ValaCAT.Iterators;
 
 
 namespace ValaCAT.UI
@@ -11,14 +12,19 @@ namespace ValaCAT.UI
 	 * Generic tab.
 	 */
 	[GtkTemplate (ui = "/info/aquelando/valacat/tab.ui")]
-	public abstract class Tab : Box
+	public abstract class Tab : Overlay
 	{
-		public Label label {get; private set;}
+		public Label label {get; protected set;}
 
 		[GtkChild]
 		private Gdl.Dock dock;
 		[GtkChild]
 		private Gdl.DockBar dockbar;
+		[GtkChild]
+		private Gtk.Revealer search_slider;
+		[GtkChild]
+		private Gtk.Entry search_entry;
+
 		private DockLayout layout_manager;
 
 		public Tab ()
@@ -42,17 +48,26 @@ namespace ValaCAT.UI
 			this.dock.add_item(item,place);
 		}
 
+		public void show_search_bar ()
+		{
+		}
+
+		public void hide_search_bar ()
+		{
+		}
 	}
 
 	public class FileTab : Tab
 	{
-		private MessageListWidget message_list;
-		private MessageEditorWidget message_editor;
-		private ContextPanel context_pannel;
+		public MessageListWidget message_list {get; private set;}
+		public MessageEditorWidget message_editor {get; private set;}
+		public ContextPanel context_pannel {get; private set;}
+		public ValaCAT.FileProject.File file {get; private set;}
 
-		public FileTab (ValaCAT.FileProject.File? f)
+		public FileTab (ValaCAT.FileProject.File f)
 		{
 			base();
+			this.label = new Gtk.Label("filename");//TODO f.name;
 			this.message_list = new MessageListWidget();
 			foreach (Message m in f.messages)
 			{
@@ -72,6 +87,7 @@ namespace ValaCAT.UI
 				this.context_pannel.set_message(message);
 				this.message_editor.set_message(message);
 				});
+			this.file = f;
 		}
 	}
 

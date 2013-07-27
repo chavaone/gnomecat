@@ -113,7 +113,7 @@ namespace ValaCAT.FileProject
 		/**
 		 * File which is the owner of this message.
 		 */
-		public File owner_file {get; private set; default = null;}
+		public File file {get; private set; default = null;}
 
 		/**
 		 * State of the message.
@@ -140,7 +140,7 @@ namespace ValaCAT.FileProject
 		 */
 		public Message (File owner_file)
 		{
-			this.owner_file = owner_file;
+			this.file = owner_file;
 			this.tips = new ArrayList<MessageTip> ();
 		}
 

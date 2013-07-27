@@ -28,6 +28,25 @@ namespace ValaCAT.UI
 		{
 			this.messages_list_box.add(new MessageListRow(m));
 		}
+
+		public MessageListRow? find_row_by_message (Message m)
+		{
+			foreach (Widget w in this.messages_list_box.get_children())
+			{
+				ValaCAT.UI.MessageListRow row = w as ValaCAT.UI.MessageListRow;
+
+				if (row.message == m)
+				{
+					return row;
+				}
+			}
+			return null;
+		}
+
+		public void select_row (MessageListRow row)
+		{
+			this.messages_list_box.select_row (row);
+		}
 	}
 
 	/**
@@ -123,7 +142,7 @@ namespace ValaCAT.UI
 
 			if (number_info_tips > 0)
 			{
-				this.listboxrow_info_image.visible = true;
+				this.listboxrow_info_image.visible = true; //TODO: Add gettext!
 				this.listboxrow_info_image.tooltip_text = "There are %i info tips.".printf(number_info_tips);
 			}
 

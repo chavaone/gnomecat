@@ -1,5 +1,6 @@
 
 using Gtk;
+using ValaCAT.Search;
 
 namespace ValaCAT.UI
 {
@@ -15,6 +16,8 @@ namespace ValaCAT.UI
 		//[GtkChild]
 		private ValaCAT.UI.HeaderBar menubar;
 
+		public ValaCAT.Search.Search active_search;
+
 		public Window ()
 		{
 			statusbar = new ValaCAT.UI.StatusBar();
@@ -28,6 +31,12 @@ namespace ValaCAT.UI
 		public void add_tab (Tab t)
 		{
 			this.notebook.append_page(t,t.label);
+		}
+
+		public Tab get_active_tab ()
+		{
+			int page_number = this.notebook.get_current_page ();
+			return this.notebook.get_nth_page(page_number) as Tab;
 		}
 	}
 }

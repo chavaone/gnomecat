@@ -51,6 +51,9 @@ namespace ValaCAT.Iterators
 	 */
 	public abstract class IteratorFilter<E> : Object
 	{
+		/**
+		 *
+		 */
 		public abstract bool check (E element);
 	}
 
@@ -62,7 +65,7 @@ namespace ValaCAT.Iterators
 	{
 		public override bool check (Message element)
 		{
-			return m.state == MessageState.TRANSLATED;
+			return element.state == MessageState.TRANSLATED;
 		}
 	}
 
@@ -73,7 +76,7 @@ namespace ValaCAT.Iterators
 	{
 		public override bool check (Message element)
 		{
-			return m.state == MessageState.UNTRANSLATED;
+			return element.state == MessageState.UNTRANSLATED;
 		}
 	}
 
@@ -84,26 +87,26 @@ namespace ValaCAT.Iterators
 	{
 		public override bool check (Message element)
 		{
-			return m.state == MessageState.FUZZY;
+			return element.state == MessageState.FUZZY;
 		}
 	}
 
 	/**
 	 *
 	 */
-	public class ORMessageFilter : IteratorFilter<Message>
+	public class ORFilter<R> : IteratorFilter<R>
 	{
 
-		public ArrayList<IteratorFilter<Message>> filters {get; private set;}
+		public ArrayList<IteratorFilter<R>> filters {get; private set;}
 
-		public ORFilter (ArrayList<IteratorFilter<Message>> filters)
+		public ORFilter (ArrayList<IteratorFilter<R>> filters)
 		{
 			this.filters = filters;
 		}
 
-		public override bool check (Message m)
+		public override bool check (R m)
 		{
-			foreach (MessageFilter mf in filters)
+			foreach (IteratorFilter<R> mf in filters)
 				if (mf.check(m))
 					return true;
 			return false;
@@ -143,18 +146,20 @@ namespace ValaCAT.Iterators
 		}
 	}
 
+
 	/**
 	 * Generic class for iterators. It iterates over
 	 *	a element \\E\\ and returns instances of \\R\\.
 	 */
-	public abstract class Iterator<E,R> : Object
+	public abstract class Iterator<Ele,Ret> : Object
 	{
-		public abstract R? next ();
-		public abstract R? previous ();
-		public abstract R  get_current_element ();
+		public abstract Ret  next ();
+		public abstract Ret  previous ();
+		public abstract Ret  get_current_element ();
 		public abstract void last ();
 		public abstract void first ();
-		public abstract void set_element (E element);
+		public abstract bool is_last();
+		public abstract void set_element (Ele element);
 	}
 
 
@@ -162,9 +167,9 @@ namespace ValaCAT.Iterators
 	 *
 	 *
 	 */
-	public abstract class FileIterator : Iterator<File, Message>
+	public class FileIterator : Iterator<ValaCAT.FileProject.File, Message>
 	{
-		public File file {get; private set;}
+		public ValaCAT.FileProject.File file {get; private set;}
 		public IteratorFilter<Message> filter {get; private set;}
 
 
@@ -173,20 +178,14 @@ namespace ValaCAT.Iterators
 		private ArrayList<Message> messages;
 
 
-		public FileIterator (File f)
-		{
-			this.with_filter(f,null);
-		}
-
-
-		public FileIterator.with_filter(File f, IteratorFilter<Message> mf)
+		public FileIterator (ValaCAT.FileProject.File f, IteratorFilter<Message> mf)
 		{
 			this.set_element(f);
 			this.filter = mf;
 		}
 
 
-		public override void set_element (File f)
+		public override void set_element (ValaCAT.FileProject.File f)
 		{
 			this.file = f;
 			this.messages = f == null ? null : f.messages;
@@ -246,6 +245,11 @@ namespace ValaCAT.Iterators
 			this.visited = false;
 		}
 
+		public override bool is_last ()
+		{
+			return this.current_index == this.messages.size -1;
+		}
+
 		public override Message get_current_element ()
 		{
 			return this.messages.get(this.current_index);
@@ -286,7 +290,7 @@ namespace ValaCAT.Iterators
 		private int marks_index;
 		private IteratorFilter<MessageMark> filter;
 
-		public MessageIterator (Message msg, string search_string, IteratorFilter<MessageMark> filter)
+		public MessageIterator (Message? msg, string search_string, IteratorFilter<MessageMark> filter)
 		{
 			this.search_string = search_string;
 			this.set_element(msg);
@@ -294,15 +298,17 @@ namespace ValaCAT.Iterators
 			this.filter = filter;
 		}
 
-		public override MessageMark? next ()
+		public override MessageMark next ()
 		{
 			marks_index++;
-			return marks_index < marks.size ? this.marks.get(marks_index) : null;
+			marks_index = marks_index >= this.marks.size ? 0 : marks_index;
+			return this.get_current_element ();
 		}
 
-		public override MessageMark? previous ()
+		public override MessageMark previous ()
 		{
 			marks_index--;
+			marks_index = marks_index < 0 ? marks.size - 1 : marks_index;
 			return this.get_current_element ();
 		}
 
@@ -314,6 +320,11 @@ namespace ValaCAT.Iterators
 		public override void last ()
 		{
 			marks_index = this.marks.size - 1;
+		}
+
+		public override bool is_last ()
+		{
+			return marks_index == marks.size - 1;
 		}
 
 		public override MessageMark get_current_element ()
@@ -357,7 +368,7 @@ namespace ValaCAT.Iterators
 						this.marks.add(mm);
 				}
 
-				for(int plural_number = 1; plural_number < message.file.number_of_plurals (); i++)
+				for(int plural_number = 1; plural_number < message.file.number_of_plurals (); plural_number++)
 				{
 					index = 0;
 					string message_string = this.message.get_translation(plural_number);

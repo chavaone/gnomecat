@@ -45,6 +45,14 @@ namespace ValaCAT.UI
 			this.message = m;
 		}
 
+		public MessageEditorTab? get_tab_by_plural_number (int plural_number)
+		{
+			if (plural_number > this.plurals_notebook.get_n_pages())
+				return null;
+
+			return this.plurals_notebook.get_nth_page (plural_number) as MessageEditorTab;
+		}
+
 		private void add_tab (MessageEditorTab t)
 		{
 			this.plurals_notebook.append_page(t, t.label);
