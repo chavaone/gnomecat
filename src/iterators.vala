@@ -167,7 +167,7 @@ namespace ValaCAT.Iterators
 	 *
 	 *
 	 */
-	public class FileIterator : Iterator<ValaCAT.FileProject.File, Message>
+	public class FileIterator : Iterator<ValaCAT.FileProject.File?, Message?>
 	{
 		public ValaCAT.FileProject.File file {get; private set;}
 		public IteratorFilter<Message> filter {get; private set;}
@@ -178,14 +178,14 @@ namespace ValaCAT.Iterators
 		private ArrayList<Message> messages;
 
 
-		public FileIterator (ValaCAT.FileProject.File f, IteratorFilter<Message> mf)
+		public FileIterator (ValaCAT.FileProject.File? f, IteratorFilter<Message> mf)
 		{
 			this.set_element(f);
 			this.filter = mf;
 		}
 
 
-		public override void set_element (ValaCAT.FileProject.File f)
+		public override void set_element (ValaCAT.FileProject.File? f)
 		{
 			this.file = f;
 			this.messages = f == null ? null : f.messages;
@@ -193,43 +193,32 @@ namespace ValaCAT.Iterators
 		}
 
 
-		public override Message next ()
+		public override Message? next ()
 		{
-			int index;
-
-			if (! visited && check_condition(this.messages.get(current_index)))
+			if (visited || ! check_condition(messages.get(current_index)))
 			{
-				this.visited = true;
-				return this.messages.get(current_index);
+				for (current_index++;
+					 current_index < messages.size && ! check_condition (messages.get (current_index));
+					 current_index++);
 			}
 
-			for (index = index_circle_next (current_index);
-				 check_condition(this.messages.get (index));
-				 index = index_circle_next (index));
-
-			current_index = index;
 			this.visited = true;
-			return this.messages.get(current_index);
+			return this.get_current_element ();
 		}
 
 
-		public override Message previous ()
+		public override Message? previous ()
 		{
-			int index;
 
-			if (! visited && check_condition(this.messages.get(current_index)))
+			if (visited || ! check_condition(messages.get(current_index)))
 			{
-				this.visited = true;
-				return this.messages.get(current_index);
+				for (current_index--;
+					 current_index >= 0 && ! check_condition (this.messages.get (current_index));
+					 current_index--);
 			}
 
-			for (index = index_circle_previous (current_index);
-				 check_condition(this.messages.get (index));
-				 index = index_circle_previous (index));
-
-			current_index = index;
 			this.visited = true;
-			return this.messages.get(current_index);
+			return this.get_current_element ();
 		}
 
 
@@ -250,30 +239,19 @@ namespace ValaCAT.Iterators
 			return this.current_index == this.messages.size -1;
 		}
 
-		public override Message get_current_element ()
+		public override Message? get_current_element ()
 		{
+			if (this.messages == null || this.current_index < 0 ||
+				this.current_index >= this.messages.size)
+				return null;
+			if (! visited)
+				return next();
 			return this.messages.get(this.current_index);
 		}
 
 		private bool check_condition (Message m)
 		{
-			return 	this.filter != null ?
-					this.filter.check(m) :
-					false;
-		}
-
-
-		private int index_circle_next (int index)
-		{
-			int a = index + 1;
-			return a >= this.messages.size ? 0 : a;
-		}
-
-
-		private int index_circle_previous (int index)
-		{
-			int a = index - 1;
-			return a < 0 ? this.messages.size - 1 : a;
+			return 	this.filter != null && this.filter.check(m);
 		}
 	}
 
@@ -281,7 +259,7 @@ namespace ValaCAT.Iterators
 	/**
 	 *
 	 */
-	public class MessageIterator : Iterator<Message, MessageMark>
+	public class MessageIterator : Iterator<Message?, MessageMark?>
 	{
 		public Message message {get; private set;}
 		public string search_string {get; private set;}
@@ -293,22 +271,21 @@ namespace ValaCAT.Iterators
 		public MessageIterator (Message? msg, string search_string, IteratorFilter<MessageMark> filter)
 		{
 			this.search_string = search_string;
-			this.set_element(msg);
 			this.marks = new ArrayList<MessageMark> ();
+			if (msg != null)
+				this.set_element(msg);
 			this.filter = filter;
 		}
 
-		public override MessageMark next ()
+		public override MessageMark? next ()
 		{
 			marks_index++;
-			marks_index = marks_index >= this.marks.size ? 0 : marks_index;
 			return this.get_current_element ();
 		}
 
-		public override MessageMark previous ()
+		public override MessageMark? previous ()
 		{
 			marks_index--;
-			marks_index = marks_index < 0 ? marks.size - 1 : marks_index;
 			return this.get_current_element ();
 		}
 
@@ -327,25 +304,35 @@ namespace ValaCAT.Iterators
 			return marks_index == marks.size - 1;
 		}
 
-		public override MessageMark get_current_element ()
+		public override MessageMark? get_current_element ()
 		{
-			return marks_index < 0 ? null : this.marks.get(marks_index);
+			if(this.marks == null || marks_index < 0 || marks_index >= this.marks.size)
+				return null;
+			return this.marks.get(marks_index);
 		}
 
-		public override void set_element (Message element)
+		public override void set_element (Message? element)
 		{
 			this.message = element;
 			this.marks.clear();
-			this.get_marks();
+			if(element != null)
+				this.get_marks();
 			this.marks_index = -1;
 		}
 
 		private void get_marks ()
 		{
-			int index = 0;
-			while ((index = this.message.get_original_singular().index_of(this.search_string, index)) != -1)
+			stdout.printf("GETMARKS Message \"%s...\" SEARCH \"%s\"\n",
+				message.get_original_singular().substring(0,5),
+				this.search_string); //DEBUG
+			int index;
+			MessageMark mm;
+
+			for	(index = message.get_original_singular().index_of(this.search_string);
+				index != -1;
+				index = this.message.get_original_singular().index_of(this.search_string, ++index))
 			{
-				MessageMark mm = new MessageMark(this.message, 0, true, index, this.search_string.char_count());
+				mm = new MessageMark(this.message, 0, true, index, this.search_string.char_count());
 				if(this.check_mark(mm))
 					this.marks.add(mm);
 			}
@@ -353,9 +340,10 @@ namespace ValaCAT.Iterators
 			index = 0;
 			while ((index = this.message.get_translation(0).index_of(this.search_string, index)) != -1)
 			{
-				MessageMark mm = new MessageMark(this.message, 0, false, index, this.search_string.char_count());
+				mm = new MessageMark(this.message, 0, false, index, this.search_string.char_count());
 				if(this.check_mark(mm))
 					this.marks.add(mm);
+				index++;
 			}
 
 			if (this.message.has_plural())
@@ -363,9 +351,10 @@ namespace ValaCAT.Iterators
 				index = 0;
 				while ((index = this.message.get_original_plural().index_of(this.search_string, index)) != -1)
 				{
-					MessageMark mm = new MessageMark(this.message, 1, true, index, this.search_string.char_count());
+					mm = new MessageMark(this.message, 1, true, index, this.search_string.char_count());
 					if(this.check_mark(mm))
 						this.marks.add(mm);
+					index++;
 				}
 
 				for(int plural_number = 1; plural_number < message.file.number_of_plurals (); plural_number++)
@@ -376,13 +365,20 @@ namespace ValaCAT.Iterators
 					{
 						while ((index = message_string.index_of(this.search_string, index)) != -1)
 						{
-							MessageMark mm = new MessageMark(this.message, plural_number, false, index, this.search_string.char_count());
+							mm = new MessageMark(this.message, plural_number, false, index, this.search_string.char_count());
 							if(this.check_mark(mm))
 								this.marks.add(mm);
+							index++;
 						}
 					}
 				}
 			}
+
+			foreach (MessageMark m in marks)
+				stdout.printf("Message %s... Index %i\n",
+					m.message.get_original_singular().substring(0,5),
+					m.index);
+
 		}
 
 		private bool check_mark (MessageMark mm)

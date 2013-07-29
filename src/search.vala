@@ -36,6 +36,12 @@ namespace ValaCAT.UI
 
 		private ValaCAT.UI.Window window;
 
+
+		public SearchDialog (Window w)
+		{
+			this.window = w;
+		}
+
 		[GtkCallback]
 		private void search_clicked (Button b)
 		{
@@ -63,14 +69,14 @@ namespace ValaCAT.UI
 		private void ini_search (bool replace, bool stop)
 		{
 
-			if (! checkbutton_search_project.active && this.window.get_active_tab is FileTab)
+			if (! checkbutton_search_project.active && this.window.get_active_tab () is FileTab)
 			{
 				this.window.active_search = new FileSearch (this.window.get_active_tab() as FileTab,
 															checkbutton_translated_messages.active,
 															checkbutton_untranslated_messages.active,
 															checkbutton_fuzzy_messages.active,
-															checkbutton_translated.active,
 															checkbutton_original.active,
+															checkbutton_translated.active,
 															replace,
 															stop,
 															entry_search.get_text (),
@@ -82,6 +88,7 @@ namespace ValaCAT.UI
 			}
 
 			this.window.active_search.next_item();
+			this.hide();
 		}
 
 	}
@@ -134,6 +141,8 @@ namespace ValaCAT.Search
 						 string search_text,
 						 string replace_text)
 		{
+
+			//FILTERS MESSAGES
 			ArrayList<IteratorFilter<Message>> filters_file = new ArrayList<IteratorFilter<Message>> ();
 			if (translated)
 				filters_file.add(new TranslatedFilter ());
@@ -144,6 +153,7 @@ namespace ValaCAT.Search
 			if (fuzzy)
 				filters_file.add(new FuzzyFilter ());
 
+
 			IteratorFilter<Message> filter_messages;
 
 			if(filters_file.size == 0)
@@ -153,20 +163,29 @@ namespace ValaCAT.Search
 			else
 				filter_messages = new ORFilter<Message> (filters_file);
 
+
+			//FILTERS MESSAGE MARKS
+			ArrayList<IteratorFilter<MessageMark>> filters_mark_array = new ArrayList<IteratorFilter<MessageMark>> ();
+			if (original)
+				filters_mark_array.add (new OriginalFilter());
+
+			if (translation)
+				filters_mark_array.add (new TranslationFilter());
+
+
 			IteratorFilter<MessageMark> filter_marks;
 
-			if(original && translation)
-				filter_marks = new AllMessageMarkFilter();
-			else if (original && ! translation)
-				filter_marks = new OriginalFilter();
-			else if (! original && translation)
-				filter_marks = new TranslationFilter();
-			else
+			if(filters_mark_array.size == 0)
 				filter_marks = null;
+			else if (filters_mark_array.size == 1)
+				filter_marks = filters_mark_array.get(0);
+			else
+				filter_marks = new ORFilter<MessageMark> (filters_mark_array);
 
 
 			this.filetab = tab;
 			this.file_iterator = new FileIterator(tab.file,filter_messages);
+			this.file_iterator.first();
 			this.message_iterator = new MessageIterator(null, search_text, filter_marks);
 			this.has_to_replace = replace;
 			this.stop = stop;
@@ -181,13 +200,14 @@ namespace ValaCAT.Search
 
 			while (mm == null)
 			{
-				if (this.message_iterator.message == null || this.message_iterator.next() == null)
+				if (this.message_iterator.message == null || (mm = this.message_iterator.next()) == null)
 				{
-					Message message = this.file_iterator.next();
+					Message message;;
+					if((message = this.file_iterator.next()) == null)
+						return;
 					this.message_iterator.set_element(message);
+					//stdout.printf("Message %s\n",message.get_original_singular()); //DEBUG
 				}
-
-				mm = this.message_iterator.next();
 			}
 
 			this.highlight_search(mm);
@@ -199,13 +219,11 @@ namespace ValaCAT.Search
 
 			while (mm == null)
 			{
-				if (this.message_iterator.message == null || this.message_iterator.previous() == null)
+				if (this.message_iterator.message == null || (mm = this.message_iterator.previous()) == null)
 				{
 					this.message_iterator.set_element(this.file_iterator.previous());
 					this.message_iterator.last();
 				}
-
-				mm = this.message_iterator.previous();
 			}
 
 			this.highlight_search(mm);
@@ -225,6 +243,15 @@ namespace ValaCAT.Search
 		{
 			MessageMark mm = this.message_iterator.get_current_element();
 			replace_intern(mm);
+		}
+
+		private void highlight_search_debug (MessageMark mm) //DEBUG
+		{
+			stdout.printf("Message %s... :: Index %i :: Length %i :: String %s\n",
+				mm.message.get_original_singular().substring(0,5),
+				mm.index,
+				mm.length,
+				mm.message.get_original_singular().substring (mm.index, mm.length));
 		}
 
 		private void highlight_search (MessageMark mm)
@@ -284,9 +311,11 @@ namespace ValaCAT.Search
 
 		public override string filter (string input_string)
 		{
-			string ini_string = input_string.substring (0, index-1);
+			string ini_string = input_string.substring (0, index);
 			string highlighted_string = input_string.substring (index,length);
 			string end_string = input_string.substring (index+length);
+			//DEBUG
+			stdout.printf("ini_string::%s\nhighlighted_string::%s\nend_string::%s\n",ini_string,highlighted_string,end_string);
 			return ini_string + "<span background=\"red\">" + highlighted_string + "</span>" + end_string;
 		}
 

@@ -12,17 +12,34 @@ namespace ValaCAT.UI
 		//[GtkChild]
 		private ValaCAT.UI.StatusBar statusbar;
 		//[GtkChild]
-		private Gtk.Notebook notebook;
+		private ValaCAT.UI.Notebook notebook;
 		//[GtkChild]
 		private ValaCAT.UI.HeaderBar menubar;
 
-		public ValaCAT.Search.Search active_search;
+		private ValaCAT.UI.SearchDialog search_dialog;
+
+
+		private ValaCAT.Search.Search _search;
+
+		public ValaCAT.Search.Search active_search {
+			get {	return this._search;}
+			set {	if (value == null)
+						this.notebook.hide_search_widget ();
+					else
+						this.notebook.show_search_widget ();
+					this._search = value;
+			}}
 
 		public Window ()
 		{
 			statusbar = new ValaCAT.UI.StatusBar();
+
 			menubar = new ValaCAT.UI.HeaderBar();
-			notebook = new Gtk.Notebook();
+			menubar.window = this;
+
+			notebook = new ValaCAT.UI.Notebook();
+			notebook.window = this;
+
 			window_box.pack_start(menubar, expand=false);
 			window_box.pack_start(notebook);
 			window_box.pack_start(statusbar, expand=false);
@@ -30,13 +47,19 @@ namespace ValaCAT.UI
 
 		public void add_tab (Tab t)
 		{
-			this.notebook.append_page(t,t.label);
+			this.notebook.add_tab(t);
 		}
 
 		public Tab get_active_tab ()
 		{
-			int page_number = this.notebook.get_current_page ();
-			return this.notebook.get_nth_page(page_number) as Tab;
+			return this.notebook.get_active_tab();
+		}
+
+		public void init_search ()
+		{
+			if (search_dialog == null)
+				search_dialog = new SearchDialog (this);
+			this.search_dialog.show_all();
 		}
 	}
 }

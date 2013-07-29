@@ -13,7 +13,7 @@ namespace ValaCAT.UI
 	public class MessageEditorWidget : DockItem, ChangedMessageSensible
 	{
 		[GtkChild]
-		private Notebook plurals_notebook;
+		private Gtk.Notebook plurals_notebook;
 		private Message message;
 
 		public MessageEditorWidget ()
