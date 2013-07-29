@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
-  <template class="ValaCATUITab" parent="GtkOverlay">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkBox" id="box">
+  <template class="ValaCATUITab" parent="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -29,64 +25,5 @@
             <property name="position">1</property>
           </packing>
         </child>
-      </object>
-    </child>
-    <child type="overlay">
-      <object class="GtkRevealer" id="search_slider">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="halign">end</property>
-        <property name="valign">start</property>
-        <property name="transition-type">GTK_REVEALER_TRANSITION_TYPE_SLIDE_DOWN</property>
-        <child>
-          <object class="GtkFrame" id="frame">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkBox" id="hbox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="orientation">horizontal</property>
-                <child>
-                  <object class="GtkEntry" id="search_entry">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="width_request">260</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="go_up_button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkImage" id="up_image">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="icon_size">1</property>
-                        <property name="icon_name">go-up-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkButton" id="go_down_button">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <object class="GtkImage" id="down_image">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="icon_size">1</property>
-                        <property name="icon_name">go-down-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-      </object>
-    </child>
   </template>
 </interface>
