@@ -107,7 +107,7 @@ namespace ValaCAT.UI
 		 */
 		public MessageEditorTab (string label,
 								 string original,
-								 string translation)
+								 string? translation)
 		{
 			this.label = new Label(label);
 
@@ -115,7 +115,8 @@ namespace ValaCAT.UI
 			this.tranlation_text = translation;
 
 			this.textview_original_text.buffer.set_text (original);
-			this.textview_translated_text.buffer.set_text (translation);
+			if(translation != null)
+				this.textview_translated_text.buffer.set_text (translation);
 
 			this.original_text_tags = new ArrayList<ValaCAT.TextTag> ();
 			this.translation_text_tags = new ArrayList<ValaCAT.TextTag> ();

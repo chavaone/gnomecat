@@ -122,7 +122,8 @@ namespace ValaCAT.UI
 			this.listboxrow_state_image.tooltip_text = status_tooltip_text;
 
 			this.listboxrow_original.set_text(this.message.get_original_singular());
-			this.listboxrow_translation.set_text(this.message.get_translation(0));
+			if(this.message.get_translation(0) != null)
+				this.listboxrow_translation.set_text(this.message.get_translation(0));
 
 			foreach (MessageTip t in this.message.tips)
 			{

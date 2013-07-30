@@ -350,13 +350,14 @@ namespace ValaCAT.Iterators
 			}
 
 			index = 0;
-			while ((index = this.message.get_translation(0).index_of(this.search_string, index)) != -1)
-			{
-				mm = new MessageMark(this.message, 0, false, index, this.search_string.char_count());
-				if(this.check_mark(mm))
-					this.marks.add(mm);
-				index++;
-			}
+			if(this.message.get_translation(0) != null)
+				while ((index = this.message.get_translation(0).index_of(this.search_string, index)) != -1)
+				{
+					mm = new MessageMark(this.message, 0, false, index, this.search_string.char_count());
+					if(this.check_mark(mm))
+						this.marks.add(mm);
+					index++;
+				}
 
 			if (this.message.has_plural())
 			{
