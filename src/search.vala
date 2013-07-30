@@ -174,7 +174,6 @@ namespace ValaCAT.Search
 
 
 			IteratorFilter<MessageMark> filter_marks;
-
 			if(filters_mark_array.size == 0)
 				filter_marks = null;
 			else if (filters_mark_array.size == 1)
@@ -259,26 +258,25 @@ namespace ValaCAT.Search
 			ValaCAT.UI.MessageListRow? row = this.filetab.message_list.find_row_by_message (mm.message);
 
 			if (row != null)
-			{
 				this.filetab.message_list.select_row (row);
-			}
 			else
-			{
 				return;
-			}
 
 			MessageEditorTab editor_tab = this.filetab.message_editor.get_tab_by_plural_number (mm.plural_number);
+			this.filetab.message_editor.select_tab_by_plural_number(mm.plural_number);
 
 			if (mm.is_original)
 			{
 				ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
 				arr.add (mm.get_tag ());
+				editor_tab.clean_tags_translation_string ();
 				editor_tab.replace_tags_original_string (arr);
 			}
 			else
 			{
 				ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
 				arr.add (mm.get_tag ());
+				editor_tab.clean_tags_original_string ();
 				editor_tab.replace_tags_translation_string (arr);
 			}
 		}
