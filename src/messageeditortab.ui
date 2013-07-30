@@ -115,6 +115,7 @@
       <object class="GtkListBox" id="tips_box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <signal name="row_activated" handler="tip_enabled" swapped="no"/>
       </object>
       <packing>
         <property name="expand">False</property>

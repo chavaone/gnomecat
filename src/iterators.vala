@@ -44,6 +44,18 @@ namespace ValaCAT.Iterators
 			this.index = index;
 			this.length = length;
 		}
+
+		public ValaCAT.TextTag get_tag ()
+		{
+			Gtk.TextTag t = new Gtk.TextTag ("search_tag");
+			Gdk.RGBA color = Gdk.RGBA();
+			color.parse("red");
+			t.background_rgba = color;
+			t.background_set = true;
+			t.weight = Pango.Weight.BOLD;
+			t.weight_set = true;
+			return new ValaCAT.TextTag.with_range (t, this.index, this.index + this.length);
+		}
 	}
 
 	/**

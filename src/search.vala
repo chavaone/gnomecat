@@ -271,13 +271,15 @@ namespace ValaCAT.Search
 
 			if (mm.is_original)
 			{
-				editor_tab.disable_filters_original_string();
-				editor_tab.add_filter_original_string(new MessageMarkFilter (mm));
+				ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
+				arr.add (mm.get_tag ());
+				editor_tab.replace_tags_original_string (arr);
 			}
 			else
 			{
-				editor_tab.disable_filters_translation_string();
-				editor_tab.add_filter_translation_string(new MessageMarkFilter (mm));
+				ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
+				arr.add (mm.get_tag ());
+				editor_tab.replace_tags_translation_string (arr);
 			}
 		}
 
@@ -295,29 +297,5 @@ namespace ValaCAT.Search
 					original_string.substring (mm.index + mm.length));
 			}
 		}
-	}
-
-	public class MessageMarkFilter : ValaCAT.String.Filter
-	{
-
-		private int index;
-		private int length;
-
-		public MessageMarkFilter (MessageMark mm)
-		{
-			this.index = mm.index;
-			this.length = mm.length;
-		}
-
-		public override string filter (string input_string)
-		{
-			string ini_string = input_string.substring (0, index);
-			string highlighted_string = input_string.substring (index,length);
-			string end_string = input_string.substring (index+length);
-			//DEBUG
-			stdout.printf("ini_string::%s\nhighlighted_string::%s\nend_string::%s\n",ini_string,highlighted_string,end_string);
-			return ini_string + "<span background=\"red\">" + highlighted_string + "</span>" + end_string;
-		}
-
 	}
 }

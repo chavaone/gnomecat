@@ -2,7 +2,6 @@
 
 using Gee;
 using ValaCAT.Languages;
-using ValaCAT.String;
 
 namespace ValaCAT.FileProject
 {
@@ -49,14 +48,14 @@ namespace ValaCAT.FileProject
 		public TipLevel level {get; private set;}
 
 		/**
-		 * Filter that can be added to the original string.
+		 * Tags that can be added to the original string.
 		 */
-		public ArrayList<Filter> filters_original {get; private set;}
+		public ArrayList<ValaCAT.TextTag> tags_original {get; private set;}
 
 		/**
-		 * Filter that can be added to the translated string.
+		 * Tags that can be added to the translated string.
 		 */
-		public ArrayList<Filter> filters_translation {get; private set;}
+		public ArrayList<ValaCAT.TextTag> tags_translation {get; private set;}
 
 		/**
 		 * Plural form this tip references.
@@ -72,20 +71,20 @@ namespace ValaCAT.FileProject
 		 * @param name
 		 * @param description
 		 * @param level
-		 * @param filter_original
-		 * @param filter_translation
+		 * @param tags_original
+		 * @param tags_translation
 		 */
 		public MessageTip (string name,
 				string? description,
 				TipLevel level,
-				ArrayList<Filter>? filter_original=null,
-				ArrayList<Filter>? filter_translation=null)
+				ArrayList<ValaCAT.TextTag>? tags_original=null,
+				ArrayList<ValaCAT.TextTag>? tags_translation=null)
 		{
 			this.name = name;
 			this.description = description;
 			this.level = level;
-			this.filters_original = filters_original != null ? filters_original : new ArrayList<Filter>();
-			this.filters_translation = filters_translation != null ? filters_translation : new ArrayList<Filter>();
+			this.tags_original = tags_original != null ? tags_original : new ArrayList<ValaCAT.TextTag>();
+			this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<ValaCAT.TextTag>();
 		}
 	}
 

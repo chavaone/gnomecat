@@ -3,7 +3,7 @@
 VALAC = valac
 FILES_VALA_UI = notebook.vala statusbar.vala headerbar.vala messagelist.vala tab.vala messageeditor.vala window.vala contextpanel.vala
 FILES_UI = contextpanel.ui  notebook.ui messageeditortab.ui messagelistrow.ui statusbarprofileslist.ui tab.ui headerbar.ui messageeditortabtiprow.ui messageeditor.ui messagelist.ui statusbar.ui window.ui
-FILES_VALA_NON_UI = demofile.vala profile.vala language.vala utils.vala file.vala strings.vala iterators.vala search.vala
+FILES_VALA_NON_UI = demofile.vala profile.vala language.vala utils.vala file.vala iterators.vala search.vala
 FILES_VALA = $(FILES_VALA_UI) $(FILES_VALA_NON_UI)
 LIBSVALA = --pkg gtk+-3.0 --pkg gdl-3.0 --pkg gee-0.8 --pkg json-glib-1.0
 RESOURCESFILE = valacatresources.xml

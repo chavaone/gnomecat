@@ -1,7 +1,7 @@
 using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
-using ValaCAT.String;
+using Gee;
 
 namespace ValaCAT.UI
 {
@@ -92,9 +92,12 @@ namespace ValaCAT.UI
 		private TextView textview_translated_text;
 		[GtkChild]
 		private ListBox tips_box;
-		private MessageString original_text;
-		private MessageString tranlation_text;
 
+		private string original_text;
+		private ArrayList<ValaCAT.TextTag> original_text_tags;
+
+		private string tranlation_text;
+		private ArrayList<ValaCAT.TextTag> translation_text_tags;
 
 		/*--------------------------- CONSTRUCTORS ---------------------------*/
 
@@ -107,23 +110,15 @@ namespace ValaCAT.UI
 								 string translation)
 		{
 			this.label = new Label(label);
-			this.original_text = new BaseString (original);
-			this.tranlation_text = new BaseString (translation);
-			this.update_textviews();
 
-			this.tips_box.row_activated.connect ((source, row) => {
+			this.original_text = original;
+			this.tranlation_text = translation;
 
-				this.disable_filters_original_string();
-				this.disable_filters_translation_string();
+			this.textview_original_text.buffer.set_text (original);
+			this.textview_translated_text.buffer.set_text (translation);
 
-				foreach (Filter f in (row as MessageTipRow).tip.filters_original)
-					f.enable();
-
-				foreach (Filter f in (row as MessageTipRow).tip.filters_translation)
-					f.enable();
-
-				this.update_textviews();
-			});
+			this.original_text_tags = new ArrayList<ValaCAT.TextTag> ();
+			this.translation_text_tags = new ArrayList<ValaCAT.TextTag> ();
 		}
 
 
@@ -134,17 +129,7 @@ namespace ValaCAT.UI
 		 */
 		public void add_tip (MessageTip t)
 		{
-			this.tips_box.add(new MessageTipRow(t));
-
-			foreach (Filter f in t.filters_original)
-				this.add_filter_original_string (f);
-
-			this.disable_filters_original_string ();
-
-			foreach (Filter f in t.filters_translation)
-				this.add_filter_translation_string (f);
-
-			this.disable_filters_translation_string ();
+			this.tips_box.add (new MessageTipRow(t));
 		}
 
 		/**
@@ -156,54 +141,61 @@ namespace ValaCAT.UI
 			{
 				if ((w as MessageTipRow).tip == t)
 				{
-					this.tips_box.remove(w);
+					this.tips_box.remove (w);
 					return;
 				}
 			}
 		}
 
-		/**
-		 *
-		 */
-		public void add_filter_translation_string (Filter f)
+		public void replace_tags_original_string (ArrayList<TextTag> tags)
 		{
-			f.base_message_string = this.tranlation_text;
-			this.tranlation_text = f;
-			this.update_textviews();
+			this.clean_tags_original_string ();
+			this.add_tags_original_string (tags);
 		}
 
-		/**
-		 *
-		 */
-		public void add_filter_original_string (Filter f)
+		public void add_tags_original_string (ArrayList<TextTag> tags)
 		{
-			f.base_message_string = this.original_text;
-			this.original_text = f;
-			this.update_textviews();
+			foreach (TextTag tt in tags)
+			{
+				tt.add_to_buffer (this.textview_original_text.buffer, this.original_text.length);
+				this.original_text_tags.add (tt);
+			}
 		}
 
-		/**
-		 *
-		 */
-		public void disable_filters_original_string ()
+		public void clean_tags_original_string ()
 		{
-			this.original_text.disable(true);
-			this.update_textviews();
+			foreach (TextTag tt in this.original_text_tags)
+				tt.remove_from_buffer (this.textview_original_text.buffer, this.original_text.length);
+			this.original_text_tags.clear ();
 		}
 
-		/**
-		 *
-		 */
-		public void disable_filters_translation_string ()
+		public void replace_tags_translation_string (ArrayList<TextTag> tags)
 		{
-			this.tranlation_text.disable(true);
-			this.update_textviews();
+			this.clean_tags_translation_string ();
+			this.add_tags_translation_string (tags);
 		}
 
-		private void update_textviews ()
+		public void add_tags_translation_string (ArrayList<TextTag> tags)
 		{
-			this.textview_original_text.buffer.set_text(this.original_text.get_string());
-			this.textview_translated_text.buffer.set_text(this.tranlation_text.get_string());
+			foreach (TextTag tt in tags)
+			{
+				tt.add_to_buffer (this.textview_translated_text.buffer, this.tranlation_text.length);
+				this.translation_text_tags.add (tt);
+			}
+		}
+
+		public void clean_tags_translation_string ()
+		{
+			foreach (TextTag tt in this.translation_text_tags)
+				tt.remove_from_buffer (this.textview_translated_text.buffer, this.tranlation_text.length);
+			this.translation_text_tags.clear ();
+		}
+
+		[GtkCallback]
+		private void tip_enabled (ListBox source, ListBoxRow row)
+		{
+			this.replace_tags_original_string ((row as MessageTipRow).tip.tags_original);
+			this.replace_tags_translation_string ((row as MessageTipRow).tip.tags_translation);
 		}
 	}
 
