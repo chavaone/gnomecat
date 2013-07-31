@@ -44,7 +44,6 @@ namespace ValaCAT.UI
 		[GtkCallback]
 		private void search_bar_next (Button b)
 		{
-			print("NEXT!!\n");
 			this.window.active_search.next_item();
 		}
 
@@ -52,6 +51,16 @@ namespace ValaCAT.UI
 		private void search_bar_previous (Button b)
 		{
 			this.window.active_search.previous_item();
+		}
+
+		[GtkCallback]
+		private void on_switch_page (Gtk.Widget src,
+									uint page)
+		{
+			int page_num = int.parse(page.to_string());
+			Tab t = this.notebook.get_nth_page (page_num) as Tab;
+			this.window.file_changed (t.file);
+			this.window.project_changed (t.project);
 		}
 
 	}

@@ -14,6 +14,8 @@ namespace ValaCAT.UI
 	public abstract class Tab : Box
 	{
 		public Label label {get; protected set;}
+		public abstract ValaCAT.FileProject.File? file {get;}
+		public abstract ValaCAT.FileProject.Project? project {get;}
 
 		[GtkChild]
 		private Gdl.Dock dock;
@@ -50,13 +52,16 @@ namespace ValaCAT.UI
 		public MessageEditorWidget message_editor {get; private set;}
 		public ContextPanel context_pannel {get; private set;}
 
-		public ValaCAT.FileProject.File? file {get; private set;}
+		public override ValaCAT.FileProject.File? file {get {return this._file;}}
+		public override ValaCAT.FileProject.Project? project {get {return this._file != null ? this._file.project : null;}}
+
+		private ValaCAT.FileProject.File? _file;
 
 		public FileTab (ValaCAT.FileProject.File? f)
 		{
 			base();
-			this.label = new Gtk.Label("filename");//TODO f.name;
-			this.file = f;
+			this.label = new Gtk.Label("filename"); //TODO f.name;
+			this._file = f;
 			this.message_list = new MessageListWidget();
 			foreach (Message m in f.messages)
 			{
@@ -81,9 +86,15 @@ namespace ValaCAT.UI
 
 	public class ProjectTab : Tab
 	{
+		public override ValaCAT.FileProject.File? file {get {return null;}}
+		public override ValaCAT.FileProject.Project? project {get {return this._project;}}
+
+		private ValaCAT.FileProject.Project? _project;
+
 		public ProjectTab (Project p)
 		{
 			base();
+			this._project = p;
 		}
 	}
 }

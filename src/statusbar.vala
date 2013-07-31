@@ -31,6 +31,7 @@ namespace ValaCAT.UI
 		private Label statusbar_label_insert;
 		private ProfilesListStore profiles;
 		private int active;
+		public ValaCAT.UI.Window window {get; set;}
 
 		/**
 		 * Signal emmited when a profile is selected on the Profiles ComboBox
@@ -93,7 +94,8 @@ namespace ValaCAT.UI
 		public void set_file_info (int translated, int untranslated, int fuzzy)
 		{
 			this.statusbar_label_file_info.set_text("%iT + %iU + %iF".printf(translated,untranslated,fuzzy));
-			this.progressbar_file.fraction = translated / (translated + untranslated + fuzzy);
+			double total = translated + untranslated + fuzzy;
+			this.progressbar_file.fraction = translated / total;
 			this.file_status_box.show_all();
 			this.statusbar_separator1.show();
 		}
