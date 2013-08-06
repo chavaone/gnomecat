@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/info/aquelando/valacat">
+    <file compressed="true" preprocess="xml-stripblanks">headerbar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">statusbar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">statusbarprofileslist.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">messagelist.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">messagelistrow.ui</file>
+  	<file compressed="true" preprocess="xml-stripblanks">messageeditor.ui</file>
+  	<file compressed="true" preprocess="xml-stripblanks">messageeditortab.ui</file>
+  	<file compressed="true" preprocess="xml-stripblanks">messageeditortabtiprow.ui</file>
+  	<file compressed="true" preprocess="xml-stripblanks">contextpanel.ui</file>
+  	<file compressed="true" preprocess="xml-stripblanks">tab.ui</file>
+  	<file compressed="true" preprocess="xml-stripblanks">window.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">searchdialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">notebook.ui</file>
+  </gresource>
+</gresources>

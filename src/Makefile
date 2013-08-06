@@ -6,8 +6,11 @@ FILES_UI = contextpanel.ui  notebook.ui messageeditortab.ui messagelistrow.ui st
 FILES_VALA_NON_UI = demofile.vala profile.vala language.vala utils.vala file.vala iterators.vala search.vala
 FILES_VALA = $(FILES_VALA_UI) $(FILES_VALA_NON_UI)
 LIBSVALA = --pkg gtk+-3.0 --pkg gdl-3.0 --pkg gee-0.8 --pkg json-glib-1.0
-RESOURCESFILE = valacatresources.xml
-FILES_C = $(FILES_VALA:.vala=.c) $(RESOURCESFILE:.xml=.c)
+UI_RESOURCES = ui_resources.xml
+UI_RESOURCES_OUTPUT = ui_resources.c
+RESOURCES = ../res/resources.xml
+RESOURCES_OUTPUT = resources.c
+FILES_C = $(FILES_VALA:.vala=.c) $(UI_RESOURCES_OUTPUT) $(RESOURCES_OUTPUT)
 FILES_O = $(FILES_C:.c=.o)
 CFLAGS = `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0`
 CLIBS = `pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0`
@@ -20,10 +23,11 @@ clean:
 
 
 compileresources: $(RESOURCESFILE) $(FILES_UI)
-	glib-compile-resources $(RESOURCESFILE) --target=$(RESOURCESFILE:.xml=.c) --sourcedir=$(srcdir) --c-name _my --generate-source
+	glib-compile-resources $(UI_RESOURCES) --target=$(UI_RESOURCES_OUTPUT) --c-name _ui --generate-source
+	glib-compile-resources $(RESOURCES) --target=$(RESOURCES_OUTPUT) --sourcedir=../res/ --c-name _json --generate-source
 
 compilevala: $(FILES_VALA)
-	$(VALAC) -g -C $(FILES_VALA) $(LIBSVALA) --gresources $(RESOURCESFILE)
+	$(VALAC) -g -C $(FILES_VALA) $(LIBSVALA) --gresources $(UI_RESOURCES) --gresources $(RESOURCES)
 
 compilec: compileresources compilevala
 	gcc -g  -c $(FILES_C) -Wall $(CFLAGS)

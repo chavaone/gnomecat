@@ -88,7 +88,10 @@ namespace ValaCAT.Languages
 			try{
 
 				var parser = new Json.Parser ();
-				parser.load_from_file ("../res/plurals.json");
+				File file = File.new_for_uri ("resource:///info/aquelando/valacat/plurals.json");
+				InputStream stream = file.read ();
+				parser.load_from_stream (stream);
+
 				var root_object = parser.get_root ().get_object ();
 
 				foreach (var form in root_object.get_array_member ("forms").get_elements ())
@@ -162,7 +165,10 @@ namespace ValaCAT.Languages
 
 			try {
 				var parser = new Json.Parser ();
-				parser.load_from_file ("/home/ch01/valacat/res/languages.json");
+				File file = File.new_for_uri ("resource:///info/aquelando/valacat/languages.json");
+				InputStream stream = file.read ();
+				parser.load_from_stream (stream);
+
 				var root_object = parser.get_root ().get_object ();
 
 				foreach (var lang in root_object.get_array_member ("languages").get_elements ())
