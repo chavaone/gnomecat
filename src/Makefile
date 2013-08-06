@@ -5,15 +5,15 @@ FILES_VALA_UI = notebook.vala statusbar.vala headerbar.vala messagelist.vala tab
 FILES_UI = contextpanel.ui  notebook.ui messageeditortab.ui messagelistrow.ui statusbarprofileslist.ui tab.ui headerbar.ui messageeditortabtiprow.ui messageeditor.ui messagelist.ui statusbar.ui window.ui
 FILES_VALA_NON_UI = demofile.vala profile.vala language.vala utils.vala file.vala iterators.vala search.vala
 FILES_VALA = $(FILES_VALA_UI) $(FILES_VALA_NON_UI)
-LIBSVALA = --pkg gtk+-3.0 --pkg gdl-3.0 --pkg gee-0.8 --pkg json-glib-1.0
+LIBSVALA = --pkg gtk+-3.0 --pkg gdl-3.0 --pkg gee-0.8 --pkg json-glib-1.0 --pkg gtksourceview-3.0
 UI_RESOURCES = ui_resources.xml
 UI_RESOURCES_OUTPUT = ui_resources.c
 RESOURCES = ../res/resources.xml
 RESOURCES_OUTPUT = resources.c
 FILES_C = $(FILES_VALA:.vala=.c) $(UI_RESOURCES_OUTPUT) $(RESOURCES_OUTPUT)
 FILES_O = $(FILES_C:.c=.o)
-CFLAGS = `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0`
-CLIBS = `pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0`
+CFLAGS = `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0`
+CLIBS = `pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0`
 PROG_NAME = valacat
 
 all: compile

@@ -94,9 +94,9 @@ namespace ValaCAT.UI
 		/*------------------------- PRIVATE VARIABLES ------------------------*/
 
 		[GtkChild]
-		private TextView textview_original_text;
+		private SourceView textview_original_text;
 		[GtkChild]
-		private TextView textview_translated_text;
+		private SourceView textview_translated_text;
 		[GtkChild]
 		private ListBox tips_box;
 
