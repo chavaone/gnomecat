@@ -8,8 +8,6 @@
       <object class="GtkNotebook" id="notebook">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">5</property>
         <signal name="switch-page" handler="on_switch_page" swapped="no"/>
       </object>
     </child>
