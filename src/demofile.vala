@@ -152,7 +152,7 @@ namespace ValaCAT.Demo
 		 * 	isn't previous string
 		 */
 		public override void set_translation (int index,
-											string translation)
+											string? translation)
 		{
 			this.translations.set(index,translation);
 		}

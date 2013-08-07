@@ -120,7 +120,7 @@ namespace ValaCAT.FileProject
 		public MessageState state
 		{
 			get;
-			protected set;
+			set;
 			default = MessageState.TRANSLATED;
 		}
 
@@ -227,7 +227,7 @@ namespace ValaCAT.FileProject
 		 * 	isn't previous string
 		 */
 		public abstract void set_translation (int index,
-											string translation);
+											string? translation);
 
 		/**
 		 * Method that returns a string containing additional
