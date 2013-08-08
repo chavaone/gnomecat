@@ -164,13 +164,3 @@ namespace ValaCAT.Demo
 
 	}
 }
-
-void main(string[] args)
-{
-	Gtk.init (ref args);
-	var win = new ValaCAT.UI.Window();
-	win.add_tab(new ValaCAT.UI.FileTab(new ValaCAT.Demo.DemoFile()));
-	win.add_tab(new ValaCAT.UI.FileTab(new ValaCAT.Demo.DemoFile()));
-	win.show_all();
-	Gtk.main ();
-}
