@@ -5,7 +5,7 @@ using ValaCAT.Search;
 namespace ValaCAT.UI
 {
 	[GtkTemplate (ui = "/info/aquelando/valacat/window.ui")]
-	public class Window : Gtk.Window
+	public class Window : Gtk.ApplicationWindow
 	{
 		[GtkChild]
 		private Gtk.Box window_box;
@@ -33,8 +33,9 @@ namespace ValaCAT.UI
 		public signal void file_changed (ValaCAT.FileProject.File? file);
 		public signal void project_changed (ValaCAT.FileProject.Project? project);
 
-		public Window ()
+		public Window (ValaCAT.Application.Application app)
 		{
+
 			statusbar = new ValaCAT.UI.StatusBar();
 			statusbar.window = this;
 
