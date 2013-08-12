@@ -134,7 +134,6 @@ namespace ValaCAT.UI
 		}
 	}
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/statusbarprofileslist.ui")]
 	public class ProfilesListStore : ListStore
 	{
 
