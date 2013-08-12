@@ -14,5 +14,7 @@
   	<file compressed="true" preprocess="xml-stripblanks">window.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">searchdialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">notebook.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">filelist.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">filelistrow.ui</file>
   </gresource>
 </gresources>

@@ -1,10 +1,8 @@
 
 
 VALAC = valac
-FILES_VALA_UI = notebook.vala statusbar.vala headerbar.vala messagelist.vala tab.vala messageeditor.vala window.vala contextpanel.vala
-FILES_UI = contextpanel.ui  notebook.ui messageeditortab.ui messagelistrow.ui statusbarprofileslist.ui tab.ui headerbar.ui messageeditortabtiprow.ui messageeditor.ui messagelist.ui statusbar.ui window.ui
-FILES_VALA_NON_UI = application.vala demofile.vala profile.vala language.vala utils.vala file.vala iterators.vala search.vala
-FILES_VALA = $(FILES_VALA_UI) $(FILES_VALA_NON_UI)
+FILES_UI = filelist.ui filelistrow.ui contextpanel.ui  notebook.ui messageeditortab.ui messagelistrow.ui statusbarprofileslist.ui tab.ui headerbar.ui messageeditortabtiprow.ui messageeditor.ui messagelist.ui statusbar.ui window.ui
+FILES_VALA = filelist.vala notebook.vala statusbar.vala headerbar.vala messagelist.vala tab.vala messageeditor.vala window.vala contextpanel.vala application.vala demofile.vala profile.vala language.vala utils.vala file.vala iterators.vala search.vala
 LIBSVALA = --pkg gtk+-3.0 --pkg gdl-3.0 --pkg gee-0.8 --pkg json-glib-1.0 --pkg gtksourceview-3.0
 UI_RESOURCES = ui_resources.xml
 UI_RESOURCES_OUTPUT = ui_resources.c
@@ -27,7 +25,7 @@ compileresources: $(RESOURCESFILE) $(FILES_UI)
 	glib-compile-resources $(RESOURCES) --target=$(RESOURCES_OUTPUT) --sourcedir=../res/ --c-name _json --generate-source
 
 compilevala: $(FILES_VALA)
-	$(VALAC) -g -C $(FILES_VALA) $(LIBSVALA) --gresources $(UI_RESOURCES) --gresources $(RESOURCES)
+	$(VALAC) -g -C $(FILES_VALA) $(LIBSVALA) --gresources $(UI_RESOURCES) --gresources $(RESOURCES) --target-glib=2.38
 
 compilec: compileresources compilevala
 	gcc -g  -c $(FILES_C) -Wall $(CFLAGS)

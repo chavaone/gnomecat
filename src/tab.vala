@@ -89,12 +89,18 @@ namespace ValaCAT.UI
 		public override ValaCAT.FileProject.File? file {get {return null;}}
 		public override ValaCAT.FileProject.Project? project {get {return this._project;}}
 
+		private FileListWidget file_list;
+
 		private ValaCAT.FileProject.Project? _project;
 
 		public ProjectTab (Project p)
 		{
 			base();
+			this.label = new Gtk.Label ("projectname"); //TODO project.name
 			this._project = p;
+
+			this.file_list = new FileListWidget.with_project (p);
+			this.add_item(this.file_list, DockPlacement.CENTER);
 		}
 	}
 }

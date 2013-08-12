@@ -572,7 +572,7 @@ namespace ValaCAT.FileProject
 		/**
 		 *
 		 */
-		private void add_file (File f)
+		public void add_file (File f)
 		{
 			this.files.add(f);
 		}
