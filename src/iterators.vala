@@ -279,6 +279,7 @@ namespace ValaCAT.Iterators
 		private ArrayList<MessageMark> marks;
 		private int marks_index;
 		private IteratorFilter<MessageMark> filter;
+		private bool visited;
 
 		public MessageIterator (Message? msg, string search_string, IteratorFilter<MessageMark> filter)
 		{
@@ -291,24 +292,34 @@ namespace ValaCAT.Iterators
 
 		public override MessageMark? next ()
 		{
-			marks_index++;
+			if (! this.visited)
+				this.visited = true;
+			else
+				marks_index++;
+
 			return this.get_current_element ();
 		}
 
 		public override MessageMark? previous ()
 		{
-			marks_index--;
+			if (! this.visited)
+				this.visited = true;
+			else
+				marks_index--;
+
 			return this.get_current_element ();
 		}
 
 		public override void first ()
 		{
 			marks_index = 0;
+			this.visited = false;
 		}
 
 		public override void last ()
 		{
 			marks_index = this.marks.size - 1;
+			this.visited = false;
 		}
 
 		public override bool is_last ()
@@ -329,14 +340,11 @@ namespace ValaCAT.Iterators
 			this.marks.clear();
 			if(element != null)
 				this.get_marks();
-			this.marks_index = -1;
+			this.first();
 		}
 
 		private void get_marks ()
 		{
-			stdout.printf("GETMARKS Message \"%s...\" SEARCH \"%s\"\n",
-				message.get_original_singular().substring(0,5),
-				this.search_string); //DEBUG
 			int index;
 			MessageMark mm;
 
@@ -386,12 +394,6 @@ namespace ValaCAT.Iterators
 					}
 				}
 			}
-
-			foreach (MessageMark m in marks)
-				stdout.printf("Message %s... Index %i\n",
-					m.message.get_original_singular().substring(0,5),
-					m.index);
-
 		}
 
 		private bool check_mark (MessageMark mm)

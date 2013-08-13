@@ -9,7 +9,7 @@ namespace ValaCAT.UI
 	/**
 	 * Editing pannel widget.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditor.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditor.ui")]
 	public class MessageEditorWidget : DockItem, ChangedMessageSensible
 	{
 		[GtkChild]
@@ -79,7 +79,7 @@ namespace ValaCAT.UI
 	/**
 	 * Editor pannel tabs.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditortab.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditortab.ui")]
 	public class MessageEditorTab : Box
 	{
 
@@ -248,7 +248,7 @@ namespace ValaCAT.UI
 	/**
 	 * Rows of the tips displaying box.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messageeditortabtiprow.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditortabtiprow.ui")]
 	public class MessageTipRow : ListBoxRow
 	{
 

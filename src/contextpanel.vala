@@ -7,7 +7,7 @@ using ValaCAT.FileProject;
 namespace ValaCAT.UI
 {
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/contextpanel.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/contextpanel.ui")]
 	public class ContextPanel : DockItem, ChangedMessageSensible
 	{
 		[GtkChild]

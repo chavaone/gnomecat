@@ -12,7 +12,7 @@ namespace ValaCAT.UI
 	/**
 	 *
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/searchdialog.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/searchdialog.ui")]
 	public class SearchDialog : Gtk.Dialog
 	{
 		[GtkChild]
@@ -90,7 +90,6 @@ namespace ValaCAT.UI
 			this.window.active_search.next_item();
 			this.hide();
 		}
-
 	}
 }
 
@@ -205,7 +204,7 @@ namespace ValaCAT.Search
 					if((message = this.file_iterator.next()) == null)
 						return;
 					this.message_iterator.set_element(message);
-					//stdout.printf("Message %s\n",message.get_original_singular()); //DEBUG
+					this.message_iterator.first();
 				}
 			}
 
@@ -220,7 +219,10 @@ namespace ValaCAT.Search
 			{
 				if (this.message_iterator.message == null || (mm = this.message_iterator.previous()) == null)
 				{
-					this.message_iterator.set_element(this.file_iterator.previous());
+					Message message;;
+					if((message = this.file_iterator.previous()) == null)
+						return;
+					this.message_iterator.set_element(message);
 					this.message_iterator.last();
 				}
 			}
@@ -242,15 +244,6 @@ namespace ValaCAT.Search
 		{
 			MessageMark mm = this.message_iterator.get_current_element();
 			replace_intern(mm);
-		}
-
-		private void highlight_search_debug (MessageMark mm) //DEBUG
-		{
-			stdout.printf("Message %s... :: Index %i :: Length %i :: String %s\n",
-				mm.message.get_original_singular().substring(0,5),
-				mm.index,
-				mm.length,
-				mm.message.get_original_singular().substring (mm.index, mm.length));
 		}
 
 		private void highlight_search (MessageMark mm)

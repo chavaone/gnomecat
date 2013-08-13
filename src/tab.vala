@@ -10,7 +10,7 @@ namespace ValaCAT.UI
 	/**
 	 * Generic tab.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/tab.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/tab.ui")]
 	public abstract class Tab : Box
 	{
 		public Label label {get; protected set;}

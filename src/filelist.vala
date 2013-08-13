@@ -6,7 +6,7 @@ using ValaCAT.FileProject;
 namespace ValaCAT.UI
 {
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/filelist.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/filelist.ui")]
 	public class FileListWidget : DockItem
 	{
 		[GtkChild]
@@ -36,7 +36,7 @@ namespace ValaCAT.UI
 		}
 	}
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/filelistrow.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/filelistrow.ui")]
 	public class FileListRow : ListBoxRow
 	{
 		[GtkChild]

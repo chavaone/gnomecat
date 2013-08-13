@@ -4,29 +4,35 @@ using ValaCAT.Search;
 
 namespace ValaCAT.UI
 {
-	[GtkTemplate (ui = "/info/aquelando/valacat/window.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/window.ui")]
 	public class Window : Gtk.ApplicationWindow
 	{
 		[GtkChild]
 		private Gtk.Box window_box;
-		//[GtkChild]
+		[GtkChild]
+		private Gtk.HeaderBar headerbar;
+		[GtkChild]
+		private Gtk.SearchEntry search_entry;
+		[GtkChild]
+		private Gtk.SearchBar search_bar;
+		[GtkChild]
+		private Gtk.Notebook notebook;
+		[GtkChild]
 		private ValaCAT.UI.StatusBar statusbar;
-		//[GtkChild]
-		private ValaCAT.UI.Notebook notebook;
-		//[GtkChild]
-		private ValaCAT.UI.HeaderBar menubar;
+		[GtkChild]
+		private Gtk.ToggleButton searchbutton;
 
 		private ValaCAT.UI.SearchDialog search_dialog;
-
-
 		private ValaCAT.Search.Search _search;
 
 		public ValaCAT.Search.Search active_search {
 			get {	return this._search;}
-			set {	if (value == null)
+			set {	/*
+					if (value == null)
 						this.notebook.hide_search_widget ();
 					else
 						this.notebook.show_search_widget ();
+					*/
 					this._search = value;
 			}}
 
@@ -35,40 +41,26 @@ namespace ValaCAT.UI
 
 		public Window (ValaCAT.Application.Application app)
 		{
+			Object(application: app);
 
-			statusbar = new ValaCAT.UI.StatusBar();
-			statusbar.window = this;
-
-			menubar = new ValaCAT.UI.HeaderBar();
-			menubar.window = this;
-
-			notebook = new ValaCAT.UI.Notebook();
-			notebook.window = this;
-
-			window_box.pack_start(menubar, expand=false);
-			window_box.pack_start(notebook);
-			window_box.pack_start(statusbar, expand=false);
+			this.searchbutton.bind_property("active", this.search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
 
 			this.file_changed.connect(on_file_changed);
 			this.project_changed.connect(on_project_changed);
 		}
 
+
 		public void add_tab (Tab t)
 		{
-			this.notebook.add_tab(t);
+			this.notebook.append_page (t, t.label);
 		}
 
 		public Tab get_active_tab ()
 		{
-			return this.notebook.get_active_tab();
+			int page_number = this.notebook.get_current_page ();
+			return this.notebook.get_nth_page (page_number) as Tab;
 		}
 
-		public void init_search ()
-		{
-			if (search_dialog == null)
-				search_dialog = new SearchDialog (this);
-			this.search_dialog.show_all();
-		}
 
 		public void on_file_changed (Window src, ValaCAT.FileProject.File? file)
 		{
@@ -89,6 +81,16 @@ namespace ValaCAT.UI
 					project.number_of_untranslated,
 					project.number_of_fuzzy);
 			*/ //TODO: Add project counters.
+		}
+
+		[GtkCallback]
+		private void on_switch_page (Gtk.Widget src,
+									uint page)
+		{
+			int page_num = int.parse(page.to_string());
+			Tab t = this.notebook.get_nth_page (page_num) as Tab;
+			this.file_changed (t.file);
+			this.project_changed (t.project);
 		}
 	}
 }

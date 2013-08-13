@@ -6,7 +6,7 @@ using ValaCAT.UI;
 namespace ValaCAT.UI
 {
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/statusbar.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/statusbar.ui")]
 	public class StatusBar : Box
 	{
 		[GtkChild]
