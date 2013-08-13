@@ -8,8 +8,6 @@ namespace ValaCAT.UI
 	public class Window : Gtk.ApplicationWindow
 	{
 		[GtkChild]
-		private Gtk.Box window_box;
-		[GtkChild]
 		private Gtk.HeaderBar headerbar;
 		[GtkChild]
 		private Gtk.SearchEntry search_entry;
@@ -17,24 +15,13 @@ namespace ValaCAT.UI
 		private Gtk.SearchBar search_bar;
 		[GtkChild]
 		private Gtk.Notebook notebook;
-		[GtkChild]
+		//[GtkChild]
 		private ValaCAT.UI.StatusBar statusbar;
 		[GtkChild]
 		private Gtk.ToggleButton searchbutton;
 
 		private ValaCAT.UI.SearchDialog search_dialog;
-		private ValaCAT.Search.Search _search;
-
-		public ValaCAT.Search.Search active_search {
-			get {	return this._search;}
-			set {	/*
-					if (value == null)
-						this.notebook.hide_search_widget ();
-					else
-						this.notebook.show_search_widget ();
-					*/
-					this._search = value;
-			}}
+		public ValaCAT.Search.Search active_search {get; set;}
 
 		public signal void file_changed (ValaCAT.FileProject.File? file);
 		public signal void project_changed (ValaCAT.FileProject.Project? project);
@@ -87,10 +74,37 @@ namespace ValaCAT.UI
 		private void on_switch_page (Gtk.Widget src,
 									uint page)
 		{
-			int page_num = int.parse(page.to_string());
+			int page_num = int.parse(page.to_string()); //FIXME
 			Tab t = this.notebook.get_nth_page (page_num) as Tab;
 			this.file_changed (t.file);
 			this.project_changed (t.project);
+		}
+
+		[GtkCallback]
+		private void on_search_changed (Gtk.SearchEntry entry)
+		{
+			if (this.active_search != null)
+				this.active_search.disable();
+			if (entry.get_text() == "")
+			{
+				this.active_search = null;
+			}
+			else
+			{
+				this.active_search = new FileSearch (	this.get_active_tab() as FileTab,
+														true,
+														true,
+														true,
+														true,
+														true,
+														false,
+														true,
+														entry.get_text (),
+														"");
+
+				this.active_search.next_item();
+			}
+
 		}
 	}
 }

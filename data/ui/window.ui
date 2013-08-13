@@ -205,6 +205,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="width_request">260</property>
+                    <signal name="search-changed" handler="on_search_changed" swapped="no"/>
+
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -293,7 +295,7 @@
             <property name="position">1</property>
           </packing>
         </child>
-        <child>
+       <!-- <child>
           <object class="ValaCATUIStatusBar" id="statusbar">
           </object>
           <packing>
@@ -302,6 +304,7 @@
             <property name="position">2</property>
           </packing>
         </child>
+      -->
       </object>
     </child>
   </template>

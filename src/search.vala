@@ -107,6 +107,8 @@ namespace ValaCAT.Search
 		public abstract void previous_item ();
 
 		public abstract void replace ();
+
+		public abstract void disable ();
 	}
 
 
@@ -244,6 +246,28 @@ namespace ValaCAT.Search
 		{
 			MessageMark mm = this.message_iterator.get_current_element();
 			replace_intern(mm);
+		}
+
+		public override void disable ()
+		{
+			MessageMark mm = this.message_iterator.get_current_element();
+			if (mm != null)
+				un_highligt_search (mm);
+		}
+
+		private void un_highligt_search (MessageMark mm)
+		{
+			ValaCAT.UI.MessageListRow? row = this.filetab.message_list.find_row_by_message (mm.message);
+
+			if (row == null) return;
+
+			this.filetab.message_list.select_row (row);
+
+			MessageEditorTab editor_tab = this.filetab.message_editor.get_tab_by_plural_number (mm.plural_number);
+			this.filetab.message_editor.select_tab_by_plural_number(mm.plural_number);
+
+			editor_tab.clean_tags_translation_string ();
+			editor_tab.clean_tags_original_string ();
 		}
 
 		private void highlight_search (MessageMark mm)
