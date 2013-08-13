@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
     <gresource prefix="/info/aquelando/valacat">
-        <file compressed="true" preprocess="xml-stripblanks">ui/headerbar.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/statusbar.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/statusbarprofileslist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messagelist.ui</file>
@@ -13,10 +12,8 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/tab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/searchdialog.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/notebook.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/searchbar.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
     </gresource>

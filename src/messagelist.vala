@@ -10,7 +10,7 @@ namespace ValaCAT.UI
 	 * Widget that dislays the strings to be translated.
 	 *	This widget can be dockable.
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messagelist.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/messagelist.ui")]
 	public class MessageListWidget : DockItem
 	{
 		[GtkChild]
@@ -52,7 +52,7 @@ namespace ValaCAT.UI
 	/**
 	 *
 	 */
-	[GtkTemplate (ui = "/info/aquelando/valacat/messagelistrow.ui")]
+	[GtkTemplate (ui = "/info/aquelando/valacat/ui/messagelistrow.ui")]
 	public class MessageListRow : ListBoxRow
 	{
 
