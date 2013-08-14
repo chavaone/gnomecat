@@ -21,8 +21,9 @@ namespace ValaCAT.UI
 
 		public MessageListWidget()
 		{
-			this.show();
-			this.messages_list_box.row_selected.connect ( (source, row) => {this.message_selected((row as MessageListRow).message);});
+			this.messages_list_box.row_selected.connect ( (source, row) => {
+				this.message_selected((row as MessageListRow).message);
+			});
 		}
 
 		public void add_message (Message m)

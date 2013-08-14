@@ -470,7 +470,7 @@ namespace ValaCAT.FileProject
 		 * Method that saves the instance of this File into
 		 *	a file indicated as parameter.
 		 */
-		public abstract void save_file (string file_path);
+		public abstract void save_file (string? file_path=null);
 
 		/**
 		 * Method that parses a file in order to populate
@@ -555,7 +555,7 @@ namespace ValaCAT.FileProject
 		 */
 		private void remove_file (File f)
 		{
-		 	this.files.remove(f);
+			this.files.remove(f);
 		}
 	}
 

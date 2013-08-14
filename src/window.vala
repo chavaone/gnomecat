@@ -32,7 +32,9 @@ namespace ValaCAT.UI
             { "edit-undo", on_edit_undo },
             { "edit-redo", on_edit_redo },
             { "search-next", on_search_next },
-            { "search-previous", on_search_previous }
+            { "search-previous", on_search_previous },
+            { "edit-save", on_edit_save},
+            { "search-advanced", on_search_advanded}
         };
 
 
@@ -58,6 +60,23 @@ namespace ValaCAT.UI
 		{
 			int page_number = this.notebook.get_current_page ();
 			return this.notebook.get_nth_page (page_number) as Tab;
+		}
+
+
+		void on_search_advanded ()
+		{
+			if (this.search_dialog == null)
+				this.search_dialog = new SearchDialog(this);
+			this.search_dialog.show_all();
+		}
+
+		void on_edit_save ()
+		{
+			Tab t = this.get_active_tab ();
+			if (! (t is FileTab))
+				return;
+			FileTab ft = t as FileTab;
+			ft.file.save_file ();
 		}
 
 		void on_edit_undo ()

@@ -65,6 +65,7 @@
           <object class="GtkButton" id="savebutton">
             <property name="valign">center</property>
             <property name="can_focus">True</property>
+            <property name="action_name">win.edit-save</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -259,7 +260,7 @@
                   <object class="GtkButton" id="advanced_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <signal name="clicked" handler="search_bar_advanced" swapped="no"/>
+                    <property name="action_name">win.search-advanced</property>
                     <child>
                       <object class="GtkImage" id="gears_image">
                         <property name="visible">True</property>

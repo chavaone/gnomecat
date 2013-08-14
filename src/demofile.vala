@@ -34,7 +34,7 @@ namespace ValaCAT.Demo
 			}
 		}
 
-		public override void save_file (string file_path){}
+		public override void save_file (string? file_path=null){}
 
 		/**
 		 * Method that parses a file in order to populate
