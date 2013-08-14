@@ -48,10 +48,16 @@ namespace ValaCAT.Iterators
         public ValaCAT.TextTag get_tag ()
         {
             Gtk.TextTag t = new Gtk.TextTag ("search_tag");
-            Gdk.RGBA color = Gdk.RGBA();
-            color.parse("red");
-            t.background_rgba = color;
+            Gdk.RGBA color_background = Gdk.RGBA();
+            color_background.parse("blue");
+            t.background_rgba = color_background;
             t.background_set = true;
+
+            Gdk.RGBA color_foreground = Gdk.RGBA();
+            color_foreground.parse("white");
+            t.foreground_rgba = color_foreground;
+            t.foreground_set = true;
+
             t.weight = Pango.Weight.BOLD;
             t.weight_set = true;
             return new ValaCAT.TextTag.with_range (t, this.index, this.index + this.length);
