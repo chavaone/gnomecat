@@ -84,6 +84,7 @@
           <object class="GtkButton" id="undobutton">
             <property name="valign">center</property>
             <property name="can_focus">True</property>
+            <property name="action_name">win.edit-undo</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -103,6 +104,7 @@
           <object class="GtkButton" id="redobutton">
             <property name="valign">center</property>
             <property name="can_focus">True</property>
+            <property name="action_name">win.edit-redo</property>
             <style>
               <class name="image-button"/>
             </style>
@@ -206,7 +208,6 @@
                     <property name="can_focus">True</property>
                     <property name="width_request">260</property>
                     <signal name="search-changed" handler="on_search_changed" swapped="no"/>
-
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -218,7 +219,7 @@
                   <object class="GtkButton" id="go_up_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <signal name="clicked" handler="search_bar_previous" swapped="no"/>
+                    <property name="action_name">win.search-next</property>
                     <child>
                       <object class="GtkImage" id="up_image">
                         <property name="visible">True</property>
@@ -238,7 +239,7 @@
                   <object class="GtkButton" id="go_down_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <signal name="clicked" handler="search_bar_next" swapped="no"/>
+                    <property name="action_name">win.search-previous</property>
                     <child>
                       <object class="GtkImage" id="down_image">
                         <property name="visible">True</property>

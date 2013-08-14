@@ -22,8 +22,7 @@ namespace ValaCAT.UI
 		public void set_message (Message m)
 		{
 			int i;
-			this.clean_tabs();
-			//TODO: Add gettext integration.
+			this.clean_tabs(); //TODO: Add gettext.
 			string label = "Singular (%s)".printf(m.get_language().get_plural_form_tag(0));
 			var auxtab = new MessageEditorTab(label, m, 0);
 			foreach (MessageTip t in m.get_tips_plural_form(0))
@@ -43,6 +42,12 @@ namespace ValaCAT.UI
 				}
 			}
 			this.message = m;
+		}
+
+		public MessageEditorTab get_active_tab ()
+		{
+			int curr_page = this.plurals_notebook.get_current_page ();
+			return this.plurals_notebook.get_nth_page (curr_page) as MessageEditorTab;
 		}
 
 		public MessageEditorTab? get_tab_by_plural_number (int plural_number)
@@ -220,6 +225,20 @@ namespace ValaCAT.UI
 			foreach (TextTag tt in this.translation_text_tags)
 				tt.remove_from_buffer (this.textview_translated_text.buffer, this.tranlation_text.length);
 			this.translation_text_tags.clear ();
+		}
+
+		public void undo ()
+		{
+			SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
+			if (source_buffer.get_undo_manager (). can_undo())
+				source_buffer.get_undo_manager ().undo ();
+		}
+
+		public void redo ()
+		{
+			SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
+			if (source_buffer.get_undo_manager (). can_redo())
+				source_buffer.get_undo_manager ().redo ();
 		}
 
 		[GtkCallback]

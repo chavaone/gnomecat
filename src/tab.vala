@@ -82,6 +82,22 @@ namespace ValaCAT.UI
 				this.message_editor.set_message(message);
 				});
 		}
+
+		public void undo ()
+		{
+			if (this.message_editor == null)
+				return;
+			MessageEditorTab tab = this.message_editor.get_active_tab ();
+			tab.undo ();
+		}
+
+		public void redo ()
+		{
+			if (this.message_editor == null)
+				return;
+			MessageEditorTab tab = this.message_editor.get_active_tab ();
+			tab.redo ();
+		}
 	}
 
 	public class ProjectTab : Tab

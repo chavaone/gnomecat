@@ -26,9 +26,20 @@ namespace ValaCAT.UI
 		public signal void file_changed (ValaCAT.FileProject.File? file);
 		public signal void project_changed (ValaCAT.FileProject.Project? project);
 
+
+		private const GLib.ActionEntry[] action_entries = {
+            { "undo", on_edit_undo },
+            { "redo", on_edit_redo },
+            { "search-next", on_search_next },
+            { "search-previous", on_search_previous }
+        };
+
+
 		public Window (ValaCAT.Application.Application app)
 		{
 			Object(application: app);
+
+			add_action_entries (action_entries, this);
 
 			this.searchbutton.bind_property("active", this.search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
 
@@ -48,6 +59,39 @@ namespace ValaCAT.UI
 			return this.notebook.get_nth_page (page_number) as Tab;
 		}
 
+		void on_edit_undo ()
+		{
+			print ("UNDO!!\n");
+			Tab t = this.get_active_tab ();
+			if (! (t is FileTab))
+				return;
+			FileTab ft = t as FileTab;
+			ft.undo ();
+		}
+
+		void on_edit_redo ()
+		{
+			print("REDO!!\n");
+			Tab t = this.get_active_tab ();
+			if (! (t is FileTab))
+				return;
+			FileTab ft = t as FileTab;
+			ft.redo ();
+		}
+
+		void on_search_next ()
+		{
+			if (this.active_search == null)
+				return;
+			this.active_search.next_item ();
+		}
+
+			void on_search_previous ()
+		{
+			if (this.active_search == null)
+				return;
+			this.active_search.previous_item ();
+		}
 
 		public void on_file_changed (Window src, ValaCAT.FileProject.File? file)
 		{
