@@ -142,12 +142,17 @@ namespace ValaCAT.UI
             this.message = message;
             this.plural_number = plural_number;
 
-            this.textview_translated_text.buffer = new SourceBuffer(new TextTagTable());
-
             this.textview_original_text.buffer.set_text (this.original_text);
 
+            this.textview_translated_text.buffer = new SourceBuffer(new TextTagTable());
+
             if(this.tranlation_text != null)
+            {
+                (this.textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
                 this.textview_translated_text.buffer.set_text (this.tranlation_text);
+                (this.textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
+
+            }
 
 
             this.original_text_tags = new ArrayList<ValaCAT.TextTag> ();
