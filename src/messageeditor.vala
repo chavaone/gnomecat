@@ -142,6 +142,8 @@ namespace ValaCAT.UI
             this.message = message;
             this.plural_number = plural_number;
 
+            this.textview_translated_text.buffer = new SourceBuffer(new TextTagTable());
+
             this.textview_original_text.buffer.set_text (this.original_text);
 
             if(this.tranlation_text != null)

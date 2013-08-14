@@ -219,7 +219,7 @@
                   <object class="GtkButton" id="go_up_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="action_name">win.search-next</property>
+                    <property name="action_name">win.search-previous</property>
                     <child>
                       <object class="GtkImage" id="up_image">
                         <property name="visible">True</property>
@@ -239,7 +239,7 @@
                   <object class="GtkButton" id="go_down_button">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="action_name">win.search-previous</property>
+                    <property name="action_name">win.search-next</property>
                     <child>
                       <object class="GtkImage" id="down_image">
                         <property name="visible">True</property>

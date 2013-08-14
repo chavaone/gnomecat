@@ -29,8 +29,8 @@ namespace ValaCAT.UI
 
 
 		private const GLib.ActionEntry[] action_entries = {
-            { "undo", on_edit_undo },
-            { "redo", on_edit_redo },
+            { "edit-undo", on_edit_undo },
+            { "edit-redo", on_edit_redo },
             { "search-next", on_search_next },
             { "search-previous", on_search_previous }
         };
@@ -62,7 +62,6 @@ namespace ValaCAT.UI
 
 		void on_edit_undo ()
 		{
-			print ("UNDO!!\n");
 			Tab t = this.get_active_tab ();
 			if (! (t is FileTab))
 				return;
@@ -72,7 +71,6 @@ namespace ValaCAT.UI
 
 		void on_edit_redo ()
 		{
-			print("REDO!!\n");
 			Tab t = this.get_active_tab ();
 			if (! (t is FileTab))
 				return;
