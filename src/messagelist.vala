@@ -1,3 +1,4 @@
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 using Gtk;
 using Gdl;
@@ -56,14 +57,10 @@ namespace ValaCAT.UI
 	public class MessageListRow : ListBoxRow
 	{
 
-		/* ------------------- CONSTRUCTOR ----------------------- */
-
 		/**
 		 * Message related with this row.
 		 */
 		public Message message {get; private set;}
-
-		/* ---------------- PRIVATE VARIABLES --------------------- */
 
 		[GtkChild]
 		private Image listboxrow_state_image;
@@ -81,8 +78,6 @@ namespace ValaCAT.UI
 		private Image listboxrow_error_image;
 
 
-		/* ------------------- CONSTRUCTOR ----------------------- */
-
 		/**
 		 *
 		 */
@@ -93,8 +88,6 @@ namespace ValaCAT.UI
 			this.update_row();
 		}
 
-
-		/* ------------------- PRIVATE METHODS ------------------ */
 
 		private void update_row ()
 		{

@@ -1,4 +1,4 @@
-
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 using Gee;
 using ValaCAT.Languages;
@@ -30,8 +30,6 @@ namespace ValaCAT.FileProject
 	public class MessageTip : Object
 	{
 
-		/*--------------------------- PROPERTIES ----------------------------*/
-
 		/*
 		 * Name of the MessageTip.
 		 */
@@ -62,8 +60,6 @@ namespace ValaCAT.FileProject
 		 */
 		public int plural_number {get; private set;}
 
-
-		/*---------------------------- CONSTRUCTORS --------------------------*/
 
 		/**
 		 * Contructor.
@@ -107,8 +103,6 @@ namespace ValaCAT.FileProject
 	public abstract class Message : Object
 	{
 
-		/*--------------------------- PROPERTIES ----------------------------*/
-
 		/**
 		 * File which is the owner of this message.
 		 */
@@ -130,8 +124,6 @@ namespace ValaCAT.FileProject
 		public ArrayList<MessageTip> tips {get; private set; default = null;}
 
 
-		/*---------------------------- CONSTRUCTORS --------------------------*/
-
 		/*
 		 * Contructor for Message objects.
 		 *
@@ -143,8 +135,6 @@ namespace ValaCAT.FileProject
 			this.tips = new ArrayList<MessageTip> ();
 		}
 
-
-		/*------------------------------ SIGNALS -----------------------------*/
 
 		/**
 		 * Signal for modified translations.
@@ -183,8 +173,6 @@ namespace ValaCAT.FileProject
 		 */
 		public signal void message_changed ();
 
-
-		/*----------------------------- METHODS ------------------------------*/
 
 		/**
 		 * Method that returns the language of this message.
@@ -284,8 +272,6 @@ namespace ValaCAT.FileProject
 	public abstract class File : Object
 	{
 
-		/*---------------------------- PROPERTIES --------------------------*/
-
 		/*
 		 * Project which belongs this file or \\null\\ if there is no project.
 		 */
@@ -348,14 +334,10 @@ namespace ValaCAT.FileProject
 			}
 
 
-		/*------------------------- PRIVATE VARIABLES --------------------------*/
-
 		private int cache_number_of_untranslated;
 		private int cache_number_of_fuzzy;
 		private int cache_number_of_translated;
 
-
-		/*---------------------------- CONSTRUCTORS --------------------------*/
 
 		/**
 		 * Simple constructor. Initializes an empty isntance.
@@ -391,9 +373,6 @@ namespace ValaCAT.FileProject
 			this.project = proj;
 
 		}
-
-
-		/*------------------------------ METHODS -----------------------------*/
 
 
 		/**
@@ -512,8 +491,6 @@ namespace ValaCAT.FileProject
 	public class Project : Object
 	{
 
-		/*---------------------------- PROPERTIES ----------------------------*/
-
 		/**
 		 * List of files of the project.
 		 */
@@ -525,12 +502,8 @@ namespace ValaCAT.FileProject
 		public string name {get; protected set;}
 
 
-		/*------------------------- PRIVATE VARIABLES ------------------------*/
-
 		private string config_file_path;
 
-
-		/*--------------------------- CONSTRUCTORS ---------------------------*/
 
 		/**
 		 * Creates a new project using a configuration file.
@@ -557,7 +530,6 @@ namespace ValaCAT.FileProject
 			//TODO
 		}
 
-		/*------------------------------ METHODS -----------------------------*/
 
 		/**
 		 * Explores the project directory searching compatible files and

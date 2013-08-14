@@ -1,4 +1,4 @@
-
+/* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 using Gee;
 
@@ -39,15 +39,11 @@ namespace ValaCAT.Settings
 	public abstract class SettingsManager : Object
 	{
 
-		/*---------------------------- PROPERTIES ----------------------------*/
-
 		/**
 		 * Values stored in this settings manager.
 		 */
 		public HashMap<String,Object> values {get; private set;}
 
-
-		/*------------------------------ METHODS -----------------------------*/
 
 		/**
 		 *
