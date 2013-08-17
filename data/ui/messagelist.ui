@@ -9,6 +9,7 @@
         <property name="shadow_type">in</property>
         <child>
         	<object class="GtkListBox" id="messages_list_box">
+            <signal name="row_selected" handler="on_row_selected" swapped="no"/>
       		</object>
         </child>
       </object>

@@ -19,13 +19,6 @@ namespace ValaCAT.UI
 
         public signal void message_selected (Message m);
 
-        public MessageListWidget()
-        {
-            this.messages_list_box.row_selected.connect ( (source, row) => {
-                this.message_selected((row as MessageListRow).message);
-            });
-        }
-
         public void add_message (Message m)
         {
             this.messages_list_box.add(new MessageListRow(m));
@@ -49,6 +42,13 @@ namespace ValaCAT.UI
         {
             this.messages_list_box.select_row (row);
         }
+
+        [GtkCallback]
+        private void on_row_selected (Gtk.ListBox src, Gtk.ListBoxRow row)
+        {
+            this.message_selected ((row as MessageListRow).message);
+        }
+
     }
 
     /**

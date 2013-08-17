@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+  <!-- interface-requires gdl 3.0 -->
   <!-- interface-requires gtk+ 3.10 -->
   <template class="ValaCATUIFileListWidget" parent="GdlDockItem">
     <child>
@@ -9,6 +10,7 @@
         <property name="shadow_type">in</property>
         <child>
         	<object class="GtkListBox" id="file_list_box">
+            <signal name="row_selected" handler="on_row_selected" swapped="no"/>
       		</object>
         </child>
       </object>

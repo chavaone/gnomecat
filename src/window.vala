@@ -44,7 +44,8 @@ namespace ValaCAT.UI
 
             add_action_entries (action_entries, this);
 
-            this.searchbutton.bind_property("active", this.search_bar, "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
+            this.searchbutton.bind_property("active", this.search_bar,
+                "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
 
             this.file_changed.connect(on_file_changed);
             this.project_changed.connect(on_project_changed);

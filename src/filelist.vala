@@ -28,7 +28,6 @@ namespace ValaCAT.UI
             {
                 this.add_file (f);
             }
-
         }
 
         public void add_file (ValaCAT.FileProject.File f)

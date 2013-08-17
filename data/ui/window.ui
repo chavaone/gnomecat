@@ -289,7 +289,9 @@
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="enable_popup">True</property>
             <signal name="switch-page" handler="on_switch_page" swapped="no"/>
+            <signal name="create-window" handler="on_create_window" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>
