@@ -113,7 +113,7 @@ namespace ValaCAT.UI
          */
         public void set_file_info (int translated, int untranslated, int fuzzy)
         {
-            this.statusbar_label_file_info.set_text("%iT + %iU + %iF".printf(translated,untranslated,fuzzy));
+            this.statusbar_label_file_info.set_text(_("%iT + %iU + %iF").printf(translated,untranslated,fuzzy));
             double total = translated + untranslated + fuzzy;
             this.progressbar_file.fraction = translated / total;
             this.file_status_box.show_all();
@@ -129,7 +129,7 @@ namespace ValaCAT.UI
          */
         public void set_project_info (int translated, int untranslated, int fuzzy)
         {
-            this.statusbar_label_project_info.set_text("%iT + %iU + %iF".printf(translated,untranslated,fuzzy));
+            this.statusbar_label_project_info.set_text(_("%iT + %iU + %iF").printf(translated,untranslated,fuzzy));
             this.progressbar_project.fraction = translated / (translated + untranslated + fuzzy);
             this.project_status_box.show_all();
             this.statusbar_separator2.show();
@@ -141,7 +141,7 @@ namespace ValaCAT.UI
          */
         public void set_insertion_mode ()
         {
-            this.statusbar_label_insert.set_text("INS"); //TODO: add gettext
+            this.statusbar_label_insert.set_text(_("INS")); //TODO: add gettext
         }
 
         /**
@@ -150,7 +150,7 @@ namespace ValaCAT.UI
          */
         public void set_overwrite_mode ()
         {
-            this.statusbar_label_insert.set_text("OVR");
+            this.statusbar_label_insert.set_text(_("OVR"));
         }
     }
 

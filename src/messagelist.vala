@@ -118,15 +118,15 @@ namespace ValaCAT.UI
             {
             case MessageState.TRANSLATED:
                 status_icon_name = "emblem-default-symbolic";
-                status_tooltip_text = "Translated"; //TODO: Add gettext.
+                status_tooltip_text = _("Translated");
                 break;
             case MessageState.UNTRANSLATED:
                 status_icon_name = "window-close-symbolic";
-                status_tooltip_text = "Untraslated";
+                status_tooltip_text = _("Untraslated");
                 break;
             case MessageState.FUZZY:
                 status_icon_name = "dialog-question-symbolic";
-                status_tooltip_text = "Fuzzy";
+                status_tooltip_text = _("Fuzzy");
                 break;
             }
 
@@ -156,19 +156,22 @@ namespace ValaCAT.UI
             if (number_info_tips > 0)
             {
                 this.listboxrow_info_image.visible = true; //TODO: Add gettext!
-                this.listboxrow_info_image.tooltip_text = "There are %i info tips.".printf(number_info_tips);
+                this.listboxrow_info_image.tooltip_text = ngettext("There is %i info tip",
+                    "There are %i info tips.",number_info_tips).printf(number_info_tips);
             }
 
             if (number_warning_tips > 0)
             {
                 this.listboxrow_warning_image.visible = true;
-                this.listboxrow_warning_image.tooltip_text = "There are %i warning tips.".printf(number_warning_tips);
+                this.listboxrow_warning_image.tooltip_text = ngettext("Ther is %i warning tip.",
+                    "There are %i warning tips.", number_warning_tips).printf(number_warning_tips);
             }
 
             if (number_error_tips > 0)
             {
                 this.listboxrow_error_image.visible = true;
-                this.listboxrow_error_image.tooltip_text = "There are %i error tips.".printf(number_error_tips);
+                this.listboxrow_error_image.tooltip_text = ngettext("There is %i error tip.",
+                    "There are %i error tips.", number_error_tips).printf(number_error_tips);
             }
         }
     }

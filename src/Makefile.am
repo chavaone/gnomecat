@@ -11,12 +11,31 @@ AM_VALAFLAGS =                                              \
     --gresources "$(top_srcdir)/data/valacat.gresource.xml" \
     --target-glib=2.38
 
-VALASOURCES = filelist.vala statusbar.vala messagelist.vala tab.vala messageeditor.vala window.vala contextpanel.vala application.vala demofile.vala profile.vala language.vala utils.vala file.vala iterators.vala search.vala
+AM_CPPFLAGS = \
+	-DGETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\"  \
+	-DGNOMELOCALEDIR=\""$(localedir)"\"
+
+VALASOURCES = \
+	filelist.vala 		\
+	statusbar.vala 		\
+	messagelist.vala 	\
+	tab.vala 			\
+	messageeditor.vala	\
+	window.vala			\
+	contextpanel.vala \
+	application.vala \
+	demofile.vala \
+	profile.vala \
+	language.vala \
+	utils.vala \
+	file.vala \
+	iterators.vala \
+	search.vala
 
 valacat_SOURCES = \
-    $(VALASOURCES)                                          \
-    config.vapi                                             \
-    valacat.gresource.c
+    $(VALASOURCES)                 \
+    valacat.gresource.c	\
+    config.vapi
 
 valacat_CFLAGS = \
     -Wall                                                   \
@@ -24,9 +43,10 @@ valacat_CFLAGS = \
     `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0` \
 	`pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0`
 
-valacat.gresource.c: $(top_srcdir)/data/valacat.gresource.xml
-	glib-compile-resources --generate-source --sourcedir $(top_srcdir)/data/ --target "$@" "$<"
-
 CLEANFILES =                                                \
     $(VALASOURCES:.vala=.c)                                 \
-    $(BUILT_SOURCES)
+    $(BUILT_SOURCES)										\
+	valacat.gresource.c
+
+valacat.gresource.c: $(top_srcdir)/data/valacat.gresource.xml
+	glib-compile-resources --generate-source --sourcedir $(top_srcdir)/data/ --target "$@" "$<"
