@@ -15,6 +15,14 @@ AC_PROG_MAKE_SET
 AM_PROG_VALAC
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 
+# i18n stuff
+IT_PROG_INTLTOOL([0.40.0])
+
+AM_GNU_GETTEXT_VERSION([0.17])
+AM_GNU_GETTEXT([external])
+
+GETTEXT_PACKAGE=valacat
+
 # Checks for libraries.
 
 # Checks for header files.
@@ -24,5 +32,5 @@ AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 # Checks for library functions.
 
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT

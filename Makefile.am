@@ -1,3 +1,4 @@
 
+ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
-subdirs = src data
+SUBDIRS = src
