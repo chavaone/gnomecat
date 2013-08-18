@@ -46,7 +46,12 @@ valacat_CFLAGS = \
 CLEANFILES =                                                \
     $(VALASOURCES:.vala=.c)                                 \
     $(BUILT_SOURCES)										\
-	valacat.gresource.c
+    valacat.gresource.c						\
+    Makefile.in \
+    Makefile \
+    config.h 	\ 
+    config.h.ini \
+    stamp-h1
 
 valacat.gresource.c: $(top_srcdir)/data/valacat.gresource.xml
 	glib-compile-resources --generate-source --sourcedir $(top_srcdir)/data/ --target "$@" "$<"
