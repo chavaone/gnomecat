@@ -71,6 +71,41 @@ namespace ValaCAT.UI
             this.project_changed.connect(on_project_changed);
         }
 
+        public void add_file (ValaCAT.FileProject.File f)
+        {
+            int number_of_pages = notebook.get_n_pages ();
+            for (int i = 0; i < number_of_pages; i++)
+            {
+                var tab = notebook.get_nth_page (i);
+                if (tab is FileTab && (tab as FileTab).file == f)
+                {
+                    notebook.set_current_page (i);
+                    return;
+                }
+            }
+            FileTab f_tab = new FileTab (f);
+            this.add_tab (f_tab);
+            notebook.set_current_page (notebook.page_num (f_tab));
+        }
+
+        public void add_project (ValaCAT.FileProject.Project p)
+        {
+            int number_of_pages = notebook.get_n_pages ();
+            for (int i = 0; i < number_of_pages; i++)
+            {
+                var tab = notebook.get_nth_page (i);
+                if (tab is ProjectTab && (tab as ProjectTab).project == p)
+                {
+                    notebook.set_current_page (i);
+                    return;
+                }
+            }
+
+            ProjectTab p_tab = new ProjectTab (p);
+            this.add_tab (p_tab);
+            notebook.set_current_page (notebook.page_num (p_tab));
+        }
+
 
         public void add_tab (Tab t)
         {
@@ -150,7 +185,8 @@ namespace ValaCAT.UI
         private void set_progress_bar_info (int translated, int untranslated, int fuzzy)
         {
                 progressbar_title.show ();
-                progressbar_title.set_text(_("%iT + %iU + %iF").printf(translated,untranslated,fuzzy));
+                progressbar_title.set_text(_("%iT + %iU + %iF").printf(translated,
+                    untranslated,fuzzy));
                 double total = translated + untranslated + fuzzy;
                 progressbar_title.fraction = translated / total;
         }

@@ -78,7 +78,7 @@ namespace ValaCAT.UI
         public FileTab (ValaCAT.FileProject.File? f)
         {
             base();
-            this.label = new Gtk.Label("filename"); //TODO f.name;
+            this.label = new Gtk.Label("f.name"); //TODO f.name;
             this._file = f;
             this.message_list = new MessageListWidget();
             foreach (Message m in f.messages)

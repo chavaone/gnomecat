@@ -46,15 +46,14 @@ namespace ValaCAT.Application
 
             foreach (GLib.File f in files)
             {
-                window.add_tab (new FileTab(new ValaCAT.Demo.DemoFile ()));
+                window.add_file (new ValaCAT.Demo.DemoFile ());
             }
 
-            ValaCAT.FileProject.Project p = new Project ("");
-
+            ValaCAT.FileProject.Project p = new Project (""); //DEMO
             p.add_file (new ValaCAT.Demo.DemoFile ());
             p.add_file (new ValaCAT.Demo.DemoFile ());
 
-            window.add_tab (new ProjectTab(p));
+            window.add_project (p);
 
             window.show_all ();
             Gtk.main ();

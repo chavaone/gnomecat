@@ -33,10 +33,6 @@ namespace ValaCAT.UI
 
         public Project project {get; private set;}
 
-        public FileListWidget()
-        {
-        }
-
         public FileListWidget.with_project (Project proj)
         {
             this ();
@@ -50,7 +46,26 @@ namespace ValaCAT.UI
 
         public void add_file (ValaCAT.FileProject.File f)
         {
-            this.file_list_box.add (new FileListRow.from_file(f));
+            this.file_list_box.add (new FileListRow (f));
+        }
+
+        [GtkCallback]
+        private void on_row_activated (ListBox list_box, ListBoxRow row)
+        {
+            var notebook = (this.master.get_controller () as Dock).parent.parent as Gtk.Notebook;
+            int number_of_pages = notebook.get_n_pages ();
+            for (int i = 0; i < number_of_pages; i++)
+            {
+                var tab = notebook.get_nth_page (i);
+                if (tab is FileTab && (tab as FileTab).file == (row as FileListRow) .file)
+                {
+                    notebook.set_current_page (i);
+                    return;
+                }
+            }
+            FileTab f_tab = new FileTab ((row as FileListRow).file);
+            notebook.append_page (f_tab, f_tab.label);
+            notebook.set_current_page (notebook.page_num (f_tab));
         }
 
 
@@ -66,24 +81,17 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.ProgressBar progressbar_file;
 
+        public ValaCAT.FileProject.File file {get; private set;}
 
-        public FileListRow (string file_name,
-                            int number_of_trans,
-                            int number_of_untrans,
-                            int number_of_fuzzy)
+
+        public FileListRow (ValaCAT.FileProject.File f)
         {
-            label_file_name.set_text(file_name);
-            label_info_trans.set_text("%iT %iU %iF".printf(number_of_trans, number_of_untrans, number_of_fuzzy));
-            float fraction = number_of_trans / (number_of_trans + number_of_fuzzy + number_of_untrans);
+            this.file = f;
+            label_file_name.set_text("f.name");
+            label_info_trans.set_text("%iT %iU %iF".printf(f.number_of_translated,
+                f.number_of_untranslated, f.number_of_fuzzy));
+            float fraction = f.number_of_translated / f.number_of_messages;
             progressbar_file.set_fraction (fraction);
-        }
-
-        public FileListRow.from_file (ValaCAT.FileProject.File f)
-        {
-            this ("f.name",
-                f.number_of_translated,
-                f.number_of_untranslated,
-                f.number_of_fuzzy);
         }
     }
 }
