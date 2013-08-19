@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
     <gresource prefix="/info/aquelando/valacat">
-        <file compressed="true" preprocess="xml-stripblanks">ui/statusbar.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/statusbarprofileslist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messagelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messagelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditor.ui</file>

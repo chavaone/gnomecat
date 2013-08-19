@@ -34,10 +34,12 @@ namespace ValaCAT.UI
         private Gtk.SearchBar search_bar;
         [GtkChild]
         private Gtk.Notebook notebook;
-        //[GtkChild]
-        private ValaCAT.UI.StatusBar statusbar;
         [GtkChild]
         private Gtk.ToggleButton searchbutton;
+        [GtkChild]
+        private Gtk.Label label_title;
+        [GtkChild]
+        private Gtk.ProgressBar progressbar_title;
 
         private ValaCAT.UI.SearchDialog search_dialog;
         public ValaCAT.Search.Search active_search {get; set;}
@@ -133,22 +135,29 @@ namespace ValaCAT.UI
         public void on_file_changed (Window src, ValaCAT.FileProject.File? file)
         {
             if (file == null)
-                this.statusbar.hide_file_info ();
+            {
+                this.label_title.set_text ("ValaCAT");
+                this.progressbar_title.hide ();
+            }
             else
-                this.statusbar.set_file_info (file.number_of_translated,
-                    file.number_of_untranslated,
-                    file.number_of_fuzzy);
+            {
+                this.label_title.set_text ("filename"); //TODO
+                set_progress_bar_info (file.number_of_translated,
+                    file.number_of_untranslated, file.number_of_fuzzy);
+            }
+        }
+
+        private void set_progress_bar_info (int translated, int untranslated, int fuzzy)
+        {
+                progressbar_title.show ();
+                progressbar_title.set_text(_("%iT + %iU + %iF").printf(translated,untranslated,fuzzy));
+                double total = translated + untranslated + fuzzy;
+                progressbar_title.fraction = translated / total;
         }
 
         public void on_project_changed (Window src, ValaCAT.FileProject.Project? project)
         {
-            if (project == null)
-                this.statusbar.hide_project_info ();
-            /*else
-                this.statusbar.set_project_info (project.number_of_translated,
-                    project.number_of_untranslated,
-                    project.number_of_fuzzy);
-            */ //TODO: Add project counters.
+            //TODO
         }
 
         [GtkCallback]

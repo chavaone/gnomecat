@@ -17,7 +17,6 @@ AM_CPPFLAGS = \
 
 VALASOURCES = \
 	filelist.vala 		\
-	statusbar.vala 		\
 	messagelist.vala 	\
 	tab.vala 			\
 	messageeditor.vala	\
@@ -48,8 +47,7 @@ CLEANFILES =                                                \
     $(BUILT_SOURCES)										\
     valacat.gresource.c						\
     Makefile.in \
-    Makefile \
-    config.h 	\ 
+    config.h 	\
     config.h.ini \
     stamp-h1
 
