@@ -320,8 +320,10 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="enable_popup">True</property>
+            <property name="group_name">valacat</property>
             <signal name="switch-page" handler="on_switch_page" swapped="no"/>
             <signal name="create-window" handler="on_create_window" swapped="no"/>
+            <signal name="page-removed" handler="on_page_removed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>

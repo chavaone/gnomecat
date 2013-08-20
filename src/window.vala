@@ -85,6 +85,7 @@ namespace ValaCAT.UI
             }
             FileTab f_tab = new FileTab (f);
             this.add_tab (f_tab);
+            f_tab.show_all ();
             notebook.set_current_page (notebook.page_num (f_tab));
         }
 
@@ -110,6 +111,8 @@ namespace ValaCAT.UI
         public void add_tab (Tab t)
         {
             this.notebook.append_page (t, t.label);
+            this.notebook.set_tab_detachable (t, true);
+            this.notebook.set_tab_reorderable (t, true);
         }
 
         public Tab get_active_tab ()
@@ -232,5 +235,23 @@ namespace ValaCAT.UI
             }
 
         }
+
+        [GtkCallback]
+        private weak Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
+        {
+            var win = new ValaCAT.UI.Window (this.application as ValaCAT.Application.Application);
+            win.show_all ();
+            return win.notebook;
+        }
+
+        [GtkCallback]
+        private void on_page_removed (Gtk.Widget pate, uint page_num)
+        {
+            if (this.notebook.get_n_pages () == 0)
+            {
+                this.hide ();
+            }
+        }
+
     }
 }

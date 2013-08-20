@@ -52,20 +52,8 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_row_activated (ListBox list_box, ListBoxRow row)
         {
-            var notebook = (this.master.get_controller () as Dock).parent.parent as Gtk.Notebook;
-            int number_of_pages = notebook.get_n_pages ();
-            for (int i = 0; i < number_of_pages; i++)
-            {
-                var tab = notebook.get_nth_page (i);
-                if (tab is FileTab && (tab as FileTab).file == (row as FileListRow) .file)
-                {
-                    notebook.set_current_page (i);
-                    return;
-                }
-            }
-            FileTab f_tab = new FileTab ((row as FileListRow).file);
-            notebook.append_page (f_tab, f_tab.label);
-            notebook.set_current_page (notebook.page_num (f_tab));
+            var w = this.get_toplevel ().parent.parent.parent.parent as ValaCAT.UI.Window;
+            w.add_file ((row as FileListRow).file);
         }
 
 
