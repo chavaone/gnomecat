@@ -29,7 +29,8 @@ VALASOURCES = \
 	utils.vala \
 	file.vala \
 	iterators.vala \
-	search.vala
+	search.vala \
+	navigator.vala
 
 valacat_SOURCES = \
     $(VALASOURCES)                 \

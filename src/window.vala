@@ -20,6 +20,11 @@
 
 using Gtk;
 using ValaCAT.Search;
+using ValaCAT.Iterators;
+using ValaCAT.Navigator;
+using Gee;
+using ValaCAT.FileProject;
+
 
 namespace ValaCAT.UI
 {
@@ -41,6 +46,11 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.ProgressBar progressbar_title;
 
+        private ValaCAT.Navigator.Navigator navigator_fuzzy;
+        private ValaCAT.Navigator.Navigator navigator_translated;
+        private ValaCAT.Navigator.Navigator navigator_untranslated;
+        private ValaCAT.Navigator.Navigator navigator_all;
+
         private ValaCAT.UI.SearchDialog search_dialog;
         public ValaCAT.Search.Search active_search {get; set;}
 
@@ -54,7 +64,15 @@ namespace ValaCAT.UI
             { "search-next", on_search_next },
             { "search-previous", on_search_previous },
             { "edit-save", on_edit_save},
-            { "search-advanced", on_search_advanded}
+            { "search-advanced", on_search_advanded},
+            { "go-next", on_go_next},
+            { "go-previous", on_go_previous},
+            { "go-next-untranslated", on_go_next_untranslated},
+            { "go-previous-untranslated", on_go_previous_untranslated},
+            { "go-next-translated", on_go_next_translated},
+            { "go-previous-translated", on_go_previous_translated},
+            { "go-next-fuzzy", on_go_next_fuzzy},
+            { "go-previous-fuzzy", on_go_previous_fuzzy}
         };
 
 
@@ -121,6 +139,45 @@ namespace ValaCAT.UI
             return this.notebook.get_nth_page (page_number) as Tab;
         }
 
+        void on_go_next ()
+        {
+            this.navigator_all.next_item ();
+        }
+
+        void on_go_previous ()
+        {
+            this.navigator_all.previous_item ();
+        }
+
+        void on_go_next_fuzzy ()
+        {
+            this.navigator_fuzzy.next_item ();
+        }
+
+        void on_go_previous_fuzzy ()
+        {
+            this.navigator_fuzzy.previous_item ();
+        }
+
+        void on_go_next_translated ()
+        {
+            this.navigator_translated.next_item ();
+        }
+
+        void on_go_previous_translated ()
+        {
+            this.navigator_translated.previous_item ();
+        }
+
+        void on_go_next_untranslated ()
+        {
+            this.navigator_untranslated.next_item ();
+        }
+
+        void on_go_previous_untranslated ()
+        {
+            this.navigator_untranslated.previous_item ();
+        }
 
         void on_search_advanded ()
         {
@@ -188,10 +245,39 @@ namespace ValaCAT.UI
         private void set_progress_bar_info (int translated, int untranslated, int fuzzy)
         {
                 progressbar_title.show ();
-                progressbar_title.set_text(_("%iT + %iU + %iF").printf(translated,
-                    untranslated,fuzzy));
+                progressbar_title.set_text (_("%iT + %iU + %iF").printf (translated,
+                    untranslated, fuzzy));
                 double total = translated + untranslated + fuzzy;
                 progressbar_title.fraction = translated / total;
+        }
+
+        private void set_navigators (ValaCAT.UI.FileTab filetab)
+        {
+            IteratorFilter<Message> fuzzy_filter = new FuzzyFilter ();
+            IteratorFilter<Message> untranslated_filter = new UntranslatedFilter ();
+            IteratorFilter<Message> translated_filter = new TranslatedFilter ();
+
+            ArrayList<IteratorFilter<Message>> arr = new ArrayList<IteratorFilter<Message>> ();
+            arr.add (fuzzy_filter);
+            arr.add (untranslated_filter);
+            arr.add (translated_filter);
+            IteratorFilter<Message> all_filter = new ORFilter<Message> (arr);
+
+            this.navigator_all = filetab.file == null ?
+                null :
+                new ValaCAT.Navigator.Navigator (filetab, all_filter);
+
+            this.navigator_fuzzy = filetab.file == null ?
+                null :
+                new ValaCAT.Navigator.Navigator (filetab as FileTab, fuzzy_filter);
+
+            this.navigator_translated = filetab.file == null ?
+                null :
+                new ValaCAT.Navigator.Navigator (filetab, translated_filter);
+
+            this.navigator_untranslated = filetab.file == null ?
+                null :
+                new ValaCAT.Navigator.Navigator (filetab, untranslated_filter);
         }
 
         public void on_project_changed (Window src, ValaCAT.FileProject.Project? project)
@@ -207,6 +293,8 @@ namespace ValaCAT.UI
             Tab t = this.notebook.get_nth_page (page_num) as Tab;
             this.file_changed (t.file);
             this.project_changed (t.project);
+            if (t is FileTab)
+                this.set_navigators (t as FileTab);
         }
 
         [GtkCallback]

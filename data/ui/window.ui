@@ -334,4 +334,190 @@
       </object>
     </child>
   </template>
+    <object class="GtkMenu" id="openmenu">
+      <property name="visible">True</property>
+      <property name="can_focus">False</property>
+      <property name="halign">start</property>
+      <child>
+        <object class="GtkMenuItem" id="openfile">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="label" translatable="yes">Open File</property>
+          <property name="use_underline">True</property>
+        </object>
+      </child>
+      <child>
+        <object class="GtkMenuItem" id="openrecentfile">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="label" translatable="yes">Open Recent File</property>
+          <property name="use_underline">True</property>
+          <child type="submenu">
+            <object class="GtkRecentChooserMenu" id="recentfilemenu">
+              <property name="visible">True</property>
+              <property name="can_focus">False</property>
+              <property name="limit">10</property>
+            </object>
+          </child>
+        </object>
+      </child>
+      <child>
+        <object class="GtkSeparatorMenuItem" id="sep1">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+        </object>
+      </child>
+      <child>
+        <object class="GtkMenuItem" id="newproject">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="label" translatable="yes">New Project</property>
+          <property name="use_underline">True</property>
+        </object>
+      </child>
+      <child>
+        <object class="GtkMenuItem" id="openproject">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="label" translatable="yes">Open Project</property>
+          <property name="use_underline">True</property>
+        </object>
+      </child>
+      <child>
+        <object class="GtkMenuItem" id="openrecentproject">
+          <property name="visible">True</property>
+          <property name="can_focus">False</property>
+          <property name="label" translatable="yes">Open Recent Project</property>
+          <property name="use_underline">True</property>
+          <child type="submenu">
+            <object class="GtkRecentChooserMenu" id="recentprojectmenu">
+              <property name="visible">True</property>
+              <property name="can_focus">False</property>
+              <property name="limit">10</property>
+            </object>
+          </child>
+        </object>
+      </child>
+  </object>
+  <object class="GtkMenu" id="settingsmenu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">end</property>
+    <child>
+      <object class="GtkMenuItem" id="tools">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Tools</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="gomenuitem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Go</property>
+        <property name="use_underline">True</property>
+        <child type="submenu">
+          <object class="GtkMenu" id="menu1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkMenuItem" id="gopreviousfuzzy">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Previous Fuzzy</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-previous-fuzzy</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="gonextfuzzy">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Next Fuzzy</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-next-fuzzy</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="goprevious">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Previous</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-previous</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="gonext">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Next</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-next</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="gopreviousuntranslated">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Previous Untranslated</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-previous-untranslated</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="gonextuntranslated">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Next Untranslated</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-next-untranslated</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="goprevioustranslated">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Previous Tranlated</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-previous-translated</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem" id="gonexttranslated">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Go Next Translated</property>
+                <property name="use_underline">True</property>
+                <property name="action_name">win.go-next-translated</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="GtkMenuItem" id="settingsmenuitem">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">Settings</property>
+        <property name="use_underline">True</property>
+      </object>
+    </child>
+  </object>
+  <object class="GtkMenu" id="viewmenu">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="halign">end</property>
+    <child>
+      <object class="GtkRadioMenuItem" id="viewcontext">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="label" translatable="yes">View Context</property>
+        <property name="use_underline">True</property>
+        <property name="draw_as_radio">True</property>
+      </object>
+    </child>
+  </object>
 </interface>
