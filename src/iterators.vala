@@ -232,7 +232,7 @@ namespace ValaCAT.Iterators
 
         public override Message? next ()
         {
-            if (visited || ! check_condition(messages.get(current_index)))
+            if ((visited || ! check_condition(messages.get(current_index))) && current_index <= messages.size)
             {
                 for (current_index++;
                      current_index < messages.size && ! check_condition (messages.get (current_index));
@@ -246,8 +246,7 @@ namespace ValaCAT.Iterators
 
         public override Message? previous ()
         {
-
-            if (visited || ! check_condition(messages.get(current_index)))
+            if ((visited || ! check_condition(messages.get(current_index))) && current_index > -1 )
             {
                 for (current_index--;
                      current_index >= 0 && ! check_condition (this.messages.get (current_index));
@@ -319,7 +318,7 @@ namespace ValaCAT.Iterators
         {
             if (! this.visited)
                 this.visited = true;
-            else
+            else if (marks_index != this.marks.size)
                 marks_index++;
 
             return this.get_current_element ();
@@ -329,7 +328,7 @@ namespace ValaCAT.Iterators
         {
             if (! this.visited)
                 this.visited = true;
-            else
+            else if (marks_index != -1)
                 marks_index--;
 
             return this.get_current_element ();

@@ -21,6 +21,9 @@
 using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
+using ValaCAT.Iterators;
+using ValaCAT.Navigator;
+using Gee;
 
 
 namespace ValaCAT.UI
@@ -75,9 +78,17 @@ namespace ValaCAT.UI
 
         private ValaCAT.FileProject.File? _file;
 
+        private ValaCAT.Navigator.Navigator navigator_fuzzy;
+        private ValaCAT.Navigator.Navigator navigator_translated;
+        private ValaCAT.Navigator.Navigator navigator_untranslated;
+        private ValaCAT.Navigator.Navigator navigator_all;
+
+        private ArrayList<ChangedMessageSensible> change_messages_sensible;
+
         public FileTab (ValaCAT.FileProject.File? f)
         {
             base();
+            this.change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
             this.label = new Gtk.Label("f.name"); //TODO f.name;
             this._file = f;
             this.message_list = new MessageListWidget();
@@ -90,15 +101,24 @@ namespace ValaCAT.UI
             this.message_editor = new MessageEditorWidget();
             this.message_editor.set_message(f.messages.get(0));
             this.add_item(this.message_editor, DockPlacement.BOTTOM);
+            change_messages_sensible.add (this.message_editor);
 
             this.context_pannel = new ContextPanel();
             this.context_pannel.set_message(f.messages.get(0));
             this.add_item(this.context_pannel,DockPlacement.RIGHT);
+            change_messages_sensible.add (this.context_pannel);
 
-            this.message_list.message_selected.connect ( (source, message) => {
-                this.context_pannel.set_message(message);
-                this.message_editor.set_message(message);
-                });
+            this.set_navigators (this);
+
+            this.message_list.message_selected.connect (on_message_selected);
+        }
+
+        public void on_message_selected (Message m)
+        {
+            foreach (ChangedMessageSensible c in change_messages_sensible)
+            {
+                c.set_message (m);
+            }
         }
 
         public void undo ()
@@ -115,6 +135,68 @@ namespace ValaCAT.UI
                 return;
             MessageEditorTab tab = this.message_editor.get_active_tab ();
             tab.redo ();
+        }
+
+        public void go_next ()
+        {
+            this.navigator_all.next_item ();
+        }
+
+        public void go_previous ()
+        {
+            this.navigator_all.previous_item ();
+        }
+
+        public void go_next_fuzzy ()
+        {
+            this.navigator_fuzzy.next_item ();
+        }
+
+        public void go_previous_fuzzy ()
+        {
+            this.navigator_fuzzy.previous_item ();
+        }
+
+        public void go_next_translated ()
+        {
+            this.navigator_translated.next_item ();
+        }
+
+        public void go_previous_translated ()
+        {
+            this.navigator_translated.previous_item ();
+        }
+
+        public void go_next_untranslated ()
+        {
+            this.navigator_untranslated.next_item ();
+        }
+
+        public void go_previous_untranslated ()
+        {
+            this.navigator_untranslated.previous_item ();
+        }
+
+        private void set_navigators (ValaCAT.UI.FileTab filetab)
+        {
+            IteratorFilter<Message> fuzzy_filter = new FuzzyFilter ();
+            IteratorFilter<Message> untranslated_filter = new UntranslatedFilter ();
+            IteratorFilter<Message> translated_filter = new TranslatedFilter ();
+
+            ArrayList<IteratorFilter<Message>> arr = new ArrayList<IteratorFilter<Message>> ();
+            arr.add (fuzzy_filter);
+            arr.add (untranslated_filter);
+            arr.add (translated_filter);
+            IteratorFilter<Message> all_filter = new ORFilter<Message> (arr);
+
+            navigator_all = new ValaCAT.Navigator.Navigator (this, all_filter);
+            change_messages_sensible.add (navigator_all);
+            navigator_fuzzy = new ValaCAT.Navigator.Navigator (this, fuzzy_filter);
+            change_messages_sensible.add (navigator_fuzzy);
+            navigator_translated = new ValaCAT.Navigator.Navigator (this, translated_filter);
+            change_messages_sensible.add (navigator_translated);
+            navigator_untranslated = new ValaCAT.Navigator.Navigator (this, untranslated_filter);
+            change_messages_sensible.add (navigator_untranslated);
         }
     }
 
