@@ -3,34 +3,35 @@
 namespace GettextPo {
 
 
-	[CCode(cheader_filename = "gettext-po.h", type="po_file_t", free_function="po_file_free")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_file", free_function="po_file_free")]
 	[Compact]
-	public class File : Glib.Object {
+	public class File {
 
 		[CCode (CCode = "po_file_create")]
 		public File();
 
-		public string[] domains ();
+		[CCode (array_length = false, array_null_terminated = true, cname="po_file_domains")]
+		public unowned string[] domains ();
 
 		[CCode (cname="po_message_iterator")]
 		public GettextPo.MessageIterator message_iterator (string domain);
 
 
 		[CCode (cname="po_file_read")]
-		static public GettextPo.File file_read (string filename,
-							ErrorHandler handler);
+		public static GettextPo.File file_read (string filename,
+							XErrorHandler handler);
 
 		[CCode (cname="po_file_write")]
-		static public GettextPo.File file_write (GettextPo.File file,
+		public static GettextPo.File file_write (GettextPo.File file,
 							string filename,
-							ErrorHandler handler);
+							XErrorHandler handler);
 
 	}
 
 
-	[CCode(cheader_filename = "gettext-po.h", type="po_message_iterator_t", free_function="po_message_iterator_free")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_message_iterator", free_function="po_message_iterator_free")]
 	[Compact]
-	public class MessageIterator : Glib.Object {
+	public class MessageIterator  {
 
 		[CCode (has_construct_function = false)]
 		public MessageIterator ();
@@ -44,9 +45,9 @@ namespace GettextPo {
 
 
 
-	[CCode(cheader_filename = "gettext-po.h", type="po_message_t")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_message", free_function="")]
 	[Compact]
-	public class Message : Glib.Object {
+	public class Message  {
 
 		[CCode (cname="po_message_create")]
 		public Message();
@@ -75,9 +76,9 @@ namespace GettextPo {
 	}
 
 
-	[CCode(cheader_filename = "gettext-po.h", type="po_filepos_t")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_filepos")]
 	[Compact]
-	public class FilePos : GLib.Object {
+	public class FilePos  {
 
 		[CCode (has_construct_function = false)]
 		public FilePos ();
@@ -86,8 +87,14 @@ namespace GettextPo {
 
 	}
 
-	[CCode(cheader_filename = "gettext-po.h", type="po_error_handler_t")]
-	[Compact]
-	public class ErrorHandler : GLib.Object {}
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_error_handler", free_function="")]
+	public struct ErrorHandler
+	{
+	}
+
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_xerror_handler", free_function="")]
+	public struct XErrorHandler
+	{
+	}
 
 }
