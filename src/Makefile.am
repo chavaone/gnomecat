@@ -8,6 +8,7 @@ AM_VALAFLAGS =                                              \
     --pkg gee-0.8                                           \
     --pkg json-glib-1.0                                     \
     --pkg gtksourceview-3.0                                 \
+    --pkg gettext-po										\
     --gresources "$(top_srcdir)/data/valacat.gresource.xml" \
     --target-glib=2.38
 
@@ -30,7 +31,8 @@ VALASOURCES = \
 	file.vala \
 	iterators.vala \
 	search.vala \
-	navigator.vala
+	navigator.vala \
+	pofile.vala
 
 valacat_SOURCES = \
     $(VALASOURCES)                 \
@@ -41,7 +43,8 @@ valacat_CFLAGS = \
     -Wall                                                   \
     -g \
     `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0` \
-	`pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0`
+	`pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0` \
+	-lgettextpo
 
 CLEANFILES =                                                \
     $(VALASOURCES:.vala=.c)                                 \

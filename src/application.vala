@@ -21,16 +21,44 @@
 using Gtk;
 using ValaCAT.UI;
 using ValaCAT.FileProject;
+using Gee;
 
 namespace ValaCAT.Application
 {
     public class Application : Gtk.Application
     {
 
+        private ArrayList<FileOpener> file_openers;
+
         private Application ()
         {
             Object (application_id: "info.aquelando.valacat",
                 flags: ApplicationFlags.HANDLES_OPEN);
+        }
+
+        construct
+        {
+            this.file_openers = new ArrayList<FileOpener> ();
+            this.add_opener (new ValaCAT.PoFiles.PoFileOpener ());
+        }
+
+        public void add_opener (FileOpener o)
+        {
+            this.file_openers.add (o);
+        }
+
+        public ValaCAT.FileProject.File? open_file (string path)
+        {
+            int index_last_point = path.last_index_of_char ('.');
+            string extension = path.substring (index_last_point + 1);
+            foreach (FileOpener o in this.file_openers)
+            {
+                if (extension in o.extensions)
+                {
+                    return o.open_file (path,null);
+                }
+            }
+            return null;
         }
 
         public override void activate ()
@@ -46,7 +74,11 @@ namespace ValaCAT.Application
 
             foreach (GLib.File f in files)
             {
-                window.add_file (new ValaCAT.Demo.DemoFile ());
+                ValaCAT.FileProject.File? file = this.open_file (f.get_path ());
+                if (file == null)
+                    print ("Error while open file.");
+                else
+                    window.add_file (file);
             }
 
             ValaCAT.FileProject.Project p = new Project (""); //DEMO

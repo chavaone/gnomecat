@@ -40,6 +40,12 @@ namespace ValaCAT.FileProject
     }
 
 
+    public abstract class FileOpener
+    {
+        public abstract string[] extensions {get;}
+        public abstract File? open_file (string path, Project? p);
+    }
+
     /*
      * This class represents information that can be added to Messages in order
      *  to indicate that they have some failure or something that can be
@@ -195,7 +201,10 @@ namespace ValaCAT.FileProject
         /**
          * Method that returns the language of this message.
          */
-        public abstract Language get_language ();
+        public Language? get_language ()
+        {
+            return file.get_language ();
+        }
 
         /**
          * Method that indicates if this string has or has not
@@ -499,7 +508,20 @@ namespace ValaCAT.FileProject
         /**
          * Method that returns the number of plurals of this file.
          */
-        public abstract int number_of_plurals ();
+        public int number_of_plurals ()
+        {
+            Language? lang = this.get_language ();
+            if (lang == null)
+            {
+                return 1;
+            }
+            else
+            {
+                return lang.get_number_of_plurals ();
+            }
+        }
+
+        public abstract Language? get_language ();
     }
 
 

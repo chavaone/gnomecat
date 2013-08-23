@@ -42,10 +42,10 @@ namespace ValaCAT.Demo
          */
         public override void parse_file (string path){}
 
-        /**
-         * Method that returns the number of plurals of this file.
-         */
-        public override int number_of_plurals (){return 1;}
+        public override Language? get_language ()
+        {
+            return Language.get_language_by_code("pl");
+        }
 
     }
 
@@ -97,11 +97,6 @@ namespace ValaCAT.Demo
                             null));
                 }
             }
-        }
-
-        public override Language get_language ()
-        {
-            return Language.get_language_by_code("pl");
         }
 
         /**
