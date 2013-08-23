@@ -37,7 +37,7 @@ namespace GettextPo {
 		public MessageIterator ();
 
 		[CCode (cname="po_next_message")]
-		public GettextPo.Message next_message ();
+		public unowned GettextPo.Message next_message ();
 
 		[CCode (cname="po_message_insert")]
 		public void insert_message (GettextPo.Message m);
@@ -45,32 +45,32 @@ namespace GettextPo {
 
 
 
-	[CCode(cheader_filename = "gettext-po.h", cname="struct po_message", free_function="")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_message")]
 	[Compact]
 	public class Message  {
 
 		[CCode (cname="po_message_create")]
 		public Message();
-		public string msgid ();
+		public unowned string msgid ();
 		public void set_msgid (string msgid);
-		public string msgid_plural ();
+		public unowned string msgid_plural ();
 		public void set_msgid_plural(string msgid_plural);
-		public string msgstr ();
+		public unowned string msgstr ();
 		public void set_msgstr (string msgstr);
-		public string msgstr_plural (int index);
+		public unowned string msgstr_plural (int index);
 		public void set_msgstr_plural (int index, string msgstr);
-		public string comments ();
+		public unowned string comments ();
 		public void set_comments (string comments);
-		public string extracted_comments ();
+		public unowned string extracted_comments ();
 		public void set_extracted_comments (string comments);
 		public GettextPo.FilePos filepos (int i);
 		public void remove_filepos (int i);
 		public void add_filepos (string file, size_t start_line);
-		public bool is_obsolete();
+		public unowned bool is_obsolete();
 		public void set_obsolete (bool obsolete);
-		public bool is_fuzzy ();
+		public unowned bool is_fuzzy ();
 		public void set_fuzzy (bool fuzzy);
-		public bool is_format (string format_type);
+		public unowned bool is_format (string format_type);
 		public void set_format(string format_type, int bool);
 		public void check_format (GettextPo.ErrorHandler handler);
 	}
@@ -87,12 +87,12 @@ namespace GettextPo {
 
 	}
 
-	[CCode(cheader_filename = "gettext-po.h", cname="struct po_error_handler", free_function="")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_error_handler")]
 	public struct ErrorHandler
 	{
 	}
 
-	[CCode(cheader_filename = "gettext-po.h", cname="struct po_xerror_handler", free_function="")]
+	[CCode(cheader_filename = "gettext-po.h", cname="struct po_xerror_handler")]
 	public struct XErrorHandler
 	{
 	}

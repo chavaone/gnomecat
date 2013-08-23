@@ -118,7 +118,7 @@ namespace ValaCAT.PoFiles
             foreach (string d in this.file.domains())
             {
                 MessageIterator mi = this.file.message_iterator (d);
-                GettextPo.Message m;
+                unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
                     this.messages.add (new PoMessage(this, this.file, m));
@@ -128,7 +128,7 @@ namespace ValaCAT.PoFiles
 
         public override Language? get_language ()
         {
-            return null;
+            return Language.get_language_by_code("es");
         }
     }
 
