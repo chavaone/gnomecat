@@ -28,7 +28,20 @@ namespace ValaCAT.Application
     public class Application : Gtk.Application
     {
 
+        private ArrayList<string> _extensions;
         private ArrayList<FileOpener> file_openers;
+
+        public ArrayList<string> extensions {   get
+            {
+                _extensions = new ArrayList<string> ();
+                foreach (FileOpener fo in file_openers)
+                {
+                    foreach (string ext in fo.extensions)
+                        _extensions.add (ext);
+                }
+                return _extensions;
+            }
+        }
 
         private Application ()
         {
@@ -47,18 +60,21 @@ namespace ValaCAT.Application
             this.file_openers.add (o);
         }
 
-        public ValaCAT.FileProject.File? open_file (string path)
+        public void open_file (GLib.File f,  ValaCAT.UI.Window window)
         {
-            int index_last_point = path.last_index_of_char ('.');
-            string extension = path.substring (index_last_point + 1);
+            int index_last_point = f.get_path ().last_index_of_char ('.');
+            string extension = f.get_path ().substring (index_last_point + 1);
             foreach (FileOpener o in this.file_openers)
             {
                 if (extension in o.extensions)
                 {
-                    return o.open_file (path,null);
+                    ValaCAT.FileProject.File? file = o.open_file (f.get_path (),null);
+                    if (file == null)
+                        print ("Error while open file.");
+                    else
+                        window.add_file (file);
                 }
             }
-            return null;
         }
 
         public override void activate ()
@@ -73,13 +89,7 @@ namespace ValaCAT.Application
             ValaCAT.UI.Window window = new ValaCAT.UI.Window (this);
 
             foreach (GLib.File f in files)
-            {
-                ValaCAT.FileProject.File? file = this.open_file (f.get_path ());
-                if (file == null)
-                    print ("Error while open file.");
-                else
-                    window.add_file (file);
-            }
+                this.open_file (f, window);
 
             ValaCAT.FileProject.Project p = new Project (""); //DEMO
             p.add_file (new ValaCAT.Demo.DemoFile ());

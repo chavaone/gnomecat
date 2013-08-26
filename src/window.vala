@@ -41,6 +41,10 @@ namespace ValaCAT.UI
         private Gtk.Label label_title;
         [GtkChild]
         private Gtk.ProgressBar progressbar_title;
+        [GtkChild]
+        private Gtk.RecentChooserMenu recentfilemenu;
+        [GtkChild]
+        private Gtk.RecentChooserMenu recentprojectmenu;
 
         private ValaCAT.UI.SearchDialog search_dialog;
         public ValaCAT.Search.Search active_search {get; set;}
@@ -63,14 +67,18 @@ namespace ValaCAT.UI
             { "go-next-translated", on_go_next_translated},
             { "go-previous-translated", on_go_previous_translated},
             { "go-next-fuzzy", on_go_next_fuzzy},
-            { "go-previous-fuzzy", on_go_previous_fuzzy}
+            { "go-previous-fuzzy", on_go_previous_fuzzy},
+            { "open-file", on_open_file}
         };
 
 
         public Window (ValaCAT.Application.Application app)
         {
             Object(application: app);
+        }
 
+        construct
+        {
             add_action_entries (action_entries, this);
 
             this.searchbutton.bind_property("active", this.search_bar,
@@ -78,6 +86,12 @@ namespace ValaCAT.UI
 
             this.file_changed.connect(on_file_changed);
             this.project_changed.connect(on_project_changed);
+
+            this.recentfilemenu.filter = new RecentFilter ();
+            foreach (string ext in (this.application as ValaCAT.Application.Application).extensions)
+            {
+                this.recentfilemenu.filter.add_pattern ("*." + ext);
+            }
         }
 
         public void add_file (ValaCAT.FileProject.File f)
@@ -334,6 +348,17 @@ namespace ValaCAT.UI
             {
                 this.hide ();
             }
+        }
+
+        private void on_open_file ()
+        {
+        }
+
+        [GtkCallback]
+        private void on_open_recent_file ()
+        {
+            string uri = this.recentfilemenu.get_current_uri ();
+            (this.application as ValaCAT.Application.Application).open_file (GLib.File.new_for_uri (uri), this);
         }
 
     }
