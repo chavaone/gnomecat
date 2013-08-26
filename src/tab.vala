@@ -76,7 +76,7 @@ namespace ValaCAT.UI
         public override ValaCAT.FileProject.File? file {get {return this._file;}}
         public override ValaCAT.FileProject.Project? project {get {return this._file != null ? this._file.project : null;}}
 
-        private ValaCAT.FileProject.File? _file;
+        private unowned ValaCAT.FileProject.File? _file;
 
         private ValaCAT.Navigator.Navigator navigator_fuzzy;
         private ValaCAT.Navigator.Navigator navigator_translated;
@@ -91,11 +91,8 @@ namespace ValaCAT.UI
             this.change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
             this.label = new Gtk.Label("f.name"); //TODO f.name;
             this._file = f;
-            this.message_list = new MessageListWidget();
-            foreach (Message m in f.messages)
-            {
-                this.message_list.add_message(m);
-            }
+
+            this.message_list = new MessageListWidget(f);
             this.add_item(this.message_list, DockPlacement.CENTER);
 
             this.message_editor = new MessageEditorWidget();
@@ -108,8 +105,7 @@ namespace ValaCAT.UI
             this.add_item(this.context_pannel,DockPlacement.RIGHT);
             change_messages_sensible.add (this.context_pannel);
 
-            this.set_navigators (this);
-
+            this.set_navigators ();
             this.message_list.message_selected.connect (on_message_selected);
         }
 
@@ -177,7 +173,7 @@ namespace ValaCAT.UI
             this.navigator_untranslated.previous_item ();
         }
 
-        private void set_navigators (ValaCAT.UI.FileTab filetab)
+        private void set_navigators ()
         {
             IteratorFilter<Message> fuzzy_filter = new FuzzyFilter ();
             IteratorFilter<Message> untranslated_filter = new UntranslatedFilter ();

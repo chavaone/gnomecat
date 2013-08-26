@@ -113,6 +113,7 @@ namespace ValaCAT.UI
 
             ProjectTab p_tab = new ProjectTab (p);
             this.add_tab (p_tab);
+            p_tab.show_all ();
             notebook.set_current_page (notebook.page_num (p_tab));
         }
 

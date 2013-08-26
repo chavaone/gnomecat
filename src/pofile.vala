@@ -10,7 +10,7 @@ namespace ValaCAT.PoFiles
     {
         private unowned GettextPo.Message message;
 
-        public PoMessage (PoFile owner_file,GettextPo.File file, GettextPo.Message msg)
+        public PoMessage (PoFile owner_file, GettextPo.Message msg)
         {
             base (owner_file);
             this.message = msg;
@@ -23,7 +23,7 @@ namespace ValaCAT.PoFiles
          */
         public override bool has_plural ()
         {
-            return this.message.msgid_plural() != null;
+            return this.message.msgid_plural () != null;
         }
 
         /**
@@ -40,7 +40,7 @@ namespace ValaCAT.PoFiles
          */
         public override string get_original_plural ()
         {
-            return this.message.msgid_plural();
+            return this.message.msgid_plural ();
         }
 
         /*
@@ -121,14 +121,14 @@ namespace ValaCAT.PoFiles
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
-                    this.messages.add (new PoMessage(this, this.file, m));
+                    this.messages.add (new PoMessage(this, m));
                 }
             }
         }
 
         public override Language? get_language ()
         {
-            return Language.get_language_by_code("es");
+            return Language.get_language_by_code("es"); //TODO
         }
     }
 

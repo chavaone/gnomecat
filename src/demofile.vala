@@ -27,7 +27,7 @@ namespace ValaCAT.Demo
         public DemoFile ()
         {
             base();
-            int num = Random.int_range(0,150);
+            int num = Random.int_range(100,300);
             for (int i = 0; i < num; i++)
             {
                 this.add_message(new DemoMessage(this));
