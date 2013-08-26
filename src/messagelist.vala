@@ -37,7 +37,15 @@ namespace ValaCAT.UI
 
         public signal void message_selected (Message m);
 
-        public void add_message (Message m)
+        public MessageListWidget (ValaCAT.FileProject.File f)
+        {
+            foreach (Message m in f.messages)
+            {
+                this.add_message (m);
+            }
+        }
+
+        private void add_message (Message m)
         {
             this.messages_list_box.add(new MessageListRow(m));
         }
@@ -82,19 +90,19 @@ namespace ValaCAT.UI
         public Message message {get; private set;}
 
         [GtkChild]
-        private Image listboxrow_state_image;
+        private Image state_image;
         [GtkChild]
-        private Gtk.Entry listboxrow_original;
+        private Gtk.Entry original;
         [GtkChild]
-        private Gtk.Entry listboxrow_translation;
+        private Gtk.Entry translation;
         [GtkChild]
-        private Gtk.Box listboxrow_tipsbox;
+        private Gtk.Box tipsbox;
         [GtkChild]
-        private Image listboxrow_info_image;
+        private Image info_image;
         [GtkChild]
-        private Image listboxrow_warning_image;
+        private Image warning_image;
         [GtkChild]
-        private Image listboxrow_error_image;
+        private Image error_image;
 
 
         /**
@@ -130,12 +138,12 @@ namespace ValaCAT.UI
                 break;
             }
 
-            this.listboxrow_state_image.icon_name = status_icon_name;
-            this.listboxrow_state_image.tooltip_text = status_tooltip_text;
+            this.state_image.icon_name = status_icon_name;
+            this.state_image.tooltip_text = status_tooltip_text;
 
-            this.listboxrow_original.set_text(this.message.get_original_singular());
+            this.original.set_text(this.message.get_original_singular());
             if(this.message.get_translation(0) != null)
-                this.listboxrow_translation.set_text(this.message.get_translation(0));
+                this.translation.set_text(this.message.get_translation(0));
 
             foreach (MessageTip t in this.message.tips)
             {
@@ -155,22 +163,22 @@ namespace ValaCAT.UI
 
             if (number_info_tips > 0)
             {
-                this.listboxrow_info_image.visible = true; //TODO: Add gettext!
-                this.listboxrow_info_image.tooltip_text = ngettext("There is %i info tip",
+                this.info_image.visible = true; //TODO: Add gettext!
+                this.info_image.tooltip_text = ngettext("There is %i info tip",
                     "There are %i info tips.",number_info_tips).printf(number_info_tips);
             }
 
             if (number_warning_tips > 0)
             {
-                this.listboxrow_warning_image.visible = true;
-                this.listboxrow_warning_image.tooltip_text = ngettext("Ther is %i warning tip.",
+                this.warning_image.visible = true;
+                this.warning_image.tooltip_text = ngettext("Ther is %i warning tip.",
                     "There are %i warning tips.", number_warning_tips).printf(number_warning_tips);
             }
 
             if (number_error_tips > 0)
             {
-                this.listboxrow_error_image.visible = true;
-                this.listboxrow_error_image.tooltip_text = ngettext("There is %i error tip.",
+                this.error_image.visible = true;
+                this.error_image.tooltip_text = ngettext("There is %i error tip.",
                     "There are %i error tips.", number_error_tips).printf(number_error_tips);
             }
         }
