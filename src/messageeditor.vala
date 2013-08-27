@@ -36,9 +36,6 @@ namespace ValaCAT.UI
         private Gtk.Notebook plurals_notebook;
         private Message message;
 
-        public MessageEditorWidget ()
-        {}
-
         public void set_message (Message m)
         {
             int i;
@@ -112,7 +109,8 @@ namespace ValaCAT.UI
          * Label of this editor tab.
          */
         public Label label {get; private set;}
-
+        public Message message {get; private set;}
+        public int plural_number {get; private set;}
 
         [GtkChild]
         private SourceView textview_original_text;
@@ -121,13 +119,11 @@ namespace ValaCAT.UI
         [GtkChild]
         private ListBox tips_box;
 
-        private Message message;
-        private int plural_number;
-
         private string _original_text;
         private string _tranlation_text;
 
-        private string original_text {
+        private string original_text
+        {
             get {
                 _original_text = this.plural_number == 0 ?
                 this.message.get_original_singular () :
@@ -136,32 +132,35 @@ namespace ValaCAT.UI
             }
         }
 
-        private ArrayList<ValaCAT.TextTag> original_text_tags;
-
-        private string? tranlation_text {
-            get { _tranlation_text = this.tranlation_text = this.message.get_translation (this.plural_number);
-                return _tranlation_text;}
-            set { this.message.set_translation (this.plural_number, value);}
+        private string? tranlation_text
+        {
+            get
+            {
+                _tranlation_text = this.message.get_translation (this.plural_number);
+                return _tranlation_text;
+            }
+            set
+            {
+                this.message.set_translation (this.plural_number, value);
+            }
         }
 
+        private ArrayList<ValaCAT.TextTag> original_text_tags;
         private ArrayList<ValaCAT.TextTag> translation_text_tags;
-
 
         /**
          * Contructor for MessageEditorTabs. Initializes tab label
          *  and strings.
          */
-        public MessageEditorTab (string label,
+        public MessageEditorTab (string label_text,
                                  Message message,
                                  int plural_number)
         {
-            this.label = new Label (label);
-
+            this.label = new Label (label_text);
             this.message = message;
             this.plural_number = plural_number;
 
             this.textview_original_text.buffer.set_text (this.original_text);
-
             this.textview_translated_text.buffer = new SourceBuffer (new TextTagTable ());
 
             if (this.tranlation_text != null)
@@ -169,9 +168,7 @@ namespace ValaCAT.UI
                 (this.textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
                 this.textview_translated_text.buffer.set_text (this.tranlation_text);
                 (this.textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
-
             }
-
 
             this.original_text_tags = new ArrayList<ValaCAT.TextTag> ();
             this.translation_text_tags = new ArrayList<ValaCAT.TextTag> ();
@@ -304,6 +301,8 @@ namespace ValaCAT.UI
          */
         public MessageTipRow (MessageTip t)
         {
+            this.tip = t;
+
             switch (t.level)
             {
             case TipLevel.ERROR:
@@ -317,7 +316,6 @@ namespace ValaCAT.UI
                 break;
             }
             icon.tooltip_text = t.name + ": " + t.description;
-            tip = t;
         }
     }
 

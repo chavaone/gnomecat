@@ -308,10 +308,10 @@ namespace ValaCAT.Iterators
         public MessageIterator (Message? msg, string search_string, IteratorFilter<MessageMark> filter)
         {
             this.search_string = search_string;
+            this.filter = filter;
             this.marks = new ArrayList<MessageMark> ();
             if (msg != null)
                 this.set_element (msg);
-            this.filter = filter;
         }
 
         public override MessageMark? next ()

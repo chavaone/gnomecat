@@ -95,6 +95,7 @@
         </child>
         <child>
           <object class="GtkButton" id="savebutton">
+            <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="can_focus">True</property>
             <property name="action_name">win.edit-save</property>
@@ -115,6 +116,7 @@
         </child>
         <child>
           <object class="GtkButton" id="undobutton">
+            <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="can_focus">True</property>
             <property name="action_name">win.edit-undo</property>
@@ -135,6 +137,7 @@
         </child>
         <child>
           <object class="GtkButton" id="redobutton">
+            <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="can_focus">True</property>
             <property name="action_name">win.edit-redo</property>
@@ -155,6 +158,7 @@
         </child>
         <child>
           <object class="GtkToggleButton" id="searchbutton">
+            <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="can_focus">True</property>
             <style>

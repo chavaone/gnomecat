@@ -96,8 +96,6 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.Entry translation;
         [GtkChild]
-        private Gtk.Box tipsbox;
-        [GtkChild]
         private Image info_image;
         [GtkChild]
         private Image warning_image;

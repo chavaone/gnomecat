@@ -283,7 +283,7 @@ namespace ValaCAT.Search
             this.filetab.message_list.select_row (row);
 
             MessageEditorTab editor_tab = this.filetab.message_editor.get_tab_by_plural_number (mm.plural_number);
-            this.filetab.message_editor.select_tab_by_plural_number(mm.plural_number);
+            this.filetab.message_editor.select_tab_by_plural_number (mm.plural_number);
 
             editor_tab.clean_tags_translation_string ();
             editor_tab.clean_tags_original_string ();

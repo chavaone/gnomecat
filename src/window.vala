@@ -299,7 +299,7 @@ namespace ValaCAT.UI
         private void on_switch_page (Gtk.Widget src,
                                     uint page)
         {
-            int page_num = int.parse(page.to_string()); //FIXME
+            int page_num = int.parse (page.to_string ()); //FIXME
             Tab t = this.notebook.get_nth_page (page_num) as Tab;
             this.file_changed (t.file);
             this.project_changed (t.project);
@@ -309,8 +309,8 @@ namespace ValaCAT.UI
         private void on_search_changed (Gtk.SearchEntry entry)
         {
             if (this.active_search != null)
-                this.active_search.disable();
-            if (entry.get_text() == "")
+                this.active_search.disable ();
+            if (entry.get_text () == "")
             {
                 this.active_search = null;
             }
