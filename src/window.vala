@@ -46,6 +46,7 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.RecentChooserMenu recentprojectmenu;
 
+        private ValaCAT.UI.FileChooser file_chooser;
         private ValaCAT.UI.SearchDialog search_dialog;
         public ValaCAT.Search.Search active_search {get; set;}
 
@@ -67,8 +68,7 @@ namespace ValaCAT.UI
             { "go-next-translated", on_go_next_translated},
             { "go-previous-translated", on_go_previous_translated},
             { "go-next-fuzzy", on_go_next_fuzzy},
-            { "go-previous-fuzzy", on_go_previous_fuzzy},
-            { "open-file", on_open_file}
+            { "go-previous-fuzzy", on_go_previous_fuzzy}
         };
 
 
@@ -350,15 +350,54 @@ namespace ValaCAT.UI
             }
         }
 
-        private void on_open_file ()
-        {
-        }
-
         [GtkCallback]
         private void on_open_recent_file ()
         {
             string uri = this.recentfilemenu.get_current_uri ();
             (this.application as ValaCAT.Application.Application).open_file (GLib.File.new_for_uri (uri), this);
+        }
+
+        [GtkCallback]
+        private void on_open_file ()
+        {
+            if (this.file_chooser == null)
+                this.file_chooser = new FileChooser (this.application as ValaCAT.Application.Application, this);
+            this.file_chooser.show_all ();
+        }
+    }
+
+    [GtkTemplate (ui = "/info/aquelando/valacat/ui/filechooser.ui")]
+    public class FileChooser : Gtk.FileChooserDialog
+    {
+
+        private ValaCAT.UI.Window window;
+
+
+        public FileChooser (ValaCAT.Application.Application app, ValaCAT.UI.Window win)
+        {
+            this.application = app;
+            this.window = win;
+            this.filter = new FileFilter ();
+            foreach (string ext in (app as ValaCAT.Application.Application).extensions)
+            {
+                this.filter.add_pattern ("*." + ext);
+            }
+        }
+
+        [GtkCallback]
+        public void on_open ()
+        {
+            foreach (string uri in this.get_uris ())
+            {
+                (application as ValaCAT.Application.Application).open_file (GLib.File.new_for_uri (uri), this.window);
+            }
+            this.hide ();
+        }
+
+        [GtkCallback]
+        public void on_cancel ()
+        {
+            this.hide ();
         }
 
     }

@@ -344,6 +344,7 @@
           <property name="can_focus">False</property>
           <property name="label" translatable="yes">Open File</property>
           <property name="use_underline">True</property>
+          <signal name="activate" handler="on_open_file" swapped="no"/>
         </object>
       </child>
       <child>
@@ -358,6 +359,7 @@
               <property name="can_focus">False</property>
               <property name="limit">10</property>
               <signal name="item-activated" handler="on_open_recent_file" swapped="no"/>
+              <signal name="file_activated" handler="on_open_recent_file" swapped="no"/>
             </object>
           </child>
         </object>
