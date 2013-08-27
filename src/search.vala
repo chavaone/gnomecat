@@ -64,19 +64,19 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void search_clicked (Button b)
         {
-            ini_search(false,true);
+            ini_search (false, true);
         }
 
         [GtkCallback]
         private void replace_clicked (Button b)
         {
-            ini_search(true,true);
+            ini_search (true, true);
         }
 
         [GtkCallback]
         private void replace_all_clicked (Button b)
         {
-            ini_search(true,false);
+            ini_search (true, false);
         }
 
         [GtkCallback]
@@ -90,7 +90,7 @@ namespace ValaCAT.UI
 
             if (! checkbutton_search_project.active && this.window.get_active_tab () is FileTab)
             {
-                this.window.active_search = new FileSearch (this.window.get_active_tab() as FileTab,
+                this.window.active_search = new FileSearch (this.window.get_active_tab () as FileTab,
                                                             checkbutton_translated_messages.active,
                                                             checkbutton_untranslated_messages.active,
                                                             checkbutton_fuzzy_messages.active,
@@ -103,11 +103,11 @@ namespace ValaCAT.UI
             }
             else
             {
-                //this.window.active_search = new ProjectSearch();
+                //this.window.active_search = new ProjectSearch ();
             }
 
-            this.window.active_search.next_item();
-            this.hide();
+            this.window.active_search.next_item ();
+            this.hide ();
         }
     }
 }
@@ -165,21 +165,21 @@ namespace ValaCAT.Search
             //FILTERS MESSAGES
             ArrayList<IteratorFilter<Message>> filters_file = new ArrayList<IteratorFilter<Message>> ();
             if (translated)
-                filters_file.add(new TranslatedFilter ());
+                filters_file.add (new TranslatedFilter ());
 
             if (untranslated)
-                filters_file.add(new UntranslatedFilter ());
+                filters_file.add (new UntranslatedFilter ());
 
             if (fuzzy)
-                filters_file.add(new FuzzyFilter ());
+                filters_file.add (new FuzzyFilter ());
 
 
             IteratorFilter<Message> filter_messages;
 
-            if(filters_file.size == 0)
+            if (filters_file.size == 0)
                 filter_messages = null;
             else if (filters_file.size == 1)
-                filter_messages = filters_file.get(0);
+                filter_messages = filters_file.get (0);
             else
                 filter_messages = new ORFilter<Message> (filters_file);
 
@@ -187,25 +187,25 @@ namespace ValaCAT.Search
             //FILTERS MESSAGE MARKS
             ArrayList<IteratorFilter<MessageMark>> filters_mark_array = new ArrayList<IteratorFilter<MessageMark>> ();
             if (original)
-                filters_mark_array.add (new OriginalFilter());
+                filters_mark_array.add (new OriginalFilter ());
 
             if (translation)
-                filters_mark_array.add (new TranslationFilter());
+                filters_mark_array.add (new TranslationFilter ());
 
 
             IteratorFilter<MessageMark> filter_marks;
-            if(filters_mark_array.size == 0)
+            if (filters_mark_array.size == 0)
                 filter_marks = null;
             else if (filters_mark_array.size == 1)
-                filter_marks = filters_mark_array.get(0);
+                filter_marks = filters_mark_array.get (0);
             else
                 filter_marks = new ORFilter<MessageMark> (filters_mark_array);
 
 
             this.filetab = tab;
-            this.file_iterator = new FileIterator(tab.file,filter_messages);
-            this.file_iterator.first();
-            this.message_iterator = new MessageIterator(null, search_text, filter_marks);
+            this.file_iterator = new FileIterator (tab.file,filter_messages);
+            this.file_iterator.first ();
+            this.message_iterator = new MessageIterator (null, search_text, filter_marks);
             this.has_to_replace = replace;
             this.stop = stop;
             this.replace_text = replace_text;
@@ -219,17 +219,17 @@ namespace ValaCAT.Search
 
             while (mm == null)
             {
-                if (this.message_iterator.message == null || (mm = this.message_iterator.next()) == null)
+                if (this.message_iterator.message == null || (mm = this.message_iterator.next ()) == null)
                 {
                     Message message;;
-                    if((message = this.file_iterator.next()) == null)
+                    if ((message = this.file_iterator.next ()) == null)
                         return;
-                    this.message_iterator.set_element(message);
-                    this.message_iterator.first();
+                    this.message_iterator.set_element (message);
+                    this.message_iterator.first ();
                 }
             }
 
-            this.highlight_search(mm);
+            this.highlight_search (mm);
         }
 
         public override void previous_item ()
@@ -238,17 +238,17 @@ namespace ValaCAT.Search
 
             while (mm == null)
             {
-                if (this.message_iterator.message == null || (mm = this.message_iterator.previous()) == null)
+                if (this.message_iterator.message == null || (mm = this.message_iterator.previous ()) == null)
                 {
                     Message message;;
-                    if((message = this.file_iterator.previous()) == null)
+                    if ((message = this.file_iterator.previous ()) == null)
                         return;
-                    this.message_iterator.set_element(message);
-                    this.message_iterator.last();
+                    this.message_iterator.set_element (message);
+                    this.message_iterator.last ();
                 }
             }
 
-            this.highlight_search(mm);
+            this.highlight_search (mm);
         }
 
         public override string get_search_text ()
@@ -263,13 +263,13 @@ namespace ValaCAT.Search
 
         public override void replace ()
         {
-            MessageMark mm = this.message_iterator.get_current_element();
-            replace_intern(mm);
+            MessageMark mm = this.message_iterator.get_current_element ();
+            replace_intern (mm);
         }
 
         public override void disable ()
         {
-            MessageMark mm = this.message_iterator.get_current_element();
+            MessageMark mm = this.message_iterator.get_current_element ();
             if (mm != null)
                 un_highligt_search (mm);
         }
@@ -299,7 +299,7 @@ namespace ValaCAT.Search
                 return;
 
             MessageEditorTab editor_tab = this.filetab.message_editor.get_tab_by_plural_number (mm.plural_number);
-            this.filetab.message_editor.select_tab_by_plural_number(mm.plural_number);
+            this.filetab.message_editor.select_tab_by_plural_number (mm.plural_number);
 
             if (mm.is_original)
             {
@@ -325,8 +325,8 @@ namespace ValaCAT.Search
             }
             else
             {
-                string original_string = mm.message.get_translation(mm.plural_number);
-                mm.message.set_translation(mm.plural_number,
+                string original_string = mm.message.get_translation (mm.plural_number);
+                mm.message.set_translation (mm.plural_number,
                     original_string.substring (0,mm.index) + this.replace_text +
                     original_string.substring (mm.index + mm.length));
             }

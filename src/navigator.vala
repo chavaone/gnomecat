@@ -88,7 +88,7 @@ namespace ValaCAT.Navigator
 
 			if (current_message == null)
 			{
-				print("ERROR!!"); //TODO
+				print ("ERROR!!"); //TODO
 			}
 		}
 

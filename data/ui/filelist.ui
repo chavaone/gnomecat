@@ -3,6 +3,7 @@
   <!-- interface-requires gdl 3.0 -->
   <!-- interface-requires gtk+ 3.10 -->
   <template class="ValaCATUIFileListWidget" parent="GdlDockItem">
+    <property name="visible">True</property>
     <child>
     <object class="GtkScrolledWindow" id="scrolled_window_file_list">
         <property name="visible">True</property>
@@ -10,6 +11,7 @@
         <property name="shadow_type">in</property>
         <child>
         	<object class="GtkListBox" id="file_list_box">
+            <property name="visible">True</property>
             <property name="activate-on-single-click">False</property>
             <signal name="row_activated" handler="on_row_activated" swapped="no"/>
       		</object>

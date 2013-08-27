@@ -102,7 +102,7 @@ namespace ValaCAT.PoFiles
          */
         public override void save_file (string? file_path=null)
         {
-            XErrorHandler err_hand = XErrorHandler();
+            XErrorHandler err_hand = XErrorHandler ();
             GettextPo.File.file_write (this.file,
                 file_path == null ? this.file_path : file_path, err_hand);
         }
@@ -113,22 +113,22 @@ namespace ValaCAT.PoFiles
          */
         public override void parse_file (string path)
         {
-            XErrorHandler err_hand = XErrorHandler();
+            XErrorHandler err_hand = XErrorHandler ();
             this.file = GettextPo.File.file_read (path, err_hand);
-            foreach (string d in this.file.domains())
+            foreach (string d in this.file.domains ())
             {
                 MessageIterator mi = this.file.message_iterator (d);
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
-                    this.messages.add (new PoMessage(this, m));
+                    this.messages.add (new PoMessage (this, m));
                 }
             }
         }
 
         public override Language? get_language ()
         {
-            return Language.get_language_by_code("es"); //TODO
+            return Language.get_language_by_code ("es"); //TODO
         }
     }
 

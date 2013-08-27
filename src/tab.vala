@@ -47,22 +47,22 @@ namespace ValaCAT.UI
         public Tab ()
         {
             this.dockbar.master = dock;
-            this.layout_manager = new DockLayout(dock);
+            this.layout_manager = new DockLayout (dock);
         }
 
         public void load_layout (string file)
         {
-            this.layout_manager.load_from_file(file);
+            this.layout_manager.load_from_file (file);
         }
 
         public void save_layout (string file)
         {
-            this.layout_manager.save_to_file(file);
+            this.layout_manager.save_to_file (file);
         }
 
         public void add_item (DockItem item, DockPlacement place)
         {
-            this.dock.add_item(item,place);
+            this.dock.add_item (item,place);
         }
 
     }
@@ -87,22 +87,22 @@ namespace ValaCAT.UI
 
         public FileTab (ValaCAT.FileProject.File? f)
         {
-            base();
+            base ();
             this.change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
-            this.label = new Gtk.Label("f.name"); //TODO f.name;
+            this.label = new Gtk.Label ("f.name"); //TODO f.name;
             this._file = f;
 
-            this.message_list = new MessageListWidget(f);
-            this.add_item(this.message_list, DockPlacement.CENTER);
+            this.message_list = new MessageListWidget (f);
+            this.add_item (this.message_list, DockPlacement.CENTER);
 
-            this.message_editor = new MessageEditorWidget();
-            this.message_editor.set_message(f.messages.get(0));
-            this.add_item(this.message_editor, DockPlacement.BOTTOM);
+            this.message_editor = new MessageEditorWidget ();
+            this.message_editor.set_message (f.messages.get (0));
+            this.add_item (this.message_editor, DockPlacement.BOTTOM);
             change_messages_sensible.add (this.message_editor);
 
-            this.context_pannel = new ContextPanel();
-            this.context_pannel.set_message(f.messages.get(0));
-            this.add_item(this.context_pannel,DockPlacement.RIGHT);
+            this.context_pannel = new ContextPanel ();
+            this.context_pannel.set_message (f.messages.get (0));
+            this.add_item (this.context_pannel,DockPlacement.RIGHT);
             change_messages_sensible.add (this.context_pannel);
 
             this.set_navigators ();
@@ -207,12 +207,12 @@ namespace ValaCAT.UI
 
         public ProjectTab (Project p)
         {
-            base();
+            base ();
             this.label = new Gtk.Label ("projectname"); //TODO project.name
             this._project = p;
 
             this.file_list = new FileListWidget.with_project (p);
-            this.add_item(this.file_list, DockPlacement.CENTER);
+            this.add_item (this.file_list, DockPlacement.CENTER);
         }
 
 

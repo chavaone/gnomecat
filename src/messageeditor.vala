@@ -42,23 +42,23 @@ namespace ValaCAT.UI
         public void set_message (Message m)
         {
             int i;
-            this.clean_tabs();
-            string label = _("Singular (%s)").printf(m.get_language().get_plural_form_tag(0));
-            var auxtab = new MessageEditorTab(label, m, 0);
-            foreach (MessageTip t in m.get_tips_plural_form(0))
-                auxtab.add_tip(t);
-            this.add_tab(auxtab);
+            this.clean_tabs ();
+            string label = _("Singular (%s)").printf (m.get_language ().get_plural_form_tag (0));
+            var auxtab = new MessageEditorTab (label, m, 0);
+            foreach (MessageTip t in m.get_tips_plural_form (0))
+                auxtab.add_tip (t);
+            this.add_tab (auxtab);
 
-            if ( m.has_plural() )
+            if (m.has_plural ())
             {
-                int num_plurals = m.get_language().get_number_of_plurals();
-                for(i = 1; i < num_plurals; i++)
+                int num_plurals = m.get_language ().get_number_of_plurals ();
+                for (i = 1; i < num_plurals; i++)
                 {
-                    label = _("Plural %i (%s)").printf(i,m.get_language().get_plural_form_tag(i));
-                    auxtab = new MessageEditorTab(label, m, i);
-                    foreach (MessageTip t in m.get_tips_plural_form(i))
-                        auxtab.add_tip(t);
-                    this.add_tab(auxtab);
+                    label = _("Plural %i (%s)").printf (i,m.get_language ().get_plural_form_tag (i));
+                    auxtab = new MessageEditorTab (label, m, i);
+                    foreach (MessageTip t in m.get_tips_plural_form (i))
+                        auxtab.add_tip (t);
+                    this.add_tab (auxtab);
                 }
             }
             this.message = m;
@@ -72,7 +72,7 @@ namespace ValaCAT.UI
 
         public MessageEditorTab? get_tab_by_plural_number (int plural_number)
         {
-            if (plural_number > this.plurals_notebook.get_n_pages())
+            if (plural_number > this.plurals_notebook.get_n_pages ())
                 return null;
 
             return this.plurals_notebook.get_nth_page (plural_number) as MessageEditorTab;
@@ -80,22 +80,22 @@ namespace ValaCAT.UI
 
         public void select_tab_by_plural_number (int plural_number)
         {
-            if (plural_number > this.plurals_notebook.get_n_pages())
+            if (plural_number > this.plurals_notebook.get_n_pages ())
                 return;
-            this.plurals_notebook.set_current_page(plural_number);
+            this.plurals_notebook.set_current_page (plural_number);
         }
 
         private void add_tab (MessageEditorTab t)
         {
-            this.plurals_notebook.append_page(t, t.label);
+            this.plurals_notebook.append_page (t, t.label);
         }
 
         private void clean_tabs ()
         {
-            int number_of_tabs = this.plurals_notebook.get_n_pages();
-            for(int i=0;i<number_of_tabs;i++)
+            int number_of_tabs = this.plurals_notebook.get_n_pages ();
+            for (int i=0; i<number_of_tabs; i++)
             {
-                this.plurals_notebook.remove_page(0);
+                this.plurals_notebook.remove_page (0);
             }
         }
 
@@ -155,16 +155,16 @@ namespace ValaCAT.UI
                                  Message message,
                                  int plural_number)
         {
-            this.label = new Label(label);
+            this.label = new Label (label);
 
             this.message = message;
             this.plural_number = plural_number;
 
             this.textview_original_text.buffer.set_text (this.original_text);
 
-            this.textview_translated_text.buffer = new SourceBuffer(new TextTagTable());
+            this.textview_translated_text.buffer = new SourceBuffer (new TextTagTable ());
 
-            if(this.tranlation_text != null)
+            if (this.tranlation_text != null)
             {
                 (this.textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
                 this.textview_translated_text.buffer.set_text (this.tranlation_text);
@@ -185,7 +185,7 @@ namespace ValaCAT.UI
          */
         public void add_tip (MessageTip t)
         {
-            this.tips_box.add (new MessageTipRow(t));
+            this.tips_box.add (new MessageTipRow (t));
         }
 
         /**
@@ -193,7 +193,7 @@ namespace ValaCAT.UI
          */
         public void remove_tip (MessageTip t)
         {
-            foreach (Widget w in this.tips_box.get_children())
+            foreach (Widget w in this.tips_box.get_children ())
             {
                 if ((w as MessageTipRow).tip == t)
                 {
@@ -250,14 +250,14 @@ namespace ValaCAT.UI
         public void undo ()
         {
             SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
-            if (source_buffer.get_undo_manager (). can_undo())
+            if (source_buffer.get_undo_manager (). can_undo ())
                 source_buffer.get_undo_manager ().undo ();
         }
 
         public void redo ()
         {
             SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
-            if (source_buffer.get_undo_manager (). can_redo())
+            if (source_buffer.get_undo_manager (). can_redo ())
                 source_buffer.get_undo_manager ().redo ();
         }
 

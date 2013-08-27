@@ -75,8 +75,8 @@ namespace ValaCAT.UI
         public FileListRow (ValaCAT.FileProject.File f)
         {
             this.file = f;
-            label_file_name.set_text("f.name");
-            label_info_trans.set_text("%iT %iU %iF".printf(f.number_of_translated,
+            label_file_name.set_text ("f.name");
+            label_info_trans.set_text ("%iT %iU %iF".printf (f.number_of_translated,
                 f.number_of_untranslated, f.number_of_fuzzy));
             float fraction = f.number_of_translated / f.number_of_messages;
             progressbar_file.set_fraction (fraction);

@@ -47,7 +47,7 @@ namespace ValaCAT.Languages
         public HashMap<int, string> plural_tags {get; private set;}
 
 
-        private static HashMap<int,PluralForm> plural_forms;
+        private static HashMap<int, PluralForm> plural_forms;
 
 
         /**
@@ -60,7 +60,7 @@ namespace ValaCAT.Languages
          *  plural forms.
          * @param plural_tags Distinguishable names for each plural form.
          */
-        public PluralForm ( int id,
+        public PluralForm   (int id,
                             int number_of_plurals,
                             string expression,
                             HashMap<int, string> plural_tags)
@@ -81,7 +81,7 @@ namespace ValaCAT.Languages
          */
         public string get_plural_form_tag (int plural)
         {
-            return plural_tags.get(plural);
+            return plural_tags.get (plural);
         }
 
         /**
@@ -90,9 +90,9 @@ namespace ValaCAT.Languages
          */
         public static PluralForm get_plural_from_id (int id)
         {
-            if(plural_forms == null)
-                lazy_init();
-            var p = plural_forms.get(id);
+            if (plural_forms == null)
+                lazy_init ();
+            var p = plural_forms.get (id);
             return p;
         }
 
@@ -102,7 +102,7 @@ namespace ValaCAT.Languages
          */
         private static void lazy_init ()
         {
-            plural_forms = new HashMap<int, PluralForm>();
+            plural_forms = new HashMap<int, PluralForm> ();
 
             try{
 
@@ -117,22 +117,22 @@ namespace ValaCAT.Languages
                 {
                     var form_object = form.get_object ();
 
-                    int id = int.parse(form_object.get_int_member ("id").to_string());
+                    int id = int.parse (form_object.get_int_member ("id").to_string ());
                     string expression = form_object.get_string_member ("expression");
-                    int number_of_plurals = int.parse(form_object.get_int_member ("number_of_plurals").to_string());
+                    int number_of_plurals = int.parse (form_object.get_int_member ("number_of_plurals").to_string ());
                     HashMap<int,string> tags = new HashMap<int,string> ();
 
                     foreach (var tag in form_object.get_array_member ("tags").get_elements ())
                     {
                         var tag_object = tag.get_object ();
-                        tags.set(int.parse(tag_object.get_int_member ("number").to_string ()), tag_object.get_string_member ("tag"));
+                        tags.set (int.parse (tag_object.get_int_member ("number").to_string ()), tag_object.get_string_member ("tag"));
                     }
 
-                    plural_forms.set(id, new PluralForm(id, number_of_plurals, expression, tags));
+                    plural_forms.set (id, new PluralForm (id, number_of_plurals, expression, tags));
                 }
 
             } catch (Error e) {
-                stderr.printf("ERROR: %s\n", e.message);
+                stderr.printf ("ERROR: %s\n", e.message);
             }
 
         }
@@ -152,16 +152,16 @@ namespace ValaCAT.Languages
 
         public static Language get_language_by_code (string code)
         {
-            if(languages == null)
-                lazy_init();
-            return languages.get(code);
+            if (languages == null)
+                lazy_init ();
+            return languages.get (code);
         }
 
         public Language (string code, string name, int? pluralform)
         {
             this.name = name;
             this.code = code;
-            this.plural_form = pluralform == null ? null : PluralForm.get_plural_from_id(pluralform);
+            this.plural_form = pluralform == null ? null : PluralForm.get_plural_from_id (pluralform);
         }
 
         public int get_number_of_plurals ()
@@ -175,12 +175,12 @@ namespace ValaCAT.Languages
         {
             if (plural_form == null)
                 return null;
-            return this.plural_form.get_plural_form_tag(plural);
+            return this.plural_form.get_plural_form_tag (plural);
         }
 
         private static void lazy_init ()
         {
-            languages = new HashMap<string, Language>();
+            languages = new HashMap<string, Language> ();
 
             try {
                 var parser = new Json.Parser ();
@@ -194,22 +194,22 @@ namespace ValaCAT.Languages
                 {
                     var lang_object = lang.get_object ();
 
-                    string name = lang_object.get_string_member("name");
-                    string code = lang_object.get_string_member("code");
+                    string name = lang_object.get_string_member ("name");
+                    string code = lang_object.get_string_member ("code");
 
-                    if ( lang_object.has_member("pluralform") )
+                    if (lang_object.has_member ("pluralform") )
                     {
-                        int plural_form_id = int.parse(lang_object.get_int_member("pluralform").to_string());
-                        languages.set(code, new Language(code, name, plural_form_id));
+                        int plural_form_id = int.parse (lang_object.get_int_member ("pluralform").to_string ());
+                        languages.set (code, new Language (code, name, plural_form_id));
                     }
                     else
                     {
-                        languages.set(code, new Language(code, name, null));
+                        languages.set (code, new Language (code, name, null));
                     }
                 }
             } catch (Error e) {
                 //TODO: print some error info.
-                stderr.printf("ERROR: %s\n",e.message);
+                stderr.printf ("ERROR: %s\n",e.message);
             }
         }
     }

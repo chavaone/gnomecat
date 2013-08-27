@@ -28,6 +28,11 @@ namespace ValaCAT
         public abstract void set_message (Message m);
     }
 
+    public interface ChangeTextSensible : Object
+    {
+        public abstract void set_original_text (string text);
+    }
+
     public class TextTag : Object
     {
 
@@ -37,7 +42,7 @@ namespace ValaCAT
 
         public TextTag (Gtk.TextTag tag)
         {
-            this.with_range(tag,-1,-1);
+            this.with_range (tag, -1, -1);
         }
 
         public TextTag.with_range (Gtk.TextTag tag, int ini_offset, int end_offset)
@@ -57,12 +62,12 @@ namespace ValaCAT
 
             TextIter end_iter = TextIter ();
             if (this.end_offset == -1)
-                buffer.get_iter_at_offset(out end_iter, text_size - 1);
+                buffer.get_iter_at_offset (out end_iter, text_size - 1);
             else
-                buffer.get_iter_at_offset(out end_iter, this.end_offset);
+                buffer.get_iter_at_offset (out end_iter, this.end_offset);
 
-            buffer.tag_table.add(this.tag);
-            buffer.apply_tag_by_name(this.tag.name, ini_iter, end_iter);
+            buffer.tag_table.add (this.tag);
+            buffer.apply_tag_by_name (this.tag.name, ini_iter, end_iter);
         }
 
         public void remove_from_buffer (TextBuffer buffer, int text_size)
@@ -75,12 +80,12 @@ namespace ValaCAT
 
             TextIter end_iter = TextIter ();
             if (this.end_offset == -1)
-                buffer.get_iter_at_offset(out end_iter, text_size - 1);
+                buffer.get_iter_at_offset (out end_iter, text_size - 1);
             else
-                buffer.get_iter_at_offset(out end_iter, this.end_offset);
+                buffer.get_iter_at_offset (out end_iter, this.end_offset);
 
-            buffer.remove_tag_by_name(this.tag.name, ini_iter, end_iter);
-            buffer.tag_table.remove(this.tag);
+            buffer.remove_tag_by_name (this.tag.name, ini_iter, end_iter);
+            buffer.tag_table.remove (this.tag);
         }
     }
 }

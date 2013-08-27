@@ -2,6 +2,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
   <template class="ValaCATUIContextPanel" parent="GdlDockItem">
+    <property name="visible">True</property>
     <property name="name" translatable="yes">Context Panel</property>
     <property name="preferred_width">75</property>
     <child>

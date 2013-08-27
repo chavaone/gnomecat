@@ -53,7 +53,6 @@ namespace ValaCAT.UI
         public signal void file_changed (ValaCAT.FileProject.File? file);
         public signal void project_changed (ValaCAT.FileProject.Project? project);
 
-
         private const GLib.ActionEntry[] action_entries = {
             { "edit-undo", on_edit_undo },
             { "edit-redo", on_edit_redo },
@@ -74,24 +73,24 @@ namespace ValaCAT.UI
 
         public Window (ValaCAT.Application.Application app)
         {
-            Object(application: app);
-        }
-
-        construct
-        {
-            add_action_entries (action_entries, this);
-
-            this.searchbutton.bind_property("active", this.search_bar,
-                "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
-
-            this.file_changed.connect(on_file_changed);
-            this.project_changed.connect(on_project_changed);
+            Object (application: app);
 
             this.recentfilemenu.filter = new RecentFilter ();
             foreach (string ext in (this.application as ValaCAT.Application.Application).extensions)
             {
                 this.recentfilemenu.filter.add_pattern ("*." + ext);
             }
+        }
+
+        construct
+        {
+            add_action_entries (action_entries, this);
+
+            this.searchbutton.bind_property ("active", this.search_bar,
+                "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
+
+            this.file_changed.connect (on_file_changed);
+            this.project_changed.connect (on_project_changed);
         }
 
         public void add_file (ValaCAT.FileProject.File f)
@@ -108,7 +107,7 @@ namespace ValaCAT.UI
             }
             FileTab f_tab = new FileTab (f);
             this.add_tab (f_tab);
-            f_tab.show_all ();
+            f_tab.show ();
             notebook.set_current_page (notebook.page_num (f_tab));
         }
 
@@ -127,7 +126,7 @@ namespace ValaCAT.UI
 
             ProjectTab p_tab = new ProjectTab (p);
             this.add_tab (p_tab);
-            p_tab.show_all ();
+            p_tab.show ();
             notebook.set_current_page (notebook.page_num (p_tab));
         }
 
@@ -220,8 +219,8 @@ namespace ValaCAT.UI
         void on_search_advanded ()
         {
             if (this.search_dialog == null)
-                this.search_dialog = new SearchDialog(this);
-            this.search_dialog.show_all();
+                this.search_dialog = new SearchDialog (this);
+            this.search_dialog.show ();
         }
 
         void on_edit_save ()
@@ -317,18 +316,18 @@ namespace ValaCAT.UI
             }
             else
             {
-                this.active_search = new FileSearch (   this.get_active_tab() as FileTab,
-                                                        true,
-                                                        true,
-                                                        true,
-                                                        true,
-                                                        true,
-                                                        false,
-                                                        true,
-                                                        entry.get_text (),
-                                                        "");
+                this.active_search = new FileSearch (this.get_active_tab () as FileTab,
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    true,
+                                                    false,
+                                                    true,
+                                                    entry.get_text (),
+                                                    "");
 
-                this.active_search.next_item();
+                this.active_search.next_item ();
             }
 
         }
@@ -337,7 +336,7 @@ namespace ValaCAT.UI
         private weak Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
         {
             var win = new ValaCAT.UI.Window (this.application as ValaCAT.Application.Application);
-            win.show_all ();
+            win.show ();
             return win.notebook;
         }
 
@@ -362,7 +361,7 @@ namespace ValaCAT.UI
         {
             if (this.file_chooser == null)
                 this.file_chooser = new FileChooser (this.application as ValaCAT.Application.Application, this);
-            this.file_chooser.show_all ();
+            this.file_chooser.show ();
         }
     }
 

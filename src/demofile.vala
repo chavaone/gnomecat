@@ -8,12 +8,12 @@ using Gee;
 namespace ValaCAT.Demo
 {
 
-    string string_random(int length = 8, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
+    string string_random (int length = 8, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
         string random = "";
 
-        for(int i=0;i<length;i++){
-            int random_index = Random.int_range(0,charset.length);
-            string ch = charset.get_char(charset.index_of_nth_char(random_index)).to_string();
+        for (int i=0;i<length;i++){
+            int random_index = Random.int_range (0, charset.length);
+            string ch = charset.get_char (charset.index_of_nth_char (random_index)).to_string ();
             random += ch;
         }
 
@@ -26,11 +26,11 @@ namespace ValaCAT.Demo
 
         public DemoFile ()
         {
-            base();
-            int num = Random.int_range(100,300);
+            base ();
+            int num = Random.int_range (100, 300);
             for (int i = 0; i < num; i++)
             {
-                this.add_message(new DemoMessage(this));
+                this.add_message (new DemoMessage (this));
             }
         }
 
@@ -44,7 +44,7 @@ namespace ValaCAT.Demo
 
         public override Language? get_language ()
         {
-            return Language.get_language_by_code("pl");
+            return Language.get_language_by_code ("pl");
         }
 
     }
@@ -59,37 +59,37 @@ namespace ValaCAT.Demo
 
         public DemoMessage (ValaCAT.FileProject.File owner)
         {
-            base(owner);
+            base (owner);
 
-            original_singular = string_random(Random.int_range(16,40));
-            original_plural = Random.int_range(0,5) == 0 ? string_random(Random.int_range(16,40)) : null;
+            original_singular = string_random (Random.int_range (16,40));
+            original_plural = Random.int_range (0,5) == 0 ? string_random (Random.int_range (16, 40)) : null;
             this._has_plural = original_plural != null;
             this.translations = new TreeMap<int, string> ();
 
-            if (Random.int_range(0,4) != 0)
-                this.translations.set(0,string_random(Random.int_range(16,40)));
+            if (Random.int_range (0, 4) != 0)
+                this.translations.set (0, string_random (Random.int_range (16, 40)));
 
-            if(_has_plural)
-                for(int i = 1; i < this.get_language().get_number_of_plurals (); i++)
-                    if (Random.int_range(0,4) != 0)
-                        this.translations.set(i,string_random(Random.int_range(16,40)));
+            if (_has_plural)
+                for (int i = 1; i < this.get_language ().get_number_of_plurals (); i++)
+                    if (Random.int_range (0, 4) != 0)
+                        this.translations.set (i,string_random (Random.int_range (16,40)));
 
-            int random = Random.int_range(0,3);
+            int random = Random.int_range (0,3);
             this.state = random == 0 ? MessageState.TRANSLATED
                        : random == 1 ? MessageState.UNTRANSLATED
                        : MessageState.FUZZY;
-            this.context = string_random(99);
+            this.context = string_random (99);
 
-            if(this.state != MessageState.UNTRANSLATED)
+            if (this.state != MessageState.UNTRANSLATED)
             {
-                random = Random.int_range(0,9);
-                for(int i = 0; i < random; i++)
+                random = Random.int_range (0,9);
+                for (int i = 0; i < random; i++)
                 {
-                    int n = Random.int_range(0,3);
-                    this.add_tip(
-                        new MessageTip(
+                    int n = Random.int_range (0,3);
+                    this.add_tip (
+                        new MessageTip (
                             "Just a tip",
-                            string_random(Random.int_range(16,25)),
+                            string_random (Random.int_range (16,25)),
                             n == 0 ? TipLevel.INFO :
                             n == 1 ? TipLevel.WARNING :
                             TipLevel.ERROR,
@@ -134,7 +134,7 @@ namespace ValaCAT.Demo
          */
         public override string get_translation (int index)
         {
-            return this.translations.get(index);
+            return this.translations.get (index);
         }
 
         /*
@@ -149,7 +149,7 @@ namespace ValaCAT.Demo
         public override void set_translation (int index,
                                             string? translation)
         {
-            this.translations.set(index,translation);
+            this.translations.set (index,translation);
         }
 
         public override string get_context ()

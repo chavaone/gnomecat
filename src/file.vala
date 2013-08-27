@@ -103,8 +103,8 @@ namespace ValaCAT.FileProject
             this.name = name;
             this.description = description;
             this.level = level;
-            this.tags_original = tags_original != null ? tags_original : new ArrayList<ValaCAT.TextTag>();
-            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<ValaCAT.TextTag>();
+            this.tags_original = tags_original != null ? tags_original : new ArrayList<ValaCAT.TextTag> ();
+            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<ValaCAT.TextTag> ();
         }
     }
 
@@ -258,8 +258,8 @@ namespace ValaCAT.FileProject
          */
         public void add_tip (MessageTip tip)
         {
-            tips.add(tip);
-            this.added_tip(tip);
+            tips.add (tip);
+            this.added_tip (tip);
         }
 
         /*
@@ -270,8 +270,8 @@ namespace ValaCAT.FileProject
          */
         public void remove_tip (MessageTip tip)
         {
-            tips.remove(tip);
-            this.removed_tip(tip);
+            tips.remove (tip);
+            this.removed_tip (tip);
         }
 
         /**
@@ -280,12 +280,12 @@ namespace ValaCAT.FileProject
          */
         public ArrayList<MessageTip> get_tips_plural_form (int plural_form)
         {
-            ArrayList<MessageTip> aux = new ArrayList<MessageTip>();
+            ArrayList<MessageTip> aux = new ArrayList<MessageTip> ();
 
             foreach (MessageTip t in this.tips)
             {
-                if(t.plural_number == plural_form)
-                    aux.add(t);
+                if (t.plural_number == plural_form)
+                    aux.add (t);
             }
 
             return aux;
@@ -371,7 +371,7 @@ namespace ValaCAT.FileProject
          */
         public File ()
         {
-            this.full(null,null);
+            this.full (null,null);
         }
 
         /**
@@ -381,21 +381,21 @@ namespace ValaCAT.FileProject
         public File.with_file_path (string file_path)
             throws FileError
         {
-            this.full(file_path, null);
+            this.full (file_path, null);
         }
 
         public File.with_project (Project proj)
         {
-            this.full(null, proj);
+            this.full (null, proj);
         }
 
         public File.full (string? file_path, Project? proj)
         {
-            this.messages = new ArrayList<Message>();
+            this.messages = new ArrayList<Message> ();
 
             this.file_path = file_path;
-            if(file_path != null)
-                this.parse_file(file_path);
+            if (file_path != null)
+                this.parse_file (file_path);
 
             this.project = proj;
 
@@ -409,8 +409,8 @@ namespace ValaCAT.FileProject
          */
         public void add_message (Message m)
         {
-            this.messages.add(m);
-            this.connect_message(m);
+            this.messages.add (m);
+            this.connect_message (m);
 
             switch (m.state) //Updates file statistics.
             {
@@ -433,8 +433,8 @@ namespace ValaCAT.FileProject
          */
         public void remove_message (Message m)
         {
-            this.messages.remove(m);
-            this.disconnect_message(m);
+            this.messages.remove (m);
+            this.disconnect_message (m);
 
             switch (m.state) //Updates file statistics.
             {
@@ -553,10 +553,8 @@ namespace ValaCAT.FileProject
         public Project (string config_file)
         {
             this.config_file_path = config_file;
-            //this.project_settings = new ProjectSettings(); //FIXME
-            //this.project_settings.parse(config_file);
-            this.files = new ArrayList<File>();
-            this.scan_files();
+            this.files = new ArrayList<File> ();
+            this.scan_files ();
         }
 
         /**
@@ -586,7 +584,7 @@ namespace ValaCAT.FileProject
          */
         public void add_file (File f)
         {
-            this.files.add(f);
+            this.files.add (f);
         }
 
 
@@ -595,7 +593,7 @@ namespace ValaCAT.FileProject
          */
         private void remove_file (File f)
         {
-            this.files.remove(f);
+            this.files.remove (f);
         }
     }
 

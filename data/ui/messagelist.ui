@@ -2,6 +2,7 @@
 <interface>
   <!-- Message list widget template. -->
   <template class="ValaCATUIMessageListWidget" parent="GdlDockItem">
+    <property name="visible">True</property>
     <child>
     <object class="GtkScrolledWindow" id="scrolledwindowmessagelist">
         <property name="visible">True</property>
@@ -9,6 +10,7 @@
         <property name="shadow_type">in</property>
         <child>
         	<object class="GtkListBox" id="messages_list_box">
+            <property name="visible">True</property>
             <signal name="row_selected" handler="on_row_selected" swapped="no"/>
       		</object>
         </child>

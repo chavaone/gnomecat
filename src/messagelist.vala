@@ -47,12 +47,12 @@ namespace ValaCAT.UI
 
         private void add_message (Message m)
         {
-            this.messages_list_box.add(new MessageListRow(m));
+            this.messages_list_box.add (new MessageListRow (m));
         }
 
         public MessageListRow? find_row_by_message (Message m)
         {
-            foreach (Widget w in this.messages_list_box.get_children())
+            foreach (Widget w in this.messages_list_box.get_children ())
             {
                 ValaCAT.UI.MessageListRow row = w as ValaCAT.UI.MessageListRow;
 
@@ -111,8 +111,8 @@ namespace ValaCAT.UI
         public MessageListRow (Message m)
         {
             this.message = m;
-            m.message_changed.connect ( (source) => {update_row();} );
-            this.update_row();
+            m.message_changed.connect (update_row);
+            this.update_row ();
         }
 
 
@@ -141,9 +141,9 @@ namespace ValaCAT.UI
             this.state_image.icon_name = status_icon_name;
             this.state_image.tooltip_text = status_tooltip_text;
 
-            this.original.set_text(this.message.get_original_singular());
-            if(this.message.get_translation(0) != null)
-                this.translation.set_text(this.message.get_translation(0));
+            this.original.set_text (this.message.get_original_singular ());
+            if (this.message.get_translation (0) != null)
+                this.translation.set_text (this.message.get_translation (0));
 
             foreach (MessageTip t in this.message.tips)
             {
@@ -163,23 +163,23 @@ namespace ValaCAT.UI
 
             if (number_info_tips > 0)
             {
-                this.info_image.visible = true; //TODO: Add gettext!
-                this.info_image.tooltip_text = ngettext("There is %i info tip",
-                    "There are %i info tips.",number_info_tips).printf(number_info_tips);
+                this.info_image.visible = true;
+                this.info_image.tooltip_text = ngettext ("There is %i info tip",
+                    "There are %i info tips.",number_info_tips).printf (number_info_tips);
             }
 
             if (number_warning_tips > 0)
             {
                 this.warning_image.visible = true;
-                this.warning_image.tooltip_text = ngettext("Ther is %i warning tip.",
-                    "There are %i warning tips.", number_warning_tips).printf(number_warning_tips);
+                this.warning_image.tooltip_text = ngettext ("Ther is %i warning tip.",
+                    "There are %i warning tips.", number_warning_tips).printf (number_warning_tips);
             }
 
             if (number_error_tips > 0)
             {
                 this.error_image.visible = true;
-                this.error_image.tooltip_text = ngettext("There is %i error tip.",
-                    "There are %i error tips.", number_error_tips).printf(number_error_tips);
+                this.error_image.tooltip_text = ngettext ("There is %i error tip.",
+                    "There are %i error tips.", number_error_tips).printf (number_error_tips);
             }
         }
     }

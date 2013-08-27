@@ -3,6 +3,7 @@
 <interface>
   <!-- interface-requires gtk+ 3.10 -->
   <template class="ValaCATUIFileChooser" parent="GtkFileChooserDialog">
+    <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>

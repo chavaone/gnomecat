@@ -60,7 +60,7 @@ namespace ValaCAT.Application
             this.file_openers.add (o);
         }
 
-        public void open_file (GLib.File f,  ValaCAT.UI.Window window)
+        public void open_file (GLib.File f, ValaCAT.UI.Window window)
         {
             int index_last_point = f.get_path ().last_index_of_char ('.');
             string extension = f.get_path ().substring (index_last_point + 1);
@@ -80,7 +80,7 @@ namespace ValaCAT.Application
         public override void activate ()
         {
             ValaCAT.UI.Window window = new ValaCAT.UI.Window (this);
-            window.show_all ();
+            window.show ();
             Gtk.main ();
         }
 
@@ -97,7 +97,7 @@ namespace ValaCAT.Application
 
             window.add_project (p);
 
-            window.show_all ();
+            window.show ();
             Gtk.main ();
         }
 
