@@ -73,7 +73,6 @@ namespace ValaCAT
                     ValaCAT.FileProject.File? file = o.open_file (f.get_path (),null);
                     if (file == null)
                     {
-                        print ("Error while open file.");
                         break;
                     }
                     else
@@ -98,12 +97,18 @@ namespace ValaCAT
 
             foreach (GLib.File f in files)
             {
-                window.add_file (open_file (f));
+                ValaCAT.FileProject.File file = open_file (f);
+                if (file != null)
+                    window.add_file (file);
+                else
+                    stderr.printf ("Error while open %s file.\n", f.get_path ());
             }
 
-            ValaCAT.FileProject.Project p = new Project ("/home/ch01/valacat"); //DEMO
-
+            //DEMO
+            ValaCAT.FileProject.Project p = new Project ("/home/ch01/valacat");
+            ValaCAT.FileProject.File f = new ValaCAT.Demo.DemoFile ();
             window.add_project (p);
+            window.add_file (f);
 
             window.show ();
             Gtk.main ();
