@@ -35,7 +35,6 @@ namespace ValaCAT.UI
 
         public FileListWidget.with_project (Project proj)
         {
-            this ();
             this.project = proj;
 
             foreach (ValaCAT.FileProject.File f in this.project.files)

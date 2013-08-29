@@ -53,6 +53,7 @@ CLEANFILES =                                                \
     Makefile.in \
     config.h 	\
     config.h.ini \
+    config.h.in~ \
     stamp-h1
 
 valacat.gresource.c: $(top_srcdir)/data/valacat.gresource.xml
