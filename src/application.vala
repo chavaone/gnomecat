@@ -23,13 +23,15 @@ using ValaCAT.UI;
 using ValaCAT.FileProject;
 using Gee;
 
-namespace ValaCAT.Application
+namespace ValaCAT
 {
     public class Application : Gtk.Application
     {
 
         private ArrayList<string> _extensions;
         private ArrayList<FileOpener> file_openers;
+        private static ValaCAT.Application _instance;
+
 
         public ArrayList<string> extensions {   get
             {
@@ -60,7 +62,7 @@ namespace ValaCAT.Application
             this.file_openers.add (o);
         }
 
-        public void open_file (GLib.File f, ValaCAT.UI.Window window)
+        public ValaCAT.FileProject.File? open_file (GLib.File f)
         {
             int index_last_point = f.get_path ().last_index_of_char ('.');
             string extension = f.get_path ().substring (index_last_point + 1);
@@ -70,11 +72,17 @@ namespace ValaCAT.Application
                 {
                     ValaCAT.FileProject.File? file = o.open_file (f.get_path (),null);
                     if (file == null)
+                    {
                         print ("Error while open file.");
+                        break;
+                    }
                     else
-                        window.add_file (file);
+                    {
+                        return file;
+                    }
                 }
             }
+            return null;
         }
 
         public override void activate ()
@@ -89,16 +97,23 @@ namespace ValaCAT.Application
             ValaCAT.UI.Window window = new ValaCAT.UI.Window (this);
 
             foreach (GLib.File f in files)
-                this.open_file (f, window);
+            {
+                window.add_file (open_file (f));
+            }
 
-            ValaCAT.FileProject.Project p = new Project (""); //DEMO
-            p.add_file (new ValaCAT.Demo.DemoFile ());
-            p.add_file (new ValaCAT.Demo.DemoFile ());
+            ValaCAT.FileProject.Project p = new Project ("/home/ch01/valacat"); //DEMO
 
             window.add_project (p);
 
             window.show ();
             Gtk.main ();
+        }
+
+        public static new ValaCAT.Application get_default ()
+        {
+            if (_instance == null)
+                _instance = new Application ();
+            return _instance;
         }
 
         public static int main (string[] args)
@@ -107,9 +122,8 @@ namespace ValaCAT.Application
             Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
             Intl.textdomain (Config.GETTEXT_PACKAGE);
 
-            var app = new Application ();
+            var app = get_default ();
             return app.run (args);
         }
-
     }
 }

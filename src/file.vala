@@ -542,20 +542,7 @@ namespace ValaCAT.FileProject
         public string name {get; protected set;}
 
 
-        private string config_file_path;
-
-
-        /**
-         * Creates a new project using a configuration file.
-         *
-         * @param config_file Paht to the existent config_file.
-         */
-        public Project (string config_file)
-        {
-            this.config_file_path = config_file;
-            this.files = new ArrayList<File> ();
-            this.scan_files ();
-        }
+        public string path {get; private set;}
 
         /**
          * Creates a new project in a directory.
@@ -563,9 +550,15 @@ namespace ValaCAT.FileProject
          * @param folder_path Path to the folder project.
          * @param name Name of the new project.
          */
-        public Project.from_folder (string folder_path, string name)
+        public Project (string folder_path)
         {
-            //TODO
+            this.path = folder_path;
+            this.scan_files ();
+        }
+
+        construct
+        {
+            this.files = new ArrayList<File> ();
         }
 
 
@@ -575,7 +568,55 @@ namespace ValaCAT.FileProject
          */
         public void scan_files ()
         {
-            //TODO
+            GLib.File dir = GLib.File.new_for_path (this.path);
+            dir.query_info_async.begin("standard::type", 0, Priority.DEFAULT, null, (obj, res) => {
+                try
+                {
+                    FileInfo info = dir.query_info_async.end (res);
+                    if (info.get_file_type () == FileType.DIRECTORY)
+                    {
+                        this.add_files_from_dir (dir);
+                    }
+                }
+                catch (Error e)
+                {
+                    stdout.printf ("Error: %s\n", e.message);
+                }
+            });
+        }
+
+        private void add_files_from_dir (GLib.File dir)
+        {
+            dir.enumerate_children_async.begin ("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+                Priority.DEFAULT, null, (obj, res) => {
+
+                try
+                {
+                    FileEnumerator enumerator = dir.enumerate_children_async.end (res);
+                    FileInfo info;
+                    while ((info = enumerator.next_file (null)) != null)
+                    {
+                        //FIXME: This doesn't work for Windows.
+                        string path = dir.get_path () + "/" + info.get_attribute_byte_string ("standard::name");
+
+                        if (info.get_file_type () == FileType.DIRECTORY)
+                        {
+                            this.add_files_from_dir (GLib.File.new_for_path (path));
+                        }
+                        else if (info.get_file_type () == FileType.REGULAR)
+                        {
+                            File f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_path (path));
+                            if (f != null)
+                                this.add_file (f);
+                        }
+                    }
+                }
+                catch (Error e)
+                {
+                    stdout.printf ("Error while adding files from %s: %s\n", dir.get_path (), e.message);
+                }
+            });
+
         }
 
 

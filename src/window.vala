@@ -71,12 +71,12 @@ namespace ValaCAT.UI
         };
 
 
-        public Window (ValaCAT.Application.Application app)
+        public Window (ValaCAT.Application app)
         {
             Object (application: app);
 
             this.recentfilemenu.filter = new RecentFilter ();
-            foreach (string ext in (this.application as ValaCAT.Application.Application).extensions)
+            foreach (string ext in (this.application as ValaCAT.Application).extensions)
             {
                 this.recentfilemenu.filter.add_pattern ("*." + ext);
             }
@@ -333,9 +333,9 @@ namespace ValaCAT.UI
         }
 
         [GtkCallback]
-        private weak Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
+        private unowned Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
         {
-            var win = new ValaCAT.UI.Window (this.application as ValaCAT.Application.Application);
+            var win = new ValaCAT.UI.Window (this.application as ValaCAT.Application);
             win.show ();
             return win.notebook;
         }
@@ -353,14 +353,15 @@ namespace ValaCAT.UI
         private void on_open_recent_file ()
         {
             string uri = this.recentfilemenu.get_current_uri ();
-            (this.application as ValaCAT.Application.Application).open_file (GLib.File.new_for_uri (uri), this);
+            ValaCAT.FileProject.File f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_uri (uri));
+            this.add_file (f);
         }
 
         [GtkCallback]
         private void on_open_file ()
         {
             if (this.file_chooser == null)
-                this.file_chooser = new FileChooser (this.application as ValaCAT.Application.Application, this);
+                this.file_chooser = new FileChooser (this);
             this.file_chooser.show ();
         }
     }
@@ -372,12 +373,12 @@ namespace ValaCAT.UI
         private ValaCAT.UI.Window window;
 
 
-        public FileChooser (ValaCAT.Application.Application app, ValaCAT.UI.Window win)
+        public FileChooser (ValaCAT.UI.Window win)
         {
-            this.application = app;
             this.window = win;
             this.filter = new FileFilter ();
-            foreach (string ext in (app as ValaCAT.Application.Application).extensions)
+            var app = ValaCAT.Application.get_default ();
+            foreach (string ext in (app as ValaCAT.Application).extensions)
             {
                 this.filter.add_pattern ("*." + ext);
             }
@@ -388,7 +389,9 @@ namespace ValaCAT.UI
         {
             foreach (string uri in this.get_uris ())
             {
-                (application as ValaCAT.Application.Application).open_file (GLib.File.new_for_uri (uri), this.window);
+                ValaCAT.FileProject.File? f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_uri (uri));
+                if (f != null)
+                    this.window.add_file (f);
             }
             this.hide ();
         }
