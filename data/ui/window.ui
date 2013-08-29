@@ -3,6 +3,8 @@
   <!-- interface-requires gtk+ 3.8 -->
   <template class="ValaCATUIWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
+    <property name="default_height">700</property>
+    <property name="default_width">900</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="headerbar">
         <property name="visible">True</property>
