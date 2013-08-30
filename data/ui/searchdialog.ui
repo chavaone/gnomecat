@@ -1,27 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.15.2 on Fri Aug 30 20:22:12 2013 -->
 <interface>
   <!-- interface-requires gtk+ 3.6 -->
-  <template class="ValaCATUISearchDialog" parent="GtkDialog" >
+  <template class="ValaCATUISearchDialog" parent="GtkDialog">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="type_hint">dialog</property>
-    <signal name="close" handler="close_search_dialog" swapped="no"/>
+    <signal name="close" handler="on_close" swapped="no"/>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox" id="dialog-action_area1">
+          <object class="GtkButtonBox" id="dialog-action_area">
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="button_close">
-                <property name="label" translatable="yes">Close</property>
+                <property name="label" translatable="yes">Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="close_search_dialog" swapped="no"/>
+                <property name="relief">half</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -35,7 +36,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="replace_all_clicked" swapped="no"/>
+                <property name="relief">half</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -49,7 +50,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="replace_clicked" swapped="no"/>
+                <property name="relief">half</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -63,7 +64,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <signal name="clicked" handler="search_clicked" swapped="no"/>
+                <property name="relief">half</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -337,9 +338,9 @@
     </child>
     <action-widgets>
       <action-widget response="0">button_close</action-widget>
-      <action-widget response="0">button_replace_all</action-widget>
-      <action-widget response="0">button_replace</action-widget>
-      <action-widget response="0">button_search</action-widget>
+      <action-widget response="3">button_replace_all</action-widget>
+      <action-widget response="2">button_replace</action-widget>
+      <action-widget response="1">button_search</action-widget>
     </action-widgets>
   </template>
 </interface>

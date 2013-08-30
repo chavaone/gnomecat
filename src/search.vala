@@ -28,6 +28,15 @@ using ValaCAT.UI;
 namespace ValaCAT.UI
 {
 
+
+    public enum SearchDialogResponses
+    {
+        CANCEL  = 0,
+        SEARCH = 1,
+        REPLACE = 2,
+        REPLACEALL = 3;
+    }
+
     /**
      *
      */
@@ -53,62 +62,22 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.CheckButton checkbutton_wrap_around;
 
-        private ValaCAT.UI.Window window;
-
-
-        public SearchDialog (Window w)
-        {
-            this.window = w;
-        }
-
-        [GtkCallback]
-        private void search_clicked (Button b)
-        {
-            ini_search (false, true);
-        }
+        public string search_text {get { return entry_search.get_text ();}}
+        public string replace_text {get {return entry_replace.get_text ();}}
+        public bool translated_messages {get {return checkbutton_translated_messages.active;}}
+        public bool fuzzy_messages {get {return checkbutton_fuzzy_messages.active;}}
+        public bool untranslated_messages {get {return checkbutton_untranslated_messages.active;}}
+        public bool translation_text {get {return checkbutton_translated.active;}}
+        public bool original_text {get {return checkbutton_original.active;}}
+        public bool search_project {get {return checkbutton_search_project.active;}}
+        public bool wrap_around {get {return checkbutton_wrap_around.active;}}
 
         [GtkCallback]
-        private void replace_clicked (Button b)
+        private void on_close ()
         {
-            ini_search (true, true);
+            this.response (ValaCAT.UI.SearchDialogResponses.CANCEL);
         }
 
-        [GtkCallback]
-        private void replace_all_clicked (Button b)
-        {
-            ini_search (true, false);
-        }
-
-        [GtkCallback]
-        private void close_search_dialog (Widget w)
-        {
-            this.visible = false;
-        }
-
-        private void ini_search (bool replace, bool stop)
-        {
-
-            if (! checkbutton_search_project.active && this.window.get_active_tab () is FileTab)
-            {
-                this.window.active_search = new FileSearch (this.window.get_active_tab () as FileTab,
-                                                            checkbutton_translated_messages.active,
-                                                            checkbutton_untranslated_messages.active,
-                                                            checkbutton_fuzzy_messages.active,
-                                                            checkbutton_original.active,
-                                                            checkbutton_translated.active,
-                                                            replace,
-                                                            stop,
-                                                            entry_search.get_text (),
-                                                            entry_replace.get_text ());
-            }
-            else
-            {
-                //this.window.active_search = new ProjectSearch ();
-            }
-
-            this.window.active_search.next_item ();
-            this.hide ();
-        }
     }
 }
 

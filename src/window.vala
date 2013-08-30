@@ -28,8 +28,6 @@ namespace ValaCAT.UI
     public class Window : Gtk.ApplicationWindow
     {
         [GtkChild]
-        private Gtk.SearchEntry search_entry;
-        [GtkChild]
         private Gtk.SearchBar search_bar;
         [GtkChild]
         private Gtk.Notebook notebook;
@@ -44,8 +42,6 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.RecentChooserMenu recentprojectmenu;
 
-        private ValaCAT.UI.FileChooser file_chooser;
-        private ValaCAT.UI.SearchDialog search_dialog;
         public ValaCAT.Search.Search active_search {get; set;}
 
         public signal void file_changed (ValaCAT.FileProject.File? file);
@@ -219,9 +215,49 @@ namespace ValaCAT.UI
 
         void on_search_advanded ()
         {
-            if (this.search_dialog == null)
-                this.search_dialog = new SearchDialog (this);
-            this.search_dialog.show ();
+            ValaCAT.UI.SearchDialog dialog = new SearchDialog ();
+
+            switch (dialog.run ())
+            {
+            case ValaCAT.UI.SearchDialogResponses.CANCEL:
+                break;
+            case ValaCAT.UI.SearchDialogResponses.SEARCH:
+                ini_search (dialog, dialog.search_project, false, false, dialog.wrap_around);
+                break;
+            case ValaCAT.UI.SearchDialogResponses.REPLACE:
+                ini_search (dialog, dialog.search_project, true, false, dialog.wrap_around);
+                break;
+            case ValaCAT.UI.SearchDialogResponses.REPLACEALL:
+                ini_search (dialog, dialog.search_project, true, true, dialog.wrap_around);
+                break;
+            }
+
+            dialog.destroy ();
+        }
+
+        private void ini_search (ValaCAT.UI.SearchDialog dialog,
+            bool project, bool replace, bool stop, bool wrap)
+        {
+
+            if (project)
+            {
+                //active_search = null;
+            }
+            else
+            {
+                active_search = new FileSearch (get_active_tab () as FileTab,
+                                                dialog.translated_messages,
+                                                dialog.untranslated_messages,
+                                                dialog.fuzzy_messages,
+                                                dialog.original_text,
+                                                dialog.translation_text,
+                                                replace,
+                                                stop,
+                                                dialog.search_text,
+                                                dialog.replace_text);
+            }
+
+            active_search.next_item ();
         }
 
         void on_edit_save ()
@@ -274,7 +310,7 @@ namespace ValaCAT.UI
             }
             else
             {
-                this.label_title.set_text ("filename"); //TODO
+                this.label_title.set_text (file.name);
                 set_progress_bar_info (file.number_of_translated,
                     file.number_of_untranslated, file.number_of_fuzzy);
             }
@@ -420,38 +456,5 @@ namespace ValaCAT.UI
                     this.add_project (new ValaCAT.FileProject.Project (f.get_path ()));
             }
         }
-    }
-
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/filechooser.ui")]
-    public class FileChooser : Gtk.FileChooserDialog
-    {
-
-        private ValaCAT.UI.Window window;
-
-
-        public FileChooser (ValaCAT.UI.Window win)
-        {
-            this.window = win;
-
-        }
-
-        [GtkCallback]
-        public void on_open ()
-        {
-            foreach (string uri in this.get_uris ())
-            {
-                ValaCAT.FileProject.File? f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_uri (uri));
-                if (f != null)
-                    this.window.add_file (f);
-            }
-            this.hide ();
-        }
-
-        [GtkCallback]
-        public void on_cancel ()
-        {
-            this.hide ();
-        }
-
     }
 }
