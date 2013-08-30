@@ -365,7 +365,6 @@
               <property name="can_focus">False</property>
               <property name="limit">10</property>
               <signal name="item-activated" handler="on_open_recent_file" swapped="no"/>
-              <signal name="file_activated" handler="on_open_recent_file" swapped="no"/>
             </object>
           </child>
         </object>
@@ -377,19 +376,12 @@
         </object>
       </child>
       <child>
-        <object class="GtkMenuItem" id="newproject">
-          <property name="visible">True</property>
-          <property name="can_focus">False</property>
-          <property name="label" translatable="yes">New Project</property>
-          <property name="use_underline">True</property>
-        </object>
-      </child>
-      <child>
         <object class="GtkMenuItem" id="openproject">
           <property name="visible">True</property>
           <property name="can_focus">False</property>
           <property name="label" translatable="yes">Open Project</property>
           <property name="use_underline">True</property>
+          <signal name="activate" handler="on_open_project" swapped="no"/>
         </object>
       </child>
       <child>

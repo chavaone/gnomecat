@@ -28,8 +28,6 @@ namespace ValaCAT.UI
     public class Window : Gtk.ApplicationWindow
     {
         [GtkChild]
-        private Gtk.HeaderBar headerbar;
-        [GtkChild]
         private Gtk.SearchEntry search_entry;
         [GtkChild]
         private Gtk.SearchBar search_bar;
@@ -80,6 +78,9 @@ namespace ValaCAT.UI
             {
                 this.recentfilemenu.filter.add_pattern ("*." + ext);
             }
+
+            this.recentprojectmenu.filter = new RecentFilter ();
+            this.recentprojectmenu.filter.add_pattern ("*/");
         }
 
         construct
@@ -360,9 +361,64 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_open_file ()
         {
-            if (this.file_chooser == null)
-                this.file_chooser = new FileChooser (this);
-            this.file_chooser.show ();
+            Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog (_("Select a file to open."),
+                this, Gtk.FileChooserAction.OPEN,
+                Gtk.Stock.CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.Stock.OPEN,
+                Gtk.ResponseType.ACCEPT);
+
+            chooser.filter = new FileFilter ();
+            var app = ValaCAT.Application.get_default ();
+            foreach (string ext in (app as ValaCAT.Application).extensions)
+            {
+                chooser.filter.add_pattern ("*." + ext);
+            }
+
+            chooser.file_activated.connect ((src) => {open_file_from_chooser (src as FileChooserDialog);});
+
+            if (chooser.run () == Gtk.ResponseType.ACCEPT)
+                this.open_file_from_chooser (chooser);
+            chooser.destroy ();
+        }
+
+        private void open_file_from_chooser (FileChooserDialog chooser)
+        {
+            foreach (string uri in chooser.get_uris ())
+            {
+                ValaCAT.FileProject.File? f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_uri (uri));
+                if (f != null)
+                    this.add_file (f);
+            }
+        }
+
+        [GtkCallback]
+        private void on_open_project ()
+        {
+            Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog (_("Select a file to open."),
+                this, Gtk.FileChooserAction.SELECT_FOLDER,
+                Gtk.Stock.CANCEL,
+                Gtk.ResponseType.CANCEL,
+                Gtk.Stock.OPEN,
+                Gtk.ResponseType.ACCEPT);
+
+            chooser.file_activated.connect ((src) => {
+                open_project_from_chooser (src as FileChooserDialog);
+            });
+
+            if (chooser.run () == Gtk.ResponseType.ACCEPT)
+                this.open_project_from_chooser (chooser);
+            chooser.destroy ();
+        }
+
+        private void open_project_from_chooser (FileChooserDialog chooser)
+        {
+            foreach (string uri in chooser.get_uris ())
+            {
+                var f = GLib.File.new_for_uri (uri);
+                if (f.get_path () != null)
+                    this.add_project (new ValaCAT.FileProject.Project (f.get_path ()));
+            }
         }
     }
 
@@ -376,12 +432,7 @@ namespace ValaCAT.UI
         public FileChooser (ValaCAT.UI.Window win)
         {
             this.window = win;
-            this.filter = new FileFilter ();
-            var app = ValaCAT.Application.get_default ();
-            foreach (string ext in (app as ValaCAT.Application).extensions)
-            {
-                this.filter.add_pattern ("*." + ext);
-            }
+
         }
 
         [GtkCallback]
