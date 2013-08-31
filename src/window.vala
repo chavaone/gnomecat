@@ -141,7 +141,7 @@ namespace ValaCAT.UI
             return this.notebook.get_nth_page (page_number) as Tab;
         }
 
-        void on_go_next ()
+        private void on_go_next ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -150,7 +150,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_previous ()
+        private void on_go_previous ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -159,7 +159,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_next_fuzzy ()
+        private void on_go_next_fuzzy ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -168,7 +168,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_previous_fuzzy ()
+        private void on_go_previous_fuzzy ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -177,7 +177,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_next_translated ()
+        private void on_go_next_translated ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -186,7 +186,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_previous_translated ()
+        private void on_go_previous_translated ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -195,7 +195,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_next_untranslated ()
+        private void on_go_next_untranslated ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -204,7 +204,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_go_previous_untranslated ()
+        private void on_go_previous_untranslated ()
         {
             Tab t = this.get_active_tab ();
             if (t is FileTab)
@@ -213,7 +213,7 @@ namespace ValaCAT.UI
             }
         }
 
-        void on_search_advanded ()
+        private void on_search_advanded ()
         {
             ValaCAT.UI.SearchDialog dialog = new SearchDialog ();
 
@@ -251,16 +251,25 @@ namespace ValaCAT.UI
                                                 dialog.fuzzy_messages,
                                                 dialog.original_text,
                                                 dialog.translation_text,
-                                                replace,
-                                                stop,
                                                 dialog.search_text,
                                                 dialog.replace_text);
             }
 
-            active_search.next_item ();
+            if (stop)
+            {
+                active_search.next_item ();
+            }
+            else
+            {
+                do
+                {
+                    active_search.next_item ();
+                    active_search.replace ();
+                } while (true); //FIXME
+            }
         }
 
-        void on_edit_save ()
+        private void on_edit_save ()
         {
             Tab t = this.get_active_tab ();
             if (! (t is FileTab))
@@ -269,7 +278,7 @@ namespace ValaCAT.UI
             ft.file.save_file ();
         }
 
-        void on_edit_undo ()
+        private void on_edit_undo ()
         {
             Tab t = this.get_active_tab ();
             if (! (t is FileTab))
@@ -278,7 +287,7 @@ namespace ValaCAT.UI
             ft.undo ();
         }
 
-        void on_edit_redo ()
+        private void on_edit_redo ()
         {
             Tab t = this.get_active_tab ();
             if (! (t is FileTab))
@@ -287,21 +296,21 @@ namespace ValaCAT.UI
             ft.redo ();
         }
 
-        void on_search_next ()
+        private void on_search_next ()
         {
             if (this.active_search == null)
                 return;
             this.active_search.next_item ();
         }
 
-            void on_search_previous ()
+        private void on_search_previous ()
         {
             if (this.active_search == null)
                 return;
             this.active_search.previous_item ();
         }
 
-        public void on_file_changed (Window src, ValaCAT.FileProject.File? file)
+        private  void on_file_changed (Window src, ValaCAT.FileProject.File? file)
         {
             if (file == null)
             {
@@ -327,7 +336,7 @@ namespace ValaCAT.UI
 
 
 
-        public void on_project_changed (Window src, ValaCAT.FileProject.Project? project)
+        private  void on_project_changed (Window src, ValaCAT.FileProject.Project? project)
         {
             //TODO
         }
@@ -358,8 +367,6 @@ namespace ValaCAT.UI
                                                     true,
                                                     true,
                                                     true,
-                                                    true,
-                                                    false,
                                                     true,
                                                     entry.get_text (),
                                                     "");

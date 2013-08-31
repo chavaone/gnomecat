@@ -113,8 +113,6 @@ namespace ValaCAT.Search
         private ValaCAT.UI.FileTab filetab;
         private FileIterator file_iterator;
         private MessageIterator message_iterator;
-        private bool has_to_replace;
-        private bool stop;
         private string replace_text;
         private string search_text;
 
@@ -125,8 +123,6 @@ namespace ValaCAT.Search
                          bool fuzzy,
                          bool original,
                          bool translation,
-                         bool replace,
-                         bool stop,
                          string search_text,
                          string replace_text)
         {
@@ -175,8 +171,6 @@ namespace ValaCAT.Search
             this.file_iterator = new FileIterator (tab.file,filter_messages);
             this.file_iterator.first ();
             this.message_iterator = new MessageIterator (null, search_text, filter_marks);
-            this.has_to_replace = replace;
-            this.stop = stop;
             this.replace_text = replace_text;
             this.search_text = search_text;
         }
