@@ -62,7 +62,7 @@ namespace ValaCAT.UI
 
         public void add_item (DockItem item, DockPlacement place)
         {
-            this.dock.add_item (item,place);
+            this.dock.add_item (item, place);
         }
 
     }
@@ -89,7 +89,7 @@ namespace ValaCAT.UI
         {
             base ();
             this.change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
-            this.label = new Gtk.Label ("f.name"); //TODO f.name;
+            this.label = new Gtk.Label (f.name);
             this._file = f;
 
             this.message_list = new MessageListWidget (f);
@@ -107,6 +107,11 @@ namespace ValaCAT.UI
 
             this.set_navigators ();
             this.message_list.message_selected.connect (on_message_selected);
+
+            this._file.file_changed.connect (() => {
+                ValaCAT.UI.Window win = this.get_parent ().get_parent (). get_parent () as ValaCAT.UI.Window;
+                win.file_changed (this.file);
+                });
         }
 
         public void on_message_selected (Message m)

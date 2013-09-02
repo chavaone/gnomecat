@@ -238,8 +238,6 @@ namespace ValaCAT.FileProject
          *
          * @param index
          * @param translation
-         * @return The previous string or \\null\\ if there
-         *  isn't previous string
          */
         public abstract void set_translation (int index,
                                             string? translation);
@@ -298,6 +296,11 @@ namespace ValaCAT.FileProject
      */
     public abstract class File : Object
     {
+
+        /**
+         *
+         */
+         public string name {get; protected set;}
 
         /*
          * Project which belongs this file or \\null\\ if there is no project.
@@ -366,6 +369,8 @@ namespace ValaCAT.FileProject
         private int cache_number_of_translated;
 
 
+        public signal void file_changed ();
+
         /**
          * Simple constructor. Initializes an empty isntance.
          */
@@ -393,9 +398,23 @@ namespace ValaCAT.FileProject
         {
             this.messages = new ArrayList<Message> ();
 
+            if (file_path != null)
+            {
+                int index_last_slash = file_path.last_index_of_char ('/');
+                this.name = file_path.substring (index_last_slash + 1);
+            }
+
             this.file_path = file_path;
             if (file_path != null)
                 this.parse_file (file_path);
+
+            foreach (Message m in this.messages)
+            {
+                m.message_changed.connect ((src) =>
+                    {
+                        this.file_changed ();
+                    });
+            }
 
             this.project = proj;
 
