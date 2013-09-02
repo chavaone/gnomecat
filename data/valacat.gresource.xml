@@ -12,6 +12,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/searchdialog.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/preferencesdialog.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
     </gresource>

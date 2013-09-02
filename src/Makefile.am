@@ -17,11 +17,11 @@ AM_CPPFLAGS = \
 	-DGNOMELOCALEDIR=\""$(localedir)"\"
 
 VALASOURCES = \
-	filelist.vala 		\
-	messagelist.vala 	\
-	tab.vala 			\
-	messageeditor.vala	\
-	window.vala			\
+	filelist.vala \
+	messagelist.vala \
+	tab.vala \
+	messageeditor.vala \
+	window.vala	\
 	contextpanel.vala \
 	application.vala \
 	demofile.vala \
@@ -32,7 +32,8 @@ VALASOURCES = \
 	iterators.vala \
 	search.vala \
 	navigator.vala \
-	pofile.vala
+	pofile.vala \
+	preferencesdialog.vala
 
 valacat_SOURCES = \
     $(VALASOURCES)                 \

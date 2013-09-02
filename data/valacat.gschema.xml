@@ -11,6 +11,11 @@
       <summary>Make whitespace visible</summary>
       <description></description>
     </key>
+    <key name="custom-font" type="b">
+      <default>true</default>
+      <summary>Use custom font.</summary>
+      <description></description>
+    </key>
     <key name="font" type="s">
       <default>'Monospace 12'</default>
       <summary>Font</summary>

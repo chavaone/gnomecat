@@ -463,5 +463,14 @@ namespace ValaCAT.UI
                     this.add_project (new ValaCAT.FileProject.Project (f.get_path ()));
             }
         }
+
+        [GtkCallback]
+        private void on_settings ()
+        {
+            ValaCAT.UI.PreferencesDialog dialog = new PreferencesDialog ();
+
+            dialog.run ();
+            dialog.destroy ();
+        }
     }
 }

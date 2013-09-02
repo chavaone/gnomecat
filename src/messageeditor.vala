@@ -145,8 +145,59 @@ namespace ValaCAT.UI
             }
         }
 
+        public bool visible_whitespace {
+            get
+            {
+                assert (textview_translated_text.draw_spaces == textview_original_text.draw_spaces);
+                return textview_translated_text.draw_spaces == SourceDrawSpacesFlags.ALL;
+            }
+            set
+            {
+                if (value)
+                {
+                    textview_translated_text.draw_spaces = SourceDrawSpacesFlags.ALL;
+                    textview_original_text.draw_spaces = SourceDrawSpacesFlags.ALL;
+                }
+                else
+                {
+                    textview_translated_text.draw_spaces = SourceDrawSpacesFlags.LEADING;
+                    textview_original_text.draw_spaces = SourceDrawSpacesFlags.LEADING;
+                }
+            }
+        }
+
+        public bool highlight_syntax
+        {
+            get
+            {
+                assert ((textview_translated_text.buffer as SourceBuffer).highlight_syntax ==
+                    (textview_original_text.buffer as SourceBuffer).highlight_syntax);
+                return (textview_translated_text.buffer as SourceBuffer).highlight_syntax;
+            }
+            construct set
+            {
+                (textview_translated_text.buffer as SourceBuffer).highlight_syntax = value;
+                (textview_original_text.buffer as SourceBuffer).highlight_syntax = value;
+            }
+        }
+
+        public string font
+        {
+            set
+            {
+                Pango.FontDescription font_desc = Pango.FontDescription.from_string (value);
+                if (font_desc != null)
+                {
+                    textview_translated_text.override_font (font_desc);
+                    textview_original_text.override_font (font_desc);
+                }
+
+            }
+        }
+
         private ArrayList<ValaCAT.TextTag> original_text_tags;
         private ArrayList<ValaCAT.TextTag> translation_text_tags;
+        private GLib.Settings settings;
 
         /**
          * Contructor for MessageEditorTabs. Initializes tab label
@@ -160,7 +211,9 @@ namespace ValaCAT.UI
             this.message = message;
             this.plural_number = plural_number;
 
+            this.textview_original_text.buffer = new SourceBuffer (new TextTagTable ());
             this.textview_original_text.buffer.set_text (this.original_text);
+
             this.textview_translated_text.buffer = new SourceBuffer (new TextTagTable ());
 
             if (this.tranlation_text != null)
@@ -174,6 +227,15 @@ namespace ValaCAT.UI
             this.translation_text_tags = new ArrayList<ValaCAT.TextTag> ();
 
             this.textview_translated_text.buffer.end_user_action.connect (update_translation);
+        }
+
+        construct
+        {
+            settings = new GLib.Settings ("info.aquelando.valacat");
+
+            settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
+            settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
+            settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 
 
