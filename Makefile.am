@@ -1,4 +1,4 @@
 
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 
-SUBDIRS = src po
+SUBDIRS = src

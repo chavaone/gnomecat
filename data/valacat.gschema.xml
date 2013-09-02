@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/org/gtk/exampleapp/" id="info.aquelando.valacat">
+    <key name="highlight" type="b">
+      <default>false</default>
+      <summary>Highlight syntax</summary>
+      <description></description>
+    </key>
+    <key name="visible-whitespace" type="b">
+      <default>true</default>
+      <summary>Make whitespace visible</summary>
+      <description></description>
+    </key>
+    <key name="font" type="s">
+      <default>'Monospace 12'</default>
+      <summary>Font</summary>
+      <description>The font to be used for content.</description>
+    </key>
+  </schema>
+</schemalist>

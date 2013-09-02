@@ -23,6 +23,8 @@ AM_GNU_GETTEXT([external])
 
 GETTEXT_PACKAGE=valacat
 
+GLIB_GSETTINGS
+
 # Checks for libraries.
 
 # Checks for header files.

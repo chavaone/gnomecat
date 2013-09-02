@@ -58,3 +58,9 @@ CLEANFILES =                                                \
 
 valacat.gresource.c: $(top_srcdir)/data/valacat.gresource.xml
 	glib-compile-resources --generate-source --sourcedir $(top_srcdir)/data/ --target "$@" "$<"
+
+gsettings_SCHEMAS = $(top_srcdir)/data/valacat.gschema.xml
+@GSETTINGS_RULES@
+
+gschemas.compiled: $(top_srcdir)/data/valacat.gschema.xml
+	$(GLIB_COMPILE_SCHEMAS) $(top_srcdir)/data/
