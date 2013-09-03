@@ -111,7 +111,7 @@ namespace ValaCAT.UI
             this._file.file_changed.connect (() => {
                 ValaCAT.UI.Window win = this.get_parent ().get_parent (). get_parent () as ValaCAT.UI.Window;
                 win.file_changed (this.file);
-                });
+            });
         }
 
         public void on_message_selected (Message m)

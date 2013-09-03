@@ -324,6 +324,7 @@ namespace ValaCAT.FileProject
             {
                 get
                 {
+                    rebuild_numbers_cache ();
                     return cache_number_of_untranslated;
                 }
             }
@@ -335,6 +336,7 @@ namespace ValaCAT.FileProject
             {
                 get
                 {
+                    rebuild_numbers_cache ();
                     return cache_number_of_translated;
                 }
             }
@@ -346,6 +348,7 @@ namespace ValaCAT.FileProject
             {
                 get
                 {
+                    rebuild_numbers_cache ();
                     return cache_number_of_fuzzy;
                 }
             }
@@ -408,14 +411,6 @@ namespace ValaCAT.FileProject
             if (file_path != null)
                 this.parse_file (file_path);
 
-            foreach (Message m in this.messages)
-            {
-                m.message_changed.connect ((src) =>
-                    {
-                        this.file_changed ();
-                    });
-            }
-
             this.project = proj;
 
         }
@@ -443,6 +438,11 @@ namespace ValaCAT.FileProject
                 this.cache_number_of_fuzzy++;
                 break;
             }
+
+            m.message_changed.connect ((src) =>
+            {
+                this.file_changed ();
+            });
         }
 
         /**

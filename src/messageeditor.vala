@@ -340,11 +340,10 @@ namespace ValaCAT.UI
             if (old_text == null && new_text != null)
             {
                 bool untrans_msg = false;
-                for (int i = 0; i < message.file.number_of_plurals (); i++)
+                int num_plurals = message.has_plural () ?
+                    message.file.number_of_plurals () : 1;
+                for (int i = 0; i < num_plurals; i++)
                     untrans_msg |= message.get_translation (i) == null;
-
-                if (untrans_msg)
-                    print ("HEYY!!");
 
                 if (! untrans_msg)
                     this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
