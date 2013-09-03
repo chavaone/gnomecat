@@ -333,7 +333,11 @@ namespace ValaCAT.UI
             string? new_text = buff.text;
 
             if (old_text == null && new_text != null)
-                this.message.state = MessageState.FUZZY;
+            {
+                this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
+                    MessageState.FUZZY :
+                    MessageState.TRANSLATED;
+            }
 
             if (old_text != null && new_text == "")
                 this.message.state = MessageState.UNTRANSLATED;

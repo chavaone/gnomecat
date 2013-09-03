@@ -21,5 +21,14 @@
       <summary>Font</summary>
       <description>The font to be used for content.</description>
     </key>
+    <key name="message-changed-state" type="s">
+      <choices>
+        <choice value='fuzzy'/>
+        <choice value='translated'/>
+      </choices>
+      <default>'fuzzy'</default>
+      <summary>Message Changed State</summary>
+      <description>The state to set when an untranslated message is translated.</description>
+    </key>
   </schema>
 </schemalist>
