@@ -332,18 +332,27 @@ namespace ValaCAT.UI
             string? old_text = this.tranlation_text;
             string? new_text = buff.text;
 
-            if (old_text == null && new_text != null)
-            {
-                this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
-                    MessageState.FUZZY :
-                    MessageState.TRANSLATED;
-            }
+            tranlation_text = new_text == "" ? null : new_text;
 
             if (old_text != null && new_text == "")
                 this.message.state = MessageState.UNTRANSLATED;
 
-            this.tranlation_text = new_text == "" ? null : new_text;
-            this.message.message_changed ();
+            if (old_text == null && new_text != null)
+            {
+                bool untrans_msg = false;
+                for (int i = 0; i < message.file.number_of_plurals (); i++)
+                    untrans_msg |= message.get_translation (i) == null;
+
+                if (untrans_msg)
+                    print ("HEYY!!");
+
+                if (! untrans_msg)
+                    this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
+                        MessageState.FUZZY :
+                        MessageState.TRANSLATED;
+            }
+
+            message.message_changed ();
         }
     }
 
