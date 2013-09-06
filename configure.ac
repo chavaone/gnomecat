@@ -3,7 +3,7 @@ AC_PREREQ([2.69])
 AC_INIT([valacat],
 		[0.01],
 		[https://github.com/chavaone/valacat/issues])
-AC_CONFIG_SRCDIR([src/])
+AC_CONFIG_SRCDIR([src/application.c])
 AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER([src/config.h])
@@ -25,14 +25,20 @@ GETTEXT_PACKAGE=valacat
 
 GLIB_GSETTINGS
 
-# Checks for libraries.
+# Checks for libraries
+# FIXME: Replace `main' with a function in `-lgettextpo':
+AC_CHECK_LIB([gettextpo], [po_message_msgid_plural])
 
 # Checks for header files.
-
-# Checks for typedefs, structures, and compiler characteristics.
+AC_CHECK_HEADERS([float.h stdlib.h string.h])
 
 # Checks for library functions.
+AC_CHECK_FUNCS([atexit memchr memset strstr])
 
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+po/Makefile.in
+data/Makefile])
 
-AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT
