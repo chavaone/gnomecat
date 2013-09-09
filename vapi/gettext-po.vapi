@@ -53,11 +53,11 @@ namespace GettextPo {
 		public Message();
 		public unowned string msgid ();
 		public void set_msgid (string msgid);
-		public unowned string msgid_plural ();
+		public unowned string? msgid_plural ();
 		public void set_msgid_plural(string msgid_plural);
 		public unowned string msgstr ();
 		public void set_msgstr (string msgstr);
-		public unowned string msgstr_plural (int index);
+		public unowned string? msgstr_plural (int index);
 		public void set_msgstr_plural (int index, string msgstr);
 		public unowned string comments ();
 		public void set_comments (string comments);

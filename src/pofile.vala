@@ -10,6 +10,40 @@ namespace ValaCAT.PoFiles
     {
         private unowned GettextPo.Message message;
 
+        public override MessageState state
+        {
+            get
+            {
+                if (message.is_fuzzy ())
+                {
+                    return MessageState.FUZZY;
+                }
+                else if (this.has_plural ())
+                {
+                    bool untrans = false;
+                    for (int i = 0; i < this.file.number_of_plurals (); i++)
+                    {
+                        untrans |= this.get_translation (i) == "";
+                    }
+
+                    return untrans ? MessageState.UNTRANSLATED :
+                        MessageState.TRANSLATED;
+                }
+                else
+                {
+                    return this.get_translation (0) == "" ?
+                        MessageState.UNTRANSLATED :
+                        MessageState.TRANSLATED;
+                }
+            }
+
+            set
+            {
+                message.set_fuzzy (value == MessageState.FUZZY);
+            }
+
+        }
+
         public PoMessage (PoFile owner_file, GettextPo.Message msg)
         {
             base (owner_file);
@@ -82,8 +116,13 @@ namespace ValaCAT.PoFiles
          */
          public override string get_context ()
          {
-            return "Coments\n" + this.message.comments () +
-                "\nExtracted Comments\n" + this.message.extracted_comments ();
+            string ctx = "";
+            if (this.message.comments () != null)
+                ctx += "Coments\n" + this.message.comments () + "\n";
+            if (this.message.extracted_comments () != null)
+                ctx += "Extracted Comments\n" + this.message.extracted_comments () + "\n";
+            return ctx;
+
          }
     }
 
@@ -121,7 +160,8 @@ namespace ValaCAT.PoFiles
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
-                    this.messages.add (new PoMessage (this, m));
+                    if (! m.is_obsolete ())
+                        this.messages.add (new PoMessage (this, m));
                 }
             }
         }
@@ -136,9 +176,13 @@ namespace ValaCAT.PoFiles
     {
         private static string[] ext = {"po"};
 
-        public override string[] extensions { get {
-            return ext;
-        }}
+        public override string[] extensions
+        {
+            get
+            {
+                return ext;
+            }
+        }
 
 
         public override ValaCAT.FileProject.File? open_file (string path, Project? p)

@@ -135,11 +135,10 @@ namespace ValaCAT.FileProject
         /**
          * State of the message.
          */
-        public MessageState state
+        public abstract MessageState state
         {
             get;
             set;
-            default = MessageState.TRANSLATED;
         }
 
         /*

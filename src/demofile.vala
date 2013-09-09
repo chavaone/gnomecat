@@ -56,6 +56,32 @@ namespace ValaCAT.Demo
         private bool _has_plural;
         private TreeMap<int, string> translations;
         private string context;
+        private bool fuzzy;
+
+        public override MessageState state
+        {
+            get
+            {
+                bool untrans = false;
+                if (_has_plural)
+                {
+                    for (int i = 0; i < this.file.number_of_plurals (); i++)
+                        untrans |= this.get_translation (i) == null;
+                }
+                else
+                {
+                    untrans = this.translations.get (0) == null;
+                }
+
+                return untrans ? MessageState.UNTRANSLATED :
+                    fuzzy ? MessageState.FUZZY : MessageState.TRANSLATED;
+            }
+
+            set
+            {
+                this.fuzzy = value == MessageState.FUZZY;
+            }
+        }
 
         public DemoMessage (ValaCAT.FileProject.File owner)
         {
@@ -74,10 +100,9 @@ namespace ValaCAT.Demo
                     if (Random.int_range (0, 4) != 0)
                         this.translations.set (i,string_random (Random.int_range (16,40)));
 
-            int random = Random.int_range (0,3);
-            this.state = random == 0 ? MessageState.TRANSLATED
-                       : random == 1 ? MessageState.UNTRANSLATED
-                       : MessageState.FUZZY;
+            int random = Random.int_range (0,10);
+            fuzzy = random == 0;
+
             this.context = string_random (99);
 
             if (this.state != MessageState.UNTRANSLATED)
