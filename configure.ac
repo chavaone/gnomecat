@@ -8,12 +8,6 @@ AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER([src/config.h])
 
-# Checks for programs.
-AC_PROG_CC
-AC_PROG_INSTALL
-AC_PROG_MAKE_SET
-AM_PROG_VALAC
-AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
 
 # i18n stuff
 IT_PROG_INTLTOOL([0.40.0])
@@ -23,10 +17,17 @@ AM_GNU_GETTEXT([external])
 
 GETTEXT_PACKAGE=valacat
 
+#GSettings
 GLIB_GSETTINGS
 
+# Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AM_PROG_VALAC
+AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
+
 # Checks for libraries
-# FIXME: Replace `main' with a function in `-lgettextpo':
 AC_CHECK_LIB([gettextpo], [po_message_msgid_plural])
 
 # Checks for header files.

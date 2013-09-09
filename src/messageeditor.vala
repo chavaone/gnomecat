@@ -211,10 +211,22 @@ namespace ValaCAT.UI
             this.message = message;
             this.plural_number = plural_number;
 
-            this.textview_original_text.buffer = new SourceBuffer (new TextTagTable ());
+            SourceLanguageManager lang_manager = new SourceLanguageManager ();
+            weak string[] old_path = lang_manager.get_search_path ();
+
+            string[] new_path = {};
+            foreach (string s in old_path)
+                new_path += s;
+            new_path += Config.DATADIR;
+
+            lang_manager.set_search_path (new_path);
+
+            SourceLanguage lang = lang_manager.get_language ("gtranslator");
+
+            this.textview_original_text.buffer = new SourceBuffer.with_language (lang);
             this.textview_original_text.buffer.set_text (this.original_text);
 
-            this.textview_translated_text.buffer = new SourceBuffer (new TextTagTable ());
+            this.textview_translated_text.buffer = new SourceBuffer.with_language (lang);
 
             if (this.tranlation_text != null)
             {

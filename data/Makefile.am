@@ -1,3 +1,5 @@
 
 
-EXTRA_DIST = po.lang
+uidir = $(pkgdatadir)/
+ui_DATA =			\
+	po.lang

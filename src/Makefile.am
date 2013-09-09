@@ -14,7 +14,8 @@ AM_VALAFLAGS =                                              \
 
 AM_CPPFLAGS = \
 	-DGETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\"  \
-	-DGNOMELOCALEDIR=\""$(localedir)"\"
+	-DGNOMELOCALEDIR=\""$(localedir)"\" \
+	-DDATADIR=\""$(pkgdatadir)"\"
 
 VALASOURCES = \
 	filelist.vala \
