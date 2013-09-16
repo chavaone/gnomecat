@@ -3,7 +3,7 @@ AC_PREREQ([2.69])
 AC_INIT([valacat],
 		[0.01],
 		[https://github.com/chavaone/valacat/issues])
-AC_CONFIG_SRCDIR([src/application.c])
+AC_CONFIG_SRCDIR([src/application.vala])
 AM_INIT_AUTOMAKE
 
 AM_CONFIG_HEADER([src/config.h])
