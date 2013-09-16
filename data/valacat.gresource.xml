@@ -13,6 +13,8 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/filelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/preferencesdialog.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/profiledialog.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/profilerow.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
     </gresource>

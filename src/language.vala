@@ -147,7 +147,7 @@ namespace ValaCAT.Languages
 
         public string name {get; private set;}
         public string code {get; private set;}
-        public PluralForm plural_form {get; private set;}
+        public PluralForm plural_form {get; set;}
 
 
         public static Language get_language_by_code (string code)

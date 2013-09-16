@@ -243,7 +243,7 @@ namespace ValaCAT.UI
 
         construct
         {
-            settings = new GLib.Settings ("info.aquelando.valacat");
+            settings = new GLib.Settings ("info.aquelando.valacat.Editor");
 
             settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
             settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
