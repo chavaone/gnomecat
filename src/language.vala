@@ -161,7 +161,8 @@ namespace ValaCAT.Languages
         {
             this.name = name;
             this.code = code;
-            this.plural_form = pluralform == null ? null : PluralForm.get_plural_from_id (pluralform);
+            this.plural_form = pluralform == null ? null :
+                PluralForm.get_plural_from_id (pluralform);
         }
 
         public int get_number_of_plurals ()

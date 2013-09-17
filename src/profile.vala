@@ -38,6 +38,7 @@ namespace ValaCAT.Profiles
         return random;
     }
 
+
     public class Profile : Object
     {
         public string uuid {get; set;}
@@ -254,6 +255,5 @@ namespace ValaCAT.UI
             this.language = prof.language;
             this.plural_form = prof.plural_form;
         }
-
     }
 }

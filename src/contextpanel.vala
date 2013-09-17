@@ -24,7 +24,6 @@ using ValaCAT.FileProject;
 
 namespace ValaCAT.UI
 {
-
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/contextpanel.ui")]
     public class ContextPanel : DockItem, ChangedMessageSensible
     {
@@ -33,7 +32,8 @@ namespace ValaCAT.UI
 
         public void set_message (Message m)
         {
-            this.context_textview.buffer.text = m == null ? "" : m.get_context ();
+            this.context_textview.buffer.text = m == null ? "" :
+                m.get_context ();
         }
     }
 }

@@ -144,6 +144,7 @@ namespace ValaCAT.PoFiles
          }
     }
 
+
     public class PoFile : ValaCAT.FileProject.File
     {
         private GettextPo.File file;
@@ -190,6 +191,7 @@ namespace ValaCAT.PoFiles
         }
     }
 
+
     public class PoFileOpener : FileOpener
     {
         private static string[] ext = {"po"};
@@ -208,5 +210,4 @@ namespace ValaCAT.PoFiles
             return new PoFile.full (path, p);
         }
     }
-
 }

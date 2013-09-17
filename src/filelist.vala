@@ -24,7 +24,6 @@ using ValaCAT.FileProject;
 
 namespace ValaCAT.UI
 {
-
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/filelist.ui")]
     public class FileListWidget : DockItem
     {
@@ -54,9 +53,8 @@ namespace ValaCAT.UI
             var w = this.get_toplevel ().parent.parent.parent.parent as ValaCAT.UI.Window;
             w.add_file ((row as FileListRow).file);
         }
-
-
     }
+
 
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/filelistrow.ui")]
     public class FileListRow : ListBoxRow
@@ -69,7 +67,6 @@ namespace ValaCAT.UI
         private Gtk.ProgressBar progressbar_file;
 
         public ValaCAT.FileProject.File file {get; private set;}
-
 
         public FileListRow (ValaCAT.FileProject.File f)
         {

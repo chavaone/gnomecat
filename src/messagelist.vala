@@ -24,7 +24,6 @@ using ValaCAT.FileProject;
 
 namespace ValaCAT.UI
 {
-
     /**
      * Widget that dislays the strings to be translated.
      *  This widget can be dockable.
@@ -74,7 +73,6 @@ namespace ValaCAT.UI
         {
             this.message_selected ((row as MessageListRow).message);
         }
-
     }
 
     /**

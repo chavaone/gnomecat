@@ -25,7 +25,6 @@ using ValaCAT.UI;
 
 namespace ValaCAT.Navigator
 {
-
 	public class Navigator : Object, ChangedMessageSensible
 	{
 		public ValaCAT.FileProject.File file {get {return filetab.file;}}

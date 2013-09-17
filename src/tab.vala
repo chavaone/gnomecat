@@ -64,17 +64,33 @@ namespace ValaCAT.UI
         {
             this.dock.add_item (item, place);
         }
-
     }
 
+
+    /**
+     *
+     */
     public class FileTab : Tab
     {
         public MessageListWidget message_list {get; private set;}
         public MessageEditorWidget message_editor {get; private set;}
         public ContextPanel context_pannel {get; private set;}
 
-        public override ValaCAT.FileProject.File? file {get {return this._file;}}
-        public override ValaCAT.FileProject.Project? project {get {return this._file != null ? this._file.project : null;}}
+        public override ValaCAT.FileProject.File? file
+        {
+            get
+            {
+                return this._file;
+            }
+        }
+
+        public override ValaCAT.FileProject.Project? project
+        {
+            get
+            {
+                return this._file != null ? this._file.project : null;
+            }
+        }
 
         private unowned ValaCAT.FileProject.File? _file;
 
@@ -201,6 +217,10 @@ namespace ValaCAT.UI
         }
     }
 
+
+    /**
+     *
+     */
     public class ProjectTab : Tab
     {
         public override ValaCAT.FileProject.File? file {get {return null;}}
@@ -219,7 +239,13 @@ namespace ValaCAT.UI
             this.file_list = new FileListWidget.with_project (p);
             this.add_item (this.file_list, DockPlacement.CENTER);
         }
+    }
+}
 
-
+namespace ValaCAT
+{
+    public interface ChangedMessageSensible : Object
+    {
+        public abstract void set_message (Message m);
     }
 }

@@ -23,13 +23,18 @@ using ValaCAT.Languages;
 
 namespace ValaCAT.FileProject
 {
-
-    errordomain FileError
+    /**
+     * Class that encapsulates a method to open files of
+     *  certain types.
+     */
+    public abstract class FileOpener
     {
-        PARSER_NOT_FOUND
+        public abstract string[] extensions {get;}
+        public abstract File? open_file (string path, Project? p);
     }
 
-    /*
+
+    /**
      * Enum for the levels of Message Tips.
      */
     public enum TipLevel
@@ -40,13 +45,7 @@ namespace ValaCAT.FileProject
     }
 
 
-    public abstract class FileOpener
-    {
-        public abstract string[] extensions {get;}
-        public abstract File? open_file (string path, Project? p);
-    }
-
-    /*
+    /**
      * This class represents information that can be added to Messages in order
      *  to indicate that they have some failure or something that can be
      *  improved.
@@ -54,7 +53,7 @@ namespace ValaCAT.FileProject
     public class MessageTip : Object
     {
 
-        /*
+        /**
          * Name of the MessageTip.
          */
         public string name {get; private set;}
@@ -109,7 +108,7 @@ namespace ValaCAT.FileProject
     }
 
 
-    /*
+    /**
      * State of a message.
      */
     public enum MessageState
@@ -121,7 +120,7 @@ namespace ValaCAT.FileProject
     }
 
 
-    /*
+    /**
      * Represents a instace of each message to be translated.
      */
     public abstract class Message : Object
@@ -297,7 +296,8 @@ namespace ValaCAT.FileProject
     {
 
         /**
-         *
+         * Readable name of the file that is going to be displayed
+         *  on some parts of the UI.
          */
          public string name {get; protected set;}
 
@@ -378,7 +378,7 @@ namespace ValaCAT.FileProject
          */
         public File ()
         {
-            this.full (null,null);
+            this.full (null, null);
         }
 
         /**
@@ -386,7 +386,6 @@ namespace ValaCAT.FileProject
          *  provided as parameter.
          */
         public File.with_file_path (string file_path)
-            throws FileError
         {
             this.full (file_path, null);
         }
@@ -543,7 +542,7 @@ namespace ValaCAT.FileProject
     }
 
 
-    /*
+    /**
      * Project that contains files.
      */
     public class Project : Object
@@ -558,7 +557,6 @@ namespace ValaCAT.FileProject
          * Name of the project.
          */
         public string name {get; protected set;}
-
 
         public string path {get; private set;}
 
@@ -655,5 +653,4 @@ namespace ValaCAT.FileProject
             this.files.remove (f);
         }
     }
-
 }

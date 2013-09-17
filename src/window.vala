@@ -64,7 +64,6 @@ namespace ValaCAT.UI
             { "go-previous-fuzzy", on_go_previous_fuzzy}
         };
 
-
         public Window (ValaCAT.Application app)
         {
             Object (application: app);

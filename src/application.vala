@@ -27,13 +27,13 @@ namespace ValaCAT
 {
     public class Application : Gtk.Application
     {
-
-        private ArrayList<string> _extensions;
         private ArrayList<FileOpener> file_openers;
         private static ValaCAT.Application _instance;
 
-
-        public ArrayList<string> extensions {   get
+        private ArrayList<string> _extensions;
+        public ArrayList<string> extensions
+        {
+            get
             {
                 _extensions = new ArrayList<string> ();
                 foreach (FileOpener fo in file_openers)
@@ -53,27 +53,39 @@ namespace ValaCAT
 
         construct
         {
-            this.file_openers = new ArrayList<FileOpener> ();
-            this.add_opener (new ValaCAT.PoFiles.PoFileOpener ());
+            file_openers = new ArrayList<FileOpener> ();
+            add_opener (new ValaCAT.PoFiles.PoFileOpener ());
+        }
+
+        public static new ValaCAT.Application get_default ()
+        {
+            if (_instance == null)
+                _instance = new Application ();
+            return _instance;
         }
 
         public void add_opener (FileOpener o)
         {
-            this.file_openers.add (o);
+            file_openers.add (o);
+        }
+
+        public void remove_opener (FileOpener o)
+        {
+            file_openers.remove (o);
         }
 
         public ValaCAT.FileProject.File? open_file (GLib.File f)
         {
             int index_last_point = f.get_path ().last_index_of_char ('.');
             string extension = f.get_path ().substring (index_last_point + 1);
-            foreach (FileOpener o in this.file_openers)
+            foreach (FileOpener o in file_openers)
             {
                 if (extension in o.extensions)
                 {
-                    ValaCAT.FileProject.File? file = o.open_file (f.get_path (),null);
+                    ValaCAT.FileProject.File? file = o.open_file (f.get_path (), null);
                     if (file == null)
                     {
-                        break;
+                        return null;
                     }
                     else
                     {
@@ -112,13 +124,6 @@ namespace ValaCAT
 
             window.show ();
             Gtk.main ();
-        }
-
-        public static new ValaCAT.Application get_default ()
-        {
-            if (_instance == null)
-                _instance = new Application ();
-            return _instance;
         }
 
         public static int main (string[] args)

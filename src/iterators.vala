@@ -23,7 +23,6 @@ using ValaCAT.FileProject;
 
 namespace ValaCAT.Iterators
 {
-
     /**
      * Object that marks a certain string in a message.
      */
@@ -83,20 +82,21 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
      *
      */
     public abstract class IteratorFilter<E> : Object
     {
         /**
-         *
+         * Method that checks if an element is valid.
          */
         public abstract bool check (E element);
     }
 
 
     /**
-     *
+     * Filter for translated messages.
      */
     public class TranslatedFilter : IteratorFilter<Message>
     {
@@ -106,8 +106,9 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
-     *
+     * Filter for untranslated messages.
      */
     public class UntranslatedFilter : IteratorFilter<Message>
     {
@@ -117,8 +118,9 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
-     *
+     * Filter for fuzzy messages.
      */
     public class FuzzyFilter : IteratorFilter<Message>
     {
@@ -128,8 +130,11 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
-     *
+     * Filter that combines several filters accepting
+     *  the elements that accomplish the conditions of
+     *  one of the provided filters.
      */
     public class ORFilter<R> : IteratorFilter<R>
     {
@@ -150,8 +155,9 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
-     *
+     * Filter for the original text of the message.
      */
     public class OriginalFilter : IteratorFilter<MessageMark>
     {
@@ -161,8 +167,9 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
-     *
+     * Filter for the translation text of the message.
      */
     public class TranslationFilter : IteratorFilter<MessageMark>
     {
@@ -172,11 +179,12 @@ namespace ValaCAT.Iterators
         }
     }
 
+
     /**
-     *
+     * Filter that accepts all parts from the message.
      */
     public class AllMessageMarkFilter : IteratorFilter<MessageMark>
-        {
+    {
         public override bool check (MessageMark mm)
         {
             return true;
@@ -186,9 +194,9 @@ namespace ValaCAT.Iterators
 
     /**
      * Generic class for iterators. It iterates over
-     *  a element \\E\\ and returns instances of \\R\\.
+     *  a element \\Ele\\ and returns instances of \\Ret\\.
      */
-    public abstract class Iterator<Ele,Ret> : Object
+    public abstract class Iterator<Ele, Ret> : Object
     {
         public abstract Ret  next ();
         public abstract Ret  previous ();
@@ -201,7 +209,6 @@ namespace ValaCAT.Iterators
 
 
     /**
-     *
      *
      */
     public class FileIterator : Iterator<ValaCAT.FileProject.File?, Message?>
@@ -232,11 +239,13 @@ namespace ValaCAT.Iterators
 
         public override Message? next ()
         {
-            if ((visited || ! check_condition (messages.get (current_index))) && current_index <= messages.size)
+            if ((visited || ! check_condition (messages.get (current_index)))
+                && current_index <= messages.size)
             {
                 for (current_index++;
-                     current_index < messages.size && ! check_condition (messages.get (current_index));
-                     current_index++);
+                    current_index < messages.size &&
+                        ! check_condition (messages.get (current_index));
+                    current_index++);
             }
 
             this.visited = true;
@@ -246,11 +255,13 @@ namespace ValaCAT.Iterators
 
         public override Message? previous ()
         {
-            if ((visited || ! check_condition (messages.get (current_index))) && current_index > -1 )
+            if ((visited || ! check_condition (messages.get (current_index)))
+                && current_index > -1 )
             {
                 for (current_index--;
-                     current_index >= 0 && ! check_condition (this.messages.get (current_index));
-                     current_index--);
+                    current_index >= 0 &&
+                       ! check_condition (this.messages.get (current_index));
+                    current_index--);
             }
 
             this.visited = true;
@@ -305,7 +316,8 @@ namespace ValaCAT.Iterators
         private IteratorFilter<MessageMark> filter;
         private bool visited;
 
-        public MessageIterator (Message? msg, string search_string, IteratorFilter<MessageMark> filter)
+        public MessageIterator (Message? msg, string search_string,
+            IteratorFilter<MessageMark> filter)
         {
             this.search_string = search_string;
             this.filter = filter;
@@ -353,7 +365,8 @@ namespace ValaCAT.Iterators
 
         public override MessageMark? get_current_element ()
         {
-            if (this.marks == null || marks_index < 0 || marks_index >= this.marks.size)
+            if (this.marks == null || marks_index < 0 ||
+                marks_index >= this.marks.size)
                 return null;
             return this.marks.get (marks_index);
         }
@@ -422,8 +435,8 @@ namespace ValaCAT.Iterators
 
         private bool check_mark (MessageMark mm)
         {
-            return this.filter == null ? false : this.filter.check (mm);
+            return this.filter == null ? false :
+                this.filter.check (mm);
         }
     }
-
 }

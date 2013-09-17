@@ -23,7 +23,6 @@ using Gee;
 
 namespace ValaCAT.UI
 {
-
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/preferencesdialog.ui")]
     public class PreferencesDialog : Gtk.Dialog
     {
@@ -86,6 +85,7 @@ namespace ValaCAT.UI
         {
         }
     }
+
 
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/profilerow.ui")]
     public class ProfileRow : Gtk.ListBoxRow
@@ -150,6 +150,5 @@ namespace ValaCAT.UI
             }
             prof_dialog.destroy ();
         }
-
     }
 }

@@ -27,8 +27,6 @@ using ValaCAT.UI;
 
 namespace ValaCAT.UI
 {
-
-
     public enum SearchDialogResponses
     {
         CANCEL  = 0,
@@ -36,6 +34,7 @@ namespace ValaCAT.UI
         REPLACE = 2,
         REPLACEALL = 3;
     }
+
 
     /**
      *
@@ -77,7 +76,6 @@ namespace ValaCAT.UI
         {
             this.response (ValaCAT.UI.SearchDialogResponses.CANCEL);
         }
-
     }
 }
 
@@ -105,7 +103,6 @@ namespace ValaCAT.Search
     {
     }
     */
-
 
     public class FileSearch : Search
     {
@@ -174,7 +171,6 @@ namespace ValaCAT.Search
             this.replace_text = replace_text;
             this.search_text = search_text;
         }
-
 
         public override void next_item ()
         {
