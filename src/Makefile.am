@@ -28,7 +28,6 @@ VALASOURCES = \
 	demofile.vala \
 	profile.vala \
 	language.vala \
-	utils.vala \
 	file.vala \
 	iterators.vala \
 	search.vala \
