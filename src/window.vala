@@ -126,7 +126,6 @@ namespace ValaCAT.UI
             notebook.set_current_page (notebook.page_num (p_tab));
         }
 
-
         public void add_tab (Tab t)
         {
             this.notebook.append_page (t, t.label);

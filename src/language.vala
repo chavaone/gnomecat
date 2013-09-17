@@ -23,7 +23,6 @@ using Json;
 
 namespace ValaCAT.Languages
 {
-
     public class PluralForm : GLib.Object
     {
         /**
