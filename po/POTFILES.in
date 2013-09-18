@@ -1,0 +1,21 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+[encoding: UTF-8]
+[type: gettext/glade]data/ui/contextpanel.ui
+[type: gettext/glade]data/ui/filelistrow.ui
+[type: gettext/glade]data/ui/filelist.ui
+[type: gettext/glade]data/ui/hintpanelrow.ui
+[type: gettext/glade]data/ui/hintpanelwidget.ui
+[type: gettext/glade]data/ui/messageeditortabtiprow.ui
+[type: gettext/glade]data/ui/messageeditortab.ui
+[type: gettext/glade]data/ui/messageeditor.ui
+[type: gettext/glade]data/ui/messagelistrow.ui
+[type: gettext/glade]data/ui/messagelist.ui
+[type: gettext/glade]data/ui/preferencesdialog.ui
+[type: gettext/glade]data/ui/searchdialog.ui
+[type: gettext/glade]data/ui/statusbarprofileslist.ui
+[type: gettext/glade]data/ui/tab.ui
+[type: gettext/glade]data/ui/window.ui
+src/messageeditor.vala
+src/messagelist.vala
+src/window.vala
