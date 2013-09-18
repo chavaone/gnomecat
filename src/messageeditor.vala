@@ -131,7 +131,7 @@ namespace ValaCAT.UI
             }
         }
 
-        private string? tranlation_text
+        private string? translation_text
         {
             get
             {
@@ -227,10 +227,10 @@ namespace ValaCAT.UI
 
             this.textview_translated_text.buffer = new SourceBuffer.with_language (lang);
 
-            if (this.tranlation_text != null)
+            if (this.translation_text != null)
             {
                 (this.textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
-                this.textview_translated_text.buffer.set_text (this.tranlation_text);
+                this.textview_translated_text.buffer.set_text (this.translation_text);
                 (this.textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
             }
 
@@ -305,7 +305,7 @@ namespace ValaCAT.UI
         {
             foreach (TextTag tt in tags)
             {
-                tt.add_to_buffer (this.textview_translated_text.buffer, this.tranlation_text.length);
+                tt.add_to_buffer (this.textview_translated_text.buffer, this.translation_text.length);
                 this.translation_text_tags.add (tt);
             }
         }
@@ -313,7 +313,7 @@ namespace ValaCAT.UI
         public void clean_tags_translation_string ()
         {
             foreach (TextTag tt in this.translation_text_tags)
-                tt.remove_from_buffer (this.textview_translated_text.buffer, this.tranlation_text.length);
+                tt.remove_from_buffer (this.textview_translated_text.buffer, this.translation_text.length);
             this.translation_text_tags.clear ();
         }
 
@@ -340,10 +340,10 @@ namespace ValaCAT.UI
 
         private void update_translation (TextBuffer buff)
         {
-            string? old_text = this.tranlation_text;
+            string? old_text = this.translation_text;
             string? new_text = buff.text;
 
-            tranlation_text = new_text == "" ? null : new_text;
+            translation_text = new_text == "" ? null : new_text;
 
             if (old_text != null && new_text == "")
                 this.message.state = MessageState.UNTRANSLATED;
