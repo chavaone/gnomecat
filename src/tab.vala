@@ -112,14 +112,18 @@ namespace ValaCAT.UI
             this.add_item (this.message_list, DockPlacement.CENTER);
 
             this.message_editor = new MessageEditorWidget ();
-            this.message_editor.set_message (f.messages.get (0));
             this.add_item (this.message_editor, DockPlacement.BOTTOM);
             change_messages_sensible.add (this.message_editor);
 
             this.context_pannel = new ContextPanel ();
-            this.context_pannel.set_message (f.messages.get (0));
             this.add_item (this.context_pannel,DockPlacement.RIGHT);
             change_messages_sensible.add (this.context_pannel);
+
+            if (f.messages.size > 0)
+            {
+                this.context_pannel.set_message (f.messages.get (0));
+                this.message_editor.set_message (f.messages.get (0));
+            }
 
             this.set_navigators ();
             this.message_list.message_selected.connect (on_message_selected);

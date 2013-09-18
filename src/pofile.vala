@@ -180,7 +180,7 @@ namespace ValaCAT.PoFiles
                 while ((m = mi.next_message ()) != null)
                 {
                     if (! m.is_obsolete ())
-                        this.messages.add (new PoMessage (this, m));
+                        this.add_message (new PoMessage (this, m));
                 }
             }
         }
