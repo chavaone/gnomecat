@@ -44,6 +44,26 @@ namespace ValaCAT
                 return _extensions;
             }
         }
+        private ValaCAT.Profiles.Profile? _enabled_profile;
+        public ValaCAT.Profiles.Profile? enabled_profile
+        {
+            get
+            {
+                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.valacat.ProfilesList");
+                if (_enabled_profile == null)
+                {
+                    string prof_uuid = prof_set.get_string ("default");
+                    _enabled_profile = prof_uuid == "" ? null : new ValaCAT.Profiles.Profile.from_uuid (prof_uuid);
+                }
+                return _enabled_profile;
+            }
+            set
+            {
+                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.valacat.ProfilesList");
+                _enabled_profile = value;
+                prof_set.set_string ("default", value == null ? "" : value.uuid);
+            }
+        }
 
         private Application ()
         {

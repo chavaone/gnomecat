@@ -72,6 +72,15 @@ namespace ValaCAT.Profiles
                 this.plural_form_id = value.id;
             }
         }
+        public bool enabled
+        {
+            get
+            {
+                ValaCAT.Application app = ValaCAT.Application.get_default();
+                Profile? p = app.enabled_profile;
+                return p != null && p.uuid == this.uuid;
+            }
+        }
 
         public string char_set {get; set;}
         public string encoding {get; set;}
@@ -117,6 +126,13 @@ namespace ValaCAT.Profiles
             if (! (uuid in prof_arr))
                 prof_arr += uuid;
             (new GLib.Settings ("info.aquelando.valacat.ProfilesList")).set_strv ("list", prof_arr);
+        }
+
+        construct
+        {
+            ValaCAT.Application app = ValaCAT.Application.get_default ();
+            if (app.enabled_profile == null)
+                app.enabled_profile = this;
         }
 
         public static ArrayList<Profile> get_profiles ()

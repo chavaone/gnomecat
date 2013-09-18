@@ -96,6 +96,8 @@ namespace ValaCAT.UI
         private Gtk.Label profile_name;
         [GtkChild]
         private Gtk.Label language_code;
+        [GtkChild]
+        private Gtk.Label enabled;
 
         public string profile_name_entry_text
         {
@@ -126,10 +128,12 @@ namespace ValaCAT.UI
             profile = p;
             profile_name_entry_text = p.name;
             language_code_entry_text = p.language_code;
+            enabled.visible = p.enabled;
             this.bind_property ("profile_name_entry_text", profile, "name",
                 BindingFlags.BIDIRECTIONAL);
             this.bind_property ("language_code_entry_text", profile, "language_code",
                 BindingFlags.BIDIRECTIONAL);
+            profile.bind_property ("enabled", enabled, "visible");
         }
 
         [GtkCallback]
