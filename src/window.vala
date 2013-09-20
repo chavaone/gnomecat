@@ -220,13 +220,13 @@ namespace ValaCAT.UI
             case ValaCAT.UI.SearchDialogResponses.CANCEL:
                 break;
             case ValaCAT.UI.SearchDialogResponses.SEARCH:
-                ini_search (dialog, dialog.search_project, false, false, dialog.wrap_around);
+                ini_search (dialog, dialog.search_project, false, true, dialog.wrap_around);
                 break;
             case ValaCAT.UI.SearchDialogResponses.REPLACE:
-                ini_search (dialog, dialog.search_project, true, false, dialog.wrap_around);
+                ini_search (dialog, dialog.search_project, true, true, dialog.wrap_around);
                 break;
             case ValaCAT.UI.SearchDialogResponses.REPLACEALL:
-                ini_search (dialog, dialog.search_project, true, true, dialog.wrap_around);
+                ini_search (dialog, dialog.search_project, true, false, dialog.wrap_around);
                 break;
             }
 
