@@ -123,6 +123,18 @@ namespace ValaCAT.UI
             }
         }
 
+        public bool enabled_profile
+        {
+            get
+            {
+                return enabled.get_text () == _("(enabled)");
+            }
+            set
+            {
+                enabled.set_text(value ? _("(enabled)") : "");
+            }
+        }
+
         public ProfileRow (Profile p)
         {
             profile = p;
@@ -133,7 +145,7 @@ namespace ValaCAT.UI
                 BindingFlags.BIDIRECTIONAL);
             this.bind_property ("language_code_entry_text", profile, "language_code",
                 BindingFlags.BIDIRECTIONAL);
-            profile.bind_property ("enabled", enabled, "visible");
+            profile.bind_property ("enabled", this, "enabled_profile");
         }
 
         [GtkCallback]
