@@ -39,7 +39,8 @@ namespace ValaCAT.PoFiles
                 else if (this.has_plural ())
                 {
                     bool untrans = false;
-                    for (int i = 0; i < this.file.number_of_plurals (); i++)
+                    PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
+                    for (int i = 0; i < enabled_plural_form.number_of_plurals; i++)
                     {
                         untrans |= this.get_translation (i) == "";
                     }
@@ -183,11 +184,6 @@ namespace ValaCAT.PoFiles
                         this.add_message (new PoMessage (this, m));
                 }
             }
-        }
-
-        public override Language? get_language ()
-        {
-            return Language.get_language_by_code ("es"); //TODO
         }
     }
 

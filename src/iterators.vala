@@ -20,6 +20,7 @@
 
 using Gee;
 using ValaCAT.FileProject;
+using ValaCAT.Languages;
 
 namespace ValaCAT.Iterators
 {
@@ -414,8 +415,8 @@ namespace ValaCAT.Iterators
                         this.marks.add (mm);
                     index++;
                 }
-
-                for (int plural_number = 1; plural_number < message.file.number_of_plurals (); plural_number++)
+                PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
+                for (int plural_number = 1; plural_number < enabled_plural_form.number_of_plurals; plural_number++)
                 {
                     index = 0;
                     string message_string = this.message.get_translation (plural_number);

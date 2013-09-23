@@ -20,6 +20,11 @@ namespace ValaCAT.Demo
         return random;
     }
 
+    PluralForm get_enabled_plural_form ()
+    {
+        return ValaCAT.Application.get_default ().enabled_profile.plural_form;
+    }
+
 
     public class DemoFile : ValaCAT.FileProject.File
     {
@@ -42,11 +47,6 @@ namespace ValaCAT.Demo
          */
         public override void parse_file (string path){}
 
-        public override Language? get_language ()
-        {
-            return Language.get_language_by_code ("pl");
-        }
-
     }
 
     public class DemoMessage : ValaCAT.FileProject.Message
@@ -65,7 +65,7 @@ namespace ValaCAT.Demo
                 bool untrans = false;
                 if (_has_plural)
                 {
-                    for (int i = 0; i < this.file.number_of_plurals (); i++)
+                    for (int i = 0; i < get_enabled_plural_form() .number_of_plurals; i++)
                         untrans |= this.get_translation (i) == null;
                 }
                 else
@@ -96,7 +96,7 @@ namespace ValaCAT.Demo
                 this.translations.set (0, string_random (Random.int_range (16, 40)));
 
             if (_has_plural)
-                for (int i = 1; i < this.get_language ().get_number_of_plurals (); i++)
+                for (int i = 1; i < get_enabled_plural_form ().number_of_plurals; i++)
                     if (Random.int_range (0, 4) != 0)
                         this.translations.set (i,string_random (Random.int_range (16,40)));
 

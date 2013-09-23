@@ -21,6 +21,7 @@
 using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
+using ValaCAT.Languages;
 using Gee;
 
 namespace ValaCAT.UI
@@ -39,7 +40,8 @@ namespace ValaCAT.UI
         {
             int i;
             this.clean_tabs ();
-            string label = _("Singular (%s)").printf (m.get_language ().get_plural_form_tag (0));
+            PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
+            string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
             var auxtab = new MessageEditorTab (label, m, 0);
             foreach (MessageTip t in m.get_tips_plural_form (0))
                 auxtab.add_tip (t);
@@ -47,10 +49,11 @@ namespace ValaCAT.UI
 
             if (m.has_plural ())
             {
-                int num_plurals = m.get_language ().get_number_of_plurals ();
+                int num_plurals = enabled_plural_form.number_of_plurals;
+
                 for (i = 1; i < num_plurals; i++)
                 {
-                    label = _("Plural %i (%s)").printf (i,m.get_language ().get_plural_form_tag (i));
+                    label = _("Plural %i (%s)").printf (i, enabled_plural_form.plural_tags.get (i));
                     auxtab = new MessageEditorTab (label, m, i);
                     foreach (MessageTip t in m.get_tips_plural_form (i))
                         auxtab.add_tip (t);
@@ -351,8 +354,9 @@ namespace ValaCAT.UI
             if (old_text == null && new_text != null)
             {
                 bool untrans_msg = false;
+                PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
                 int num_plurals = message.has_plural () ?
-                    message.file.number_of_plurals () : 1;
+                    enabled_plural_form.number_of_plurals : 1;
                 for (int i = 0; i < num_plurals; i++)
                     untrans_msg |= message.get_translation (i) == null;
 

@@ -19,7 +19,6 @@
  */
 
 using Gee;
-using ValaCAT.Languages;
 
 namespace ValaCAT.FileProject
 {
@@ -194,15 +193,6 @@ namespace ValaCAT.FileProject
          * Signal emited when the message changed.
          */
         public signal void message_changed ();
-
-
-        /**
-         * Method that returns the language of this message.
-         */
-        public Language? get_language ()
-        {
-            return file.get_language ();
-        }
 
         /**
          * Method that indicates if this string has or has not
@@ -521,24 +511,6 @@ namespace ValaCAT.FileProject
          *  this instance of File.
          */
         public abstract void parse_file (string path);
-
-        /**
-         * Method that returns the number of plurals of this file.
-         */
-        public int number_of_plurals ()
-        {
-            Language? lang = this.get_language ();
-            if (lang == null)
-            {
-                return 1;
-            }
-            else
-            {
-                return lang.get_number_of_plurals ();
-            }
-        }
-
-        public abstract Language? get_language ();
     }
 
 
