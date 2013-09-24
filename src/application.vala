@@ -75,6 +75,7 @@ namespace ValaCAT
         {
             file_openers = new ArrayList<FileOpener> ();
             add_opener (new ValaCAT.PoFiles.PoFileOpener ());
+            this.window_removed.connect (on_window_removed);
         }
 
         public static new ValaCAT.Application get_default ()
@@ -114,6 +115,13 @@ namespace ValaCAT
                 }
             }
             return null;
+        }
+
+        private void on_window_removed ()
+        {
+            foreach (var w in get_windows ())
+                return;
+            Gtk.main_quit ();
         }
 
         public override void activate ()
