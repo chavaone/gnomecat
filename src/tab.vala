@@ -121,8 +121,8 @@ namespace ValaCAT.UI
 
             if (f.messages.size > 0)
             {
-                this.context_pannel.set_message (f.messages.get (0));
-                this.message_editor.set_message (f.messages.get (0));
+                this.context_pannel.message = f.messages.get (0);
+                this.message_editor.message = f.messages.get (0);
             }
 
             this.set_navigators ();
@@ -138,7 +138,7 @@ namespace ValaCAT.UI
         {
             foreach (ChangedMessageSensible c in change_messages_sensible)
             {
-                c.set_message (m);
+                c.message = m;
             }
         }
 
@@ -250,6 +250,6 @@ namespace ValaCAT
 {
     public interface ChangedMessageSensible : Object
     {
-        public abstract void set_message (Message m);
+        public abstract Message message {get;set;}
     }
 }

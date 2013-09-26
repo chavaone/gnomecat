@@ -31,6 +31,38 @@ namespace ValaCAT.Navigator
 		private FileIterator iterator;
 		private IteratorFilter<Message> filter;
 		private ValaCAT.UI.FileTab filetab;
+		private Message _message;
+		public Message message
+		{
+			get
+			{
+				return _message;
+			}
+			set
+			{
+				_message = value;
+				if (filter.check (value))
+				{
+					set_message_intern (value);
+				}
+				else
+				{
+					Gee.ArrayList<Message> msgs = file.messages;
+					int index;
+					for (index = msgs.index_of (value); index >= 0 && ! filter.check (msgs.get (index)); index--);
+
+					if (index == -1)
+						iterator.first ();
+					else
+						set_message_intern (msgs.get (index));
+				}
+			}
+		}
+
+		public void set_message (Message m)
+		{
+
+		}
 
 
 		public Navigator (FileTab ft, IteratorFilter<Message> filter)
@@ -74,24 +106,6 @@ namespace ValaCAT.Navigator
 			filetab.message_list.select_row (row);
 		}
 
-		public void set_message (Message m)
-		{
-			if (filter.check (m))
-			{
-				set_message_intern (m);
-			}
-			else
-			{
-				Gee.ArrayList<Message> msgs = this.file.messages;
-				int index;
-				for (index = msgs.index_of (m); index >= 0 && ! filter.check (msgs.get (index)); index--);
-
-				if (index == -1)
-					iterator.first ();
-				else
-					set_message_intern (msgs.get (index));
-			}
-		}
 
 		private void set_message_intern (Message m)
 		{

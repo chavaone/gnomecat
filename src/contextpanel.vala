@@ -29,11 +29,19 @@ namespace ValaCAT.UI
     {
         [GtkChild]
         private TextView context_textview;
-
-        public void set_message (Message m)
+        private Message _message;
+        public Message message
         {
-            this.context_textview.buffer.text = m == null ? "" :
-                m.get_context ();
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                _message = value;
+                context_textview.buffer.text = value == null ? "" :
+                    value.get_context ();
+            }
         }
     }
 }

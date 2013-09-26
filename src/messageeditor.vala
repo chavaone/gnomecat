@@ -34,33 +34,34 @@ namespace ValaCAT.UI
     {
         [GtkChild]
         private Gtk.Notebook plurals_notebook;
-        private Message message;
-
-        public void set_message (Message m)
+        private Message _message;
+        public Message message
         {
-            int i;
-            this.clean_tabs ();
-            PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
-            string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
-            var auxtab = new MessageEditorTab (label, m, 0);
-            foreach (MessageTip t in m.get_tips_plural_form (0))
-                auxtab.add_tip (t);
-            this.add_tab (auxtab);
-
-            if (m.has_plural ())
+            get
             {
-                int num_plurals = enabled_plural_form.number_of_plurals;
+                return _message;
+            }
+            set
+            {
+                _message = value;
+                int i;
+                this.clean_tabs ();
+                PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
 
-                for (i = 1; i < num_plurals; i++)
+                string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
+                this.add_tab (new MessageEditorTab (label, value, 0));
+
+                if (value.has_plural ())
                 {
-                    label = _("Plural %i (%s)").printf (i, enabled_plural_form.plural_tags.get (i));
-                    auxtab = new MessageEditorTab (label, m, i);
-                    foreach (MessageTip t in m.get_tips_plural_form (i))
-                        auxtab.add_tip (t);
-                    this.add_tab (auxtab);
+                    int num_plurals = enabled_plural_form.number_of_plurals;
+
+                    for (i = 1; i < num_plurals; i++)
+                    {
+                        label = _("Plural %i (%s)").printf (i, enabled_plural_form.plural_tags.get (i));
+                        this.add_tab (new MessageEditorTab (label, value, i));
+                    }
                 }
             }
-            this.message = m;
         }
 
         public MessageEditorTab get_active_tab ()
@@ -209,7 +210,7 @@ namespace ValaCAT.UI
                                  Message message,
                                  int plural_number)
         {
-            this.label = new Label (label_text);
+            label = new Label (label_text);
             this.message = message;
             this.plural_number = plural_number;
 
@@ -225,22 +226,25 @@ namespace ValaCAT.UI
 
             SourceLanguage lang = lang_manager.get_language ("gtranslator");
 
-            this.textview_original_text.buffer = new SourceBuffer.with_language (lang);
-            this.textview_original_text.buffer.set_text (this.original_text);
+            textview_original_text.buffer = new SourceBuffer.with_language (lang);
+            textview_original_text.buffer.set_text (original_text);
 
-            this.textview_translated_text.buffer = new SourceBuffer.with_language (lang);
+            textview_translated_text.buffer = new SourceBuffer.with_language (lang);
 
-            if (this.translation_text != null)
+            if (translation_text != null)
             {
-                (this.textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
-                this.textview_translated_text.buffer.set_text (this.translation_text);
-                (this.textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
+                (textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
+                textview_translated_text.buffer.set_text (this.translation_text);
+                (textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
             }
 
-            this.original_text_tags = new ArrayList<ValaCAT.TextTag> ();
-            this.translation_text_tags = new ArrayList<ValaCAT.TextTag> ();
+            original_text_tags = new ArrayList<ValaCAT.TextTag> ();
+            translation_text_tags = new ArrayList<ValaCAT.TextTag> ();
 
-            this.textview_translated_text.buffer.end_user_action.connect (update_translation);
+            textview_translated_text.buffer.end_user_action.connect (update_translation);
+
+            foreach (MessageTip t in message.get_tips_plural_form (plural_number))
+                add_tip (t);
         }
 
         construct
