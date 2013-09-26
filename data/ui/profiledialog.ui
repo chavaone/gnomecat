@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.15.2 on Fri Sep 13 19:45:49 2013 -->
+<!-- Generated with glade 3.15.4 on Wed Sep 25 21:24:39 2013 -->
 <interface>
   <!-- interface-requires gtk+ 3.10 -->
-  <object class="GtkListStore" id="liststore_encoding">
-    <columns>
-      <!-- column-name encoding -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0">UTF-8</col>
-      </row>
-    </data>
-  </object>
-  <object class="GtkListStore" id="liststore_languages">
-    <columns>
-      <!-- column-name language_name -->
-      <column type="gchararray"/>
-      <!-- column-name language_code -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
-  <object class="GtkListStore" id="liststore_plural_form">
-    <columns>
-      <!-- column-name id -->
-      <column type="gint"/>
-      <!-- column-name plural_form -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
   <template class="ValaCATUIProfileDialog" parent="GtkDialog">
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
@@ -238,10 +211,21 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBox" id="language_combobox">
+              <object class="GtkEntry" id="team_email_entry">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">6</property>
+                <property name="width">1</property>
+                <property name="height">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="language_combobox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="model">liststore_languages</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -251,10 +235,9 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBox" id="plural_form_combobox">
+              <object class="GtkComboBoxText" id="plural_form_combobox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="model">liststore_plural_form</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
@@ -264,26 +247,16 @@
               </packing>
             </child>
             <child>
-              <object class="GtkComboBox" id="encoding_combobox">
+              <object class="GtkComboBoxText" id="encoding_combobox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="model">liststore_encoding</property>
+                <items>
+                  <item translatable="yes">UTF-8</item>
+                </items>
               </object>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">5</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="team_email_entry">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">6</property>
                 <property name="width">1</property>
                 <property name="height">1</property>
               </packing>

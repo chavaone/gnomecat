@@ -163,21 +163,9 @@ namespace ValaCAT.UI
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/profiledialog.ui")]
     public class ProfileDialog : Gtk.Dialog
     {
+
         [GtkChild]
         private Gtk.Entry profile_name_entry;
-        [GtkChild]
-        private Gtk.Entry translator_name_entry;
-        [GtkChild]
-        private Gtk.Entry translator_email_entry;
-        [GtkChild]
-        private Gtk.ComboBox language_combobox;
-        [GtkChild]
-        private Gtk.ComboBox plural_form_combobox;
-        [GtkChild]
-        private Gtk.ComboBox encoding_combobox;
-        [GtkChild]
-        private Gtk.Entry team_email_entry;
-
         public string profile_name
         {
             get
@@ -190,6 +178,8 @@ namespace ValaCAT.UI
             }
         }
 
+        [GtkChild]
+        private Gtk.Entry translator_name_entry;
         public string translator_name
         {
             get
@@ -202,6 +192,8 @@ namespace ValaCAT.UI
             }
         }
 
+        [GtkChild]
+        private Gtk.Entry translator_email_entry;
         public string translator_email
         {
             get
@@ -214,6 +206,8 @@ namespace ValaCAT.UI
             }
         }
 
+        [GtkChild]
+        private Gtk.Entry team_email_entry;
         public string team_email
         {
             get
@@ -226,43 +220,89 @@ namespace ValaCAT.UI
             }
         }
 
+        [GtkChild]
+        private Gtk.ComboBoxText encoding_combobox;
         public string encoding
         {
             get
             {
-                return "UTF-8";
+                return "UTF-8"; //FIXME
             }
             set
             {
             }
         }
 
-        private Language _language; //FIXME
-        public Language language
+        [GtkChild]
+        private Gtk.ComboBoxText language_combobox;
+        public Language? language
         {
             get
             {
-                _language = Language.get_language_by_code ("es"); //FIXME
-                return _language;
+                int active_item = language_combobox.get_active ();
+                if (active_item == -1)
+                    return null;
+
+                foreach (var entry in Language.languages.entries)
+                    if (active_item-- == 0)
+                        return entry.value;
+                return null;
             }
             set
             {
+                int index = 0;
+                foreach (var entry in Language.languages.entries)
+                {
+                    if (entry.value == value)
+                        plural_form_combobox.active = index;
+                    index++;
+                }
             }
         }
 
-        public PluralForm plural_form
+        [GtkChild]
+        private Gtk.ComboBoxText plural_form_combobox;
+        public PluralForm? plural_form
         {
             get
             {
-                return Language.get_language_by_code ("es").plural_form; //FIXME
+                int active_item = plural_form_combobox.get_active ();
+                if (active_item == -1)
+                    return null;
+
+                foreach (var entry in PluralForm.plural_forms.entries)
+                    if (active_item-- == 0)
+                        return entry.value;
+                return null;
             }
             set
             {
+                int index = 0;
+                foreach (var entry in PluralForm.plural_forms.entries)
+                {
+                    if (entry.value == value)
+                        plural_form_combobox.active = index;
+                    index++;
+                }
+            }
+        }
+
+        public ProfileDialog ()
+        {
+            foreach (var entry in Language.languages.entries)
+            {
+                language_combobox.append_text (entry.value.name + " (" + entry.key + ")");
+            }
+
+            foreach (PluralForm pf in PluralForm.plural_forms)
+            {
+                plural_form_combobox.append_text (pf.expression);
             }
         }
 
         public ProfileDialog.from_profile (ValaCAT.Profiles.Profile prof)
         {
+            this ();
             this.profile_name = prof.name;
             this.translator_name = prof.translator_name;
             this.translator_email = prof.translator_email;
