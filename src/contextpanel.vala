@@ -19,16 +19,16 @@
  */
 
 using Gtk;
-using Gdl;
 using ValaCAT.FileProject;
 
 namespace ValaCAT.UI
 {
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/contextpanel.ui")]
-    public class ContextPanel : DockItem, ChangedMessageSensible
+    public class ContextPanel : Gtk.Box, ChangedMessageSensible
     {
         [GtkChild]
         private TextView context_textview;
+
         private Message _message;
         public Message message
         {

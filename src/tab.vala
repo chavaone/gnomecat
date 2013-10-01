@@ -18,7 +18,6 @@
  * along with valacat. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
 using ValaCAT.Iterators;
@@ -31,38 +30,15 @@ namespace ValaCAT.UI
     /**
      * Generic tab.
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/tab.ui")]
-    public abstract class Tab : Box
+    public abstract class Tab : Gtk.Box
     {
         public Label label {get; protected set;}
         public abstract ValaCAT.FileProject.File? file {get;}
         public abstract ValaCAT.FileProject.Project? project {get;}
 
-        [GtkChild]
-        private Gdl.Dock dock;
-        [GtkChild]
-        private Gdl.DockBar dockbar;
-        private DockLayout layout_manager;
-
-        public Tab ()
+        public Tab (string label)
         {
-            this.dockbar.master = dock;
-            this.layout_manager = new DockLayout (dock);
-        }
-
-        public void load_layout (string file)
-        {
-            this.layout_manager.load_from_file (file);
-        }
-
-        public void save_layout (string file)
-        {
-            this.layout_manager.save_to_file (file);
-        }
-
-        public void add_item (DockItem item, DockPlacement place)
-        {
-            this.dock.add_item (item, place);
+            this.label = new Gtk.Label (label);
         }
     }
 
@@ -70,12 +46,17 @@ namespace ValaCAT.UI
     /**
      *
      */
+    [GtkTemplate (ui = "/info/aquelando/valacat/ui/filetab.ui")]
     public class FileTab : Tab
     {
-        public MessageListWidget message_list {get; private set;}
-        public MessageEditorWidget message_editor {get; private set;}
-        public ContextPanel context_pannel {get; private set;}
+        [GtkChild]
+        public MessageListWidget message_list;
+        [GtkChild]
+        public MessageEditorWidget message_editor;
+        [GtkChild]
+        public ContextPanel message_context;
 
+        private unowned ValaCAT.FileProject.File? _file;
         public override ValaCAT.FileProject.File? file
         {
             get
@@ -92,8 +73,6 @@ namespace ValaCAT.UI
             }
         }
 
-        private unowned ValaCAT.FileProject.File? _file;
-
         private ValaCAT.Navigator.Navigator navigator_fuzzy;
         private ValaCAT.Navigator.Navigator navigator_translated;
         private ValaCAT.Navigator.Navigator navigator_untranslated;
@@ -103,30 +82,21 @@ namespace ValaCAT.UI
 
         public FileTab (ValaCAT.FileProject.File? f)
         {
-            base ();
-            this.change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
-            this.label = new Gtk.Label (f.name);
-            this._file = f;
+            base (f.name);
+            _file = f;
 
-            this.message_list = new MessageListWidget (f);
-            this.add_item (this.message_list, DockPlacement.CENTER);
-
-            this.message_editor = new MessageEditorWidget ();
-            this.add_item (this.message_editor, DockPlacement.BOTTOM);
-            change_messages_sensible.add (this.message_editor);
-
-            this.context_pannel = new ContextPanel ();
-            this.add_item (this.context_pannel,DockPlacement.RIGHT);
-            change_messages_sensible.add (this.context_pannel);
+            message_list.file = f;
+            change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
+            change_messages_sensible.add (message_editor);
+            change_messages_sensible.add (message_context);
+            set_navigators ();
+            message_list.message_selected.connect (on_message_selected);
 
             if (f.messages.size > 0)
             {
-                this.context_pannel.message = f.messages.get (0);
+                this.message_context.message = f.messages.get (0);
                 this.message_editor.message = f.messages.get (0);
             }
-
-            this.set_navigators ();
-            this.message_list.message_selected.connect (on_message_selected);
 
             this._file.file_changed.connect (() => {
                 ValaCAT.UI.Window win = this.get_parent ().get_parent (). get_parent () as ValaCAT.UI.Window;
@@ -137,9 +107,7 @@ namespace ValaCAT.UI
         public void on_message_selected (Message m)
         {
             foreach (ChangedMessageSensible c in change_messages_sensible)
-            {
                 c.message = m;
-            }
         }
 
         public void undo ()
@@ -225,23 +193,33 @@ namespace ValaCAT.UI
     /**
      *
      */
+    [GtkTemplate (ui = "/info/aquelando/valacat/ui/projecttab.ui")]
     public class ProjectTab : Tab
     {
-        public override ValaCAT.FileProject.File? file {get {return null;}}
-        public override ValaCAT.FileProject.Project? project {get {return this._project;}}
-
+        [GtkChild]
         private FileListWidget file_list;
 
+        public override ValaCAT.FileProject.File? file
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         private ValaCAT.FileProject.Project? _project;
+        public override ValaCAT.FileProject.Project? project
+        {
+            get
+            {
+                return this._project;
+            }
+        }
 
         public ProjectTab (Project p)
         {
-            base ();
-            this.label = new Gtk.Label ("projectname"); //TODO project.name
+            base ("project_name"); //TODO project.name
             this._project = p;
-
-            this.file_list = new FileListWidget.with_project (p);
-            this.add_item (this.file_list, DockPlacement.CENTER);
         }
     }
 }

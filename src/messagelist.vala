@@ -19,7 +19,6 @@
  */
 
 using Gtk;
-using Gdl;
 using ValaCAT.FileProject;
 
 namespace ValaCAT.UI
@@ -29,24 +28,37 @@ namespace ValaCAT.UI
      *  This widget can be dockable.
      */
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/messagelist.ui")]
-    public class MessageListWidget : DockItem
+    public class MessageListWidget : Gtk.Box
     {
         [GtkChild]
         private ListBox messages_list_box;
 
         public signal void message_selected (Message m);
 
-        public MessageListWidget (ValaCAT.FileProject.File f)
+        private ValaCAT.FileProject.File? _file;
+        public ValaCAT.FileProject.File? file
         {
-            foreach (Message m in f.messages)
+            get
             {
-                this.add_message (m);
+                return _file;
             }
+            set
+            {
+                _file = value;
+                foreach (Message m in value.messages)
+                    add_message (m);
+            }
+        }
+
+        public MessageListWidget.with_file (ValaCAT.FileProject.File f)
+        {
+            this ();
+            this.file = f;
         }
 
         private void add_message (Message m)
         {
-            this.messages_list_box.add (new MessageListRow (m));
+            messages_list_box.add (new MessageListRow (m));
         }
 
         public MessageListRow? find_row_by_message (Message m)

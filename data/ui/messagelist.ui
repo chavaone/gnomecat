@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <!-- Message list widget template. -->
-  <template class="ValaCATUIMessageListWidget" parent="GdlDockItem">
+  <template class="ValaCATUIMessageListWidget" parent="Gtk.Box">
     <property name="visible">True</property>
     <child>
     <object class="GtkScrolledWindow" id="scrolledwindowmessagelist">

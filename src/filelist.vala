@@ -19,13 +19,12 @@
  */
 
 using Gtk;
-using Gdl;
 using ValaCAT.FileProject;
 
 namespace ValaCAT.UI
 {
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/filelist.ui")]
-    public class FileListWidget : DockItem
+    public class FileListWidget : Gtk.Box
     {
         [GtkChild]
         private ListBox file_list_box;

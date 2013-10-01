@@ -2,7 +2,7 @@
 <interface>
   <!-- interface-requires gdl 3.0 -->
   <!-- interface-requires gtk+ 3.10 -->
-  <template class="ValaCATUIFileListWidget" parent="GdlDockItem">
+  <template class="ValaCATUIFileListWidget" parent="GtkBox">
     <property name="visible">True</property>
     <child>
     <object class="GtkScrolledWindow" id="scrolled_window_file_list">

@@ -18,7 +18,6 @@
  * along with valacat. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gdl;
 using Gtk;
 using ValaCAT.FileProject;
 using ValaCAT.Languages;
@@ -30,7 +29,7 @@ namespace ValaCAT.UI
      * Editing pannel widget.
      */
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditor.ui")]
-    public class MessageEditorWidget : DockItem, ChangedMessageSensible
+    public class MessageEditorWidget : Gtk.Box, ChangedMessageSensible
     {
         [GtkChild]
         private Gtk.Notebook plurals_notebook;

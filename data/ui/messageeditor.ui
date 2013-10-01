@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.15.4 on Mon Sep 30 20:55:13 2013 -->
 <interface>
   <!-- interface-requires gtk+ 3.0 -->
-  <template class="ValaCATUIMessageEditorWidget" parent="GdlDockItem">
+  <template class="ValaCATUIMessageEditorWidget" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
@@ -9,6 +10,11 @@
         <property name="visible">True</property>
         <property name="can_focus">True</property>
       </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
     </child>
   </template>
 </interface>
