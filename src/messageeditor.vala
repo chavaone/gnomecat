@@ -25,6 +25,14 @@ using Gee;
 
 namespace ValaCAT.UI
 {
+
+    int string_lines (string s)
+    {
+        int index, ret;
+        for (ret = 1, index = -1; (index = s.index_of_char ('\n', index+1)) != -1; ret++);
+        return ret;
+    }
+
     /**
      * Editing pannel widget.
      */
@@ -244,6 +252,15 @@ namespace ValaCAT.UI
 
             foreach (MessageTip t in message.get_tips_plural_form (plural_number))
                 add_tip (t);
+
+            int height_orig = string_lines (original_text) * 25;
+            int height_tran = string_lines (translation_text) * 25;
+            int height = height_orig > height_tran ? height_orig : height_tran;
+            height = height > 225 ? 225 : height;
+            textview_original_text.height_request = height;
+            textview_translated_text.height_request = height;
+            this.height_request = height * 2 + 60;
+
         }
 
         construct

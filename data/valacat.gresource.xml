@@ -7,8 +7,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditortab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditortabtiprow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/contextpanel.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/filetab.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/projecttab.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/tab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/searchdialog.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelist.ui</file>

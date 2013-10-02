@@ -30,15 +30,23 @@ namespace ValaCAT.UI
     /**
      * Generic tab.
      */
+    [GtkTemplate (ui = "/info/aquelando/valacat/ui/tab.ui")]
     public abstract class Tab : Gtk.Box
     {
         public Label label {get; protected set;}
         public abstract ValaCAT.FileProject.File? file {get;}
         public abstract ValaCAT.FileProject.Project? project {get;}
 
-        public Tab (string label)
+        [GtkChild]
+        public Gtk.Box left_box;
+        [GtkChild]
+        public Gtk.Box center_box;
+        [GtkChild]
+        public Gtk.Box right_box;
+
+        public Tab (string? label)
         {
-            this.label = new Gtk.Label (label);
+            this.label = new Gtk.Label (label == null ? "" : label);
         }
     }
 
@@ -46,15 +54,12 @@ namespace ValaCAT.UI
     /**
      *
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/filetab.ui")]
     public class FileTab : Tab
     {
-        [GtkChild]
         public MessageListWidget message_list;
-        [GtkChild]
         public MessageEditorWidget message_editor;
-        [GtkChild]
         public ContextPanel message_context;
+
 
         private unowned ValaCAT.FileProject.File? _file;
         public override ValaCAT.FileProject.File? file
@@ -84,6 +89,14 @@ namespace ValaCAT.UI
         {
             base (f.name);
             _file = f;
+
+            message_list = new MessageListWidget ();
+            message_editor = new MessageEditorWidget ();
+            message_context = new ContextPanel ();
+
+            center_box.pack_start (message_list, true, true, 0);
+            center_box.pack_start (message_editor, false, true, 0);
+            right_box.pack_start (message_context, true, true, 0);
 
             message_list.file = f;
             change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
@@ -193,10 +206,8 @@ namespace ValaCAT.UI
     /**
      *
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/projecttab.ui")]
     public class ProjectTab : Tab
     {
-        [GtkChild]
         private FileListWidget file_list;
 
         public override ValaCAT.FileProject.File? file
@@ -220,6 +231,10 @@ namespace ValaCAT.UI
         {
             base ("project_name"); //TODO project.name
             this._project = p;
+
+            file_list = new FileListWidget.with_project (p);
+
+            center_box.pack_start (file_list, true, true, 0);
         }
     }
 }
