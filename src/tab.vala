@@ -59,6 +59,7 @@ namespace ValaCAT.UI
         public MessageListWidget message_list;
         public MessageEditorWidget message_editor;
         public ContextPanel message_context;
+        public HintPanelWidget hints_panel;
 
 
         private unowned ValaCAT.FileProject.File? _file;
@@ -93,10 +94,13 @@ namespace ValaCAT.UI
             message_list = new MessageListWidget ();
             message_editor = new MessageEditorWidget ();
             message_context = new ContextPanel ();
+            hints_panel = new HintPanelWidget ();
 
             center_box.pack_start (message_list, true, true, 0);
             center_box.pack_start (message_editor, false, true, 0);
+            right_box.pack_start (hints_panel, true, true, 0);
             right_box.pack_start (message_context, true, true, 0);
+
 
             message_list.file = f;
             change_messages_sensible = new ArrayList<ChangedMessageSensible> ();

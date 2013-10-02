@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <!-- interface-requires gtk+ 3.10 -->
+  <template class="ValaCATUIHintPanelWidget" parent="GtkBox">
+    <property name="visible">True</property>
+    <property name="width_request">260</property>
+    <child>
+      <object class="GtkScrolledWindow" id="scrolledwindow">
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="shadow_type">in</property>
+        <child>
+          <object class="GtkListBox" id="hints_list">
+            <property name="activate-on-single-click">False</property>
+            <signal name="row_activated" handler="on_row_activated" swapped="no"/>
+          </object>
+        </child>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+  </template>
+</interface>
