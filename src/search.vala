@@ -235,30 +235,28 @@ namespace ValaCAT.Search
 
         private void un_highligt_search (MessageMark mm)
         {
-            ValaCAT.UI.MessageListRow? row = this.filetab.message_list.find_row_by_message (mm.message);
+            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mm.message);
 
             if (row == null) return;
 
-            this.filetab.message_list.select_row (row);
+            filetab.message_list.select_row (row);
+            filetab.message_list.select_editor_tab (mm.plural_number);
 
-            MessageEditorTab editor_tab = this.filetab.message_editor.get_tab_by_plural_number (mm.plural_number);
-            this.filetab.message_editor.select_tab_by_plural_number (mm.plural_number);
-
+            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mm.plural_number);
             editor_tab.clean_tags_translation_string ();
             editor_tab.clean_tags_original_string ();
         }
 
         private void highlight_search (MessageMark mm)
         {
-            ValaCAT.UI.MessageListRow? row = this.filetab.message_list.find_row_by_message (mm.message);
+            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mm.message);
 
-            if (row != null)
-                this.filetab.message_list.select_row (row);
-            else
-                return;
+            if (row == null) return;
 
-            MessageEditorTab editor_tab = this.filetab.message_editor.get_tab_by_plural_number (mm.plural_number);
-            this.filetab.message_editor.select_tab_by_plural_number (mm.plural_number);
+            filetab.message_list.select_row (row);
+            filetab.message_list.select_editor_tab (mm.plural_number);
+
+            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mm.plural_number);
 
             if (mm.is_original)
             {

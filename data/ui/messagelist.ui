@@ -4,7 +4,7 @@
   <template class="ValaCATUIMessageListWidget" parent="Gtk.Box">
     <property name="visible">True</property>
     <child>
-      <object class="GtkScrolledWindow" id="scrolledwindowmessagelist">
+      <object class="GtkScrolledWindow" id="scrolled_window">
           <property name="visible">True</property>
           <property name="can_focus">True</property>
           <property name="shadow_type">in</property>

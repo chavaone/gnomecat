@@ -57,7 +57,6 @@ namespace ValaCAT.UI
     public class FileTab : Tab
     {
         public MessageListWidget message_list;
-        public MessageEditorWidget message_editor;
         public ContextPanel message_context;
         public HintPanelWidget hints_panel;
 
@@ -92,19 +91,16 @@ namespace ValaCAT.UI
             _file = f;
 
             message_list = new MessageListWidget ();
-            message_editor = new MessageEditorWidget ();
             message_context = new ContextPanel ();
             hints_panel = new HintPanelWidget ();
 
             center_box.pack_start (message_list, true, true, 0);
-            center_box.pack_start (message_editor, false, true, 0);
             right_box.pack_start (hints_panel, true, true, 0);
             right_box.pack_start (message_context, true, true, 0);
 
 
             message_list.file = f;
             change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
-            change_messages_sensible.add (message_editor);
             change_messages_sensible.add (message_context);
             change_messages_sensible.add (hints_panel);
             set_navigators ();
@@ -113,7 +109,6 @@ namespace ValaCAT.UI
             if (f.messages.size > 0)
             {
                 this.message_context.message = f.messages.get (0);
-                this.message_editor.message = f.messages.get (0);
             }
 
             this._file.file_changed.connect (() => {
@@ -130,18 +125,16 @@ namespace ValaCAT.UI
 
         public void undo ()
         {
-            if (this.message_editor == null)
-                return;
-            MessageEditorTab tab = this.message_editor.get_active_tab ();
-            tab.undo ();
+            MessageEditorTab tab;
+            if ((tab = message_list.get_active_editor_tab ()) != null)
+                tab.undo ();
         }
 
         public void redo ()
         {
-            if (this.message_editor == null)
-                return;
-            MessageEditorTab tab = this.message_editor.get_active_tab ();
-            tab.redo ();
+            MessageEditorTab tab;
+            if ((tab = message_list.get_active_editor_tab ()) != null)
+                tab.redo ();
         }
 
         public void go_next ()

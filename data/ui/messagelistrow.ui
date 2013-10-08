@@ -9,55 +9,14 @@
         <property name="can_focus">False</property>
         <property name="spacing">7</property>
         <child>
-          <object class="GtkImage" id="state_image">
-            <property name="visible">True</property>
-            <property name="icon-name">dialog-warning-symbolic</property>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="original">
+          <object class="GtkBox" id="info_box">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="editable">False</property>
-            <property name="invisible_char">●</property>
-            <property name="truncate_multiline">True</property>
-            <property name="caps_lock_warning">False</property>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="translation">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="editable">False</property>
-            <property name="invisible_char">●</property>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox" id="tipsbox">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="homogeneous">True</property>
-            <property name="spacing">3</property>
+            <property name="spacing">7</property>
             <child>
-              <object class="GtkImage" id="info_image">
-                <property name="icon-name">dialog-information-symbolic</property>
-                <property name="no-show-all">True</property>
-                <property name="visible">False</property>
+              <object class="GtkImage" id="state_image">
+                <property name="visible">True</property>
+                <property name="icon-name">dialog-warning-symbolic</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -66,34 +25,98 @@
               </packing>
             </child>
             <child>
-              <object class="GtkImage" id="warning_image">
-                <property name="icon-name">dialog-warning-symbolic</property>
-                <property name="no-show-all">True</property>
-                <property name="visible">False</property>
+              <object class="GtkEntry" id="original">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="editable">False</property>
+                <property name="invisible_char">●</property>
+                <property name="truncate_multiline">True</property>
+                <property name="caps_lock_warning">False</property>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">1</property>
               </packing>
             </child>
             <child>
-              <object class="GtkImage" id="error_image">
-                <property name="icon-name">dialog-error-symbolic</property>
-                <property name="no-show-all">True</property>
-                <property name="visible">False</property>
+              <object class="GtkEntry" id="translation">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="editable">False</property>
+                <property name="invisible_char">●</property>
               </object>
               <packing>
-                <property name="expand">False</property>
+                <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">2</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkBox" id="tipsbox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="homogeneous">True</property>
+                <property name="spacing">3</property>
+                <child>
+                  <object class="GtkImage" id="info_image">
+                    <property name="icon-name">dialog-information-symbolic</property>
+                    <property name="no-show-all">True</property>
+                    <property name="visible">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage" id="warning_image">
+                    <property name="icon-name">dialog-warning-symbolic</property>
+                    <property name="no-show-all">True</property>
+                    <property name="visible">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage" id="error_image">
+                    <property name="icon-name">dialog-error-symbolic</property>
+                    <property name="no-show-all">True</property>
+                    <property name="visible">False</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">3</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkNotebook" id="editor_notebook">
+            <property name="visible">False</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>

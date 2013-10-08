@@ -31,6 +31,7 @@ namespace ValaCAT.Navigator
 		private FileIterator iterator;
 		private IteratorFilter<Message> filter;
 		private ValaCAT.UI.FileTab filetab;
+
 		private Message _message;
 		public Message message
 		{
@@ -59,12 +60,6 @@ namespace ValaCAT.Navigator
 			}
 		}
 
-		public void set_message (Message m)
-		{
-
-		}
-
-
 		public Navigator (FileTab ft, IteratorFilter<Message> filter)
 		{
 			filetab = ft;
@@ -85,8 +80,9 @@ namespace ValaCAT.Navigator
 			if (m == null)
 				return; //FIXME
 
-			MessageListRow? row = filetab.message_list.find_row_by_message (m);
-			filetab.message_list.select_row (row);
+			MessageListRow? row = filetab.message_list.get_row_by_message (m);
+			if (row != null)
+				filetab.message_list.select_row (row);
 		}
 
 		public void previous_item ()
@@ -102,8 +98,9 @@ namespace ValaCAT.Navigator
 			if (m == null)
 				return; //FIXME
 
-			MessageListRow? row = filetab.message_list.find_row_by_message (m);
-			filetab.message_list.select_row (row);
+			MessageListRow? row = filetab.message_list.get_row_by_message (m);
+			if (row != null)
+				filetab.message_list.select_row (row);
 		}
 
 

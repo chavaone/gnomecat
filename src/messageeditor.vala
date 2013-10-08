@@ -34,81 +34,6 @@ namespace ValaCAT.UI
     }
 
     /**
-     * Editing pannel widget.
-     */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditor.ui")]
-    public class MessageEditorWidget : Gtk.Box, ChangedMessageSensible
-    {
-        [GtkChild]
-        private Gtk.Notebook plurals_notebook;
-        private Message _message;
-        public Message message
-        {
-            get
-            {
-                return _message;
-            }
-            set
-            {
-                _message = value;
-                int i;
-                this.clean_tabs ();
-                PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
-
-                string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
-                this.add_tab (new MessageEditorTab (label, value, 0));
-
-                if (value.has_plural ())
-                {
-                    int num_plurals = enabled_plural_form.number_of_plurals;
-
-                    for (i = 1; i < num_plurals; i++)
-                    {
-                        label = _("Plural %i (%s)").printf (i, enabled_plural_form.plural_tags.get (i));
-                        this.add_tab (new MessageEditorTab (label, value, i));
-                    }
-                }
-            }
-        }
-
-        public MessageEditorTab get_active_tab ()
-        {
-            int curr_page = this.plurals_notebook.get_current_page ();
-            return this.plurals_notebook.get_nth_page (curr_page) as MessageEditorTab;
-        }
-
-        public MessageEditorTab? get_tab_by_plural_number (int plural_number)
-        {
-            if (plural_number > this.plurals_notebook.get_n_pages ())
-                return null;
-
-            return this.plurals_notebook.get_nth_page (plural_number) as MessageEditorTab;
-        }
-
-        public void select_tab_by_plural_number (int plural_number)
-        {
-            if (plural_number > this.plurals_notebook.get_n_pages ())
-                return;
-            this.plurals_notebook.set_current_page (plural_number);
-        }
-
-        private void add_tab (MessageEditorTab t)
-        {
-            this.plurals_notebook.append_page (t, t.label);
-        }
-
-        private void clean_tabs ()
-        {
-            int number_of_tabs = this.plurals_notebook.get_n_pages ();
-            for (int i=0; i<number_of_tabs; i++)
-            {
-                this.plurals_notebook.remove_page (0);
-            }
-        }
-    }
-
-
-    /**
      * Editor pannel tabs.
      */
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditortab.ui")]
@@ -130,11 +55,10 @@ namespace ValaCAT.UI
         private ListBox tips_box;
 
         private string _original_text;
-        private string _tranlation_text;
-
         private string original_text
         {
-            get {
+            get
+            {
                 _original_text = this.plural_number == 0 ?
                 this.message.get_original_singular () :
                 this.message.get_original_plural ();
@@ -142,6 +66,8 @@ namespace ValaCAT.UI
             }
         }
 
+
+        private string _tranlation_text;
         private string? translation_text
         {
             get
@@ -155,7 +81,8 @@ namespace ValaCAT.UI
             }
         }
 
-        public bool visible_whitespace {
+        public bool visible_whitespace
+        {
             get
             {
                 assert (textview_translated_text.draw_spaces == textview_original_text.draw_spaces);
