@@ -55,7 +55,7 @@ namespace ValaCAT.UI
         private ListBox tips_box;
 
         private string _original_text;
-        private string original_text
+        public string original_text
         {
             get
             {
@@ -68,7 +68,7 @@ namespace ValaCAT.UI
 
 
         private string _tranlation_text;
-        private string? translation_text
+        public string? translation_text
         {
             get
             {
@@ -77,7 +77,29 @@ namespace ValaCAT.UI
             }
             set
             {
-                this.message.set_translation (this.plural_number, value);
+                string old_text = translation_text;
+                string new_text = value;
+
+                message.set_translation (this.plural_number, new_text);
+                if (old_text != null && new_text == "")
+                this.message.state = MessageState.UNTRANSLATED;
+
+                if (old_text == null && new_text != null)
+                {
+                    bool untrans_msg = false;
+                    PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
+                    int num_plurals = message.has_plural () ?
+                        enabled_plural_form.number_of_plurals : 1;
+                    for (int i = 0; i < num_plurals; i++)
+                        untrans_msg |= message.get_translation (i) == null;
+
+                    if (! untrans_msg)
+                        this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
+                            MessageState.FUZZY :
+                            MessageState.TRANSLATED;
+                }
+                textview_translated_text.buffer.set_text (new_text);
+                message.message_changed ();
             }
         }
 
@@ -187,7 +209,6 @@ namespace ValaCAT.UI
             textview_original_text.height_request = height;
             textview_translated_text.height_request = height;
             this.height_request = height * 2 + 60;
-
         }
 
         construct
@@ -290,30 +311,8 @@ namespace ValaCAT.UI
 
         private void update_translation (TextBuffer buff)
         {
-            string? old_text = this.translation_text;
             string? new_text = buff.text;
-
             translation_text = new_text == "" ? null : new_text;
-
-            if (old_text != null && new_text == "")
-                this.message.state = MessageState.UNTRANSLATED;
-
-            if (old_text == null && new_text != null)
-            {
-                bool untrans_msg = false;
-                PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
-                int num_plurals = message.has_plural () ?
-                    enabled_plural_form.number_of_plurals : 1;
-                for (int i = 0; i < num_plurals; i++)
-                    untrans_msg |= message.get_translation (i) == null;
-
-                if (! untrans_msg)
-                    this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
-                        MessageState.FUZZY :
-                        MessageState.TRANSLATED;
-            }
-
-            message.message_changed ();
         }
     }
 

@@ -11,9 +11,10 @@
         <property name="can_focus">False</property>
         <property name="spacing">10</property>
         <child>
-          <object class="GtkEntry" id="hint">
+          <object class="GtkEntry" id="hint_entry">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can_focus">False</property>
+            <property name="editable">False</property>
           </object>
           <packing>
             <property name="expand">True</property>

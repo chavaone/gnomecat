@@ -27,14 +27,28 @@ namespace ValaCAT.UI
 	public class HintPanelRow : Gtk.ListBoxRow
 	{
 		[GtkChild]
-		private Gtk.Entry hint;
+		private Gtk.Entry hint_entry;
 		[GtkChild]
 		private Gtk.Label origin;
 
+		private Hint _hint;
+		public Hint hint
+		{
+			get
+			{
+				return _hint;
+			}
+			set
+			{
+				_hint = value;
+				hint_entry.set_text (value.translation_hint);
+				origin.set_text (value.origin);
+			}
+		}
+
 		public HintPanelRow (Hint h)
 		{
-			hint.set_text (h.translation_hint);
-			origin.set_text (h.origin);
+			hint = h;
 		}
 	}
 
@@ -75,6 +89,15 @@ namespace ValaCAT.UI
 		{
 			if (m == this.message)
 				hints_list.add (new HintPanelRow (h));
+		}
+
+		[GtkCallback]
+		public void on_row_activated (Gtk.ListBoxRow r)
+		{
+			string text = (r as HintPanelRow).hint.translation_hint;
+			ValaCAT.UI.MessageListWidget w = (this.get_parent ().get_parent
+				() as FileTab).message_list;
+			w.get_active_editor_tab ().translation_text = text;
 		}
 	}
 }
