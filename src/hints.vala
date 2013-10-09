@@ -30,6 +30,12 @@ namespace ValaCAT.UI
 		private Gtk.Entry hint;
 		[GtkChild]
 		private Gtk.Label origin;
+
+		public HintPanelRow (Hint h)
+		{
+			hint.set_text (h.translation_hint);
+			origin.set_text (h.origin);
+		}
 	}
 
 	[GtkTemplate (ui = "/info/aquelando/valacat/ui/hintpanelwidget.ui")]
@@ -60,9 +66,16 @@ namespace ValaCAT.UI
 
 			if (message == null)
 				return;
-			//TODO:
+
+			ValaCAT.Application app = ValaCAT.Application.get_default ();
+			app.get_hints (this.message, this);
 		}
 
+		public void add_hint (Message m, Hint h)
+		{
+			if (m == this.message)
+				hints_list.add (new HintPanelRow (h));
+		}
 	}
 }
 
@@ -82,5 +95,10 @@ namespace ValaCAT
 			this.translation_hint = translation_hint;
 			this.accuracy = accuracy;
 		}
+	}
+
+	public abstract class HintProvider : Object
+	{
+		public abstract void get_hints (Message m, ValaCAT.UI.HintPanelWidget hpw);
 	}
 }

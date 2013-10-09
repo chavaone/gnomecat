@@ -106,6 +106,7 @@ namespace ValaCAT.UI
             change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
             change_messages_sensible.add (message_editor);
             change_messages_sensible.add (message_context);
+            change_messages_sensible.add (hints_panel);
             set_navigators ();
             message_list.message_selected.connect (on_message_selected);
 

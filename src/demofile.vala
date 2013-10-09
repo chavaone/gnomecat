@@ -183,4 +183,15 @@ namespace ValaCAT.Demo
         }
 
     }
+
+
+    public class DemoHintProvider : ValaCAT.HintProvider
+    {
+
+        public override void get_hints (Message m,
+            ValaCAT.UI.HintPanelWidget hpw)
+        {
+            hpw.add_hint (m, new Hint (m.get_original_singular (), "DEMO", 0.3));
+        }
+    }
 }

@@ -12,6 +12,7 @@
         <child>
           <object class="GtkListBox" id="hints_list">
             <property name="activate-on-single-click">False</property>
+            <property name="visible">True</property>
             <signal name="row_activated" handler="on_row_activated" swapped="no"/>
           </object>
         </child>

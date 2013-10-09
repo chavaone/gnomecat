@@ -28,6 +28,7 @@ namespace ValaCAT
     public class Application : Gtk.Application
     {
         private ArrayList<FileOpener> file_openers;
+        private ArrayList<HintProvider> hint_providers;
         private static ValaCAT.Application _instance;
 
         private ArrayList<string> _extensions;
@@ -44,6 +45,7 @@ namespace ValaCAT
                 return _extensions;
             }
         }
+
         private ValaCAT.Profiles.Profile? _enabled_profile;
         public ValaCAT.Profiles.Profile? enabled_profile
         {
@@ -76,6 +78,9 @@ namespace ValaCAT
             file_openers = new ArrayList<FileOpener> ();
             add_opener (new ValaCAT.PoFiles.PoFileOpener ());
             this.window_removed.connect (on_window_removed);
+
+            hint_providers = new ArrayList<HintProvider> ();
+            add_hint_provider (new ValaCAT.Demo.DemoHintProvider ()); //DEMO
         }
 
         public static new ValaCAT.Application get_default ()
@@ -115,6 +120,25 @@ namespace ValaCAT
                 }
             }
             return null;
+        }
+
+        public void add_hint_provider (HintProvider hp)
+        {
+            hint_providers.add (hp);
+        }
+
+        public void remove_hint_provider (HintProvider hp)
+        {
+            hint_providers.remove (hp);
+        }
+
+        public void get_hints (ValaCAT.FileProject.Message m,
+            ValaCAT.UI.HintPanelWidget pannel)
+        {
+            foreach (HintProvider hp in hint_providers)
+            {
+                hp.get_hints (m, pannel);
+            }
         }
 
         private void on_window_removed ()
