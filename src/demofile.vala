@@ -194,4 +194,29 @@ namespace ValaCAT.Demo
             hpw.add_hint (m, new Hint (m.get_original_singular (), "DEMO", 0.3));
         }
     }
+
+    public class DemoChecker :ValaCAT.Checker
+    {
+        public override void check (Message m)
+        {
+            int random;
+            if (m.state != MessageState.UNTRANSLATED)
+            {
+                random = Random.int_range (0,9);
+                for (int i = 0; i < random; i++)
+                {
+                    int n = Random.int_range (0,3);
+                    m.add_tip (
+                        new MessageTip (
+                            "Just a tip",
+                            string_random (Random.int_range (16,25)),
+                            n == 0 ? TipLevel.INFO :
+                            n == 1 ? TipLevel.WARNING :
+                            TipLevel.ERROR,
+                            null,
+                            null));
+                }
+            }
+        }
+    }
 }

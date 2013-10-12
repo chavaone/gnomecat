@@ -209,6 +209,9 @@ namespace ValaCAT.UI
             textview_original_text.height_request = height;
             textview_translated_text.height_request = height;
             this.height_request = height * 2 + 60;
+
+            this.message.added_tip.connect (on_added_tip);
+            this.message.removed_tip.connect (on_removed_tip);
         }
 
         construct
@@ -220,13 +223,22 @@ namespace ValaCAT.UI
             settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 
+        private void on_added_tip (Message m, MessageTip t)
+        {
+            add_tip (t);
+        }
+
+        private void on_removed_tip (Message m, MessageTip t)
+        {
+            remove_tip (t);
+        }
 
         /**
          *
          */
         public void add_tip (MessageTip t)
         {
-            this.tips_box.add (new MessageTipRow (t));
+            tips_box.add (new MessageTipRow (t));
         }
 
         /**
@@ -234,11 +246,11 @@ namespace ValaCAT.UI
          */
         public void remove_tip (MessageTip t)
         {
-            foreach (Widget w in this.tips_box.get_children ())
+            foreach (Widget w in tips_box.get_children ())
             {
                 if ((w as MessageTipRow).tip == t)
                 {
-                    this.tips_box.remove (w);
+                    tips_box.remove (w);
                     return;
                 }
             }
@@ -291,14 +303,14 @@ namespace ValaCAT.UI
         public void undo ()
         {
             SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
-            if (source_buffer.get_undo_manager (). can_undo ())
+            if (source_buffer.get_undo_manager ().can_undo ())
                 source_buffer.get_undo_manager ().undo ();
         }
 
         public void redo ()
         {
             SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
-            if (source_buffer.get_undo_manager (). can_redo ())
+            if (source_buffer.get_undo_manager ().can_redo ())
                 source_buffer.get_undo_manager ().redo ();
         }
 

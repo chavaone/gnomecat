@@ -29,6 +29,7 @@ namespace ValaCAT
     {
         private ArrayList<FileOpener> file_openers;
         private ArrayList<HintProvider> hint_providers;
+        private ArrayList<Checker> checkers;
         private static ValaCAT.Application _instance;
 
         private ArrayList<string> _extensions;
@@ -81,6 +82,9 @@ namespace ValaCAT
 
             hint_providers = new ArrayList<HintProvider> ();
             add_hint_provider (new ValaCAT.Demo.DemoHintProvider ()); //DEMO
+
+            checkers = new ArrayList<Checker> ();
+            add_checker (new ValaCAT.Demo.DemoChecker ()); //DEMO
         }
 
         public static new ValaCAT.Application get_default ()
@@ -138,6 +142,24 @@ namespace ValaCAT
             foreach (HintProvider hp in hint_providers)
             {
                 hp.get_hints (m, pannel);
+            }
+        }
+
+        public void add_checker (Checker c)
+        {
+            checkers.add (c);
+        }
+
+        public void remove_checker (Checker c)
+        {
+            checkers.remove (c);
+        }
+
+        public void check_message (Message m)
+        {
+            foreach (Checker c in checkers)
+            {
+                c.check (m);
             }
         }
 

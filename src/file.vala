@@ -154,6 +154,7 @@ namespace ValaCAT.FileProject
         {
             this.file = owner_file;
             this.tips = new ArrayList<MessageTip> ();
+            message_changed.connect (check_message);
         }
 
 
@@ -275,6 +276,16 @@ namespace ValaCAT.FileProject
             }
 
             return aux;
+        }
+
+        private void check_message ()
+        {
+            int length = tips.size;
+            for (int i = 0; i < length; i++)
+            {
+                remove_tip (tips.get (0));
+            }
+            ValaCAT.Application.get_default ().check_message (this);
         }
     }
 
