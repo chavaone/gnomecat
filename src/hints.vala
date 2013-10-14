@@ -23,108 +23,108 @@ using ValaCAT.FileProject;
 namespace ValaCAT.UI
 {
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/ui/hintpanelrow.ui")]
-	public class HintPanelRow : Gtk.ListBoxRow
-	{
-		[GtkChild]
-		private Gtk.Entry hint_entry;
-		[GtkChild]
-		private Gtk.Label origin;
-		[GtkChild]
-		private Gtk.Label accuracy_label;
+    [GtkTemplate (ui = "/info/aquelando/valacat/ui/hintpanelrow.ui")]
+    public class HintPanelRow : Gtk.ListBoxRow
+    {
+        [GtkChild]
+        private Gtk.Entry hint_entry;
+        [GtkChild]
+        private Gtk.Label origin;
+        [GtkChild]
+        private Gtk.Label accuracy_label;
 
-		private Hint _hint;
-		public Hint hint
-		{
-			get
-			{
-				return _hint;
-			}
-			set
-			{
-				_hint = value;
-				hint_entry.set_text (value.translation_hint);
-				origin.set_text (value.origin);
-				accuracy_label.set_text ((value.accuracy * 100).to_string () + " %");
-			}
-		}
+        private Hint _hint;
+        public Hint hint
+        {
+            get
+            {
+                return _hint;
+            }
+            set
+            {
+                _hint = value;
+                hint_entry.set_text (value.translation_hint);
+                origin.set_text (value.origin);
+                accuracy_label.set_text ((value.accuracy * 100).to_string () + "%");
+            }
+        }
 
-		public HintPanelRow (Hint h)
-		{
-			hint = h;
-		}
-	}
+        public HintPanelRow (Hint h)
+        {
+            hint = h;
+        }
+    }
 
-	[GtkTemplate (ui = "/info/aquelando/valacat/ui/hintpanelwidget.ui")]
-	public class HintPanelWidget : Gtk.Box, ChangedMessageSensible
-	{
-		[GtkChild]
-		private Gtk.ListBox hints_list;
+    [GtkTemplate (ui = "/info/aquelando/valacat/ui/hintpanelwidget.ui")]
+    public class HintPanelWidget : Gtk.Box, ChangedMessageSensible
+    {
+        [GtkChild]
+        private Gtk.ListBox hints_list;
 
-		private Message _message;
-		public Message message
-		{
-			get
-			{
-				return _message;
-			}
-			set
-			{
-				_message = value;
-				this.populate_list ();
-			}
-		}
+        private Message _message;
+        public Message message
+        {
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                _message = value;
+                this.populate_list ();
+            }
+        }
 
-		private void populate_list ()
-		{
-			hints_list.foreach ((w) => {
-				hints_list.remove (w);
-			});
+        private void populate_list ()
+        {
+            hints_list.foreach ((w) => {
+                hints_list.remove (w);
+            });
 
-			if (message == null)
-				return;
+            if (message == null)
+                return;
 
-			ValaCAT.Application app = ValaCAT.Application.get_default ();
-			app.get_hints (this.message, this);
-		}
+            ValaCAT.Application app = ValaCAT.Application.get_default ();
+            app.get_hints (this.message, this);
+        }
 
-		public void add_hint (Message m, Hint h)
-		{
-			if (m == this.message)
-				hints_list.add (new HintPanelRow (h));
-		}
+        public void add_hint (Message m, Hint h)
+        {
+            if (m == this.message)
+                hints_list.add (new HintPanelRow (h));
+        }
 
-		[GtkCallback]
-		public void on_row_activated (Gtk.ListBoxRow r)
-		{
-			string text = (r as HintPanelRow).hint.translation_hint;
-			ValaCAT.UI.MessageListWidget w = (this.get_parent ().get_parent
-				() as FileTab).message_list;
-			w.get_active_editor_tab ().translation_text = text;
-		}
-	}
+        [GtkCallback]
+        public void on_row_activated (Gtk.ListBoxRow r)
+        {
+            string text = (r as HintPanelRow).hint.translation_hint;
+            ValaCAT.UI.MessageListWidget w = (this.get_parent ().get_parent
+                () as FileTab).message_list;
+            w.get_active_editor_tab ().translation_text = text;
+        }
+    }
 }
 
 namespace ValaCAT
 {
-	public class Hint : Object
-	{
-		public string translation_hint {get; private set;}
-		public string origin {get; private set;}
-		public double accuracy {get; private set;}
+    public class Hint : Object
+    {
+        public string translation_hint {get; private set;}
+        public string origin {get; private set;}
+        public double accuracy {get; private set;}
 
-		public Hint (string translation_hint,
-					string origin,
-					double accuracy)
-		{
-			this.origin = origin;
-			this.translation_hint = translation_hint;
-			this.accuracy = accuracy;
-		}
-	}
+        public Hint (string translation_hint,
+                    string origin,
+                    double accuracy)
+        {
+            this.origin = origin;
+            this.translation_hint = translation_hint;
+            this.accuracy = accuracy;
+        }
+    }
 
-	public abstract class HintProvider : Object
-	{
-		public abstract void get_hints (Message m, ValaCAT.UI.HintPanelWidget hpw);
-	}
+    public abstract class HintProvider : Object
+    {
+        public abstract void get_hints (Message m, ValaCAT.UI.HintPanelWidget hpw);
+    }
 }
