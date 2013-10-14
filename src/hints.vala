@@ -30,6 +30,8 @@ namespace ValaCAT.UI
 		private Gtk.Entry hint_entry;
 		[GtkChild]
 		private Gtk.Label origin;
+		[GtkChild]
+		private Gtk.Label accuracy_label;
 
 		private Hint _hint;
 		public Hint hint
@@ -43,6 +45,7 @@ namespace ValaCAT.UI
 				_hint = value;
 				hint_entry.set_text (value.translation_hint);
 				origin.set_text (value.origin);
+				accuracy_label.set_text ((value.accuracy * 100).to_string () + " %");
 			}
 		}
 
