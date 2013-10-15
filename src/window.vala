@@ -385,12 +385,9 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_page_removed (Gtk.Widget pate, uint page_num)
         {
-            if (notebook.get_n_pages () == 0)
-            {
-                foreach (var w in ValaCAT.Application.get_default ().get_windows ())
-                    return;
+            if (notebook.get_n_pages () == 0 &&
+                ValaCAT.Application.get_default ().get_windows ().length () != 1)
                 this.close ();
-            }
         }
 
         [GtkCallback]
