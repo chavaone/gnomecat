@@ -27,13 +27,36 @@ using Gee;
 
 namespace ValaCAT.UI
 {
+
+    [GtkTemplate (ui ="/info/aquelando/valacat/ui/tablabel.ui")]
+    public class TabLabel : Gtk.Box
+    {
+
+        [GtkChild]
+        public Gtk.Label tab_name;
+
+        private Tab tab;
+
+        public TabLabel (string label_text, Tab tab)
+        {
+            tab_name.set_text (label_text);
+            this.tab = tab;
+        }
+
+        [GtkCallback]
+        private void on_close ()
+        {
+            tab.on_close ();
+        }
+    }
+
     /**
      * Generic tab.
      */
     [GtkTemplate (ui = "/info/aquelando/valacat/ui/tab.ui")]
     public abstract class Tab : Gtk.Box
     {
-        public Label label {get; protected set;}
+        public Widget label {get; protected set;}
         public abstract ValaCAT.FileProject.File? file {get;}
         public abstract ValaCAT.FileProject.Project? project {get;}
 
@@ -46,7 +69,13 @@ namespace ValaCAT.UI
 
         public Tab (string? label)
         {
-            this.label = new Gtk.Label (label == null ? "" : label);
+            this.label = new TabLabel (label == null ? "" : label, this);
+        }
+
+        public void on_close ()
+        {
+            Gtk.Notebook notebook = get_parent () as Gtk.Notebook;
+            notebook.remove_page (notebook.page_num (this));
         }
     }
 
