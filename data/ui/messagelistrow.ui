@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.0 on Fri Oct 18 11:34:37 2013
+
+This file is part of ValaCAT.
+
+ValaCAT is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ValaCAT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ValaCAT.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <interface>
+  <!-- interface-requires gtk+ 3.10 -->
   <template class="ValaCATUIMessageListRow" parent="GtkListBoxRow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -16,7 +35,8 @@
             <child>
               <object class="GtkImage" id="state_image">
                 <property name="visible">True</property>
-                <property name="icon-name">dialog-warning-symbolic</property>
+                <property name="can_focus">False</property>
+                <property name="icon_name">dialog-warning-symbolic</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -56,13 +76,13 @@
               <object class="GtkBox" id="tipsbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="homogeneous">True</property>
                 <property name="spacing">3</property>
+                <property name="homogeneous">True</property>
                 <child>
                   <object class="GtkImage" id="info_image">
-                    <property name="icon-name">dialog-information-symbolic</property>
-                    <property name="no-show-all">True</property>
-                    <property name="visible">False</property>
+                    <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
+                    <property name="icon_name">dialog-information-symbolic</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -72,9 +92,9 @@
                 </child>
                 <child>
                   <object class="GtkImage" id="warning_image">
-                    <property name="icon-name">dialog-warning-symbolic</property>
-                    <property name="no-show-all">True</property>
-                    <property name="visible">False</property>
+                    <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
+                    <property name="icon_name">dialog-warning-symbolic</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -84,9 +104,9 @@
                 </child>
                 <child>
                   <object class="GtkImage" id="error_image">
-                    <property name="icon-name">dialog-error-symbolic</property>
-                    <property name="no-show-all">True</property>
-                    <property name="visible">False</property>
+                    <property name="can_focus">False</property>
+                    <property name="no_show_all">True</property>
+                    <property name="icon_name">dialog-error-symbolic</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -110,8 +130,8 @@
         </child>
         <child>
           <object class="GtkNotebook" id="editor_notebook">
-            <property name="visible">False</property>
             <property name="can_focus">True</property>
+            <property name="margin_top">1</property>
           </object>
           <packing>
             <property name="expand">True</property>

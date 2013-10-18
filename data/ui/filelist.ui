@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.0 on Fri Oct 18 12:39:37 2013
+
+This file is part of ValaCAT.
+
+ValaCAT is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ValaCAT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ValaCAT.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
 <interface>
-  <!-- interface-requires gdl 3.0 -->
   <!-- interface-requires gtk+ 3.10 -->
   <template class="ValaCATUIFileListWidget" parent="GtkBox">
     <property name="visible">True</property>
+    <property name="can_focus">False</property>
     <child>
-    <object class="GtkScrolledWindow" id="scrolled_window_file_list">
+      <object class="GtkScrolledWindow" id="scrolled_window_file_list">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
         <property name="shadow_type">in</property>
         <child>
-        	<object class="GtkListBox" id="file_list_box">
+          <object class="GtkListBox" id="file_list_box">
             <property name="visible">True</property>
             <property name="activate-on-single-click">False</property>
             <signal name="row_activated" handler="on_row_activated" swapped="no"/>
-      		</object>
+          </object>
         </child>
       </object>
       <packing>
