@@ -290,5 +290,19 @@ namespace ValaCAT.UI
                     "There are %i error tips.", number_error_tips).printf (number_error_tips);
             }
         }
+
+        [GtkCallback]
+        private void on_page_added (Gtk.Widget pate, uint page_num)
+        {
+            if (editor_notebook.get_n_pages () > 1)
+                editor_notebook.show_tabs = true;
+        }
+
+        [GtkCallback]
+        private void on_page_removed (Gtk.Widget pate, uint page_num)
+        {
+            if (editor_notebook.get_n_pages () <= 1)
+                editor_notebook.show_tabs = false;
+        }
     }
 }

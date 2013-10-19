@@ -345,9 +345,11 @@ along with ValaCAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="can_focus">False</property>
             <property name="enable_popup">True</property>
             <property name="group_name">valacat</property>
+            <property name="show_tabs">False</property>
             <signal name="switch-page" handler="on_switch_page" swapped="no"/>
             <signal name="create-window" handler="on_create_window" swapped="no"/>
             <signal name="page-removed" handler="on_page_removed" swapped="no"/>
+            <signal name="page-added" handler="on_page_added" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>

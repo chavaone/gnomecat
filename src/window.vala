@@ -383,11 +383,20 @@ namespace ValaCAT.UI
         }
 
         [GtkCallback]
+        private void on_page_added (Gtk.Widget pate, uint page_num)
+        {
+            if (notebook.get_n_pages () > 1)
+                notebook.show_tabs = true;
+        }
+
+        [GtkCallback]
         private void on_page_removed (Gtk.Widget pate, uint page_num)
         {
             if (notebook.get_n_pages () == 0 &&
                 ValaCAT.Application.get_default ().get_windows ().length () != 1)
                 this.close ();
+            if (notebook.get_n_pages () <= 1)
+                notebook.show_tabs = false;
         }
 
         [GtkCallback]

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.0 on Fri Oct 18 11:34:37 2013
+<!-- Generated with glade 3.16.0 on Fri Oct 18 16:40:05 2013
 
 This file is part of ValaCAT.
 
@@ -132,6 +132,9 @@ along with ValaCAT.  If not, see <http://www.gnu.org/licenses/>.
           <object class="GtkNotebook" id="editor_notebook">
             <property name="can_focus">True</property>
             <property name="margin_top">1</property>
+            <property name="show_tabs">False</property>
+            <signal name="page-added" handler="on_page_added" swapped="no"/>
+            <signal name="page-removed" handler="on_page_removed" swapped="no"/>
           </object>
           <packing>
             <property name="expand">True</property>
