@@ -158,8 +158,10 @@ namespace ValaCAT.UI
             {
                 editor_notebook.visible = value;
                 info_box.visible = ! value;
-                if (value && editor_notebook.get_n_pages () == 0)
+                if (value)
                     set_editor_box_properties ();
+                else
+                    clean_tabs ();
             }
         }
 
