@@ -5,6 +5,29 @@ using ValaCAT.FileProject;
 namespace ValaCAT
 {
 
+    public enum SelectLevel
+    {
+        FILE,
+        ROW,
+        PLURAL,
+        STRING
+    }
+
+    public class SelectInfo : Object
+    {
+        public MessageFragment fragment {get; private set;}
+        public Message message {get {return fragment.message;}}
+        public ValaCAT.FileProject.File file {get {return fragment.message.file;}}
+        public SelectLevel level {get; private set;}
+
+        public SelectInfo (MessageFragment fragment, SelectLevel level)
+        {
+            this.fragment = fragment;
+            this.level = level;
+        }
+    }
+
+
     public class TextTag : Object
     {
 
@@ -24,9 +47,9 @@ namespace ValaCAT
             this.end_offset = end_offset;
         }
 
-        public TextTag.from_message_fragment (MessageFragment mf)
+        public TextTag.from_message_fragment (MessageFragment mf, string tag_name)
         {
-            tag = new Gtk.TextTag ("search_tag");
+            tag = new Gtk.TextTag (tag_name);
 
             Gdk.RGBA color_background = Gdk.RGBA ();
             color_background.parse ("blue");

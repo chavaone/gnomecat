@@ -259,7 +259,7 @@ namespace ValaCAT.Search
             MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mf.plural_number);
 
             ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
-            arr.add (new ValaCAT.TextTag.from_message_fragment (mf));
+            arr.add (new ValaCAT.TextTag.from_message_fragment (mf, "search_tag"));
 
             if (mf.is_original)
             {
