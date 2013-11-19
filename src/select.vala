@@ -1,0 +1,47 @@
+
+
+using ValaCAT.FileProject;
+
+namespace ValaCAT
+{
+
+    public class TextTag : Object
+    {
+
+        public Gtk.TextTag tag {get; private set;}
+        public int ini_offset {get; private set;}
+        public int end_offset {get; private set;}
+
+        public TextTag (Gtk.TextTag tag)
+        {
+            this.with_range (tag, -1, -1);
+        }
+
+        public TextTag.with_range (Gtk.TextTag tag, int ini_offset, int end_offset)
+        {
+            this.tag = tag;
+            this.ini_offset = ini_offset;
+            this.end_offset = end_offset;
+        }
+
+        public TextTag.from_message_fragment (MessageFragment mf)
+        {
+            tag = new Gtk.TextTag ("search_tag");
+
+            Gdk.RGBA color_background = Gdk.RGBA ();
+            color_background.parse ("blue");
+            tag.background_rgba = color_background;
+            tag.background_set = true;
+
+            Gdk.RGBA color_foreground = Gdk.RGBA ();
+            color_foreground.parse ("white");
+            tag.foreground_rgba = color_foreground;
+            tag.foreground_set = true;
+
+            tag.weight = Pango.Weight.BOLD;
+            tag.weight_set = true;
+            this.ini_offset = mf.index;
+            this.end_offset = mf.index + mf.length;
+        }
+    }
+}

@@ -35,7 +35,8 @@ VALASOURCES = \
 	pofile.vala \
 	preferencesdialog.vala \
 	hints.vala \
-	checker.vala
+	checker.vala \
+	select.vala
 
 valacat_SOURCES = \
     $(VALASOURCES)                 \

@@ -25,66 +25,6 @@ using ValaCAT.Languages;
 namespace ValaCAT.Iterators
 {
     /**
-     * Object that marks a certain string in a message.
-     */
-    public class MessageMark : Object
-    {
-        /**
-         * Message that references.
-         */
-        public Message message {get; private set;}
-
-        /**
-         *
-         */
-        public int plural_number {get; private set;}
-
-        /**
-         *
-         */
-        public bool is_original {get; private set;}
-
-        /**
-         *
-         */
-        public int index {get; private set;}
-
-        /**
-         *
-         */
-        public int length {get; private set;}
-
-
-        public MessageMark (Message m, int plural_number, bool is_original, int index, int length)
-        {
-            this.message = m;
-            this.plural_number = plural_number;
-            this.is_original = is_original;
-            this.index = index;
-            this.length = length;
-        }
-
-        public ValaCAT.TextTag get_tag ()
-        {
-            Gtk.TextTag t = new Gtk.TextTag ("search_tag");
-            Gdk.RGBA color_background = Gdk.RGBA ();
-            color_background.parse ("blue");
-            t.background_rgba = color_background;
-            t.background_set = true;
-
-            Gdk.RGBA color_foreground = Gdk.RGBA ();
-            color_foreground.parse ("white");
-            t.foreground_rgba = color_foreground;
-            t.foreground_set = true;
-
-            t.weight = Pango.Weight.BOLD;
-            t.weight_set = true;
-            return new ValaCAT.TextTag.with_range (t, this.index, this.index + this.length);
-        }
-    }
-
-
-    /**
      *
      */
     public abstract class IteratorFilter<E> : Object
@@ -160,9 +100,9 @@ namespace ValaCAT.Iterators
     /**
      * Filter for the original text of the message.
      */
-    public class OriginalFilter : IteratorFilter<MessageMark>
+    public class OriginalFilter : IteratorFilter<MessageFragment>
     {
-        public override bool check (MessageMark mm)
+        public override bool check (MessageFragment mm)
         {
             return mm.is_original;
         }
@@ -172,9 +112,9 @@ namespace ValaCAT.Iterators
     /**
      * Filter for the translation text of the message.
      */
-    public class TranslationFilter : IteratorFilter<MessageMark>
+    public class TranslationFilter : IteratorFilter<MessageFragment>
     {
-        public override bool check (MessageMark mm)
+        public override bool check (MessageFragment mm)
         {
             return ! mm.is_original;
         }
@@ -184,9 +124,9 @@ namespace ValaCAT.Iterators
     /**
      * Filter that accepts all parts from the message.
      */
-    public class AllMessageMarkFilter : IteratorFilter<MessageMark>
+    public class AllMessageFragmentFilter : IteratorFilter<MessageFragment>
     {
-        public override bool check (MessageMark mm)
+        public override bool check (MessageFragment mm)
         {
             return true;
         }
@@ -307,27 +247,27 @@ namespace ValaCAT.Iterators
     /**
      *
      */
-    public class MessageIterator : Iterator<Message?, MessageMark?>
+    public class MessageIterator : Iterator<Message?, MessageFragment?>
     {
         public Message message {get; private set;}
         public string search_string {get; private set;}
 
-        private ArrayList<MessageMark> marks;
+        private ArrayList<MessageFragment> marks;
         private int marks_index;
-        private IteratorFilter<MessageMark> filter;
+        private IteratorFilter<MessageFragment> filter;
         private bool visited;
 
         public MessageIterator (Message? msg, string search_string,
-            IteratorFilter<MessageMark> filter)
+            IteratorFilter<MessageFragment> filter)
         {
             this.search_string = search_string;
             this.filter = filter;
-            this.marks = new ArrayList<MessageMark> ();
+            this.marks = new ArrayList<MessageFragment> ();
             if (msg != null)
                 this.set_element (msg);
         }
 
-        public override MessageMark? next ()
+        public override MessageFragment? next ()
         {
             if (! this.visited)
                 this.visited = true;
@@ -337,7 +277,7 @@ namespace ValaCAT.Iterators
             return this.get_current_element ();
         }
 
-        public override MessageMark? previous ()
+        public override MessageFragment? previous ()
         {
             if (! this.visited)
                 this.visited = true;
@@ -364,7 +304,7 @@ namespace ValaCAT.Iterators
             return marks_index == marks.size - 1;
         }
 
-        public override MessageMark? get_current_element ()
+        public override MessageFragment? get_current_element ()
         {
             if (this.marks == null || marks_index < 0 ||
                 marks_index >= this.marks.size)
@@ -384,13 +324,13 @@ namespace ValaCAT.Iterators
         private void get_marks ()
         {
             int index;
-            MessageMark mm;
+            MessageFragment mm;
 
             for (index = message.get_original_singular ().index_of (this.search_string);
                 index != -1;
                 index = this.message.get_original_singular ().index_of (this.search_string, ++index))
             {
-                mm = new MessageMark (this.message, 0, true, index, this.search_string.char_count ());
+                mm = new MessageFragment (this.message, 0, true, index, this.search_string.char_count ());
                 if (this.check_mark (mm))
                     this.marks.add (mm);
             }
@@ -399,7 +339,7 @@ namespace ValaCAT.Iterators
             if (this.message.get_translation (0) != null)
                 while ((index = this.message.get_translation (0).index_of (this.search_string, index)) != -1)
                 {
-                    mm = new MessageMark (this.message, 0, false, index, this.search_string.char_count ());
+                    mm = new MessageFragment (this.message, 0, false, index, this.search_string.char_count ());
                     if (this.check_mark (mm))
                         this.marks.add (mm);
                     index++;
@@ -410,7 +350,7 @@ namespace ValaCAT.Iterators
                 index = 0;
                 while ((index = this.message.get_original_plural ().index_of (this.search_string, index)) != -1)
                 {
-                    mm = new MessageMark (this.message, 1, true, index, this.search_string.char_count ());
+                    mm = new MessageFragment (this.message, 1, true, index, this.search_string.char_count ());
                     if (this.check_mark (mm))
                         this.marks.add (mm);
                     index++;
@@ -424,7 +364,7 @@ namespace ValaCAT.Iterators
                     {
                         while ((index = message_string.index_of (this.search_string, index)) != -1)
                         {
-                            mm = new MessageMark (this.message, plural_number, false, index, this.search_string.char_count ());
+                            mm = new MessageFragment (this.message, plural_number, false, index, this.search_string.char_count ());
                             if (this.check_mark (mm))
                                 this.marks.add (mm);
                             index++;
@@ -434,7 +374,7 @@ namespace ValaCAT.Iterators
             }
         }
 
-        private bool check_mark (MessageMark mm)
+        private bool check_mark (MessageFragment mm)
         {
             return this.filter == null ? false :
                 this.filter.check (mm);

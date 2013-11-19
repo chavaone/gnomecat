@@ -106,6 +106,28 @@ namespace ValaCAT.FileProject
         }
     }
 
+    /**
+     * Object that represents certain portion of a message.
+     */
+    public class MessageFragment : Object
+    {
+
+        public Message message {get; private set;}
+        public int plural_number {get; private set;}
+        public bool is_original {get; private set;}
+        public int index {get; private set;}
+        public int length {get; private set;}
+
+        public MessageFragment (Message m, int plural_number, bool is_original, int index, int length)
+        {
+            this.message = m;
+            this.plural_number = plural_number;
+            this.is_original = is_original;
+            this.index = index;
+            this.length = length;
+        }
+    }
+
 
     /**
      * State of a message.

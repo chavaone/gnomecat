@@ -147,7 +147,7 @@ namespace ValaCAT.Search
 
 
             //FILTERS MESSAGE MARKS
-            ArrayList<IteratorFilter<MessageMark>> filters_mark_array = new ArrayList<IteratorFilter<MessageMark>> ();
+            ArrayList<IteratorFilter<MessageFragment>> filters_mark_array = new ArrayList<IteratorFilter<MessageFragment>> ();
             if (original)
                 filters_mark_array.add (new OriginalFilter ());
 
@@ -155,13 +155,13 @@ namespace ValaCAT.Search
                 filters_mark_array.add (new TranslationFilter ());
 
 
-            IteratorFilter<MessageMark> filter_marks;
+            IteratorFilter<MessageFragment> filter_marks;
             if (filters_mark_array.size == 0)
                 filter_marks = null;
             else if (filters_mark_array.size == 1)
                 filter_marks = filters_mark_array.get (0);
             else
-                filter_marks = new ORFilter<MessageMark> (filters_mark_array);
+                filter_marks = new ORFilter<MessageFragment> (filters_mark_array);
 
 
             this.filetab = tab;
@@ -174,11 +174,11 @@ namespace ValaCAT.Search
 
         public override void next_item ()
         {
-            MessageMark mm = null;
+            MessageFragment mf = null;
 
-            while (mm == null)
+            while (mf == null)
             {
-                if (this.message_iterator.message == null || (mm = this.message_iterator.next ()) == null)
+                if (this.message_iterator.message == null || (mf = this.message_iterator.next ()) == null)
                 {
                     Message message;;
                     if ((message = this.file_iterator.next ()) == null)
@@ -188,16 +188,16 @@ namespace ValaCAT.Search
                 }
             }
 
-            this.highlight_search (mm);
+            this.highlight_search (mf);
         }
 
         public override void previous_item ()
         {
-            MessageMark mm = null;
+            MessageFragment mf = null;
 
-            while (mm == null)
+            while (mf == null)
             {
-                if (this.message_iterator.message == null || (mm = this.message_iterator.previous ()) == null)
+                if (this.message_iterator.message == null || (mf = this.message_iterator.previous ()) == null)
                 {
                     Message message;;
                     if ((message = this.file_iterator.previous ()) == null)
@@ -207,7 +207,7 @@ namespace ValaCAT.Search
                 }
             }
 
-            this.highlight_search (mm);
+            this.highlight_search (mf);
         }
 
         public override string get_search_text ()
@@ -222,70 +222,69 @@ namespace ValaCAT.Search
 
         public override void replace ()
         {
-            MessageMark mm = this.message_iterator.get_current_element ();
-            replace_intern (mm);
+            MessageFragment mf = this.message_iterator.get_current_element ();
+            replace_intern (mf);
         }
 
         public override void disable ()
         {
-            MessageMark mm = this.message_iterator.get_current_element ();
-            if (mm != null)
-                un_highligt_search (mm);
+            MessageFragment mf = this.message_iterator.get_current_element ();
+            if (mf != null)
+                un_highligt_search (mf);
         }
 
-        private void un_highligt_search (MessageMark mm)
+        private void un_highligt_search (MessageFragment mf)
         {
-            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mm.message);
+            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mf.message);
 
             if (row == null) return;
 
             filetab.message_list.select_row (row);
-            filetab.message_list.select_editor_tab (mm.plural_number);
+            filetab.message_list.select_editor_tab (mf.plural_number);
 
-            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mm.plural_number);
+            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mf.plural_number);
             editor_tab.clean_tags_translation_string ();
             editor_tab.clean_tags_original_string ();
         }
 
-        private void highlight_search (MessageMark mm)
+        private void highlight_search (MessageFragment mf)
         {
-            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mm.message);
+            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mf.message);
 
             if (row == null) return;
 
             filetab.message_list.select_row (row);
-            filetab.message_list.select_editor_tab (mm.plural_number);
+            filetab.message_list.select_editor_tab (mf.plural_number);
 
-            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mm.plural_number);
+            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mf.plural_number);
 
-            if (mm.is_original)
+            ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
+            arr.add (new ValaCAT.TextTag.from_message_fragment (mf));
+
+            if (mf.is_original)
             {
-                ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
-                arr.add (mm.get_tag ());
                 editor_tab.clean_tags_translation_string ();
                 editor_tab.replace_tags_original_string (arr);
             }
             else
             {
-                ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
-                arr.add (mm.get_tag ());
                 editor_tab.clean_tags_original_string ();
                 editor_tab.replace_tags_translation_string (arr);
             }
         }
 
-        private void replace_intern (MessageMark mm)
+        private void replace_intern (MessageFragment mf)
         {
-            if (mm.is_original)
+            if (mf.is_original)
             {
                 return;
             }
             else
             {
-                string original_string = mm.message.get_translation (mm.plural_number);
-                mm.message.set_translation (mm.plural_number,
-                    original_string.substring (0,mm.index) + this.replace_text +
-                    original_string.substring (mm.index + mm.length));
+                string original_string = mf.message.get_translation (mf.plural_number);
+                mf.message.set_translation (mf.plural_number,
+                    original_string.substring (0,mf.index) + this.replace_text +
+                    original_string.substring (mf.index + mf.length));
             }
         }
     }
