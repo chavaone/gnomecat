@@ -62,7 +62,6 @@ namespace ValaCAT.UI
             }
         }
 
-
         private string _tranlation_text;
         public string? translation_text
         {
@@ -229,17 +228,11 @@ namespace ValaCAT.UI
             remove_tip (t);
         }
 
-        /**
-         *
-         */
         public void add_tip (MessageTip t)
         {
             tips_box.add (new MessageTipRow (t));
         }
 
-        /**
-         *
-         */
         public void remove_tip (MessageTip t)
         {
             foreach (Widget w in tips_box.get_children ())
@@ -360,6 +353,26 @@ namespace ValaCAT.UI
             buffer.tag_table.remove (tag.tag);
         }
 
+        public void select (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            assert (level == SelectLevel.STRING);
+            assert (fragment != null);
+
+            ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
+            arr.add (new ValaCAT.TextTag.from_message_fragment (fragment, "search_tag"));
+
+            if (fragment.is_original)
+            {
+                clean_tags_translation_string ();
+                replace_tags_original_string (arr);
+            }
+            else
+            {
+                clean_tags_original_string ();
+                replace_tags_translation_string (arr);
+            }
+        }
     }
 
 

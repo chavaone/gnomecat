@@ -188,7 +188,7 @@ namespace ValaCAT.Search
                 }
             }
 
-            this.highlight_search (mf);
+            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
         }
 
         public override void previous_item ()
@@ -207,7 +207,7 @@ namespace ValaCAT.Search
                 }
             }
 
-            this.highlight_search (mf);
+            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
         }
 
         public override string get_search_text ()
@@ -245,32 +245,6 @@ namespace ValaCAT.Search
             MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mf.plural_number);
             editor_tab.clean_tags_translation_string ();
             editor_tab.clean_tags_original_string ();
-        }
-
-        private void highlight_search (MessageFragment mf)
-        {
-            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mf.message);
-
-            if (row == null) return;
-
-            filetab.message_list.select_row (row);
-            filetab.message_list.select_editor_tab (mf.plural_number);
-
-            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mf.plural_number);
-
-            ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
-            arr.add (new ValaCAT.TextTag.from_message_fragment (mf, "search_tag"));
-
-            if (mf.is_original)
-            {
-                editor_tab.clean_tags_translation_string ();
-                editor_tab.replace_tags_original_string (arr);
-            }
-            else
-            {
-                editor_tab.clean_tags_original_string ();
-                editor_tab.replace_tags_translation_string (arr);
-            }
         }
 
         private void replace_intern (MessageFragment mf)

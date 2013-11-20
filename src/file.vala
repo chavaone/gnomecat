@@ -117,6 +117,24 @@ namespace ValaCAT.FileProject
         public bool is_original {get; private set;}
         public int index {get; private set;}
         public int length {get; private set;}
+        public File file
+        {
+            get
+            {
+                return this.message.file;
+            }
+        }
+        public Project? project
+        {
+            get
+            {
+                if (this.message.file != null)
+                {
+                    return this.message.file.project;
+                }
+                return null;
+            }
+        }
 
         public MessageFragment (Message m, int plural_number, bool is_original, int index, int length)
         {
@@ -626,7 +644,7 @@ namespace ValaCAT.FileProject
                         }
                         else if (info.get_file_type () == FileType.REGULAR)
                         {
-                            File f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_path (path));
+                            File f = ValaCAT.Application.get_default ().open_file (path);
                             if (f != null)
                                 this.add_file (f);
                         }

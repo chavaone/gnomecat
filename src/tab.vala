@@ -206,6 +206,12 @@ namespace ValaCAT.UI
             this.navigator_untranslated.previous_item ();
         }
 
+        public void select (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            message_list.select (level, fragment);
+        }
+
         private void set_navigators ()
         {
             IteratorFilter<Message> fuzzy_filter = new FuzzyFilter ();

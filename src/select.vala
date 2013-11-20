@@ -13,20 +13,6 @@ namespace ValaCAT
         STRING
     }
 
-    public class SelectInfo : Object
-    {
-        public MessageFragment fragment {get; private set;}
-        public Message message {get {return fragment.message;}}
-        public ValaCAT.FileProject.File file {get {return fragment.message.file;}}
-        public SelectLevel level {get; private set;}
-
-        public SelectInfo (MessageFragment fragment, SelectLevel level)
-        {
-            this.fragment = fragment;
-            this.level = level;
-        }
-    }
-
 
     public class TextTag : Object
     {

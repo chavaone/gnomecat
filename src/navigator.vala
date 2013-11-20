@@ -80,9 +80,8 @@ namespace ValaCAT.Navigator
             if (m == null)
                 return; //FIXME
 
-            MessageListRow? row = filetab.message_list.get_row_by_message (m);
-            if (row != null)
-                filetab.message_list.select_row (row);
+            ValaCAT.Application.get_default ().select (SelectLevel.ROW,
+                new MessageFragment (m, 0, false, 0, 0));
         }
 
         public void previous_item ()
@@ -98,9 +97,8 @@ namespace ValaCAT.Navigator
             if (m == null)
                 return; //FIXME
 
-            MessageListRow? row = filetab.message_list.get_row_by_message (m);
-            if (row != null)
-                filetab.message_list.select_row (row);
+            ValaCAT.Application.get_default ().select (SelectLevel.ROW,
+                new MessageFragment (m, 0, false, 0, 0));
         }
 
 

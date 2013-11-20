@@ -332,8 +332,6 @@ namespace ValaCAT.UI
                 progressbar_title.fraction = translated / total;
         }
 
-
-
         private  void on_project_changed (Window src, ValaCAT.FileProject.Project? project)
         {
             //TODO
@@ -352,8 +350,6 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_search_changed (Gtk.SearchEntry entry)
         {
-            if (this.active_search != null)
-                this.active_search.disable ();
             if (entry.get_text () == "")
             {
                 this.active_search = null;
@@ -371,7 +367,6 @@ namespace ValaCAT.UI
 
                 this.active_search.next_item ();
             }
-
         }
 
         [GtkCallback]
@@ -403,7 +398,8 @@ namespace ValaCAT.UI
         private void on_open_recent_file ()
         {
             string uri = this.recentfilemenu.get_current_uri ();
-            ValaCAT.FileProject.File f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_uri (uri));
+            ValaCAT.FileProject.File f = ValaCAT.Application.get_default ()
+                .open_file (GLib.File.new_for_uri (uri).get_path ());
             this.add_file (f);
         }
 
@@ -435,7 +431,8 @@ namespace ValaCAT.UI
         {
             foreach (string uri in chooser.get_uris ())
             {
-                ValaCAT.FileProject.File? f = ValaCAT.Application.get_default ().open_file (GLib.File.new_for_uri (uri));
+                ValaCAT.FileProject.File? f = ValaCAT.Application.get_default ()
+                    .open_file (GLib.File.new_for_uri (uri).get_path ());
                 if (f != null)
                     this.add_file (f);
             }
@@ -477,6 +474,25 @@ namespace ValaCAT.UI
 
             dialog.run ();
             dialog.destroy ();
+        }
+
+        public bool select (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
+            {
+                if ((notebook.get_nth_page (n_pages) as Tab).file == fragment.file)
+                {
+                    notebook.set_current_page (n_pages);
+                    if (level != SelectLevel.FILE)
+                    {
+                        (notebook.get_nth_page (n_pages) as FileTab).select (level,
+                            fragment);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

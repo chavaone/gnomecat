@@ -104,24 +104,14 @@ namespace ValaCAT
             file_openers.remove (o);
         }
 
-        public ValaCAT.FileProject.File? open_file (GLib.File f)
+        public ValaCAT.FileProject.File? open_file (string path)
         {
-            int index_last_point = f.get_path ().last_index_of_char ('.');
-            string extension = f.get_path ().substring (index_last_point + 1);
+            int index_last_point = path.last_index_of_char ('.');
+            string extension = path.substring (index_last_point + 1);
             foreach (FileOpener o in file_openers)
             {
                 if (extension in o.extensions)
-                {
-                    ValaCAT.FileProject.File? file = o.open_file (f.get_path (), null);
-                    if (file == null)
-                    {
-                        return null;
-                    }
-                    else
-                    {
-                        return file;
-                    }
-                }
+                    return o.open_file (path, null);
             }
             return null;
         }
@@ -163,6 +153,25 @@ namespace ValaCAT
             }
         }
 
+        public void select (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            bool success = false;
+            foreach (var w in get_windows ())
+            {
+                success |= (w as ValaCAT.UI.Window).select(level, fragment);
+            }
+
+            if (!success && fragment.file != null)
+            {
+                ValaCAT.FileProject.File file = open_file (fragment.file.file_path);
+                if (file != null)
+                    (get_active_window () as ValaCAT.UI.Window).add_file (file);
+                else
+                    stderr.printf ("Error while open %s file.\n", fragment.file.file_path);
+            }
+        }
+
         private void on_window_removed ()
         {
             foreach (var w in get_windows ())
@@ -183,7 +192,7 @@ namespace ValaCAT
 
             foreach (GLib.File f in files)
             {
-                ValaCAT.FileProject.File file = open_file (f);
+                ValaCAT.FileProject.File file = open_file (f.get_path ());
                 if (file != null)
                     window.add_file (file);
                 else

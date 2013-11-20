@@ -61,6 +61,22 @@ namespace ValaCAT.UI
             this.file = f;
         }
 
+        public void select (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            assert (fragment != null && fragment.message != null);
+
+            MessageListRow row = get_row_by_message(fragment.message);
+            if (row == null)
+                return;
+
+            messages_list_box.select_row (row);
+            if(level != SelectLevel.ROW)
+            {
+                row.select (level, fragment);
+            }
+        }
+
         public MessageListRow? get_row_by_message (Message m)
         {
             foreach (Widget w in this.messages_list_box.get_children ())
@@ -305,6 +321,25 @@ namespace ValaCAT.UI
         {
             if (editor_notebook.get_n_pages () <= 1)
                 editor_notebook.show_tabs = false;
+        }
+
+        public void select (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            assert (fragment != null);
+
+            if (fragment.plural_number >= editor_notebook.get_n_pages ())
+            {
+                //TODO:include debug info!
+                return;
+            }
+
+            editor_notebook.set_current_page (fragment.plural_number);
+            if (level != SelectLevel.PLURAL)
+            {
+                (editor_notebook.get_nth_page (fragment.plural_number)
+                    as MessageEditorTab).select (level, fragment);
+            }
         }
     }
 }
