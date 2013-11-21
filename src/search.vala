@@ -94,7 +94,9 @@ namespace ValaCAT.Search
 
         public abstract void replace ();
 
-        public abstract void disable ();
+        public abstract void select ();
+
+        public abstract void deselect ();
     }
 
 
@@ -176,7 +178,7 @@ namespace ValaCAT.Search
         {
             MessageFragment mf = null;
 
-            disable ();
+            deselect ();
 
             while (mf == null)
             {
@@ -197,7 +199,7 @@ namespace ValaCAT.Search
         {
             MessageFragment mf = null;
 
-            disable ();
+            deselect ();
 
             while (mf == null)
             {
@@ -220,7 +222,14 @@ namespace ValaCAT.Search
             replace_intern (mf);
         }
 
-        public override void disable ()
+        public override void select ()
+        {
+            MessageFragment mf = this.message_iterator.get_current_element ();
+            if (mf != null)
+                ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+        }
+
+        public override void deselect ()
         {
             MessageFragment mf = this.message_iterator.get_current_element ();
             if (mf != null)

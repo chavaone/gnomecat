@@ -42,7 +42,20 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.RecentChooserMenu recentprojectmenu;
 
-        public ValaCAT.Search.Search active_search {get; set;}
+        private ValaCAT.Search.Search _active_search;
+        public ValaCAT.Search.Search active_search
+        {
+            get
+            {
+                return _active_search;
+            }
+            set
+            {
+                if (_active_search != null)
+                    _active_search.deselect ();
+                _active_search = value;
+            }
+        }
 
         public signal void file_changed (ValaCAT.FileProject.File? file);
         public signal void project_changed (ValaCAT.FileProject.Project? project);
@@ -350,7 +363,6 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_search_changed (Gtk.SearchEntry entry)
         {
-            this.active_search.disable ();
             if (entry.get_text () == "")
             {
                 this.active_search = null;
