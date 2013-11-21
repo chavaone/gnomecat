@@ -84,9 +84,9 @@ namespace ValaCAT.Search
 {
     public abstract class Search : Object
     {
-        public abstract string get_search_text ();
+        public abstract string search_text {get; set;}
 
-        public abstract string get_replace_text ();
+        public abstract string replace_text {get; set;}
 
         public abstract void next_item ();
 
@@ -110,8 +110,8 @@ namespace ValaCAT.Search
         private ValaCAT.UI.FileTab filetab;
         private FileIterator file_iterator;
         private MessageIterator message_iterator;
-        private string replace_text;
-        private string search_text;
+        public override string replace_text {get; private set;}
+        public override string search_text {get; private set;}
 
 
         public FileSearch (ValaCAT.UI.FileTab tab,
@@ -208,16 +208,6 @@ namespace ValaCAT.Search
             }
 
             ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
-        }
-
-        public override string get_search_text ()
-        {
-            return this.search_text;
-        }
-
-        public override string get_replace_text ()
-        {
-            return this.replace_text;
         }
 
         public override void replace ()
