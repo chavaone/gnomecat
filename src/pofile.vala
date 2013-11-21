@@ -163,7 +163,7 @@ namespace ValaCAT.PoFiles
         {
             XErrorHandler err_hand = XErrorHandler ();
             GettextPo.File.file_write (this.file,
-                file_path == null ? this.file_path : file_path, err_hand);
+                file_path == null ? this.path : file_path, err_hand);
         }
 
         /**

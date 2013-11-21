@@ -164,11 +164,11 @@ namespace ValaCAT
 
             if (!success && fragment.file != null)
             {
-                ValaCAT.FileProject.File file = open_file (fragment.file.file_path);
+                ValaCAT.FileProject.File file = open_file (fragment.file.path);
                 if (file != null)
                     (get_active_window () as ValaCAT.UI.Window).add_file (file);
                 else
-                    stderr.printf ("Error while open %s file.\n", fragment.file.file_path);
+                    stderr.printf ("Error while open %s file.\n", fragment.file.path);
             }
         }
 

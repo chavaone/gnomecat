@@ -355,7 +355,7 @@ namespace ValaCAT.FileProject
         /**
          * Path to the original file.
          */
-        public string file_path {get; protected set;}
+        public string path {get; protected set;}
 
         /**
          * Number of untranlated messages.
@@ -438,20 +438,16 @@ namespace ValaCAT.FileProject
 
         public File.full (string? file_path, Project? proj)
         {
-            this.messages = new ArrayList<Message> ();
+            messages = new ArrayList<Message> ();
+            path = file_path;
+            project = proj;
 
-            if (file_path != null)
+            if (path != null)
             {
-                int index_last_slash = file_path.last_index_of_char ('/');
-                this.name = file_path.substring (index_last_slash + 1);
+                int index_last_slash = path.last_index_of_char ('/');
+                name = path.substring (index_last_slash + 1);
+                parse_file (path);
             }
-
-            this.file_path = file_path;
-            if (file_path != null)
-                this.parse_file (file_path);
-
-            this.project = proj;
-
         }
 
 
