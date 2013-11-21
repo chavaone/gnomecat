@@ -181,6 +181,7 @@ along with ValaCAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="visible">True</property>
             <property name="valign">center</property>
             <property name="can_focus">True</property>
+            <signal name="toggled" handler="on_search_button_clicked" swapped="no"/>
             <style>
               <class name="image-button"/>
             </style>

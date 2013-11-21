@@ -383,6 +383,22 @@ namespace ValaCAT.UI
         }
 
         [GtkCallback]
+        private void on_search_button_clicked ()
+        {
+            if (active_search == null)
+                return;
+
+            if (this.searchbutton.get_active ())
+            {
+                active_search.select ();
+            }
+            else
+            {
+                active_search.deselect ();
+            }
+        }
+
+        [GtkCallback]
         private unowned Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
         {
             var win = new ValaCAT.UI.Window (this.application as ValaCAT.Application);
