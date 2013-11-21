@@ -172,6 +172,15 @@ namespace ValaCAT
             }
         }
 
+        public void deselect (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            foreach (var w in get_windows ())
+            {
+                (w as ValaCAT.UI.Window).deselect(level, fragment);
+            }
+        }
+
         private void on_window_removed ()
         {
             foreach (var w in get_windows ())

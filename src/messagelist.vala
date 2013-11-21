@@ -77,6 +77,21 @@ namespace ValaCAT.UI
             }
         }
 
+        public void deselect (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            assert (fragment != null && fragment.message != null);
+
+            MessageListRow row = get_row_by_message(fragment.message);
+            if (row == null)
+                return;
+
+            if(level != SelectLevel.ROW)
+            {
+                row.deselect (level, fragment);
+            }
+        }
+
         public MessageListRow? get_row_by_message (Message m)
         {
             foreach (Widget w in this.messages_list_box.get_children ())
@@ -89,17 +104,6 @@ namespace ValaCAT.UI
                 }
             }
             return null;
-        }
-
-        public void select_row (MessageListRow row)
-        {
-            messages_list_box.select_row (row);
-        }
-
-        public void select_editor_tab (int plural_number)
-        {
-            if (selected_row != null)
-                selected_row.select_tab_by_plural_number (plural_number);
         }
 
         public MessageEditorTab? get_tab_by_plural_number (int plural_number)
@@ -339,6 +343,22 @@ namespace ValaCAT.UI
             {
                 (editor_notebook.get_nth_page (fragment.plural_number)
                     as MessageEditorTab).select (level, fragment);
+            }
+        }
+
+        public void deselect (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            assert (fragment != null);
+
+            if (this.edition_mode
+                && fragment.plural_number < editor_notebook.get_n_pages ())
+            {
+                if (level != SelectLevel.PLURAL)
+                {
+                    (editor_notebook.get_nth_page (fragment.plural_number)
+                        as MessageEditorTab).deselect (level, fragment);
+                }
             }
         }
     }

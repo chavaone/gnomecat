@@ -350,6 +350,7 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_search_changed (Gtk.SearchEntry entry)
         {
+            this.active_search.disable ();
             if (entry.get_text () == "")
             {
                 this.active_search = null;
@@ -493,6 +494,22 @@ namespace ValaCAT.UI
                 }
             }
             return false;
+        }
+
+        public void deselect (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
+            {
+                if ((notebook.get_nth_page (n_pages) as Tab).file == fragment.file)
+                {
+                    if (level != SelectLevel.FILE)
+                    {
+                        (notebook.get_nth_page (n_pages) as FileTab).deselect (level,
+                            fragment);
+                    }
+                }
+            }
         }
     }
 }

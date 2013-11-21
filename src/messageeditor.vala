@@ -364,13 +364,27 @@ namespace ValaCAT.UI
 
             if (fragment.is_original)
             {
-                clean_tags_translation_string ();
                 replace_tags_original_string (arr);
             }
             else
             {
-                clean_tags_original_string ();
                 replace_tags_translation_string (arr);
+            }
+        }
+
+        public void deselect (ValaCAT.SelectLevel level,
+            ValaCAT.FileProject.MessageFragment? fragment)
+        {
+            assert (level == SelectLevel.STRING);
+            assert (fragment != null);
+
+            if (fragment.is_original)
+            {
+                clean_tags_original_string ();
+            }
+            else
+            {
+                clean_tags_translation_string ();
             }
         }
     }

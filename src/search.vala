@@ -176,6 +176,8 @@ namespace ValaCAT.Search
         {
             MessageFragment mf = null;
 
+            disable ();
+
             while (mf == null)
             {
                 if (this.message_iterator.message == null || (mf = this.message_iterator.next ()) == null)
@@ -194,6 +196,8 @@ namespace ValaCAT.Search
         public override void previous_item ()
         {
             MessageFragment mf = null;
+
+            disable ();
 
             while (mf == null)
             {
@@ -220,21 +224,7 @@ namespace ValaCAT.Search
         {
             MessageFragment mf = this.message_iterator.get_current_element ();
             if (mf != null)
-                un_highligt_search (mf);
-        }
-
-        private void un_highligt_search (MessageFragment mf)
-        {
-            ValaCAT.UI.MessageListRow? row = filetab.message_list.get_row_by_message (mf.message);
-
-            if (row == null) return;
-
-            filetab.message_list.select_row (row);
-            filetab.message_list.select_editor_tab (mf.plural_number);
-
-            MessageEditorTab editor_tab = filetab.message_list.get_tab_by_plural_number (mf.plural_number);
-            editor_tab.clean_tags_translation_string ();
-            editor_tab.clean_tags_original_string ();
+                ValaCAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
         }
 
         private void replace_intern (MessageFragment mf)
