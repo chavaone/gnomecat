@@ -220,23 +220,16 @@ namespace ValaCAT.UI
 
         private void set_navigators ()
         {
-            IteratorFilter<Message> fuzzy_filter = new FuzzyFilter ();
-            IteratorFilter<Message> untranslated_filter = new UntranslatedFilter ();
-            IteratorFilter<Message> translated_filter = new TranslatedFilter ();
-
-            ArrayList<IteratorFilter<Message>> arr = new ArrayList<IteratorFilter<Message>> ();
-            arr.add (fuzzy_filter);
-            arr.add (untranslated_filter);
-            arr.add (translated_filter);
-            IteratorFilter<Message> all_filter = new ORFilter<Message> (arr);
-
-            navigator_all = new ValaCAT.Navigator.Navigator (this, all_filter);
+            navigator_all = new ValaCAT.Navigator.Navigator (file, new TransparentFilter<Message> ());
             change_messages_sensible.add (navigator_all);
-            navigator_fuzzy = new ValaCAT.Navigator.Navigator (this, fuzzy_filter);
+
+            navigator_fuzzy = new ValaCAT.Navigator.Navigator (file, new FuzzyFilter ());
             change_messages_sensible.add (navigator_fuzzy);
-            navigator_translated = new ValaCAT.Navigator.Navigator (this, translated_filter);
+
+            navigator_translated = new ValaCAT.Navigator.Navigator (file, new TranslatedFilter ());
             change_messages_sensible.add (navigator_translated);
-            navigator_untranslated = new ValaCAT.Navigator.Navigator (this, untranslated_filter);
+
+            navigator_untranslated = new ValaCAT.Navigator.Navigator (file, new UntranslatedFilter ());
             change_messages_sensible.add (navigator_untranslated);
         }
     }

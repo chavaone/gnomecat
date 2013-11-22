@@ -27,10 +27,9 @@ namespace ValaCAT.Navigator
 {
     public class Navigator : Object, ChangedMessageSensible
     {
-        public ValaCAT.FileProject.File file {get {return filetab.file;}}
+        private ValaCAT.FileProject.File file;
         private FileIterator iterator;
         private IteratorFilter<Message> filter;
-        private ValaCAT.UI.FileTab filetab;
 
         private Message _message;
         public Message message
@@ -41,30 +40,39 @@ namespace ValaCAT.Navigator
             }
             set
             {
-                _message = value;
                 if (filter.check (value))
                 {
-                    set_message_intern (value);
+                    _message = value;
                 }
                 else
                 {
                     Gee.ArrayList<Message> msgs = file.messages;
                     int index;
-                    for (index = msgs.index_of (value); index >= 0 && ! filter.check (msgs.get (index)); index--);
+                    for (index = msgs.index_of (value);
+                        index >= 0 && ! filter.check (msgs.get (index));
+                        index--);
 
                     if (index == -1)
-                        iterator.first ();
+                    {
+                        _message = iterator.first ();
+                    }
                     else
-                        set_message_intern (msgs.get (index));
+                    {
+                        _message = msgs.get (index);
+                    }
                 }
+
+                for (Message? current_message = iterator.first ();
+                    current_message != _message && current_message != null;
+                    current_message = iterator.next ());
             }
         }
 
-        public Navigator (FileTab ft, IteratorFilter<Message> filter)
+        public Navigator (ValaCAT.FileProject.File file, IteratorFilter<Message> filter)
         {
-            filetab = ft;
-            iterator = new FileIterator (ft.file, filter);
+            this.file = file;
             this.filter = filter;
+            iterator = new FileIterator (file, filter);
         }
 
         public void next_item ()
@@ -72,13 +80,7 @@ namespace ValaCAT.Navigator
             Message? m = iterator.next ();
 
             if (m == null)
-            {
-                iterator.first ();
-                m = iterator.get_current_element ();
-            }
-
-            if (m == null)
-                return; //FIXME
+                return;
 
             ValaCAT.Application.get_default ().select (SelectLevel.ROW,
                 new MessageFragment (m, 0, false, 0, 0));
@@ -89,34 +91,10 @@ namespace ValaCAT.Navigator
             Message? m = iterator.previous ();
 
             if (m == null)
-            {
-                iterator.last ();
-                m = iterator.get_current_element ();
-            }
-
-            if (m == null)
                 return; //FIXME
 
             ValaCAT.Application.get_default ().select (SelectLevel.ROW,
                 new MessageFragment (m, 0, false, 0, 0));
         }
-
-
-        private void set_message_intern (Message m)
-        {
-            Message? current_message = null;
-            iterator.first ();
-            do
-            {
-                current_message = this.iterator.next ();
-            }
-            while (current_message != m && current_message != null);
-
-            if (current_message == null)
-            {
-                print ("ERROR!!"); //TODO
-            }
-        }
-
     }
 }

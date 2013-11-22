@@ -256,7 +256,7 @@ namespace ValaCAT.UI
             }
             else
             {
-                active_search = new FileSearch (get_active_tab () as FileTab,
+                active_search = new FileSearch ((get_active_tab () as FileTab).file,
                                                 dialog.translated_messages,
                                                 dialog.untranslated_messages,
                                                 dialog.fuzzy_messages,
@@ -369,7 +369,7 @@ namespace ValaCAT.UI
             }
             else
             {
-                this.active_search = new FileSearch (this.get_active_tab () as FileTab,
+                this.active_search = new FileSearch ((this.get_active_tab () as FileTab).file,
                                                     true,
                                                     true,
                                                     true,

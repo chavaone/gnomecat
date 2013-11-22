@@ -24,217 +24,180 @@ using ValaCAT.Languages;
 
 namespace ValaCAT.Iterators
 {
-    /**
-     *
-     */
-    public abstract class IteratorFilter<E> : Object
+    public abstract class Iterator<Element> : Object
     {
         /**
-         * Method that checks if an element is valid.
+         * The current element of the iterator if any.
          */
-        public abstract bool check (E element);
-    }
+        public abstract Element current {get;}
 
+        /**
+         * Returns the previous element. If the current
+         *  element is the first then it returns null.
+         */
+        public abstract Element previous ();
 
-    /**
-     * Filter for translated messages.
-     */
-    public class TranslatedFilter : IteratorFilter<Message>
-    {
-        public override bool check (Message element)
-        {
-            return element.state == MessageState.TRANSLATED;
-        }
-    }
+        /**
+         * Returns the next element. If the current
+         *  element is the last then it returns null.
+         */
+        public abstract Element next ();
 
+        /**
+         * Returns the first element if any.
+         */
+        public abstract Element first ();
 
-    /**
-     * Filter for untranslated messages.
-     */
-    public class UntranslatedFilter : IteratorFilter<Message>
-    {
-        public override bool check (Message element)
-        {
-            return element.state == MessageState.UNTRANSLATED;
-        }
-    }
+        /**
+         * Returns the last element if any.
+         */
+        public abstract Element last ();
 
+        /**
+         * Returns a value that allows to
+         *  know if the current element is
+         *  the first. If there is no elements
+         *  then it returns false.
+         */
+        public abstract bool is_first ();
 
-    /**
-     * Filter for fuzzy messages.
-     */
-    public class FuzzyFilter : IteratorFilter<Message>
-    {
-        public override bool check (Message element)
-        {
-            return element.state == MessageState.FUZZY;
-        }
-    }
-
-
-    /**
-     * Filter that combines several filters accepting
-     *  the elements that accomplish the conditions of
-     *  one of the provided filters.
-     */
-    public class ORFilter<R> : IteratorFilter<R>
-    {
-
-        public ArrayList<IteratorFilter<R>> filters {get; private set;}
-
-        public ORFilter (ArrayList<IteratorFilter<R>> filters)
-        {
-            this.filters = filters;
-        }
-
-        public override bool check (R m)
-        {
-            foreach (IteratorFilter<R> mf in filters)
-                if (mf.check (m))
-                    return true;
-            return false;
-        }
-    }
-
-
-    /**
-     * Filter for the original text of the message.
-     */
-    public class OriginalFilter : IteratorFilter<MessageFragment>
-    {
-        public override bool check (MessageFragment mm)
-        {
-            return mm.is_original;
-        }
-    }
-
-
-    /**
-     * Filter for the translation text of the message.
-     */
-    public class TranslationFilter : IteratorFilter<MessageFragment>
-    {
-        public override bool check (MessageFragment mm)
-        {
-            return ! mm.is_original;
-        }
-    }
-
-
-    /**
-     * Filter that accepts all parts from the message.
-     */
-    public class AllMessageFragmentFilter : IteratorFilter<MessageFragment>
-    {
-        public override bool check (MessageFragment mm)
-        {
-            return true;
-        }
-    }
-
-
-    /**
-     * Generic class for iterators. It iterates over
-     *  a element \\Ele\\ and returns instances of \\Ret\\.
-     */
-    public abstract class Iterator<Ele, Ret> : Object
-    {
-        public abstract Ret  next ();
-        public abstract Ret  previous ();
-        public abstract Ret  get_current_element ();
-        public abstract void last ();
-        public abstract void first ();
+        /**
+         * Returns a value that allows to
+         *  know if the current element is
+         *  the last. If there is no elements
+         *  then it returns false.
+         */
         public abstract bool is_last ();
-        public abstract void set_element (Ele element);
     }
 
 
-    /**
-     *
-     */
-    public class FileIterator : Iterator<ValaCAT.FileProject.File?, Message?>
+    public class FileIterator : Iterator<Message?>
     {
-        public ValaCAT.FileProject.File file {get; private set;}
+        private ValaCAT.FileProject.File _file;
+        public ValaCAT.FileProject.File file
+        {
+            get
+            {
+                return _file;
+            }
+            private set
+            {
+                _file = value;
+                messages = _file == null ? null : _file.messages;
+                current_index = 0;
+            }
+        }
+
         public IteratorFilter<Message> filter {get; private set;}
 
-
         private int current_index;
-        private bool visited;
         private ArrayList<Message> messages;
 
-
-        public FileIterator (ValaCAT.FileProject.File? f, IteratorFilter<Message> mf)
+        private Message? _current;
+        public override Message? current
         {
-            this.set_element (f);
-            this.filter = mf;
-        }
-
-
-        public override void set_element (ValaCAT.FileProject.File? f)
-        {
-            this.file = f;
-            this.messages = f == null ? null : f.messages;
-            this.first ();
-        }
-
-
-        public override Message? next ()
-        {
-            if ((visited || ! check_condition (messages.get (current_index)))
-                && current_index <= messages.size)
+            get
             {
-                for (current_index++;
-                    current_index < messages.size &&
-                        ! check_condition (messages.get (current_index));
-                    current_index++);
-            }
+                if (messages == null || current_index >= messages.size
+                    || current_index < 0)
+                    return null;
 
-            this.visited = true;
-            return this.get_current_element ();
+                _current = messages.get (current_index);
+                return _current;
+            }
         }
 
+        public FileIterator (ValaCAT.FileProject.File? f,
+            IteratorFilter<Message> mf)
+        {
+            file = f;
+            filter = mf;
+        }
 
         public override Message? previous ()
         {
-            if ((visited || ! check_condition (messages.get (current_index)))
-                && current_index > -1 )
-            {
-                for (current_index--;
-                    current_index >= 0 &&
-                       ! check_condition (this.messages.get (current_index));
-                    current_index--);
-            }
+            if (messages == null || is_first ())
+                return null;
 
-            this.visited = true;
-            return this.get_current_element ();
+            do current_index--;
+            while (!check_condition (current) && ! is_first ());
+
+            if (is_first () && !check_condition (current))
+                return null;
+
+            return current;
         }
 
-
-        public override void first ()
+        public override Message? next ()
         {
-            this.current_index = 0;
-            this.visited = false;
+            if (messages == null || is_last ())
+                return null;
+
+            do current_index++;
+            while (!check_condition (current) && ! is_last ());
+
+            if (is_last () && !check_condition (current))
+                return null;
+
+            return current;
         }
 
-        public override void last ()
+        public override Message? first ()
         {
-            this.current_index = this.messages.size - 1;
-            this.visited = false;
+            if (messages == null)
+                return null;
+
+            current_index = 0;
+
+            if (check_condition (current))
+                return current;
+            else
+                return next ();
+        }
+
+        public override Message? last ()
+        {
+            if (messages == null)
+                return null;
+
+            current_index = messages.size - 1;
+
+            if (check_condition (current))
+                return current;
+            else
+                return previous ();
+        }
+
+        public override bool is_first ()
+        {
+            int aux_index = current_index;
+
+            if (messages == null || messages.size == 0)
+                return false;
+
+            if (aux_index == 0)
+                return true;
+
+            for(aux_index--; aux_index >= 0; aux_index--)
+                if (check_condition (messages.get(aux_index)))
+                    return false;
+            return true;
         }
 
         public override bool is_last ()
         {
-            return this.current_index == this.messages.size -1;
-        }
+            int aux_index = current_index;
 
-        public override Message? get_current_element ()
-        {
-            if (this.messages == null || this.current_index < 0 ||
-                this.current_index >= this.messages.size)
-                return null;
-            if (! visited)
-                return next ();
-            return this.messages.get (this.current_index);
+            if (messages == null || messages.size == 0)
+                return false;
+
+            if (aux_index == messages.size - 1)
+                return true;
+
+            for(aux_index++; aux_index < messages.size; aux_index++)
+                if (check_condition (messages.get(aux_index)))
+                    return false;
+            return false;
         }
 
         private bool check_condition (Message m)
@@ -244,140 +207,135 @@ namespace ValaCAT.Iterators
     }
 
 
-    /**
-     *
-     */
-    public class MessageIterator : Iterator<Message?, MessageFragment?>
+    public class MessageIterator : Iterator<MessageFragment?>
     {
         public Message message {get; private set;}
-        public string search_string {get; private set;}
 
-        private ArrayList<MessageFragment> marks;
-        private int marks_index;
-        private IteratorFilter<MessageFragment> filter;
-        private bool visited;
+        private int current_index;
+        private ArrayList<MessageFragment> message_fragments;
 
-        public MessageIterator (Message? msg, string search_string,
-            IteratorFilter<MessageFragment> filter)
+        private MessageFragment? _current;
+        public override MessageFragment? current
         {
-            this.search_string = search_string;
-            this.filter = filter;
-            this.marks = new ArrayList<MessageFragment> ();
-            if (msg != null)
-                this.set_element (msg);
+            get
+            {
+                if (message_fragments == null || current_index < 0
+                    || current_index >= message_fragments.size)
+                    return null;
+                _current = message_fragments.get (current_index);
+                return _current;
+            }
         }
 
-        public override MessageFragment? next ()
+        public MessageIterator (Message msg, string search_string,
+            IteratorFilter<MessageFragment> filter)
         {
-            if (! this.visited)
-                this.visited = true;
-            else if (marks_index != this.marks.size)
-                marks_index++;
-
-            return this.get_current_element ();
+            message = msg;
+            get_message_fragments (msg, search_string, filter);
+            current_index = 0;
         }
 
         public override MessageFragment? previous ()
         {
-            if (! this.visited)
-                this.visited = true;
-            else if (marks_index != -1)
-                marks_index--;
-
-            return this.get_current_element ();
+            current_index--;
+            return current;
         }
 
-        public override void first ()
+        public override MessageFragment? next ()
         {
-            marks_index = 0;
-            this.visited = false;
+            current_index++;
+            return current;
         }
 
-        public override void last ()
+        public override MessageFragment? first ()
         {
-            marks_index = this.marks.size - 1;
-            this.visited = false;
+            current_index = 0;
+            return current;
+        }
+
+        public override MessageFragment? last ()
+        {
+            current_index = message_fragments.size - 1;
+            return current;
+        }
+
+        public override bool is_first ()
+        {
+            if (message_fragments.size == 0)
+                return false;
+
+            return current_index == 0;
         }
 
         public override bool is_last ()
         {
-            return marks_index == marks.size - 1;
+            if (message_fragments.size == 0)
+                return false;
+
+            return current_index == message_fragments.size - 1;
         }
 
-        public override MessageFragment? get_current_element ()
+        private void get_message_fragments (Message message, string search_string,
+            IteratorFilter<MessageFragment> filter)
         {
-            if (this.marks == null || marks_index < 0 ||
-                marks_index >= this.marks.size)
-                return null;
-            return this.marks.get (marks_index);
+
+            message_fragments = new ArrayList<MessageFragment> ();
+
+            message_fragments.add_all (get_fragments_from_string (message,
+                message.get_original_singular (), search_string,
+                filter, 0, true));
+
+            message_fragments.add_all (get_fragments_from_string (message,
+                message.get_translation (0), search_string,
+                filter, 0, false));
+
+            if (message.has_plural ())
+            {
+                message_fragments.add_all (get_fragments_from_string (message,
+                        message.get_original_plural (), search_string,
+                        filter, 1, true));
+
+                PluralForm plural_form = ValaCAT.Application
+                    .get_default ().enabled_profile.plural_form;
+                for (int plural_number = 1;
+                    plural_number < plural_form.number_of_plurals;
+                    plural_number++)
+                {
+                    message_fragments.add_all (get_fragments_from_string (message,
+                        message.get_translation (plural_number), search_string,
+                        filter, plural_number, false));
+                }
+            }
         }
 
-        public override void set_element (Message? element)
+        private ArrayList<MessageFragment> get_fragments_from_string (
+            Message message, string message_string, string search_string,
+            IteratorFilter<MessageFragment> filter, int plural_number,
+            bool original)
         {
-            this.message = element;
-            this.marks.clear ();
-            if (element != null)
-                this.get_marks ();
-            this.first ();
-        }
-
-        private void get_marks ()
-        {
-            int index;
+            int index = 0;
             MessageFragment mm;
+            ArrayList<MessageFragment> ret_arr = new ArrayList<MessageFragment> ();
 
-            for (index = message.get_original_singular ().index_of (this.search_string);
-                index != -1;
-                index = this.message.get_original_singular ().index_of (this.search_string, ++index))
+            if (message_string == null)
+                return ret_arr;
+
+            while ((index = message_string.index_of (search_string, index)) != -1)
             {
-                mm = new MessageFragment (this.message, 0, true, index, this.search_string.char_count ());
-                if (this.check_mark (mm))
-                    this.marks.add (mm);
-            }
+                mm = new MessageFragment (message, plural_number,
+                    original, index, search_string.char_count ());
 
-            index = 0;
-            if (this.message.get_translation (0) != null)
-                while ((index = this.message.get_translation (0).index_of (this.search_string, index)) != -1)
-                {
-                    mm = new MessageFragment (this.message, 0, false, index, this.search_string.char_count ());
-                    if (this.check_mark (mm))
-                        this.marks.add (mm);
-                    index++;
-                }
-
-            if (this.message.has_plural ())
-            {
-                index = 0;
-                while ((index = this.message.get_original_plural ().index_of (this.search_string, index)) != -1)
-                {
-                    mm = new MessageFragment (this.message, 1, true, index, this.search_string.char_count ());
-                    if (this.check_mark (mm))
-                        this.marks.add (mm);
-                    index++;
-                }
-                PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
-                for (int plural_number = 1; plural_number < enabled_plural_form.number_of_plurals; plural_number++)
-                {
-                    index = 0;
-                    string message_string = this.message.get_translation (plural_number);
-                    if (message_string != null)
-                    {
-                        while ((index = message_string.index_of (this.search_string, index)) != -1)
-                        {
-                            mm = new MessageFragment (this.message, plural_number, false, index, this.search_string.char_count ());
-                            if (this.check_mark (mm))
-                                this.marks.add (mm);
-                            index++;
-                        }
-                    }
-                }
+                if (check_mark (mm, filter))
+                    ret_arr.add (mm);
+                index++;
             }
+            return ret_arr;
         }
 
-        private bool check_mark (MessageFragment mm)
+        private bool check_mark (MessageFragment mm,
+            IteratorFilter<MessageFragment> filter)
         {
-            return this.filter == null ? false :
-                this.filter.check (mm);
+            return filter != null && filter.check (mm);
         }
     }
 }

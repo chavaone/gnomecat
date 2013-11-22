@@ -109,14 +109,14 @@ namespace ValaCAT.Search
     public class FileSearch : Search
     {
 
-        private ValaCAT.UI.FileTab filetab;
         private FileIterator file_iterator;
         private MessageIterator message_iterator;
+        private IteratorFilter<MessageFragment> filter_marks;
         public override string replace_text {get; private set;}
         public override string search_text {get; private set;}
 
 
-        public FileSearch (ValaCAT.UI.FileTab tab,
+        public FileSearch (ValaCAT.FileProject.File file,
                          bool translated,
                          bool untranslated,
                          bool fuzzy,
@@ -126,8 +126,22 @@ namespace ValaCAT.Search
                          string replace_text)
         {
 
-            //FILTERS MESSAGES
-            ArrayList<IteratorFilter<Message>> filters_file = new ArrayList<IteratorFilter<Message>> ();
+            this.replace_text = replace_text;
+            this.search_text = search_text;
+
+            file_iterator = new FileIterator (file, get_message_filter(translated,
+                untranslated, fuzzy));
+
+            filter_marks = get_fragments_filter (original, translation);
+            message_iterator = new MessageIterator (file_iterator.current,
+                search_text, filter_marks);
+        }
+
+        private IteratorFilter<Message>? get_message_filter (bool translated,
+            bool untranslated, bool fuzzy)
+        {
+            ArrayList<IteratorFilter<Message>> filters_file
+                = new ArrayList<IteratorFilter<Message>> ();
             if (translated)
                 filters_file.add (new TranslatedFilter ());
 
@@ -137,59 +151,46 @@ namespace ValaCAT.Search
             if (fuzzy)
                 filters_file.add (new FuzzyFilter ());
 
-
-            IteratorFilter<Message> filter_messages;
-
             if (filters_file.size == 0)
-                filter_messages = null;
+                return null;
             else if (filters_file.size == 1)
-                filter_messages = filters_file.get (0);
+                return filters_file.get (0);
             else
-                filter_messages = new ORFilter<Message> (filters_file);
+                return new ORFilter<Message> (filters_file);
+        }
 
-
-            //FILTERS MESSAGE MARKS
-            ArrayList<IteratorFilter<MessageFragment>> filters_mark_array = new ArrayList<IteratorFilter<MessageFragment>> ();
+        private IteratorFilter<MessageFragment>? get_fragments_filter (bool original,
+            bool translation)
+        {
+            ArrayList<IteratorFilter<MessageFragment>> filters_mark_array
+                = new ArrayList<IteratorFilter<MessageFragment>> ();
             if (original)
                 filters_mark_array.add (new OriginalFilter ());
 
             if (translation)
                 filters_mark_array.add (new TranslationFilter ());
 
-
-            IteratorFilter<MessageFragment> filter_marks;
             if (filters_mark_array.size == 0)
-                filter_marks = null;
+                return null;
             else if (filters_mark_array.size == 1)
-                filter_marks = filters_mark_array.get (0);
+                return filters_mark_array.get (0);
             else
-                filter_marks = new ORFilter<MessageFragment> (filters_mark_array);
-
-
-            this.filetab = tab;
-            this.file_iterator = new FileIterator (tab.file,filter_messages);
-            this.file_iterator.first ();
-            this.message_iterator = new MessageIterator (null, search_text, filter_marks);
-            this.replace_text = replace_text;
-            this.search_text = search_text;
+                return new ORFilter<MessageFragment> (filters_mark_array);
         }
 
         public override void next_item ()
         {
-            MessageFragment mf = null;
-
             deselect ();
+
+            MessageFragment mf = message_iterator.next ();
 
             while (mf == null)
             {
-                if (this.message_iterator.message == null || (mf = this.message_iterator.next ()) == null)
-                {
-                    Message message;;
-                    if ((message = this.file_iterator.next ()) == null)
-                        return;
-                    this.message_iterator.set_element (message);
-                    this.message_iterator.first ();
-                }
+                Message msg = file_iterator.next ();
+                if (msg == null) return;
+
+                message_iterator = new MessageIterator (msg, search_text, filter_marks);
+                mf = message_iterator.current;
             }
 
             ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
@@ -197,20 +198,17 @@ namespace ValaCAT.Search
 
         public override void previous_item ()
         {
-            MessageFragment mf = null;
-
             deselect ();
+
+            MessageFragment mf = message_iterator.previous ();
 
             while (mf == null)
             {
-                if (this.message_iterator.message == null || (mf = this.message_iterator.previous ()) == null)
-                {
-                    Message message;;
-                    if ((message = this.file_iterator.previous ()) == null)
-                        return;
-                    this.message_iterator.set_element (message);
-                    this.message_iterator.last ();
-                }
+                Message msg = file_iterator.previous ();
+                if (msg == null) return;
+
+                message_iterator = new MessageIterator (msg, search_text, filter_marks);
+                mf = message_iterator.current;
             }
 
             ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
@@ -218,37 +216,30 @@ namespace ValaCAT.Search
 
         public override void replace ()
         {
-            MessageFragment mf = this.message_iterator.get_current_element ();
-            replace_intern (mf);
+            MessageFragment? mf = message_iterator.current;
+
+            if (mf == null || mf.is_original)
+                return;
+
+            string original_string = mf.message.get_translation (mf.plural_number);
+            mf.message.set_translation (mf.plural_number,
+                original_string.substring (0, mf.index) +
+                this.replace_text +
+                original_string.substring (mf.index + mf.length));
         }
 
         public override void select ()
         {
-            MessageFragment mf = this.message_iterator.get_current_element ();
+            MessageFragment mf = message_iterator.current;
             if (mf != null)
                 ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
         }
 
         public override void deselect ()
         {
-            MessageFragment mf = this.message_iterator.get_current_element ();
+            MessageFragment mf = message_iterator.current;
             if (mf != null)
                 ValaCAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
-        }
-
-        private void replace_intern (MessageFragment mf)
-        {
-            if (mf.is_original)
-            {
-                return;
-            }
-            else
-            {
-                string original_string = mf.message.get_translation (mf.plural_number);
-                mf.message.set_translation (mf.plural_number,
-                    original_string.substring (0,mf.index) + this.replace_text +
-                    original_string.substring (mf.index + mf.length));
-            }
         }
     }
 }

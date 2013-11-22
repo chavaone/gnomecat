@@ -36,7 +36,8 @@ VALASOURCES = \
 	preferencesdialog.vala \
 	hints.vala \
 	checker.vala \
-	select.vala
+	select.vala \
+	filter.vala
 
 valacat_SOURCES = \
     $(VALASOURCES)                 \
