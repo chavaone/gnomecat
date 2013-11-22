@@ -107,10 +107,10 @@ namespace ValaCAT.UI
             }
         }
 
-        private ValaCAT.Navigator.Navigator navigator_fuzzy;
-        private ValaCAT.Navigator.Navigator navigator_translated;
-        private ValaCAT.Navigator.Navigator navigator_untranslated;
-        private ValaCAT.Navigator.Navigator navigator_all;
+        private ValaCAT.Navigator.FileNavigator navigator_fuzzy;
+        private ValaCAT.Navigator.FileNavigator navigator_translated;
+        private ValaCAT.Navigator.FileNavigator navigator_untranslated;
+        private ValaCAT.Navigator.FileNavigator navigator_all;
 
         private ArrayList<ChangedMessageSensible> change_messages_sensible;
 
@@ -119,21 +119,32 @@ namespace ValaCAT.UI
             base (f.name);
             _file = f;
 
-            message_list = new MessageListWidget ();
-            message_context = new ContextPanel ();
-            hints_panel = new HintPanelWidget ();
+            change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
 
+            message_list = new MessageListWidget ();
+            message_list.file = f;
+            message_list.message_selected.connect (on_message_selected);
             center_box.pack_start (message_list, true, true, 0);
-            right_box.pack_start (hints_panel, true, true, 0);
+
+            message_context = new ContextPanel ();
+            change_messages_sensible.add (message_context);
             right_box.pack_start (message_context, true, true, 0);
 
-
-            message_list.file = f;
-            change_messages_sensible = new ArrayList<ChangedMessageSensible> ();
-            change_messages_sensible.add (message_context);
+            hints_panel = new HintPanelWidget ();
             change_messages_sensible.add (hints_panel);
-            set_navigators ();
-            message_list.message_selected.connect (on_message_selected);
+            right_box.pack_start (hints_panel, true, true, 0);
+
+            navigator_all = new ValaCAT.Navigator.FileNavigator (f, new TransparentFilter<Message> ());
+            change_messages_sensible.add (navigator_all);
+
+            navigator_fuzzy = new ValaCAT.Navigator.FileNavigator (f, new FuzzyFilter ());
+            change_messages_sensible.add (navigator_fuzzy);
+
+            navigator_translated = new ValaCAT.Navigator.FileNavigator (f, new TranslatedFilter ());
+            change_messages_sensible.add (navigator_translated);
+
+            navigator_untranslated = new ValaCAT.Navigator.FileNavigator (f, new UntranslatedFilter ());
+            change_messages_sensible.add (navigator_untranslated);
 
             if (f.messages.size > 0)
             {
@@ -168,42 +179,42 @@ namespace ValaCAT.UI
 
         public void go_next ()
         {
-            this.navigator_all.next_item ();
+            this.navigator_all.next ();
         }
 
         public void go_previous ()
         {
-            this.navigator_all.previous_item ();
+            this.navigator_all.previous ();
         }
 
         public void go_next_fuzzy ()
         {
-            this.navigator_fuzzy.next_item ();
+            this.navigator_fuzzy.next ();
         }
 
         public void go_previous_fuzzy ()
         {
-            this.navigator_fuzzy.previous_item ();
+            this.navigator_fuzzy.previous ();
         }
 
         public void go_next_translated ()
         {
-            this.navigator_translated.next_item ();
+            this.navigator_translated.next ();
         }
 
         public void go_previous_translated ()
         {
-            this.navigator_translated.previous_item ();
+            this.navigator_translated.previous ();
         }
 
         public void go_next_untranslated ()
         {
-            this.navigator_untranslated.next_item ();
+            this.navigator_untranslated.next ();
         }
 
         public void go_previous_untranslated ()
         {
-            this.navigator_untranslated.previous_item ();
+            this.navigator_untranslated.previous ();
         }
 
         public void select (ValaCAT.SelectLevel level,
@@ -220,17 +231,7 @@ namespace ValaCAT.UI
 
         private void set_navigators ()
         {
-            navigator_all = new ValaCAT.Navigator.Navigator (file, new TransparentFilter<Message> ());
-            change_messages_sensible.add (navigator_all);
 
-            navigator_fuzzy = new ValaCAT.Navigator.Navigator (file, new FuzzyFilter ());
-            change_messages_sensible.add (navigator_fuzzy);
-
-            navigator_translated = new ValaCAT.Navigator.Navigator (file, new TranslatedFilter ());
-            change_messages_sensible.add (navigator_translated);
-
-            navigator_untranslated = new ValaCAT.Navigator.Navigator (file, new UntranslatedFilter ());
-            change_messages_sensible.add (navigator_untranslated);
         }
     }
 

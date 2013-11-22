@@ -82,15 +82,11 @@ namespace ValaCAT.UI
 
 namespace ValaCAT.Search
 {
-    public abstract class Search : Object
+    public abstract class Search : ValaCAT.Navigator.Navigator
     {
         public abstract string search_text {get; set;}
 
         public abstract string replace_text {get; set;}
-
-        public abstract void next_item ();
-
-        public abstract void previous_item ();
 
         public abstract void replace ();
 
@@ -109,21 +105,17 @@ namespace ValaCAT.Search
     public class FileSearch : Search
     {
 
-        private FileIterator file_iterator;
-        private MessageIterator message_iterator;
-        private IteratorFilter<MessageFragment> filter_marks;
         public override string replace_text {get; private set;}
         public override string search_text {get; private set;}
 
+        private FileIterator file_iterator;
+        private MessageIterator message_iterator;
+        private IteratorFilter<MessageFragment> filter_marks;
 
         public FileSearch (ValaCAT.FileProject.File file,
-                         bool translated,
-                         bool untranslated,
-                         bool fuzzy,
-                         bool original,
-                         bool translation,
-                         string search_text,
-                         string replace_text)
+            bool translated, bool untranslated, bool fuzzy,
+            bool original, bool translation, string search_text,
+            string replace_text)
         {
 
             this.replace_text = replace_text;
@@ -178,7 +170,7 @@ namespace ValaCAT.Search
                 return new ORFilter<MessageFragment> (filters_mark_array);
         }
 
-        public override void next_item ()
+        public override bool next ()
         {
             deselect ();
 
@@ -187,16 +179,17 @@ namespace ValaCAT.Search
             while (mf == null)
             {
                 Message msg = file_iterator.next ();
-                if (msg == null) return;
+                if (msg == null) return false;
 
                 message_iterator = new MessageIterator (msg, search_text, filter_marks);
                 mf = message_iterator.current;
             }
 
             ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            return true;
         }
 
-        public override void previous_item ()
+        public override bool previous ()
         {
             deselect ();
 
@@ -205,13 +198,44 @@ namespace ValaCAT.Search
             while (mf == null)
             {
                 Message msg = file_iterator.previous ();
-                if (msg == null) return;
+                if (msg == null) return false;
 
                 message_iterator = new MessageIterator (msg, search_text, filter_marks);
                 mf = message_iterator.current;
             }
 
             ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            return true;
+        }
+
+        public override bool first ()
+        {
+            deselect ();
+
+            Message msg = file_iterator.first ();
+            if (msg == null) return false;
+
+            message_iterator = new MessageIterator (msg, search_text, filter_marks);
+            MessageFragment mf = message_iterator.first ();
+            if (mf == null) return next ();
+
+            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            return true;
+        }
+
+        public override bool last ()
+        {
+            deselect ();
+
+            Message msg = file_iterator.last ();
+            if (msg == null) return false;
+
+            message_iterator = new MessageIterator (msg, search_text, filter_marks);
+            MessageFragment mf = message_iterator.last ();
+            if (mf == null) return previous ();
+
+            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            return true;
         }
 
         public override void replace ()

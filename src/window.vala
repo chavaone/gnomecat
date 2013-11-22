@@ -268,13 +268,13 @@ namespace ValaCAT.UI
 
             if (stop)
             {
-                active_search.next_item ();
+                active_search.next ();
             }
             else
             {
                 do
                 {
-                    active_search.next_item ();
+                    active_search.next ();
                     active_search.replace ();
                 } while (true); //FIXME
             }
@@ -311,14 +311,14 @@ namespace ValaCAT.UI
         {
             if (this.active_search == null)
                 return;
-            this.active_search.next_item ();
+            this.active_search.next ();
         }
 
         private void on_search_previous ()
         {
             if (this.active_search == null)
                 return;
-            this.active_search.previous_item ();
+            this.active_search.previous ();
         }
 
         private  void on_file_changed (Window src, ValaCAT.FileProject.File? file)
@@ -378,7 +378,7 @@ namespace ValaCAT.UI
                                                     entry.get_text (),
                                                     "");
 
-                this.active_search.next_item ();
+                this.active_search.next ();
             }
         }
 

@@ -37,7 +37,8 @@ VALASOURCES = \
 	hints.vala \
 	checker.vala \
 	select.vala \
-	filter.vala
+	filter.vala \
+	filenavigator.vala
 
 valacat_SOURCES = \
     $(VALASOURCES)                 \
