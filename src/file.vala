@@ -1,26 +1,26 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of Gnomecat
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * Gnomecat is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * Gnomecat is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with Gnomecat. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gee;
 
-namespace ValaCAT.FileProject
+namespace GnomeCAT.FileProject
 {
     /**
      * Class that encapsulates a method to open files of
@@ -70,12 +70,12 @@ namespace ValaCAT.FileProject
         /**
          * Tags that can be added to the original string.
          */
-        public ArrayList<ValaCAT.TextTag> tags_original {get; private set;}
+        public ArrayList<GnomeCAT.TextTag> tags_original {get; private set;}
 
         /**
          * Tags that can be added to the translated string.
          */
-        public ArrayList<ValaCAT.TextTag> tags_translation {get; private set;}
+        public ArrayList<GnomeCAT.TextTag> tags_translation {get; private set;}
 
         /**
          * Plural form this tip references.
@@ -95,14 +95,14 @@ namespace ValaCAT.FileProject
         public MessageTip (string name,
                 string? description,
                 TipLevel level,
-                ArrayList<ValaCAT.TextTag>? tags_original=null,
-                ArrayList<ValaCAT.TextTag>? tags_translation=null)
+                ArrayList<GnomeCAT.TextTag>? tags_original=null,
+                ArrayList<GnomeCAT.TextTag>? tags_translation=null)
         {
             this.name = name;
             this.description = description;
             this.level = level;
-            this.tags_original = tags_original != null ? tags_original : new ArrayList<ValaCAT.TextTag> ();
-            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<ValaCAT.TextTag> ();
+            this.tags_original = tags_original != null ? tags_original : new ArrayList<GnomeCAT.TextTag> ();
+            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<GnomeCAT.TextTag> ();
         }
     }
 
@@ -325,7 +325,7 @@ namespace ValaCAT.FileProject
             {
                 remove_tip (tips.get (0));
             }
-            ValaCAT.Application.get_default ().check_message (this);
+            GnomeCAT.Application.get_default ().check_message (this);
         }
     }
 
@@ -640,7 +640,7 @@ namespace ValaCAT.FileProject
                         }
                         else if (info.get_file_type () == FileType.REGULAR)
                         {
-                            File f = ValaCAT.Application.get_default ().open_file (path);
+                            File f = GnomeCAT.Application.get_default ().open_file (path);
                             if (f != null)
                                 this.add_file (f);
                         }

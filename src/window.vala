@@ -1,30 +1,30 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using ValaCAT.Search;
+using GnomeCAT.Search;
 
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/window.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/window.ui")]
     public class Window : Gtk.ApplicationWindow
     {
         [GtkChild]
@@ -42,8 +42,8 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.RecentChooserMenu recentprojectmenu;
 
-        private ValaCAT.Search.Search _active_search;
-        public ValaCAT.Search.Search active_search
+        private GnomeCAT.Search.Search _active_search;
+        public GnomeCAT.Search.Search active_search
         {
             get
             {
@@ -57,8 +57,8 @@ namespace ValaCAT.UI
             }
         }
 
-        public signal void file_changed (ValaCAT.FileProject.File? file);
-        public signal void project_changed (ValaCAT.FileProject.Project? project);
+        public signal void file_changed (GnomeCAT.FileProject.File? file);
+        public signal void project_changed (GnomeCAT.FileProject.Project? project);
 
         private const GLib.ActionEntry[] action_entries = {
             { "edit-undo", on_edit_undo },
@@ -77,12 +77,12 @@ namespace ValaCAT.UI
             { "go-previous-fuzzy", on_go_previous_fuzzy}
         };
 
-        public Window (ValaCAT.Application app)
+        public Window (GnomeCAT.Application app)
         {
             Object (application: app);
 
             this.recentfilemenu.filter = new RecentFilter ();
-            foreach (string ext in (this.application as ValaCAT.Application).extensions)
+            foreach (string ext in (this.application as GnomeCAT.Application).extensions)
             {
                 this.recentfilemenu.filter.add_pattern ("*." + ext);
             }
@@ -102,7 +102,7 @@ namespace ValaCAT.UI
             this.project_changed.connect (on_project_changed);
         }
 
-        public void add_file (ValaCAT.FileProject.File f)
+        public void add_file (GnomeCAT.FileProject.File f)
         {
             int number_of_pages = notebook.get_n_pages ();
             for (int i = 0; i < number_of_pages; i++)
@@ -120,7 +120,7 @@ namespace ValaCAT.UI
             notebook.set_current_page (notebook.page_num (f_tab));
         }
 
-        public void add_project (ValaCAT.FileProject.Project p)
+        public void add_project (GnomeCAT.FileProject.Project p)
         {
             int number_of_pages = notebook.get_n_pages ();
             for (int i = 0; i < number_of_pages; i++)
@@ -226,19 +226,19 @@ namespace ValaCAT.UI
 
         private void on_search_advanded ()
         {
-            ValaCAT.UI.SearchDialog dialog = new SearchDialog ();
+            GnomeCAT.UI.SearchDialog dialog = new SearchDialog ();
 
             switch (dialog.run ())
             {
-            case ValaCAT.UI.SearchDialogResponses.CANCEL:
+            case GnomeCAT.UI.SearchDialogResponses.CANCEL:
                 break;
-            case ValaCAT.UI.SearchDialogResponses.SEARCH:
+            case GnomeCAT.UI.SearchDialogResponses.SEARCH:
                 ini_search (dialog, dialog.search_project, false, true, dialog.wrap_around);
                 break;
-            case ValaCAT.UI.SearchDialogResponses.REPLACE:
+            case GnomeCAT.UI.SearchDialogResponses.REPLACE:
                 ini_search (dialog, dialog.search_project, true, true, dialog.wrap_around);
                 break;
-            case ValaCAT.UI.SearchDialogResponses.REPLACEALL:
+            case GnomeCAT.UI.SearchDialogResponses.REPLACEALL:
                 ini_search (dialog, dialog.search_project, true, false, dialog.wrap_around);
                 break;
             }
@@ -246,7 +246,7 @@ namespace ValaCAT.UI
             dialog.destroy ();
         }
 
-        private void ini_search (ValaCAT.UI.SearchDialog dialog,
+        private void ini_search (GnomeCAT.UI.SearchDialog dialog,
             bool project, bool replace, bool stop, bool wrap)
         {
 
@@ -321,11 +321,11 @@ namespace ValaCAT.UI
             this.active_search.previous ();
         }
 
-        private  void on_file_changed (Window src, ValaCAT.FileProject.File? file)
+        private  void on_file_changed (Window src, GnomeCAT.FileProject.File? file)
         {
             if (file == null)
             {
-                this.label_title.set_text ("ValaCAT");
+                this.label_title.set_text ("GnomeCAT");
                 this.progressbar_title.hide ();
             }
             else
@@ -345,7 +345,7 @@ namespace ValaCAT.UI
                 progressbar_title.fraction = translated / total;
         }
 
-        private  void on_project_changed (Window src, ValaCAT.FileProject.Project? project)
+        private  void on_project_changed (Window src, GnomeCAT.FileProject.Project? project)
         {
             //TODO
         }
@@ -401,7 +401,7 @@ namespace ValaCAT.UI
         [GtkCallback]
         private unowned Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
         {
-            var win = new ValaCAT.UI.Window (this.application as ValaCAT.Application);
+            var win = new GnomeCAT.UI.Window (this.application as GnomeCAT.Application);
             win.show ();
             return win.notebook;
         }
@@ -417,7 +417,7 @@ namespace ValaCAT.UI
         private void on_page_removed (Gtk.Widget pate, uint page_num)
         {
             if (notebook.get_n_pages () == 0 &&
-                ValaCAT.Application.get_default ().get_windows ().length () != 1)
+                GnomeCAT.Application.get_default ().get_windows ().length () != 1)
                 this.close ();
             if (notebook.get_n_pages () <= 1)
                 notebook.show_tabs = false;
@@ -427,7 +427,7 @@ namespace ValaCAT.UI
         private void on_open_recent_file ()
         {
             string uri = this.recentfilemenu.get_current_uri ();
-            ValaCAT.FileProject.File f = ValaCAT.Application.get_default ()
+            GnomeCAT.FileProject.File f = GnomeCAT.Application.get_default ()
                 .open_file (GLib.File.new_for_uri (uri).get_path ());
             this.add_file (f);
         }
@@ -443,8 +443,8 @@ namespace ValaCAT.UI
                 Gtk.ResponseType.ACCEPT);
 
             chooser.filter = new FileFilter ();
-            var app = ValaCAT.Application.get_default ();
-            foreach (string ext in (app as ValaCAT.Application).extensions)
+            var app = GnomeCAT.Application.get_default ();
+            foreach (string ext in (app as GnomeCAT.Application).extensions)
             {
                 chooser.filter.add_pattern ("*." + ext);
             }
@@ -460,7 +460,7 @@ namespace ValaCAT.UI
         {
             foreach (string uri in chooser.get_uris ())
             {
-                ValaCAT.FileProject.File? f = ValaCAT.Application.get_default ()
+                GnomeCAT.FileProject.File? f = GnomeCAT.Application.get_default ()
                     .open_file (GLib.File.new_for_uri (uri).get_path ());
                 if (f != null)
                     this.add_file (f);
@@ -492,21 +492,21 @@ namespace ValaCAT.UI
             {
                 var f = GLib.File.new_for_uri (uri);
                 if (f.get_path () != null)
-                    this.add_project (new ValaCAT.FileProject.Project (f.get_path ()));
+                    this.add_project (new GnomeCAT.FileProject.Project (f.get_path ()));
             }
         }
 
         [GtkCallback]
         private void on_settings ()
         {
-            ValaCAT.UI.PreferencesDialog dialog = new PreferencesDialog ();
+            GnomeCAT.UI.PreferencesDialog dialog = new PreferencesDialog ();
 
             dialog.run ();
             dialog.destroy ();
         }
 
-        public bool select (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public bool select (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
             {
@@ -524,8 +524,8 @@ namespace ValaCAT.UI
             return false;
         }
 
-        public void deselect (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
             {

@@ -1,29 +1,29 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using ValaCAT.FileProject;
+using GnomeCAT.FileProject;
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/filelist.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/filelist.ui")]
     public class FileListWidget : Gtk.Box
     {
         [GtkChild]
@@ -35,13 +35,13 @@ namespace ValaCAT.UI
         {
             this.project = proj;
 
-            foreach (ValaCAT.FileProject.File f in this.project.files)
+            foreach (GnomeCAT.FileProject.File f in this.project.files)
             {
                 this.add_file (f);
             }
         }
 
-        public void add_file (ValaCAT.FileProject.File f)
+        public void add_file (GnomeCAT.FileProject.File f)
         {
             this.file_list_box.add (new FileListRow (f));
         }
@@ -49,13 +49,13 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_row_activated (ListBox list_box, ListBoxRow row)
         {
-            var w = this.get_toplevel ().parent.parent.parent.parent as ValaCAT.UI.Window;
+            var w = this.get_toplevel ().parent.parent.parent.parent as GnomeCAT.UI.Window;
             w.add_file ((row as FileListRow).file);
         }
     }
 
 
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/filelistrow.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/filelistrow.ui")]
     public class FileListRow : ListBoxRow
     {
         [GtkChild]
@@ -65,9 +65,9 @@ namespace ValaCAT.UI
         [GtkChild]
         private Gtk.ProgressBar progressbar_file;
 
-        public ValaCAT.FileProject.File file {get; private set;}
+        public GnomeCAT.FileProject.File file {get; private set;}
 
-        public FileListRow (ValaCAT.FileProject.File f)
+        public FileListRow (GnomeCAT.FileProject.File f)
         {
             this.file = f;
             label_file_name.set_text ("f.name");

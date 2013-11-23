@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.16.0 on Fri Oct 18 16:40:05 2013
 
-This file is part of ValaCAT.
+This file is part of GnomeCAT.
 
-ValaCAT is free software: you can redistribute it and/or modify
+GnomeCAT is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-ValaCAT is distributed in the hope that it will be useful,
+GnomeCAT is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with ValaCAT.  If not, see <http://www.gnu.org/licenses/>.
+along with GnomeCAT.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 <interface>
   <!-- interface-requires gtk+ 3.10 -->
-  <template class="ValaCATUIMessageListRow" parent="GtkListBoxRow">
+  <template class="GnomeCATUIMessageListRow" parent="GtkListBoxRow">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>

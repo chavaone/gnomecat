@@ -1,34 +1,34 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using ValaCAT.FileProject;
-using ValaCAT.Languages;
+using GnomeCAT.FileProject;
+using GnomeCAT.Languages;
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
     /**
      * Widget that dislays the strings to be translated.
      *  This widget can be dockable.
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/messagelist.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messagelist.ui")]
     public class MessageListWidget : Gtk.Box
     {
         [GtkChild]
@@ -40,8 +40,8 @@ namespace ValaCAT.UI
 
         public signal void message_selected (Message m);
 
-        private ValaCAT.FileProject.File? _file;
-        public ValaCAT.FileProject.File? file
+        private GnomeCAT.FileProject.File? _file;
+        public GnomeCAT.FileProject.File? file
         {
             get
             {
@@ -55,14 +55,14 @@ namespace ValaCAT.UI
             }
         }
 
-        public MessageListWidget.with_file (ValaCAT.FileProject.File f)
+        public MessageListWidget.with_file (GnomeCAT.FileProject.File f)
         {
             this ();
             this.file = f;
         }
 
-        public void select (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void select (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null && fragment.message != null);
 
@@ -77,8 +77,8 @@ namespace ValaCAT.UI
             }
         }
 
-        public void deselect (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null && fragment.message != null);
 
@@ -96,7 +96,7 @@ namespace ValaCAT.UI
         {
             foreach (Widget w in this.messages_list_box.get_children ())
             {
-                ValaCAT.UI.MessageListRow row = w as ValaCAT.UI.MessageListRow;
+                GnomeCAT.UI.MessageListRow row = w as GnomeCAT.UI.MessageListRow;
 
                 if (row.message == m)
                 {
@@ -131,7 +131,7 @@ namespace ValaCAT.UI
     /**
      *
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/messagelistrow.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messagelistrow.ui")]
     public class MessageListRow : ListBoxRow
     {
 
@@ -229,7 +229,7 @@ namespace ValaCAT.UI
         {
             int i;
             clean_tabs ();
-            PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
+            PluralForm enabled_plural_form = GnomeCAT.Application.get_default ().enabled_profile.plural_form;
 
             string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
             add_tab (new MessageEditorTab (label, message, 0));
@@ -327,8 +327,8 @@ namespace ValaCAT.UI
                 editor_notebook.show_tabs = false;
         }
 
-        public void select (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void select (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null);
 
@@ -346,8 +346,8 @@ namespace ValaCAT.UI
             }
         }
 
-        public void deselect (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null);
 

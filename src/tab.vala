@@ -1,34 +1,34 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using ValaCAT.FileProject;
-using ValaCAT.Iterators;
-using ValaCAT.Navigator;
+using GnomeCAT.FileProject;
+using GnomeCAT.Iterators;
+using GnomeCAT.Navigator;
 using Gee;
 
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
 
-    [GtkTemplate (ui ="/info/aquelando/valacat/ui/tablabel.ui")]
+    [GtkTemplate (ui ="/info/aquelando/gnomecat/ui/tablabel.ui")]
     public class TabLabel : Gtk.Box
     {
 
@@ -53,12 +53,12 @@ namespace ValaCAT.UI
     /**
      * Generic tab.
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/tab.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/tab.ui")]
     public abstract class Tab : Gtk.Box
     {
         public Widget label {get; protected set;}
-        public abstract ValaCAT.FileProject.File? file {get;}
-        public abstract ValaCAT.FileProject.Project? project {get;}
+        public abstract GnomeCAT.FileProject.File? file {get;}
+        public abstract GnomeCAT.FileProject.Project? project {get;}
 
         [GtkChild]
         public Gtk.Box left_box;
@@ -90,8 +90,8 @@ namespace ValaCAT.UI
         public HintPanelWidget hints_panel;
 
 
-        private unowned ValaCAT.FileProject.File? _file;
-        public override ValaCAT.FileProject.File? file
+        private unowned GnomeCAT.FileProject.File? _file;
+        public override GnomeCAT.FileProject.File? file
         {
             get
             {
@@ -99,7 +99,7 @@ namespace ValaCAT.UI
             }
         }
 
-        public override ValaCAT.FileProject.Project? project
+        public override GnomeCAT.FileProject.Project? project
         {
             get
             {
@@ -107,14 +107,14 @@ namespace ValaCAT.UI
             }
         }
 
-        private ValaCAT.Navigator.FileNavigator navigator_fuzzy;
-        private ValaCAT.Navigator.FileNavigator navigator_translated;
-        private ValaCAT.Navigator.FileNavigator navigator_untranslated;
-        private ValaCAT.Navigator.FileNavigator navigator_all;
+        private GnomeCAT.Navigator.FileNavigator navigator_fuzzy;
+        private GnomeCAT.Navigator.FileNavigator navigator_translated;
+        private GnomeCAT.Navigator.FileNavigator navigator_untranslated;
+        private GnomeCAT.Navigator.FileNavigator navigator_all;
 
         private ArrayList<ChangedMessageSensible> change_messages_sensible;
 
-        public FileTab (ValaCAT.FileProject.File? f)
+        public FileTab (GnomeCAT.FileProject.File? f)
         {
             base (f.name);
             _file = f;
@@ -134,16 +134,16 @@ namespace ValaCAT.UI
             change_messages_sensible.add (hints_panel);
             right_box.pack_start (hints_panel, true, true, 0);
 
-            navigator_all = new ValaCAT.Navigator.FileNavigator (f, new TransparentFilter<Message> ());
+            navigator_all = new GnomeCAT.Navigator.FileNavigator (f, new TransparentFilter<Message> ());
             change_messages_sensible.add (navigator_all);
 
-            navigator_fuzzy = new ValaCAT.Navigator.FileNavigator (f, new FuzzyFilter ());
+            navigator_fuzzy = new GnomeCAT.Navigator.FileNavigator (f, new FuzzyFilter ());
             change_messages_sensible.add (navigator_fuzzy);
 
-            navigator_translated = new ValaCAT.Navigator.FileNavigator (f, new TranslatedFilter ());
+            navigator_translated = new GnomeCAT.Navigator.FileNavigator (f, new TranslatedFilter ());
             change_messages_sensible.add (navigator_translated);
 
-            navigator_untranslated = new ValaCAT.Navigator.FileNavigator (f, new UntranslatedFilter ());
+            navigator_untranslated = new GnomeCAT.Navigator.FileNavigator (f, new UntranslatedFilter ());
             change_messages_sensible.add (navigator_untranslated);
 
             if (f.messages.size > 0)
@@ -152,7 +152,7 @@ namespace ValaCAT.UI
             }
 
             this._file.file_changed.connect (() => {
-                ValaCAT.UI.Window win = this.get_parent ().get_parent (). get_parent () as ValaCAT.UI.Window;
+                GnomeCAT.UI.Window win = this.get_parent ().get_parent (). get_parent () as GnomeCAT.UI.Window;
                 win.file_changed (this.file);
             });
         }
@@ -217,14 +217,14 @@ namespace ValaCAT.UI
             this.navigator_untranslated.previous ();
         }
 
-        public void select (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void select (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             message_list.select (level, fragment);
         }
 
-        public void deselect (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             message_list.deselect (level, fragment);
         }
@@ -243,7 +243,7 @@ namespace ValaCAT.UI
     {
         private FileListWidget file_list;
 
-        public override ValaCAT.FileProject.File? file
+        public override GnomeCAT.FileProject.File? file
         {
             get
             {
@@ -251,8 +251,8 @@ namespace ValaCAT.UI
             }
         }
 
-        private ValaCAT.FileProject.Project? _project;
-        public override ValaCAT.FileProject.Project? project
+        private GnomeCAT.FileProject.Project? _project;
+        public override GnomeCAT.FileProject.Project? project
         {
             get
             {
@@ -272,7 +272,7 @@ namespace ValaCAT.UI
     }
 }
 
-namespace ValaCAT
+namespace GnomeCAT
 {
     public interface ChangedMessageSensible : Object
     {

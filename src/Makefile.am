@@ -1,5 +1,5 @@
 
-bin_PROGRAMS = valacat
+bin_PROGRAMS = gnomecat
 
 AM_VALAFLAGS =                                              \
     --vapidir $(top_srcdir)/vapi                            \
@@ -9,7 +9,7 @@ AM_VALAFLAGS =                                              \
     --pkg json-glib-1.0                                     \
     --pkg gtksourceview-3.0                                 \
     --pkg gettext-po										\
-    --gresources "$(top_srcdir)/data/valacat.gresource.xml" \
+    --gresources "$(top_srcdir)/data/gnomecat.gresource.xml" \
     --target-glib=2.38
 
 AM_CPPFLAGS = \
@@ -40,12 +40,12 @@ VALASOURCES = \
 	filter.vala \
 	filenavigator.vala
 
-valacat_SOURCES = \
+gnomecat_SOURCES = \
     $(VALASOURCES)                 \
-    valacat.gresource.c	\
+    gnomecat.gresource.c	\
     config.vapi
 
-valacat_CFLAGS = \
+gnomecat_CFLAGS = \
     -Wall                                                   \
     -g \
     `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0` \
@@ -55,18 +55,18 @@ valacat_CFLAGS = \
 CLEANFILES =                                                \
     $(VALASOURCES:.vala=.c)                                 \
     $(BUILT_SOURCES)										\
-    valacat.gresource.c						\
+    gnomecat.gresource.c						\
     Makefile.in \
     config.h 	\
     config.h.ini \
     config.h.in~ \
     stamp-h1
 
-valacat.gresource.c: $(top_srcdir)/data/valacat.gresource.xml
+gnomecat.gresource.c: $(top_srcdir)/data/gnomecat.gresource.xml
 	glib-compile-resources --generate-source --sourcedir $(top_srcdir)/data/ --target "$@" "$<"
 
-gsettings_SCHEMAS = $(top_srcdir)/data/valacat.gschema.xml
+gsettings_SCHEMAS = $(top_srcdir)/data/gnomecat.gschema.xml
 @GSETTINGS_RULES@
 
-gschemas.compiled: $(top_srcdir)/data/valacat.gschema.xml
+gschemas.compiled: $(top_srcdir)/data/gnomecat.gschema.xml
 	$(GLIB_COMPILE_SCHEMAS) $(top_srcdir)/data/

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema path="/info/aquelando/valacat/editor/" id="info.aquelando.valacat.Editor">
+  <schema path="/info/aquelando/gnomecat/editor/" id="info.aquelando.gnomecat.Editor">
     <key name="highlight" type="b">
       <default>false</default>
       <summary>Highlight syntax</summary>
@@ -31,8 +31,8 @@
       <description>The state to set when an untranslated message is translated.</description>
     </key>
   </schema>
-  <schema id="info.aquelando.valacat.ProfilesList"
-          path="/info/aquelando/valacat/profiles:/">
+  <schema id="info.aquelando.gnomecat.ProfilesList"
+          path="/info/aquelando/gnomecat/profiles:/">
     <key name="list" type="as">
       <default>[]</default>
     </key>
@@ -40,7 +40,7 @@
       <default>""</default>
     </key>
   </schema>
-  <schema id="info.aquelando.valacat.Profile">
+  <schema id="info.aquelando.gnomecat.Profile">
       <key name="uuid" type="s">
         <default>""</default>
       </key>

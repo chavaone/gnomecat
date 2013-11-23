@@ -1,36 +1,36 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using ValaCAT.UI;
-using ValaCAT.FileProject;
+using GnomeCAT.UI;
+using GnomeCAT.FileProject;
 using Gee;
 
-namespace ValaCAT
+namespace GnomeCAT
 {
     public class Application : Gtk.Application
     {
         private ArrayList<FileOpener> file_openers;
         private ArrayList<HintProvider> hint_providers;
         private ArrayList<Checker> checkers;
-        private static ValaCAT.Application _instance;
+        private static GnomeCAT.Application _instance;
 
         private ArrayList<string> _extensions;
         public ArrayList<string> extensions
@@ -47,22 +47,22 @@ namespace ValaCAT
             }
         }
 
-        private ValaCAT.Profiles.Profile? _enabled_profile;
-        public ValaCAT.Profiles.Profile? enabled_profile
+        private GnomeCAT.Profiles.Profile? _enabled_profile;
+        public GnomeCAT.Profiles.Profile? enabled_profile
         {
             get
             {
-                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.valacat.ProfilesList");
+                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.gnomecat.ProfilesList");
                 if (_enabled_profile == null)
                 {
                     string prof_uuid = prof_set.get_string ("default");
-                    _enabled_profile = prof_uuid == "" ? null : new ValaCAT.Profiles.Profile.from_uuid (prof_uuid);
+                    _enabled_profile = prof_uuid == "" ? null : new GnomeCAT.Profiles.Profile.from_uuid (prof_uuid);
                 }
                 return _enabled_profile;
             }
             set
             {
-                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.valacat.ProfilesList");
+                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.gnomecat.ProfilesList");
                 _enabled_profile = value;
                 prof_set.set_string ("default", value == null ? "" : value.uuid);
             }
@@ -70,24 +70,24 @@ namespace ValaCAT
 
         private Application ()
         {
-            Object (application_id: "info.aquelando.valacat",
+            Object (application_id: "info.aquelando.gnomecat",
                 flags: ApplicationFlags.HANDLES_OPEN);
         }
 
         construct
         {
             file_openers = new ArrayList<FileOpener> ();
-            add_opener (new ValaCAT.PoFiles.PoFileOpener ());
+            add_opener (new GnomeCAT.PoFiles.PoFileOpener ());
             this.window_removed.connect (on_window_removed);
 
             hint_providers = new ArrayList<HintProvider> ();
-            add_hint_provider (new ValaCAT.Demo.DemoHintProvider ()); //DEMO
+            add_hint_provider (new GnomeCAT.Demo.DemoHintProvider ()); //DEMO
 
             checkers = new ArrayList<Checker> ();
-            add_checker (new ValaCAT.Demo.DemoChecker ()); //DEMO
+            add_checker (new GnomeCAT.Demo.DemoChecker ()); //DEMO
         }
 
-        public static new ValaCAT.Application get_default ()
+        public static new GnomeCAT.Application get_default ()
         {
             if (_instance == null)
                 _instance = new Application ();
@@ -104,7 +104,7 @@ namespace ValaCAT
             file_openers.remove (o);
         }
 
-        public ValaCAT.FileProject.File? open_file (string path)
+        public GnomeCAT.FileProject.File? open_file (string path)
         {
             int index_last_point = path.last_index_of_char ('.');
             string extension = path.substring (index_last_point + 1);
@@ -126,8 +126,8 @@ namespace ValaCAT
             hint_providers.remove (hp);
         }
 
-        public void get_hints (ValaCAT.FileProject.Message m,
-            ValaCAT.UI.HintPanelWidget pannel)
+        public void get_hints (GnomeCAT.FileProject.Message m,
+            GnomeCAT.UI.HintPanelWidget pannel)
         {
             foreach (HintProvider hp in hint_providers)
             {
@@ -153,31 +153,31 @@ namespace ValaCAT
             }
         }
 
-        public void select (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void select (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             bool success = false;
             foreach (var w in get_windows ())
             {
-                success |= (w as ValaCAT.UI.Window).select(level, fragment);
+                success |= (w as GnomeCAT.UI.Window).select(level, fragment);
             }
 
             if (!success && fragment.file != null)
             {
-                ValaCAT.FileProject.File file = open_file (fragment.file.path);
+                GnomeCAT.FileProject.File file = open_file (fragment.file.path);
                 if (file != null)
-                    (get_active_window () as ValaCAT.UI.Window).add_file (file);
+                    (get_active_window () as GnomeCAT.UI.Window).add_file (file);
                 else
                     stderr.printf ("Error while open %s file.\n", fragment.file.path);
             }
         }
 
-        public void deselect (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             foreach (var w in get_windows ())
             {
-                (w as ValaCAT.UI.Window).deselect(level, fragment);
+                (w as GnomeCAT.UI.Window).deselect(level, fragment);
             }
         }
 
@@ -190,18 +190,18 @@ namespace ValaCAT
 
         public override void activate ()
         {
-            ValaCAT.UI.Window window = new ValaCAT.UI.Window (this);
+            GnomeCAT.UI.Window window = new GnomeCAT.UI.Window (this);
             window.show ();
             Gtk.main ();
         }
 
         public override void open (GLib.File[] files, string hint)
         {
-            ValaCAT.UI.Window window = new ValaCAT.UI.Window (this);
+            GnomeCAT.UI.Window window = new GnomeCAT.UI.Window (this);
 
             foreach (GLib.File f in files)
             {
-                ValaCAT.FileProject.File file = open_file (f.get_path ());
+                GnomeCAT.FileProject.File file = open_file (f.get_path ());
                 if (file != null)
                     window.add_file (file);
                 else
@@ -209,8 +209,8 @@ namespace ValaCAT
             }
 
             //DEMO
-            ValaCAT.FileProject.Project p = new Project ("/home/ch01/valacat");
-            ValaCAT.FileProject.File f = new ValaCAT.Demo.DemoFile ();
+            GnomeCAT.FileProject.Project p = new Project ("/home/ch01");
+            GnomeCAT.FileProject.File f = new GnomeCAT.Demo.DemoFile ();
             window.add_project (p);
             window.add_file (f);
 

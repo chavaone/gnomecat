@@ -1,29 +1,29 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using ValaCAT.Profiles;
+using GnomeCAT.Profiles;
 using Gee;
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/preferencesdialog.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/preferencesdialog.ui")]
     public class PreferencesDialog : Gtk.Dialog
     {
         private Settings settings;
@@ -45,7 +45,7 @@ namespace ValaCAT.UI
 
         public PreferencesDialog ()
         {
-            settings = new Settings ("info.aquelando.valacat.Editor");
+            settings = new Settings ("info.aquelando.gnomecat.Editor");
 
             highlight_checkbutton.active = settings.get_boolean ("highlight");
             visible_whitespace_checkbutton.active = settings.get_boolean ("visible-whitespace");
@@ -60,7 +60,7 @@ namespace ValaCAT.UI
             settings.bind ("custom-font", editor_font_hbox, "sensitive", SettingsBindFlags.DEFAULT);
             settings.bind ("message-changed-state", changed_state, "active_id", SettingsBindFlags.DEFAULT);
 
-            ArrayList<Profile> profs = ValaCAT.Profiles.Profile.get_profiles ();
+            ArrayList<Profile> profs = GnomeCAT.Profiles.Profile.get_profiles ();
             foreach (Profile p in profs)
                 profiles_list.add (new ProfileRow (p));
         }
@@ -87,7 +87,7 @@ namespace ValaCAT.UI
     }
 
 
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/profilerow.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/profilerow.ui")]
     public class ProfileRow : Gtk.ListBoxRow
     {
 

@@ -1,29 +1,29 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using ValaCAT.FileProject;
-using ValaCAT.Languages;
+using GnomeCAT.FileProject;
+using GnomeCAT.Languages;
 using Gee;
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
 
     int string_lines (string s)
@@ -36,7 +36,7 @@ namespace ValaCAT.UI
     /**
      * Editor pannel tabs.
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditortab.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messageeditortab.ui")]
     public class MessageEditorTab : Box
     {
         public Label label {get; private set;}
@@ -82,7 +82,7 @@ namespace ValaCAT.UI
                 if (old_text == null && new_text != null)
                 {
                     bool untrans_msg = false;
-                    PluralForm enabled_plural_form = ValaCAT.Application.get_default ().enabled_profile.plural_form;
+                    PluralForm enabled_plural_form = GnomeCAT.Application.get_default ().enabled_profile.plural_form;
                     int num_plurals = message.has_plural () ?
                         enabled_plural_form.number_of_plurals : 1;
                     for (int i = 0; i < num_plurals; i++)
@@ -149,8 +149,8 @@ namespace ValaCAT.UI
             }
         }
 
-        private ArrayList<ValaCAT.TextTag> original_text_tags;
-        private ArrayList<ValaCAT.TextTag> translation_text_tags;
+        private ArrayList<GnomeCAT.TextTag> original_text_tags;
+        private ArrayList<GnomeCAT.TextTag> translation_text_tags;
         private GLib.Settings settings;
 
         /**
@@ -189,8 +189,8 @@ namespace ValaCAT.UI
                 (textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
             }
 
-            original_text_tags = new ArrayList<ValaCAT.TextTag> ();
-            translation_text_tags = new ArrayList<ValaCAT.TextTag> ();
+            original_text_tags = new ArrayList<GnomeCAT.TextTag> ();
+            translation_text_tags = new ArrayList<GnomeCAT.TextTag> ();
 
             textview_translated_text.buffer.end_user_action.connect (update_translation);
 
@@ -211,7 +211,7 @@ namespace ValaCAT.UI
 
         construct
         {
-            settings = new GLib.Settings ("info.aquelando.valacat.Editor");
+            settings = new GLib.Settings ("info.aquelando.gnomecat.Editor");
 
             settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
             settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
@@ -316,7 +316,7 @@ namespace ValaCAT.UI
             translation_text = new_text == "" ? null : new_text;
         }
 
-        private void add_tag_to_buffer (ValaCAT.TextTag tag, TextBuffer buffer, int text_size)
+        private void add_tag_to_buffer (GnomeCAT.TextTag tag, TextBuffer buffer, int text_size)
         {
             TextIter ini_iter = TextIter ();
             if (tag.ini_offset == -1)
@@ -335,7 +335,7 @@ namespace ValaCAT.UI
         }
 
 
-        public void remove_tag_from_buffer (ValaCAT.TextTag tag, TextBuffer buffer, int text_size)
+        public void remove_tag_from_buffer (GnomeCAT.TextTag tag, TextBuffer buffer, int text_size)
         {
             TextIter ini_iter = TextIter ();
             if (tag.ini_offset == -1)
@@ -353,14 +353,14 @@ namespace ValaCAT.UI
             buffer.tag_table.remove (tag.tag);
         }
 
-        public void select (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void select (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             assert (level == SelectLevel.STRING);
             assert (fragment != null);
 
-            ArrayList<ValaCAT.TextTag> arr = new ArrayList<ValaCAT.TextTag> ();
-            arr.add (new ValaCAT.TextTag.from_message_fragment (fragment, "search_tag"));
+            ArrayList<GnomeCAT.TextTag> arr = new ArrayList<GnomeCAT.TextTag> ();
+            arr.add (new GnomeCAT.TextTag.from_message_fragment (fragment, "search_tag"));
 
             if (fragment.is_original)
             {
@@ -372,8 +372,8 @@ namespace ValaCAT.UI
             }
         }
 
-        public void deselect (ValaCAT.SelectLevel level,
-            ValaCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GnomeCAT.SelectLevel level,
+            GnomeCAT.FileProject.MessageFragment? fragment)
         {
             assert (level == SelectLevel.STRING);
             assert (fragment != null);
@@ -393,7 +393,7 @@ namespace ValaCAT.UI
     /**
      * Rows of the tips displaying box.
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/messageeditortabtiprow.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messageeditortabtiprow.ui")]
     public class MessageTipRow : ListBoxRow
     {
 

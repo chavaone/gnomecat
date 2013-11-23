@@ -1,27 +1,27 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gee;
 using Json;
 
-namespace ValaCAT.Languages
+namespace GnomeCAT.Languages
 {
     public class PluralForm : GLib.Object
     {
@@ -112,7 +112,7 @@ namespace ValaCAT.Languages
             try{
 
                 var parser = new Json.Parser ();
-                File file = File.new_for_uri ("resource:///info/aquelando/valacat/plurals.json");
+                File file = File.new_for_uri ("resource:///info/aquelando/gnomecat/plurals.json");
                 InputStream stream = file.read ();
                 parser.load_from_stream (stream);
 
@@ -195,7 +195,7 @@ namespace ValaCAT.Languages
 
             try {
                 var parser = new Json.Parser ();
-                File file = File.new_for_uri ("resource:///info/aquelando/valacat/languages.json");
+                File file = File.new_for_uri ("resource:///info/aquelando/gnomecat/languages.json");
                 InputStream stream = file.read ();
                 parser.load_from_stream (stream);
 

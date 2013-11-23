@@ -1,31 +1,31 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
 using Gee;
-using ValaCAT.FileProject;
-using ValaCAT.Iterators;
-using ValaCAT.Search;
-using ValaCAT.UI;
+using GnomeCAT.FileProject;
+using GnomeCAT.Iterators;
+using GnomeCAT.Search;
+using GnomeCAT.UI;
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
     public enum SearchDialogResponses
     {
@@ -39,7 +39,7 @@ namespace ValaCAT.UI
     /**
      *
      */
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/searchdialog.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/searchdialog.ui")]
     public class SearchDialog : Gtk.Dialog
     {
         [GtkChild]
@@ -74,15 +74,15 @@ namespace ValaCAT.UI
         [GtkCallback]
         private void on_close ()
         {
-            this.response (ValaCAT.UI.SearchDialogResponses.CANCEL);
+            this.response (GnomeCAT.UI.SearchDialogResponses.CANCEL);
         }
     }
 }
 
 
-namespace ValaCAT.Search
+namespace GnomeCAT.Search
 {
-    public abstract class Search : ValaCAT.Navigator.Navigator
+    public abstract class Search : GnomeCAT.Navigator.Navigator
     {
         public abstract string search_text {get; set;}
 
@@ -112,7 +112,7 @@ namespace ValaCAT.Search
         private MessageIterator message_iterator;
         private IteratorFilter<MessageFragment> filter_marks;
 
-        public FileSearch (ValaCAT.FileProject.File file,
+        public FileSearch (GnomeCAT.FileProject.File file,
             bool translated, bool untranslated, bool fuzzy,
             bool original, bool translation, string search_text,
             string replace_text)
@@ -185,7 +185,7 @@ namespace ValaCAT.Search
                 mf = message_iterator.current;
             }
 
-            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -204,7 +204,7 @@ namespace ValaCAT.Search
                 mf = message_iterator.current;
             }
 
-            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -219,7 +219,7 @@ namespace ValaCAT.Search
             MessageFragment mf = message_iterator.first ();
             if (mf == null) return next ();
 
-            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -234,7 +234,7 @@ namespace ValaCAT.Search
             MessageFragment mf = message_iterator.last ();
             if (mf == null) return previous ();
 
-            ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -256,14 +256,14 @@ namespace ValaCAT.Search
         {
             MessageFragment mf = message_iterator.current;
             if (mf != null)
-                ValaCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+                GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
         }
 
         public override void deselect ()
         {
             MessageFragment mf = message_iterator.current;
             if (mf != null)
-                ValaCAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
+                GnomeCAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
         }
     }
 }

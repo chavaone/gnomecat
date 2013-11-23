@@ -1,6 +1,6 @@
 AC_PREREQ([2.69])
 
-AC_INIT([valacat],
+AC_INIT([gnomecat],
 		[0.01],
 		[https://github.com/chavaone/valacat/issues])
 AC_CONFIG_SRCDIR([src/application.vala])
@@ -15,7 +15,7 @@ IT_PROG_INTLTOOL([0.40.0])
 AM_GNU_GETTEXT_VERSION([0.17])
 AM_GNU_GETTEXT([external])
 
-GETTEXT_PACKAGE=valacat
+GETTEXT_PACKAGE=gnomecat
 
 #GSettings
 GLIB_GSETTINGS

@@ -1,11 +1,11 @@
 
 
-using ValaCAT.FileProject;
-using ValaCAT.Languages;
-using ValaCAT.UI;
+using GnomeCAT.FileProject;
+using GnomeCAT.Languages;
+using GnomeCAT.UI;
 using Gee;
 
-namespace ValaCAT.Demo
+namespace GnomeCAT.Demo
 {
 
     string string_random (int length = 8, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
@@ -22,11 +22,11 @@ namespace ValaCAT.Demo
 
     PluralForm get_enabled_plural_form ()
     {
-        return ValaCAT.Application.get_default ().enabled_profile.plural_form;
+        return GnomeCAT.Application.get_default ().enabled_profile.plural_form;
     }
 
 
-    public class DemoFile : ValaCAT.FileProject.File
+    public class DemoFile : GnomeCAT.FileProject.File
     {
 
         public DemoFile ()
@@ -49,7 +49,7 @@ namespace ValaCAT.Demo
 
     }
 
-    public class DemoMessage : ValaCAT.FileProject.Message
+    public class DemoMessage : GnomeCAT.FileProject.Message
     {
         private string original_singular;
         private string original_plural;
@@ -83,7 +83,7 @@ namespace ValaCAT.Demo
             }
         }
 
-        public DemoMessage (ValaCAT.FileProject.File owner)
+        public DemoMessage (GnomeCAT.FileProject.File owner)
         {
             base (owner);
 
@@ -185,17 +185,17 @@ namespace ValaCAT.Demo
     }
 
 
-    public class DemoHintProvider : ValaCAT.HintProvider
+    public class DemoHintProvider : GnomeCAT.HintProvider
     {
 
         public override void get_hints (Message m,
-            ValaCAT.UI.HintPanelWidget hpw)
+            GnomeCAT.UI.HintPanelWidget hpw)
         {
             hpw.add_hint (m, new Hint (m.get_original_singular (), "DEMO", 0.3));
         }
     }
 
-    public class DemoChecker :ValaCAT.Checker
+    public class DemoChecker :GnomeCAT.Checker
     {
         public override void check (Message m)
         {

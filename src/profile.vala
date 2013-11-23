@@ -1,27 +1,27 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gee;
-using ValaCAT.Languages;
+using GnomeCAT.Languages;
 
-namespace ValaCAT.Profiles
+namespace GnomeCAT.Profiles
 {
 
     string string_random (int length = 8, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890")
@@ -76,7 +76,7 @@ namespace ValaCAT.Profiles
         {
             get
             {
-                ValaCAT.Application app = ValaCAT.Application.get_default();
+                GnomeCAT.Application app = GnomeCAT.Application.get_default();
                 Profile? p = app.enabled_profile;
                 return p != null && p.uuid == this.uuid;
             }
@@ -109,8 +109,8 @@ namespace ValaCAT.Profiles
 
         public Profile.from_uuid (string uuid)
         {
-            GLib.Settings set_prof = new GLib.Settings.with_path ("info.aquelando.valacat.Profile",
-                "/info/aquelando/valacat/profiles:/" + uuid);
+            GLib.Settings set_prof = new GLib.Settings.with_path ("info.aquelando.GnomeCAT.Profile",
+                "/info/aquelando/gnomecat/profiles:/" + uuid);
 
             this.uuid = uuid;
             set_prof.bind ("profile-name", this, "name",  SettingsBindFlags.DEFAULT);
@@ -122,22 +122,22 @@ namespace ValaCAT.Profiles
             set_prof.bind ("encoding", this, "encoding",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("team-email", this, "team_email",  SettingsBindFlags.DEFAULT);
 
-            string[] prof_arr = (new GLib.Settings ("info.aquelando.valacat.ProfilesList")).get_strv ("list");
+            string[] prof_arr = (new GLib.Settings ("info.aquelando.GnomeCAT.ProfilesList")).get_strv ("list");
             if (! (uuid in prof_arr))
                 prof_arr += uuid;
-            (new GLib.Settings ("info.aquelando.valacat.ProfilesList")).set_strv ("list", prof_arr);
+            (new GLib.Settings ("info.aquelando.GnomeCAT.ProfilesList")).set_strv ("list", prof_arr);
         }
 
         construct
         {
-            ValaCAT.Application app = ValaCAT.Application.get_default ();
+            GnomeCAT.Application app = GnomeCAT.Application.get_default ();
             if (app.enabled_profile == null)
                 app.enabled_profile = this;
         }
 
         public static ArrayList<Profile> get_profiles ()
         {
-            string[] prof_arr = (new GLib.Settings ("info.aquelando.valacat.ProfilesList")).get_strv ("list");
+            string[] prof_arr = (new GLib.Settings ("info.aquelando.GnomeCAT.ProfilesList")).get_strv ("list");
             ArrayList<Profile> ret_arr = new ArrayList<Profile> ();
 
             foreach (string uuid in prof_arr)
@@ -147,20 +147,20 @@ namespace ValaCAT.Profiles
 
         public static void remove_profile (Profile p)
         {
-            string[] prof_arr = (new GLib.Settings ("info.aquelando.valacat.ProfilesList")).get_strv ("list");
+            string[] prof_arr = (new GLib.Settings ("info.aquelando.GnomeCAT.ProfilesList")).get_strv ("list");
             string[] new_prof_arr = {};
 
             foreach (string prof in prof_arr)
                 if (prof != p.uuid)
                     new_prof_arr += prof;
-            (new GLib.Settings ("info.aquelando.valacat.ProfilesList")).set_strv ("list", new_prof_arr);
+            (new GLib.Settings ("info.aquelando.GnomeCAT.ProfilesList")).set_strv ("list", new_prof_arr);
         }
     }
 }
 
-namespace ValaCAT.UI
+namespace GnomeCAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/valacat/ui/profiledialog.ui")]
+    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/profiledialog.ui")]
     public class ProfileDialog : Gtk.Dialog
     {
 
@@ -300,7 +300,7 @@ namespace ValaCAT.UI
             }
         }
 
-        public ProfileDialog.from_profile (ValaCAT.Profiles.Profile prof)
+        public ProfileDialog.from_profile (GnomeCAT.Profiles.Profile prof)
         {
             this ();
             this.profile_name = prof.name;

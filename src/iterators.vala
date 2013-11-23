@@ -1,28 +1,28 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of valacat
+ * This file is part of GnomeCAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * valacat is free software; you can redistribute it and/or modify
+ * GnomeCAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * valacat is distributed in the hope that it will be useful,
+ * GnomeCAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with valacat. If not, see <http://www.gnu.org/licenses/>.
+ * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gee;
-using ValaCAT.FileProject;
-using ValaCAT.Languages;
+using GnomeCAT.FileProject;
+using GnomeCAT.Languages;
 
-namespace ValaCAT.Iterators
+namespace GnomeCAT.Iterators
 {
     public abstract class Iterator<Element> : Object
     {
@@ -73,8 +73,8 @@ namespace ValaCAT.Iterators
 
     public class FileIterator : Iterator<Message?>
     {
-        private ValaCAT.FileProject.File _file;
-        public ValaCAT.FileProject.File file
+        private GnomeCAT.FileProject.File _file;
+        public GnomeCAT.FileProject.File file
         {
             get
             {
@@ -107,7 +107,7 @@ namespace ValaCAT.Iterators
             }
         }
 
-        public FileIterator (ValaCAT.FileProject.File? f,
+        public FileIterator (GnomeCAT.FileProject.File? f,
             IteratorFilter<Message> mf)
         {
             file = f;
@@ -295,7 +295,7 @@ namespace ValaCAT.Iterators
                         message.get_original_plural (), search_string,
                         filter, 1, true));
 
-                PluralForm plural_form = ValaCAT.Application
+                PluralForm plural_form = GnomeCAT.Application
                     .get_default ().enabled_profile.plural_form;
                 for (int plural_number = 1;
                     plural_number < plural_form.number_of_plurals;
