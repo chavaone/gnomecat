@@ -218,6 +218,21 @@ namespace GnomeCAT
             Gtk.main ();
         }
 
+        public override void startup ()
+        {
+            base.startup ();
+
+            var css_provider = new Gtk.CssProvider ();
+            try {
+                var file = GLib.File.new_for_uri("resource:///info/aquelando/gnomecat/css/gnomecat.css");
+                css_provider.load_from_file (file);
+            } catch (Error e) {
+                warning ("loading css: %s", e.message);
+            }
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
+                css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
+
         public static int main (string[] args)
         {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.GNOMELOCALEDIR);
