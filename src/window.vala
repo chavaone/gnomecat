@@ -108,7 +108,7 @@ namespace GnomeCAT.UI
             for (int i = 0; i < number_of_pages; i++)
             {
                 var tab = notebook.get_nth_page (i);
-                if (tab is FileTab && (tab as FileTab).file == f)
+                if (tab is FileTab && (tab as FileTab).file.path == f.path)
                 {
                     notebook.set_current_page (i);
                     return;
@@ -330,7 +330,7 @@ namespace GnomeCAT.UI
             }
             else
             {
-                this.label_title.set_text (file.name);
+                this.label_title.set_text ("GnomeCAT - " + file.name);
                 set_progress_bar_info (file.number_of_translated,
                     file.number_of_untranslated, file.number_of_fuzzy);
             }
@@ -347,7 +347,17 @@ namespace GnomeCAT.UI
 
         private  void on_project_changed (Window src, GnomeCAT.FileProject.Project? project)
         {
-            //TODO
+            if (project == null)
+            {
+                this.label_title.set_text ("GnomeCAT");
+                this.progressbar_title.hide ();
+            }
+            else
+            {
+                this.label_title.set_text ("GnomeCAT - " +  project.name);
+                set_progress_bar_info (project.number_of_translated,
+                    project.number_of_untranslated, project.number_of_fuzzy);
+            }
         }
 
         [GtkCallback]
@@ -356,8 +366,15 @@ namespace GnomeCAT.UI
         {
             int page_num = int.parse (page.to_string ()); //FIXME
             Tab t = this.notebook.get_nth_page (page_num) as Tab;
-            this.file_changed (t.file);
-            this.project_changed (t.project);
+
+            if (t is FileTab)
+            {
+                this.file_changed (t.file);
+            }
+            else
+            {
+                this.project_changed (t.project);
+            }
         }
 
         [GtkCallback]

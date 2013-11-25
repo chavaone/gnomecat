@@ -146,15 +146,11 @@ namespace GnomeCAT.UI
             navigator_untranslated = new GnomeCAT.Navigator.FileNavigator (f, new UntranslatedFilter ());
             change_messages_sensible.add (navigator_untranslated);
 
-            if (f.messages.size > 0)
-            {
-                this.message_context.message = f.messages.get (0);
-            }
-
-            this._file.file_changed.connect (() => {
-                GnomeCAT.UI.Window win = this.get_parent ().get_parent (). get_parent () as GnomeCAT.UI.Window;
-                win.file_changed (this.file);
-            });
+            this._file.file_changed.connect (() =>
+                {
+                    (GnomeCAT.Application.get_default ().get_active_window () as GnomeCAT.UI.Window)
+                        .file_changed (file);
+                });
         }
 
         public void on_message_selected (Message m)
@@ -228,11 +224,6 @@ namespace GnomeCAT.UI
         {
             message_list.deselect (level, fragment);
         }
-
-        private void set_navigators ()
-        {
-
-        }
     }
 
 
@@ -262,12 +253,18 @@ namespace GnomeCAT.UI
 
         public ProjectTab (Project p)
         {
-            base ("project_name"); //TODO project.name
+            base (p.name);
             this._project = p;
 
-            file_list = new FileListWidget.with_project (p);
+            file_list = new FileListWidget (p);
 
             center_box.pack_start (file_list, true, true, 0);
+
+            _project.project_changed.connect ( () =>
+                {
+                    (GnomeCAT.Application.get_default ().get_active_window () as GnomeCAT.UI.Window)
+                        .project_changed (_project);
+                });
         }
     }
 }

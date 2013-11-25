@@ -29,28 +29,39 @@ namespace GnomeCAT.UI
         [GtkChild]
         private ListBox file_list_box;
 
-        public Project project {get; private set;}
-
-        public FileListWidget.with_project (Project proj)
+        private Project _project;
+        public Project project
         {
-            this.project = proj;
-
-            foreach (GnomeCAT.FileProject.File f in this.project.files)
+            get
             {
-                this.add_file (f);
+                return _project;
+            }
+            private set
+            {
+                _project = value;
+                foreach (Widget w in file_list_box.get_children ())
+                    file_list_box.remove (w);
+                foreach (GnomeCAT.FileProject.File f in _project.files)
+                    add_file (f);
+                _project.file_added.connect (add_file);
             }
         }
 
-        public void add_file (GnomeCAT.FileProject.File f)
+        public FileListWidget (Project proj)
         {
-            this.file_list_box.add (new FileListRow (f));
+            project = proj;
         }
 
         [GtkCallback]
         private void on_row_activated (ListBox list_box, ListBoxRow row)
         {
-            var w = this.get_toplevel ().parent.parent.parent.parent as GnomeCAT.UI.Window;
-            w.add_file ((row as FileListRow).file);
+            (GnomeCAT.Application.get_default ().get_active_window () as GnomeCAT.UI.Window)
+                .add_file ((row as FileListRow).file);
+        }
+
+        private void add_file (GnomeCAT.FileProject.File file)
+        {
+            file_list_box.add (new FileListRow (file));
         }
     }
 
@@ -65,16 +76,28 @@ namespace GnomeCAT.UI
         [GtkChild]
         private Gtk.ProgressBar progressbar_file;
 
-        public GnomeCAT.FileProject.File file {get; private set;}
+        private GnomeCAT.FileProject.File _file;
+        public GnomeCAT.FileProject.File file
+        {
+            get
+            {
+                return _file;
+            }
+            private set
+            {
+                _file = value;
+                label_file_name.set_text (_file.name);
+                label_info_trans.set_text ("%iT %iU %iF".printf (_file.number_of_translated,
+                    _file.number_of_untranslated, _file.number_of_fuzzy));
+                double total = _file.number_of_translated + _file.number_of_untranslated
+                    + _file.number_of_fuzzy;
+                progressbar_file.fraction = _file.number_of_translated / total;
+            }
+        }
 
         public FileListRow (GnomeCAT.FileProject.File f)
         {
-            this.file = f;
-            label_file_name.set_text ("f.name");
-            label_info_trans.set_text ("%iT %iU %iF".printf (f.number_of_translated,
-                f.number_of_untranslated, f.number_of_fuzzy));
-            float fraction = f.number_of_translated / f.number_of_messages;
-            progressbar_file.set_fraction (fraction);
+            file = f;
         }
     }
 }

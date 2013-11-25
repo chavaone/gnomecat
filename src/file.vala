@@ -476,7 +476,8 @@ namespace GnomeCAT.FileProject
 
             m.message_changed.connect ((src) =>
             {
-                this.file_changed ();
+                file_changed ();
+                project.project_changed ();
             });
         }
 
@@ -572,12 +573,87 @@ namespace GnomeCAT.FileProject
          */
         public ArrayList<File> files {get; private set;}
 
-        /**
-         * Name of the project.
-         */
-        public string name {get; protected set;}
+        private string _name;
+        public string name
+        {
+            get
+            {
+                if (_name == null)
+                {
+                    int bar = _path.last_index_of_char('/');
+                    _name = _path.substring (bar + 1);
+                }
+                return _name;
+            }
+        }
 
-        public string path {get; private set;}
+        private string _path;
+        public string path
+        {
+            get
+            {
+                return _path;
+            }
+            private set
+            {
+                _path = value;
+                if (files == null)
+                    files = new ArrayList<File> ();
+                files.clear ();
+                scan_files ();
+            }
+        }
+
+        public int _number_of_messages;
+        public int number_of_messages
+        {
+            get
+            {
+                _number_of_messages = 0;
+                foreach (File f in files)
+                    _number_of_messages += f.number_of_messages;
+                return _number_of_messages;
+            }
+        }
+
+        public int _number_of_translated;
+        public int number_of_translated
+        {
+            get
+            {
+                _number_of_translated = 0;
+                foreach (File f in files)
+                    _number_of_translated += f.number_of_translated;
+                return _number_of_translated;
+            }
+        }
+
+        public int _number_of_untranslated;
+        public int number_of_untranslated
+        {
+            get
+            {
+                _number_of_untranslated = 0;
+                foreach (File f in files)
+                    _number_of_untranslated += f.number_of_untranslated;
+                return _number_of_untranslated;
+            }
+        }
+
+        public int _number_of_fuzzy;
+        public int number_of_fuzzy
+        {
+            get
+            {
+                _number_of_fuzzy = 0;
+                foreach (File f in files)
+                    _number_of_fuzzy += f.number_of_fuzzy;
+                return _number_of_fuzzy;
+            }
+        }
+
+        public signal void project_changed ();
+        public signal void file_added (File file);
 
         /**
          * Creates a new project in a directory.
@@ -587,13 +663,11 @@ namespace GnomeCAT.FileProject
          */
         public Project (string folder_path)
         {
-            this.path = folder_path;
-            this.scan_files ();
-        }
-
-        construct
-        {
-            this.files = new ArrayList<File> ();
+            path = folder_path;
+            file_added.connect ((f) =>
+                {
+                    project_changed ();
+                });
         }
 
 
@@ -610,7 +684,7 @@ namespace GnomeCAT.FileProject
                     FileInfo info = dir.query_info_async.end (res);
                     if (info.get_file_type () == FileType.DIRECTORY)
                     {
-                        this.add_files_from_dir (dir);
+                        add_files_from_dir (dir);
                     }
                 }
                 catch (Error e)
@@ -642,7 +716,10 @@ namespace GnomeCAT.FileProject
                         {
                             File f = GnomeCAT.Application.get_default ().open_file (path);
                             if (f != null)
-                                this.add_file (f);
+                            {
+                                files.add (f);
+                                file_added (f);
+                            }
                         }
                     }
                 }
@@ -651,25 +728,6 @@ namespace GnomeCAT.FileProject
                     stdout.printf ("Error while adding files from %s: %s\n", dir.get_path (), e.message);
                 }
             });
-
-        }
-
-
-        /**
-         *
-         */
-        public void add_file (File f)
-        {
-            this.files.add (f);
-        }
-
-
-        /**
-         *
-         */
-        private void remove_file (File f)
-        {
-            this.files.remove (f);
         }
     }
 }
