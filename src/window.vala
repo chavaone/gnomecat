@@ -336,15 +336,6 @@ namespace GnomeCAT.UI
             }
         }
 
-        private void set_progress_bar_info (int translated, int untranslated, int fuzzy)
-        {
-                progressbar_title.show ();
-                progressbar_title.set_text (_("%iT + %iU + %iF").printf (translated,
-                    untranslated, fuzzy));
-                double total = translated + untranslated + fuzzy;
-                progressbar_title.fraction = translated / total;
-        }
-
         private  void on_project_changed (Window src, GnomeCAT.FileProject.Project? project)
         {
             if (project == null)
@@ -358,6 +349,15 @@ namespace GnomeCAT.UI
                 set_progress_bar_info (project.number_of_translated,
                     project.number_of_untranslated, project.number_of_fuzzy);
             }
+        }
+
+        private void set_progress_bar_info (int translated, int untranslated, int fuzzy)
+        {
+                progressbar_title.show ();
+                progressbar_title.set_text (_("%iT + %iU + %iF").printf (translated,
+                    untranslated, fuzzy));
+                double total = translated + untranslated + fuzzy;
+                progressbar_title.fraction = translated / total;
         }
 
         [GtkCallback]
