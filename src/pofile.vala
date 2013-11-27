@@ -1,30 +1,30 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using GettextPo;
-using GnomeCAT.FileProject;
-using GnomeCAT.Languages;
+using GNOMECAT.FileProject;
+using GNOMECAT.Languages;
 
-namespace GnomeCAT.PoFiles
+namespace GNOMECAT.PoFiles
 {
-    public class PoMessage : GnomeCAT.FileProject.Message
+    public class PoMessage : GNOMECAT.FileProject.Message
     {
         private unowned GettextPo.Message message;
 
@@ -39,7 +39,7 @@ namespace GnomeCAT.PoFiles
                 else if (this.has_plural ())
                 {
                     bool untrans = false;
-                    PluralForm enabled_plural_form = GnomeCAT.Application.get_default ().enabled_profile.plural_form;
+                    PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
                     for (int i = 0; i < enabled_plural_form.number_of_plurals; i++)
                     {
                         untrans |= this.get_translation (i) == "";
@@ -146,7 +146,7 @@ namespace GnomeCAT.PoFiles
     }
 
 
-    public class PoFile : GnomeCAT.FileProject.File
+    public class PoFile : GNOMECAT.FileProject.File
     {
         private GettextPo.File file;
 
@@ -201,7 +201,7 @@ namespace GnomeCAT.PoFiles
         }
 
 
-        public override GnomeCAT.FileProject.File? open_file (string path, Project? p)
+        public override GNOMECAT.FileProject.File? open_file (string path, Project? p)
         {
             return new PoFile.full (path, p);
         }

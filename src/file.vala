@@ -20,7 +20,7 @@
 
 using Gee;
 
-namespace GnomeCAT.FileProject
+namespace GNOMECAT.FileProject
 {
     /**
      * Class that encapsulates a method to open files of
@@ -70,12 +70,12 @@ namespace GnomeCAT.FileProject
         /**
          * Tags that can be added to the original string.
          */
-        public ArrayList<GnomeCAT.TextTag> tags_original {get; private set;}
+        public ArrayList<GNOMECAT.TextTag> tags_original {get; private set;}
 
         /**
          * Tags that can be added to the translated string.
          */
-        public ArrayList<GnomeCAT.TextTag> tags_translation {get; private set;}
+        public ArrayList<GNOMECAT.TextTag> tags_translation {get; private set;}
 
         /**
          * Plural form this tip references.
@@ -95,14 +95,14 @@ namespace GnomeCAT.FileProject
         public MessageTip (string name,
                 string? description,
                 TipLevel level,
-                ArrayList<GnomeCAT.TextTag>? tags_original=null,
-                ArrayList<GnomeCAT.TextTag>? tags_translation=null)
+                ArrayList<GNOMECAT.TextTag>? tags_original=null,
+                ArrayList<GNOMECAT.TextTag>? tags_translation=null)
         {
             this.name = name;
             this.description = description;
             this.level = level;
-            this.tags_original = tags_original != null ? tags_original : new ArrayList<GnomeCAT.TextTag> ();
-            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<GnomeCAT.TextTag> ();
+            this.tags_original = tags_original != null ? tags_original : new ArrayList<GNOMECAT.TextTag> ();
+            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<GNOMECAT.TextTag> ();
         }
     }
 
@@ -325,7 +325,7 @@ namespace GnomeCAT.FileProject
             {
                 remove_tip (tips.get (0));
             }
-            GnomeCAT.Application.get_default ().check_message (this);
+            GNOMECAT.Application.get_default ().check_message (this);
         }
     }
 
@@ -714,7 +714,7 @@ namespace GnomeCAT.FileProject
                         }
                         else if (info.get_file_type () == FileType.REGULAR)
                         {
-                            File f = GnomeCAT.Application.get_default ().open_file (path);
+                            File f = GNOMECAT.Application.get_default ().open_file (path);
                             if (f != null)
                             {
                                 files.add (f);

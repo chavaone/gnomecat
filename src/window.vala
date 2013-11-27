@@ -1,28 +1,28 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using GnomeCAT.Search;
+using GNOMECAT.Search;
 
 
-namespace GnomeCAT.UI
+namespace GNOMECAT.UI
 {
     [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/window.ui")]
     public class Window : Gtk.ApplicationWindow
@@ -42,8 +42,8 @@ namespace GnomeCAT.UI
         [GtkChild]
         private Gtk.RecentChooserMenu recentprojectmenu;
 
-        private GnomeCAT.Search.Search _active_search;
-        public GnomeCAT.Search.Search active_search
+        private GNOMECAT.Search.Search _active_search;
+        public GNOMECAT.Search.Search active_search
         {
             get
             {
@@ -57,8 +57,8 @@ namespace GnomeCAT.UI
             }
         }
 
-        public signal void file_changed (GnomeCAT.FileProject.File? file);
-        public signal void project_changed (GnomeCAT.FileProject.Project? project);
+        public signal void file_changed (GNOMECAT.FileProject.File? file);
+        public signal void project_changed (GNOMECAT.FileProject.Project? project);
 
         private const GLib.ActionEntry[] action_entries = {
             { "edit-undo", on_edit_undo },
@@ -77,12 +77,12 @@ namespace GnomeCAT.UI
             { "go-previous-fuzzy", on_go_previous_fuzzy}
         };
 
-        public Window (GnomeCAT.Application app)
+        public Window (GNOMECAT.Application app)
         {
             Object (application: app);
 
             this.recentfilemenu.filter = new RecentFilter ();
-            foreach (string ext in (this.application as GnomeCAT.Application).extensions)
+            foreach (string ext in (this.application as GNOMECAT.Application).extensions)
             {
                 this.recentfilemenu.filter.add_pattern ("*." + ext);
             }
@@ -102,7 +102,7 @@ namespace GnomeCAT.UI
             this.project_changed.connect (on_project_changed);
         }
 
-        public void add_file (GnomeCAT.FileProject.File f)
+        public void add_file (GNOMECAT.FileProject.File f)
         {
             int number_of_pages = notebook.get_n_pages ();
             for (int i = 0; i < number_of_pages; i++)
@@ -120,7 +120,7 @@ namespace GnomeCAT.UI
             notebook.set_current_page (notebook.page_num (f_tab));
         }
 
-        public void add_project (GnomeCAT.FileProject.Project p)
+        public void add_project (GNOMECAT.FileProject.Project p)
         {
             int number_of_pages = notebook.get_n_pages ();
             for (int i = 0; i < number_of_pages; i++)
@@ -226,19 +226,19 @@ namespace GnomeCAT.UI
 
         private void on_search_advanded ()
         {
-            GnomeCAT.UI.SearchDialog dialog = new SearchDialog ();
+            GNOMECAT.UI.SearchDialog dialog = new SearchDialog ();
 
             switch (dialog.run ())
             {
-            case GnomeCAT.UI.SearchDialogResponses.CANCEL:
+            case GNOMECAT.UI.SearchDialogResponses.CANCEL:
                 break;
-            case GnomeCAT.UI.SearchDialogResponses.SEARCH:
+            case GNOMECAT.UI.SearchDialogResponses.SEARCH:
                 ini_search (dialog, dialog.search_project, false, true, dialog.wrap_around);
                 break;
-            case GnomeCAT.UI.SearchDialogResponses.REPLACE:
+            case GNOMECAT.UI.SearchDialogResponses.REPLACE:
                 ini_search (dialog, dialog.search_project, true, true, dialog.wrap_around);
                 break;
-            case GnomeCAT.UI.SearchDialogResponses.REPLACEALL:
+            case GNOMECAT.UI.SearchDialogResponses.REPLACEALL:
                 ini_search (dialog, dialog.search_project, true, false, dialog.wrap_around);
                 break;
             }
@@ -246,7 +246,7 @@ namespace GnomeCAT.UI
             dialog.destroy ();
         }
 
-        private void ini_search (GnomeCAT.UI.SearchDialog dialog,
+        private void ini_search (GNOMECAT.UI.SearchDialog dialog,
             bool project, bool replace, bool stop, bool wrap)
         {
 
@@ -321,31 +321,31 @@ namespace GnomeCAT.UI
             this.active_search.previous ();
         }
 
-        private  void on_file_changed (Window src, GnomeCAT.FileProject.File? file)
+        private  void on_file_changed (Window src, GNOMECAT.FileProject.File? file)
         {
             if (file == null)
             {
-                this.label_title.set_text ("GnomeCAT");
+                this.label_title.set_text ("GNOMECAT");
                 this.progressbar_title.hide ();
             }
             else
             {
-                this.label_title.set_text ("GnomeCAT - " + file.name);
+                this.label_title.set_text ("GNOMECAT - " + file.name);
                 set_progress_bar_info (file.number_of_translated,
                     file.number_of_untranslated, file.number_of_fuzzy);
             }
         }
 
-        private  void on_project_changed (Window src, GnomeCAT.FileProject.Project? project)
+        private  void on_project_changed (Window src, GNOMECAT.FileProject.Project? project)
         {
             if (project == null)
             {
-                this.label_title.set_text ("GnomeCAT");
+                this.label_title.set_text ("GNOMECAT");
                 this.progressbar_title.hide ();
             }
             else
             {
-                this.label_title.set_text ("GnomeCAT - " +  project.name);
+                this.label_title.set_text ("GNOMECAT - " +  project.name);
                 set_progress_bar_info (project.number_of_translated,
                     project.number_of_untranslated, project.number_of_fuzzy);
             }
@@ -418,7 +418,7 @@ namespace GnomeCAT.UI
         [GtkCallback]
         private unowned Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
         {
-            var win = new GnomeCAT.UI.Window (this.application as GnomeCAT.Application);
+            var win = new GNOMECAT.UI.Window (this.application as GNOMECAT.Application);
             win.show ();
             return win.notebook;
         }
@@ -434,7 +434,7 @@ namespace GnomeCAT.UI
         private void on_page_removed (Gtk.Widget pate, uint page_num)
         {
             if (notebook.get_n_pages () == 0 &&
-                GnomeCAT.Application.get_default ().get_windows ().length () != 1)
+                GNOMECAT.Application.get_default ().get_windows ().length () != 1)
                 this.close ();
             if (notebook.get_n_pages () <= 1)
                 notebook.show_tabs = false;
@@ -444,7 +444,7 @@ namespace GnomeCAT.UI
         private void on_open_recent_file ()
         {
             string uri = this.recentfilemenu.get_current_uri ();
-            GnomeCAT.FileProject.File f = GnomeCAT.Application.get_default ()
+            GNOMECAT.FileProject.File f = GNOMECAT.Application.get_default ()
                 .open_file (GLib.File.new_for_uri (uri).get_path ());
             this.add_file (f);
         }
@@ -460,8 +460,8 @@ namespace GnomeCAT.UI
                 Gtk.ResponseType.ACCEPT);
 
             chooser.filter = new FileFilter ();
-            var app = GnomeCAT.Application.get_default ();
-            foreach (string ext in (app as GnomeCAT.Application).extensions)
+            var app = GNOMECAT.Application.get_default ();
+            foreach (string ext in (app as GNOMECAT.Application).extensions)
             {
                 chooser.filter.add_pattern ("*." + ext);
             }
@@ -477,7 +477,7 @@ namespace GnomeCAT.UI
         {
             foreach (string uri in chooser.get_uris ())
             {
-                GnomeCAT.FileProject.File? f = GnomeCAT.Application.get_default ()
+                GNOMECAT.FileProject.File? f = GNOMECAT.Application.get_default ()
                     .open_file (GLib.File.new_for_uri (uri).get_path ());
                 if (f != null)
                     this.add_file (f);
@@ -509,21 +509,21 @@ namespace GnomeCAT.UI
             {
                 var f = GLib.File.new_for_uri (uri);
                 if (f.get_path () != null)
-                    this.add_project (new GnomeCAT.FileProject.Project (f.get_path ()));
+                    this.add_project (new GNOMECAT.FileProject.Project (f.get_path ()));
             }
         }
 
         [GtkCallback]
         private void on_settings ()
         {
-            GnomeCAT.UI.PreferencesDialog dialog = new PreferencesDialog ();
+            GNOMECAT.UI.PreferencesDialog dialog = new PreferencesDialog ();
 
             dialog.run ();
             dialog.destroy ();
         }
 
-        public bool select (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public bool select (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
             {
@@ -541,8 +541,8 @@ namespace GnomeCAT.UI
             return false;
         }
 
-        public void deselect (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
             {

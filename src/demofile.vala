@@ -1,11 +1,11 @@
 
 
-using GnomeCAT.FileProject;
-using GnomeCAT.Languages;
-using GnomeCAT.UI;
+using GNOMECAT.FileProject;
+using GNOMECAT.Languages;
+using GNOMECAT.UI;
 using Gee;
 
-namespace GnomeCAT.Demo
+namespace GNOMECAT.Demo
 {
 
     string string_random (int length = 8, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"){
@@ -22,11 +22,11 @@ namespace GnomeCAT.Demo
 
     PluralForm get_enabled_plural_form ()
     {
-        return GnomeCAT.Application.get_default ().enabled_profile.plural_form;
+        return GNOMECAT.Application.get_default ().enabled_profile.plural_form;
     }
 
 
-    public class DemoFile : GnomeCAT.FileProject.File
+    public class DemoFile : GNOMECAT.FileProject.File
     {
 
         public DemoFile ()
@@ -49,7 +49,7 @@ namespace GnomeCAT.Demo
 
     }
 
-    public class DemoMessage : GnomeCAT.FileProject.Message
+    public class DemoMessage : GNOMECAT.FileProject.Message
     {
         private string original_singular;
         private string original_plural;
@@ -83,7 +83,7 @@ namespace GnomeCAT.Demo
             }
         }
 
-        public DemoMessage (GnomeCAT.FileProject.File owner)
+        public DemoMessage (GNOMECAT.FileProject.File owner)
         {
             base (owner);
 
@@ -185,17 +185,17 @@ namespace GnomeCAT.Demo
     }
 
 
-    public class DemoHintProvider : GnomeCAT.HintProvider
+    public class DemoHintProvider : GNOMECAT.HintProvider
     {
 
         public override void get_hints (Message m,
-            GnomeCAT.UI.HintPanelWidget hpw)
+            GNOMECAT.UI.HintPanelWidget hpw)
         {
             hpw.add_hint (m, new Hint (m.get_original_singular (), "DEMO", 0.3));
         }
     }
 
-    public class DemoChecker :GnomeCAT.Checker
+    public class DemoChecker :GNOMECAT.Checker
     {
         public override void check (Message m)
         {

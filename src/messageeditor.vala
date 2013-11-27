@@ -1,29 +1,29 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using GnomeCAT.FileProject;
-using GnomeCAT.Languages;
+using GNOMECAT.FileProject;
+using GNOMECAT.Languages;
 using Gee;
 
-namespace GnomeCAT.UI
+namespace GNOMECAT.UI
 {
 
     int string_lines (string s)
@@ -82,7 +82,7 @@ namespace GnomeCAT.UI
                 if (old_text == null && new_text != null)
                 {
                     bool untrans_msg = false;
-                    PluralForm enabled_plural_form = GnomeCAT.Application.get_default ().enabled_profile.plural_form;
+                    PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
                     int num_plurals = message.has_plural () ?
                         enabled_plural_form.number_of_plurals : 1;
                     for (int i = 0; i < num_plurals; i++)
@@ -149,8 +149,8 @@ namespace GnomeCAT.UI
             }
         }
 
-        private ArrayList<GnomeCAT.TextTag> original_text_tags;
-        private ArrayList<GnomeCAT.TextTag> translation_text_tags;
+        private ArrayList<GNOMECAT.TextTag> original_text_tags;
+        private ArrayList<GNOMECAT.TextTag> translation_text_tags;
         private GLib.Settings settings;
 
         /**
@@ -189,8 +189,8 @@ namespace GnomeCAT.UI
                 (textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
             }
 
-            original_text_tags = new ArrayList<GnomeCAT.TextTag> ();
-            translation_text_tags = new ArrayList<GnomeCAT.TextTag> ();
+            original_text_tags = new ArrayList<GNOMECAT.TextTag> ();
+            translation_text_tags = new ArrayList<GNOMECAT.TextTag> ();
 
             textview_translated_text.buffer.end_user_action.connect (update_translation);
 
@@ -316,7 +316,7 @@ namespace GnomeCAT.UI
             translation_text = new_text == "" ? null : new_text;
         }
 
-        private void add_tag_to_buffer (GnomeCAT.TextTag tag, TextBuffer buffer, int text_size)
+        private void add_tag_to_buffer (GNOMECAT.TextTag tag, TextBuffer buffer, int text_size)
         {
             TextIter ini_iter = TextIter ();
             if (tag.ini_offset == -1)
@@ -335,7 +335,7 @@ namespace GnomeCAT.UI
         }
 
 
-        public void remove_tag_from_buffer (GnomeCAT.TextTag tag, TextBuffer buffer, int text_size)
+        public void remove_tag_from_buffer (GNOMECAT.TextTag tag, TextBuffer buffer, int text_size)
         {
             TextIter ini_iter = TextIter ();
             if (tag.ini_offset == -1)
@@ -353,14 +353,14 @@ namespace GnomeCAT.UI
             buffer.tag_table.remove (tag.tag);
         }
 
-        public void select (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void select (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (level == SelectLevel.STRING);
             assert (fragment != null);
 
-            ArrayList<GnomeCAT.TextTag> arr = new ArrayList<GnomeCAT.TextTag> ();
-            arr.add (new GnomeCAT.TextTag.from_message_fragment (fragment, "search_tag"));
+            ArrayList<GNOMECAT.TextTag> arr = new ArrayList<GNOMECAT.TextTag> ();
+            arr.add (new GNOMECAT.TextTag.from_message_fragment (fragment, "search_tag"));
 
             if (fragment.is_original)
             {
@@ -372,8 +372,8 @@ namespace GnomeCAT.UI
             }
         }
 
-        public void deselect (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (level == SelectLevel.STRING);
             assert (fragment != null);

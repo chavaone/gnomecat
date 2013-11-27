@@ -1,31 +1,31 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
 using Gee;
-using GnomeCAT.FileProject;
-using GnomeCAT.Iterators;
-using GnomeCAT.Search;
-using GnomeCAT.UI;
+using GNOMECAT.FileProject;
+using GNOMECAT.Iterators;
+using GNOMECAT.Search;
+using GNOMECAT.UI;
 
-namespace GnomeCAT.UI
+namespace GNOMECAT.UI
 {
     public enum SearchDialogResponses
     {
@@ -74,15 +74,15 @@ namespace GnomeCAT.UI
         [GtkCallback]
         private void on_close ()
         {
-            this.response (GnomeCAT.UI.SearchDialogResponses.CANCEL);
+            this.response (GNOMECAT.UI.SearchDialogResponses.CANCEL);
         }
     }
 }
 
 
-namespace GnomeCAT.Search
+namespace GNOMECAT.Search
 {
-    public abstract class Search : GnomeCAT.Navigator.Navigator
+    public abstract class Search : GNOMECAT.Navigator.Navigator
     {
         public abstract string search_text {get; set;}
 
@@ -112,7 +112,7 @@ namespace GnomeCAT.Search
         private MessageIterator message_iterator;
         private IteratorFilter<MessageFragment> filter_marks;
 
-        public FileSearch (GnomeCAT.FileProject.File file,
+        public FileSearch (GNOMECAT.FileProject.File file,
             bool translated, bool untranslated, bool fuzzy,
             bool original, bool translation, string search_text,
             string replace_text)
@@ -185,7 +185,7 @@ namespace GnomeCAT.Search
                 mf = message_iterator.current;
             }
 
-            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -204,7 +204,7 @@ namespace GnomeCAT.Search
                 mf = message_iterator.current;
             }
 
-            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -219,7 +219,7 @@ namespace GnomeCAT.Search
             MessageFragment mf = message_iterator.first ();
             if (mf == null) return next ();
 
-            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -234,7 +234,7 @@ namespace GnomeCAT.Search
             MessageFragment mf = message_iterator.last ();
             if (mf == null) return previous ();
 
-            GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -256,14 +256,14 @@ namespace GnomeCAT.Search
         {
             MessageFragment mf = message_iterator.current;
             if (mf != null)
-                GnomeCAT.Application.get_default ().select (SelectLevel.STRING, mf);
+                GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
         }
 
         public override void deselect ()
         {
             MessageFragment mf = message_iterator.current;
             if (mf != null)
-                GnomeCAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
+                GNOMECAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
         }
     }
 }

@@ -1,28 +1,28 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using GnomeCAT.FileProject;
-using GnomeCAT.Languages;
+using GNOMECAT.FileProject;
+using GNOMECAT.Languages;
 
-namespace GnomeCAT.UI
+namespace GNOMECAT.UI
 {
     /**
      * Widget that dislays the strings to be translated.
@@ -40,8 +40,8 @@ namespace GnomeCAT.UI
 
         public signal void message_selected (Message m);
 
-        private GnomeCAT.FileProject.File? _file;
-        public GnomeCAT.FileProject.File? file
+        private GNOMECAT.FileProject.File? _file;
+        public GNOMECAT.FileProject.File? file
         {
             get
             {
@@ -55,14 +55,14 @@ namespace GnomeCAT.UI
             }
         }
 
-        public MessageListWidget.with_file (GnomeCAT.FileProject.File f)
+        public MessageListWidget.with_file (GNOMECAT.FileProject.File f)
         {
             this ();
             this.file = f;
         }
 
-        public void select (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void select (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null && fragment.message != null);
 
@@ -77,8 +77,8 @@ namespace GnomeCAT.UI
             }
         }
 
-        public void deselect (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null && fragment.message != null);
 
@@ -96,7 +96,7 @@ namespace GnomeCAT.UI
         {
             foreach (Widget w in this.messages_list_box.get_children ())
             {
-                GnomeCAT.UI.MessageListRow row = w as GnomeCAT.UI.MessageListRow;
+                GNOMECAT.UI.MessageListRow row = w as GNOMECAT.UI.MessageListRow;
 
                 if (row.message == m)
                 {
@@ -229,7 +229,7 @@ namespace GnomeCAT.UI
         {
             int i;
             clean_tabs ();
-            PluralForm enabled_plural_form = GnomeCAT.Application.get_default ().enabled_profile.plural_form;
+            PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
 
             string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
             add_tab (new MessageEditorTab (label, message, 0));
@@ -327,8 +327,8 @@ namespace GnomeCAT.UI
                 editor_notebook.show_tabs = false;
         }
 
-        public void select (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void select (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null);
 
@@ -346,8 +346,8 @@ namespace GnomeCAT.UI
             }
         }
 
-        public void deselect (GnomeCAT.SelectLevel level,
-            GnomeCAT.FileProject.MessageFragment? fragment)
+        public void deselect (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null);
 

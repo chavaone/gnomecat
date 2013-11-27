@@ -1,33 +1,33 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GnomeCAT.FileProject;
+using GNOMECAT.FileProject;
 using Gee;
-using GnomeCAT.Iterators;
-using GnomeCAT.UI;
+using GNOMECAT.Iterators;
+using GNOMECAT.UI;
 
-namespace GnomeCAT.Navigator
+namespace GNOMECAT.Navigator
 {
     public class FileNavigator : Navigator, ChangedMessageSensible
     {
-        private GnomeCAT.FileProject.File file;
+        private GNOMECAT.FileProject.File file;
         private FileIterator iterator;
         private IteratorFilter<Message> filter;
 
@@ -69,7 +69,7 @@ namespace GnomeCAT.Navigator
             }
         }
 
-        public FileNavigator (GnomeCAT.FileProject.File file,
+        public FileNavigator (GNOMECAT.FileProject.File file,
             IteratorFilter<Message> filter)
         {
             this.file = file;
@@ -117,7 +117,7 @@ namespace GnomeCAT.Navigator
         {
             Message? m = iterator.current;
             if (m != null)
-                GnomeCAT.Application.get_default ().select (SelectLevel.ROW,
+                GNOMECAT.Application.get_default ().select (SelectLevel.ROW,
                     new MessageFragment (m, 0, false, 0, 0));
         }
     }

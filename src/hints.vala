@@ -1,26 +1,26 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GnomeCAT.FileProject;
+using GNOMECAT.FileProject;
 
-namespace GnomeCAT.UI
+namespace GNOMECAT.UI
 {
 
     [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/hintpanelrow.ui")]
@@ -84,7 +84,7 @@ namespace GnomeCAT.UI
             if (message == null)
                 return;
 
-            GnomeCAT.Application app = GnomeCAT.Application.get_default ();
+            GNOMECAT.Application app = GNOMECAT.Application.get_default ();
             app.get_hints (this.message, this);
         }
 
@@ -98,14 +98,14 @@ namespace GnomeCAT.UI
         public void on_row_activated (Gtk.ListBoxRow r)
         {
             string text = (r as HintPanelRow).hint.translation_hint;
-            GnomeCAT.UI.MessageListWidget w = (this.get_parent ().get_parent
+            GNOMECAT.UI.MessageListWidget w = (this.get_parent ().get_parent
                 () as FileTab).message_list;
             w.get_active_editor_tab ().translation_text = text;
         }
     }
 }
 
-namespace GnomeCAT
+namespace GNOMECAT
 {
     public class Hint : Object
     {
@@ -125,6 +125,6 @@ namespace GnomeCAT
 
     public abstract class HintProvider : Object
     {
-        public abstract void get_hints (Message m, GnomeCAT.UI.HintPanelWidget hpw);
+        public abstract void get_hints (Message m, GNOMECAT.UI.HintPanelWidget hpw);
     }
 }

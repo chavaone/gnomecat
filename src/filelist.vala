@@ -1,27 +1,27 @@
 /* -*- tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- * This file is part of GnomeCAT
+ * This file is part of GNOMECAT
  *
  * Copyright (C) 2013 - Marcos Chavarría Teijeiro
  *
- * GnomeCAT is free software; you can redistribute it and/or modify
+ * GNOMECAT is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * GnomeCAT is distributed in the hope that it will be useful,
+ * GNOMECAT is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with GnomeCAT. If not, see <http://www.gnu.org/licenses/>.
+ * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
 using Gtk;
-using GnomeCAT.FileProject;
+using GNOMECAT.FileProject;
 
-namespace GnomeCAT.UI
+namespace GNOMECAT.UI
 {
     [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/filelist.ui")]
     public class FileListWidget : Gtk.Box
@@ -41,7 +41,7 @@ namespace GnomeCAT.UI
                 _project = value;
                 foreach (Widget w in file_list_box.get_children ())
                     file_list_box.remove (w);
-                foreach (GnomeCAT.FileProject.File f in _project.files)
+                foreach (GNOMECAT.FileProject.File f in _project.files)
                     add_file (f);
                 _project.file_added.connect (add_file);
             }
@@ -55,11 +55,11 @@ namespace GnomeCAT.UI
         [GtkCallback]
         private void on_row_activated (ListBox list_box, ListBoxRow row)
         {
-            (GnomeCAT.Application.get_default ().get_active_window () as GnomeCAT.UI.Window)
+            (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
                 .add_file ((row as FileListRow).file);
         }
 
-        private void add_file (GnomeCAT.FileProject.File file)
+        private void add_file (GNOMECAT.FileProject.File file)
         {
             file_list_box.add (new FileListRow (file));
         }
@@ -76,8 +76,8 @@ namespace GnomeCAT.UI
         [GtkChild]
         private Gtk.ProgressBar progressbar_file;
 
-        private GnomeCAT.FileProject.File _file;
-        public GnomeCAT.FileProject.File file
+        private GNOMECAT.FileProject.File _file;
+        public GNOMECAT.FileProject.File file
         {
             get
             {
@@ -95,7 +95,7 @@ namespace GnomeCAT.UI
             }
         }
 
-        public FileListRow (GnomeCAT.FileProject.File f)
+        public FileListRow (GNOMECAT.FileProject.File f)
         {
             file = f;
         }

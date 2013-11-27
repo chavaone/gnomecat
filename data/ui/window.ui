@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.16.0 on Fri Oct 18 12:53:23 2013
 
-This file is part of GnomeCAT.
+This file is part of GNOMECAT.
 
-GnomeCAT is free software: you can redistribute it and/or modify
+GNOMECAT is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-GnomeCAT is distributed in the hope that it will be useful,
+GNOMECAT is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with GnomeCAT.  If not, see <http://www.gnu.org/licenses/>.
+along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 <interface>
   <!-- interface-requires gtk+ 3.8 -->
-  <template class="GnomeCATUIWindow" parent="GtkApplicationWindow">
+  <template class="GNOMECATUIWindow" parent="GtkApplicationWindow">
     <property name="can_focus">False</property>
     <property name="default_height">700</property>
     <property name="default_width">900</property>
@@ -37,7 +37,7 @@ along with GnomeCAT.  If not, see <http://www.gnu.org/licenses/>.
               <object class="GtkLabel" id="label_title">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label">GnomeCAT</property>
+                <property name="label">GNOMECAT</property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                 </attributes>
@@ -345,7 +345,7 @@ along with GnomeCAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="enable_popup">True</property>
-            <property name="group_name">GnomeCAT</property>
+            <property name="group_name">GNOMECAT</property>
             <property name="show_tabs">False</property>
             <signal name="switch-page" handler="on_switch_page" swapped="no"/>
             <signal name="create-window" handler="on_create_window" swapped="no"/>
