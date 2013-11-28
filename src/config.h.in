@@ -4,6 +4,9 @@
    language is requested. */
 #undef ENABLE_NLS
 
+/* The name of the gettext domain */
+#undef GETTEXT_PACKAGE
+
 /* Define to 1 if you have the `atexit' function. */
 #undef HAVE_ATEXIT
 

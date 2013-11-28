@@ -1,28 +1,30 @@
 
 bin_PROGRAMS = gnomecat
 
-AM_VALAFLAGS =                                              \
-    --vapidir $(top_srcdir)/vapi                            \
-    --pkg gtk+-3.0                                          \
-    --pkg gdl-3.0                                           \
-    --pkg gee-0.8                                           \
-    --pkg json-glib-1.0                                     \
-    --pkg gtksourceview-3.0                                 \
-    --pkg gettext-po										\
-    --gresources "$(top_srcdir)/data/gnomecat.gresource.xml" \
-    --target-glib=2.38
+AM_CFLAGS = \
+	-g -Wall
 
 AM_CPPFLAGS = \
 	-DGETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\"  \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
 	-DDATADIR=\""$(pkgdatadir)"\"
 
+AM_VALAFLAGS = \
+	--vapidir $(top_srcdir)/vapi \
+	--pkg gtk+-3.0 \
+	--pkg gee-0.8 \
+	--pkg json-glib-1.0 \
+	--pkg gtksourceview-3.0 \
+	--pkg gettext-po \
+	--gresources "$(top_srcdir)/data/gnomecat.gresource.xml" \
+	--target-glib=2.38
+
 VALASOURCES = \
 	filelist.vala \
 	messagelist.vala \
 	tab.vala \
 	messageeditor.vala \
-	window.vala	\
+	window.vala \
 	contextpanel.vala \
 	application.vala \
 	demofile.vala \
@@ -41,26 +43,25 @@ VALASOURCES = \
 	filenavigator.vala
 
 gnomecat_SOURCES = \
-    $(VALASOURCES)                 \
-    gnomecat.gresource.c	\
-    config.vapi
+	$(VALASOURCES) \
+	gnomecat.gresource.c \
+	config.vapi
 
 gnomecat_CFLAGS = \
-    -Wall                                                   \
-    -g \
-    `pkg-config --cflags gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0` \
-	`pkg-config --libs gtk+-3.0 gdl-3.0 gee-0.8 json-glib-1.0 gmodule-export-2.0 gtksourceview-3.0` \
+	$(GNOMECAT_CFLAGS) \
 	-lgettextpo
 
-CLEANFILES =                                                \
-    $(VALASOURCES:.vala=.c)                                 \
-    $(BUILT_SOURCES)										\
-    gnomecat.gresource.c						\
-    Makefile.in \
-    config.h 	\
-    config.h.ini \
-    config.h.in~ \
-    stamp-h1
+gnomecat_LDADD = \
+	$(GNOMECAT_LIBS)
+
+CLEANFILES = \
+	$(VALASOURCES:.vala=.c) \
+	$(BUILT_SOURCES) \
+	gnomecat.gresource.c \
+	Makefile.in \
+	config.h \
+	config.h.ini \
+	config.h.in~
 
 gnomecat.gresource.c: $(top_srcdir)/data/gnomecat.gresource.xml
 	glib-compile-resources --generate-source --sourcedir $(top_srcdir)/data/ --target "$@" "$<"
