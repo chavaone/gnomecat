@@ -25,61 +25,6 @@ using GNOMECAT.Iterators;
 using GNOMECAT.Search;
 using GNOMECAT.UI;
 
-namespace GNOMECAT.UI
-{
-    public enum SearchDialogResponses
-    {
-        CANCEL  = 0,
-        SEARCH = 1,
-        REPLACE = 2,
-        REPLACEALL = 3;
-    }
-
-
-    /**
-     *
-     */
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/searchdialog.ui")]
-    public class SearchDialog : Gtk.Dialog
-    {
-        [GtkChild]
-        private Gtk.Entry entry_search;
-        [GtkChild]
-        private Gtk.Entry entry_replace;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_translated_messages;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_fuzzy_messages;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_untranslated_messages;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_translated;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_original;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_search_project;
-        [GtkChild]
-        private Gtk.CheckButton checkbutton_wrap_around;
-
-        public string search_text {get { return entry_search.get_text ();}}
-        public string replace_text {get {return entry_replace.get_text ();}}
-        public bool translated_messages {get {return checkbutton_translated_messages.active;}}
-        public bool fuzzy_messages {get {return checkbutton_fuzzy_messages.active;}}
-        public bool untranslated_messages {get {return checkbutton_untranslated_messages.active;}}
-        public bool translation_text {get {return checkbutton_translated.active;}}
-        public bool original_text {get {return checkbutton_original.active;}}
-        public bool search_project {get {return checkbutton_search_project.active;}}
-        public bool wrap_around {get {return checkbutton_wrap_around.active;}}
-
-        [GtkCallback]
-        private void on_close ()
-        {
-            this.response (GNOMECAT.UI.SearchDialogResponses.CANCEL);
-        }
-    }
-}
-
-
 namespace GNOMECAT.Search
 {
     public abstract class Search : GNOMECAT.Navigator.Navigator

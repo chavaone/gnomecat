@@ -41,6 +41,66 @@ namespace GNOMECAT.UI
         private Gtk.RecentChooserMenu recentfilemenu;
         [GtkChild]
         private Gtk.RecentChooserMenu recentprojectmenu;
+        [GtkChild]
+        private Gtk.Separator separator_search;
+        [GtkChild]
+        private Gtk.Box advanced_box;
+        [GtkChild]
+        private Gtk.ToggleButton advanced_search_button;
+        [GtkChild]
+        private Gtk.Button replace_button;
+        [GtkChild]
+        private Gtk.Entry search_entry;
+        [GtkChild]
+        private Gtk.Entry replace_entry;
+        [GtkChild]
+        private Gtk.CheckButton translated_messages;
+        [GtkChild]
+        private Gtk.CheckButton untranslated_messages;
+        [GtkChild]
+        private Gtk.CheckButton fuzzy_messages;
+        [GtkChild]
+        private Gtk.CheckButton original_text;
+        [GtkChild]
+        private Gtk.CheckButton translation_text;
+        [GtkChild]
+        private Gtk.CheckButton plurals_text;
+
+
+        private bool _advanded_search_enabled;
+        public bool advanded_search_enabled
+        {
+            get
+            {
+                return _advanded_search_enabled;
+            }
+            set
+            {
+                _advanded_search_enabled = value;
+
+                separator_search.visible = value;
+                advanced_box.visible = value;
+                replace_button.visible = value;
+                replace_entry.visible = value;
+            }
+        }
+
+        public bool search_enabled
+        {
+            get
+            {
+                return search_bar.search_mode_enabled;
+            }
+            set
+            {
+                search_bar.search_mode_enabled = value;
+
+                if (active_search == null) return;
+
+                if (value) active_search.select ();
+                else active_search.deselect ();
+            }
+        }
 
         private GNOMECAT.Search.Search _active_search;
         public GNOMECAT.Search.Search active_search
@@ -66,7 +126,6 @@ namespace GNOMECAT.UI
             { "search-next", on_search_next },
             { "search-previous", on_search_previous },
             { "edit-save", on_edit_save},
-            { "search-advanced", on_search_advanded},
             { "go-next", on_go_next},
             { "go-previous", on_go_previous},
             { "go-next-untranslated", on_go_next_untranslated},
@@ -74,7 +133,8 @@ namespace GNOMECAT.UI
             { "go-next-translated", on_go_next_translated},
             { "go-previous-translated", on_go_previous_translated},
             { "go-next-fuzzy", on_go_next_fuzzy},
-            { "go-previous-fuzzy", on_go_previous_fuzzy}
+            { "go-previous-fuzzy", on_go_previous_fuzzy},
+            { "on-search-replace", on_search_replace}
         };
 
         public Window (GNOMECAT.Application app)
@@ -95,8 +155,11 @@ namespace GNOMECAT.UI
         {
             add_action_entries (action_entries, this);
 
-            this.searchbutton.bind_property ("active", this.search_bar,
-                "search-mode-enabled", BindingFlags.BIDIRECTIONAL);
+            this.searchbutton.bind_property ("active", this,
+                "search_enabled", BindingFlags.BIDIRECTIONAL);
+
+            this.advanced_search_button.bind_property ("active", this,
+                "advanded_search_enabled", BindingFlags.BIDIRECTIONAL);
 
             this.file_changed.connect (on_file_changed);
             this.project_changed.connect (on_project_changed);
@@ -224,62 +287,6 @@ namespace GNOMECAT.UI
             }
         }
 
-        private void on_search_advanded ()
-        {
-            GNOMECAT.UI.SearchDialog dialog = new SearchDialog ();
-
-            switch (dialog.run ())
-            {
-            case GNOMECAT.UI.SearchDialogResponses.CANCEL:
-                break;
-            case GNOMECAT.UI.SearchDialogResponses.SEARCH:
-                ini_search (dialog, dialog.search_project, false, true, dialog.wrap_around);
-                break;
-            case GNOMECAT.UI.SearchDialogResponses.REPLACE:
-                ini_search (dialog, dialog.search_project, true, true, dialog.wrap_around);
-                break;
-            case GNOMECAT.UI.SearchDialogResponses.REPLACEALL:
-                ini_search (dialog, dialog.search_project, true, false, dialog.wrap_around);
-                break;
-            }
-
-            dialog.destroy ();
-        }
-
-        private void ini_search (GNOMECAT.UI.SearchDialog dialog,
-            bool project, bool replace, bool stop, bool wrap)
-        {
-
-            if (project)
-            {
-                //active_search = null;
-            }
-            else
-            {
-                active_search = new FileSearch ((get_active_tab () as FileTab).file,
-                                                dialog.translated_messages,
-                                                dialog.untranslated_messages,
-                                                dialog.fuzzy_messages,
-                                                dialog.original_text,
-                                                dialog.translation_text,
-                                                dialog.search_text,
-                                                dialog.replace_text);
-            }
-
-            if (stop)
-            {
-                active_search.next ();
-            }
-            else
-            {
-                do
-                {
-                    active_search.next ();
-                    active_search.replace ();
-                } while (true); //FIXME
-            }
-        }
-
         private void on_edit_save ()
         {
             Tab t = this.get_active_tab ();
@@ -321,7 +328,14 @@ namespace GNOMECAT.UI
             this.active_search.previous ();
         }
 
-        private  void on_file_changed (Window src, GNOMECAT.FileProject.File? file)
+        private void on_search_replace ()
+        {
+            if (active_search == null) return;
+            active_search.replace_text = replace_entry.get_text ();
+            active_search.replace ();
+        }
+
+        private void on_file_changed (Window src, GNOMECAT.FileProject.File? file)
         {
             if (file == null)
             {
@@ -336,7 +350,7 @@ namespace GNOMECAT.UI
             }
         }
 
-        private  void on_project_changed (Window src, GNOMECAT.FileProject.Project? project)
+        private void on_project_changed (Window src, GNOMECAT.FileProject.Project? project)
         {
             if (project == null)
             {
@@ -378,40 +392,24 @@ namespace GNOMECAT.UI
         }
 
         [GtkCallback]
-        private void on_search_changed (Gtk.SearchEntry entry)
+        private void on_search_changed (Gtk.Widget w)
         {
-            if (entry.get_text () == "")
+            if (search_entry.get_text () == "")
             {
                 this.active_search = null;
             }
-            else
+            else if (true) //FIXME: include project searches
             {
-                this.active_search = new FileSearch ((this.get_active_tab () as FileTab).file,
-                                                    true,
-                                                    true,
-                                                    true,
-                                                    true,
-                                                    true,
-                                                    entry.get_text (),
-                                                    "");
+                init_file_search ((this.get_active_tab () as FileTab).file,
+                    translated_messages.active, untranslated_messages.active,
+                    fuzzy_messages.active, original_text.active, translation_text.active,
+                    plurals_text.active, search_entry.get_text (), "");
 
                 this.active_search.next ();
             }
-        }
-
-        [GtkCallback]
-        private void on_search_button_clicked ()
-        {
-            if (active_search == null)
-                return;
-
-            if (this.searchbutton.get_active ())
-            {
-                active_search.select ();
-            }
             else
             {
-                active_search.deselect ();
+                return; //FIXME: include project searches
             }
         }
 
@@ -555,6 +553,14 @@ namespace GNOMECAT.UI
                     }
                 }
             }
+        }
+
+        private void init_file_search (GNOMECAT.FileProject.File file, bool translated_messages,
+            bool untranslated_messages, bool fuzzy_messages, bool original_text,
+            bool translation_text, bool plurals_text, string search_text, string replace_text)
+        {
+            active_search = new FileSearch (file, translated_messages, untranslated_messages,
+                fuzzy_messages, original_text, translation_text, search_text, replace_text);
         }
     }
 }

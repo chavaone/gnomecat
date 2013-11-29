@@ -9,7 +9,6 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/contextpanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/tab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/searchdialog.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/preferencesdialog.ui</file>
