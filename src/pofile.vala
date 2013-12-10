@@ -119,7 +119,7 @@ namespace GNOMECAT.PoFiles
          * @return The previous string or \\null\\ if there
          *  isn't previous string
          */
-        public override void set_translation (int index,
+        public override void set_translation_impl (int index,
                                             string? translation)
         {
             if (index == 0)

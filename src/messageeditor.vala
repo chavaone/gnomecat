@@ -205,6 +205,7 @@ namespace GNOMECAT.UI
             textview_translated_text.height_request = height;
             this.height_request = height * 2 + 60;
 
+            this.message.modified_translation.connect (on_modified_translation);
             this.message.added_tip.connect (on_added_tip);
             this.message.removed_tip.connect (on_removed_tip);
         }
@@ -216,6 +217,15 @@ namespace GNOMECAT.UI
             settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
             settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
             settings.bind ("font", this, "font", SettingsBindFlags.GET);
+        }
+
+        private void on_modified_translation (Message m, int index,
+            string? old_string, string? new_string)
+        {
+            if (index != this.plural_number || m != this.message)
+                return;
+
+            this.translation_text = new_string;
         }
 
         private void on_added_tip (Message m, MessageTip t)

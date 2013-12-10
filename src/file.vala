@@ -268,7 +268,22 @@ namespace GNOMECAT.FileProject
          * @param index
          * @param translation
          */
-        public abstract void set_translation (int index,
+        public void set_translation (int index,
+                                    string? translation)
+        {
+            string old_string = get_translation (index);
+            MessageState old_state = this.state;
+
+            set_translation_impl (index, translation);
+
+            if (old_string != get_translation (index))
+                this.modified_translation (index, old_string, translation);
+
+            if (old_state != this.state)
+                this.changed_state (old_state, this.state);
+        }
+
+        public abstract void set_translation_impl (int index,
                                             string? translation);
 
         /**

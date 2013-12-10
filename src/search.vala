@@ -195,6 +195,7 @@ namespace GNOMECAT.Search
                 original_string.substring (0, mf.index) +
                 this.replace_text +
                 original_string.substring (mf.index + mf.length));
+            next ();
         }
 
         public override void select ()
