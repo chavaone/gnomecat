@@ -16,6 +16,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/profilerow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelwidget.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelrow.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/notebook.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/tablabel.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>

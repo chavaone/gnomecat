@@ -40,7 +40,8 @@ VALASOURCES = \
 	checker.vala \
 	select.vala \
 	filter.vala \
-	filenavigator.vala
+	filenavigator.vala \
+	notebook.vala
 
 gnomecat_SOURCES = \
 	$(VALASOURCES) \

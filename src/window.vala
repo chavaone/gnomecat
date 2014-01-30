@@ -30,8 +30,6 @@ namespace GNOMECAT.UI
         [GtkChild]
         private Gtk.SearchBar search_bar;
         [GtkChild]
-        private Gtk.Notebook notebook;
-        [GtkChild]
         private Gtk.ToggleButton searchbutton;
         [GtkChild]
         private Gtk.Label label_title;
@@ -65,7 +63,10 @@ namespace GNOMECAT.UI
         private Gtk.CheckButton translation_text;
         [GtkChild]
         private Gtk.CheckButton plurals_text;
+        [GtkChild]
+        private Gtk.Box window_box;
 
+        public GNOMECAT.UI.Notebook notebook;
 
         private bool _advanded_search_enabled;
         public bool advanded_search_enabled
@@ -117,6 +118,24 @@ namespace GNOMECAT.UI
             }
         }
 
+        public Gtk.Widget? work_pannel
+        {
+            get
+            {
+                if (window_box.get_children ().length () == 1)
+                    return null;
+                return window_box.get_children ().nth_data (1);
+            }
+            set
+            {
+                Gtk.Widget old = work_pannel;
+                if(old != null)
+                    window_box.remove (old);
+                if(value != null)
+                    window_box.pack_end(value);
+            }
+        }
+
         public signal void file_changed (GNOMECAT.FileProject.File? file);
         public signal void project_changed (GNOMECAT.FileProject.Project? project);
 
@@ -140,6 +159,9 @@ namespace GNOMECAT.UI
         public Window (GNOMECAT.Application app)
         {
             Object (application: app);
+
+            notebook = new GNOMECAT.UI.Notebook ();
+            work_pannel = notebook;
 
             this.recentfilemenu.filter = new RecentFilter ();
             foreach (string ext in (this.application as GNOMECAT.Application).extensions)
@@ -178,7 +200,7 @@ namespace GNOMECAT.UI
                 }
             }
             FileTab f_tab = new FileTab (f);
-            this.add_tab (f_tab);
+            notebook.add_tab (f_tab);
             f_tab.show ();
             notebook.set_current_page (notebook.page_num (f_tab));
         }
@@ -197,27 +219,14 @@ namespace GNOMECAT.UI
             }
 
             ProjectTab p_tab = new ProjectTab (p);
-            this.add_tab (p_tab);
+            notebook.add_tab (p_tab);
             p_tab.show ();
             notebook.set_current_page (notebook.page_num (p_tab));
         }
 
-        public void add_tab (Tab t)
-        {
-            this.notebook.append_page (t, t.label);
-            this.notebook.set_tab_detachable (t, true);
-            this.notebook.set_tab_reorderable (t, true);
-        }
-
-        public Tab get_active_tab ()
-        {
-            int page_number = this.notebook.get_current_page ();
-            return this.notebook.get_nth_page (page_number) as Tab;
-        }
-
         private void on_go_next ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_next ();
@@ -226,7 +235,7 @@ namespace GNOMECAT.UI
 
         private void on_go_previous ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_previous ();
@@ -235,7 +244,7 @@ namespace GNOMECAT.UI
 
         private void on_go_next_fuzzy ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_next_fuzzy ();
@@ -244,7 +253,7 @@ namespace GNOMECAT.UI
 
         private void on_go_previous_fuzzy ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_previous_fuzzy ();
@@ -253,7 +262,7 @@ namespace GNOMECAT.UI
 
         private void on_go_next_translated ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_next_translated ();
@@ -262,7 +271,7 @@ namespace GNOMECAT.UI
 
         private void on_go_previous_translated ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_previous_translated ();
@@ -271,7 +280,7 @@ namespace GNOMECAT.UI
 
         private void on_go_next_untranslated ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_next_untranslated ();
@@ -280,7 +289,7 @@ namespace GNOMECAT.UI
 
         private void on_go_previous_untranslated ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (t is FileTab)
             {
                 (t as FileTab).go_previous_untranslated ();
@@ -289,7 +298,7 @@ namespace GNOMECAT.UI
 
         private void on_edit_save ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (! (t is FileTab))
                 return;
             FileTab ft = t as FileTab;
@@ -298,7 +307,7 @@ namespace GNOMECAT.UI
 
         private void on_edit_undo ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (! (t is FileTab))
                 return;
             FileTab ft = t as FileTab;
@@ -307,7 +316,7 @@ namespace GNOMECAT.UI
 
         private void on_edit_redo ()
         {
-            Tab t = this.get_active_tab ();
+            Tab t = notebook.get_active_tab ();
             if (! (t is FileTab))
                 return;
             FileTab ft = t as FileTab;
@@ -375,23 +384,6 @@ namespace GNOMECAT.UI
         }
 
         [GtkCallback]
-        private void on_switch_page (Gtk.Widget src,
-                                    uint page)
-        {
-            int page_num = int.parse (page.to_string ()); //FIXME
-            Tab t = this.notebook.get_nth_page (page_num) as Tab;
-
-            if (t is FileTab)
-            {
-                this.file_changed (t.file);
-            }
-            else
-            {
-                this.project_changed (t.project);
-            }
-        }
-
-        [GtkCallback]
         private void on_search_changed (Gtk.Widget w)
         {
             if (search_entry.get_text () == "")
@@ -400,7 +392,7 @@ namespace GNOMECAT.UI
             }
             else if (true) //FIXME: include project searches
             {
-                init_file_search ((this.get_active_tab () as FileTab).file,
+                init_file_search ((notebook.get_active_tab () as FileTab).file,
                     translated_messages.active, untranslated_messages.active,
                     fuzzy_messages.active, original_text.active, translation_text.active,
                     plurals_text.active, search_entry.get_text (), "");
@@ -411,31 +403,6 @@ namespace GNOMECAT.UI
             {
                 return; //FIXME: include project searches
             }
-        }
-
-        [GtkCallback]
-        private unowned Gtk.Notebook on_create_window (Gtk.Widget page, int x, int y)
-        {
-            var win = new GNOMECAT.UI.Window (this.application as GNOMECAT.Application);
-            win.show ();
-            return win.notebook;
-        }
-
-        [GtkCallback]
-        private void on_page_added (Gtk.Widget pate, uint page_num)
-        {
-            if (notebook.get_n_pages () > 1)
-                notebook.show_tabs = true;
-        }
-
-        [GtkCallback]
-        private void on_page_removed (Gtk.Widget pate, uint page_num)
-        {
-            if (notebook.get_n_pages () == 0 &&
-                GNOMECAT.Application.get_default ().get_windows ().length () != 1)
-                this.close ();
-            if (notebook.get_n_pages () <= 1)
-                notebook.show_tabs = false;
         }
 
         [GtkCallback]
@@ -523,36 +490,13 @@ namespace GNOMECAT.UI
         public bool select (GNOMECAT.SelectLevel level,
             GNOMECAT.FileProject.MessageFragment? fragment)
         {
-            for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
-            {
-                if ((notebook.get_nth_page (n_pages) as Tab).file == fragment.file)
-                {
-                    notebook.set_current_page (n_pages);
-                    if (level != SelectLevel.FILE)
-                    {
-                        (notebook.get_nth_page (n_pages) as FileTab).select (level,
-                            fragment);
-                    }
-                    return true;
-                }
-            }
-            return false;
+            return notebook.select (level, fragment);
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
             GNOMECAT.FileProject.MessageFragment? fragment)
         {
-            for (int n_pages = this.notebook.get_n_pages(); n_pages >= 0; n_pages--)
-            {
-                if ((notebook.get_nth_page (n_pages) as Tab).file == fragment.file)
-                {
-                    if (level != SelectLevel.FILE)
-                    {
-                        (notebook.get_nth_page (n_pages) as FileTab).deselect (level,
-                            fragment);
-                    }
-                }
-            }
+            notebook.deselect (level, fragment);
         }
 
         private void init_file_search (GNOMECAT.FileProject.File file, bool translated_messages,
