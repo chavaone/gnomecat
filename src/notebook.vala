@@ -49,10 +49,10 @@ namespace GNOMECAT.UI
         private void on_switch_page (Gtk.Widget src,
                                     uint page)
         {
+
             int page_num = int.parse (page.to_string ()); //FIXME
             Tab t = this.get_nth_page (page_num) as Tab;
-            GNOMECAT.UI.Window win = this.get_parent_window () as GNOMECAT.UI.Window;
-
+            GNOMECAT.UI.Window win = this.get_parent ().get_parent () as GNOMECAT.UI.Window;
             if (t is FileTab)
             {
                 win.file_changed (t.file);
