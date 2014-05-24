@@ -3,11 +3,11 @@ AC_PREREQ([2.69])
 AC_INIT([gnomecat],
 		[0.01],
 		[https://github.com/chavaone/valacat/issues])
+
 AC_CONFIG_SRCDIR([src/application.vala])
+AC_CONFIG_HEADER([src/config.h])
+
 AM_INIT_AUTOMAKE
-
-AM_CONFIG_HEADER([src/config.h])
-
 
 # i18n stuff
 IT_PROG_INTLTOOL([0.40.0])
