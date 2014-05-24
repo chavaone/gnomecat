@@ -11,9 +11,11 @@
 [type: gettext/glade]data/ui/messageeditor.ui
 [type: gettext/glade]data/ui/messagelistrow.ui
 [type: gettext/glade]data/ui/messagelist.ui
+[type: gettext/glade]data/ui/notebook.ui
 [type: gettext/glade]data/ui/preferencesdialog.ui
-[type: gettext/glade]data/ui/searchdialog.ui
-[type: gettext/glade]data/ui/statusbarprofileslist.ui
+[type: gettext/glade]data/ui/profiledialog.ui
+[type: gettext/glade]data/ui/profilerow.ui
+[type: gettext/glade]data/ui/tablabel.ui
 [type: gettext/glade]data/ui/tab.ui
 [type: gettext/glade]data/ui/window.ui
 src/messageeditor.vala
