@@ -20,6 +20,6 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/tablabel.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
-	<file>css/gnomecat.css</file>
+        <file>css/gnomecat.css</file>
     </gresource>
 </gresources>
