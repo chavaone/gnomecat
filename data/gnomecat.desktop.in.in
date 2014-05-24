@@ -1,0 +1,12 @@
+[Desktop Entry]
+_Name=GNOMECAT
+_GenericName=GNOMECAT
+_Comment=The GNOME translator tool.
+Keywords=translator;locacalization;
+Exec=gnomecat %F
+Icon=gnome-boxes
+Terminal=false
+Type=Application
+StartupNotify=true
+OnlyShowIn=GNOME;
+Categories=GNOME;GTK;

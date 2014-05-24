@@ -28,6 +28,7 @@ AC_PROG_INSTALL
 AC_PROG_MAKE_SET
 AM_PROG_VALAC
 AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
+AC_CHECK_TOOL([DESKTOP_FILE_VALIDATE], [desktop-file-validate], [/bin/true])
 
 PKG_PROG_PKG_CONFIG([0.22])
 
@@ -52,7 +53,8 @@ AC_CONFIG_FILES([
 Makefile
 src/Makefile
 po/Makefile.in
-data/Makefile])
+data/Makefile
+data/gnomecat.desktop.in])
 
 echo "
     gnomecat ${VERSION}
