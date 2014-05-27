@@ -55,6 +55,8 @@ po/Makefile.in
 data/Makefile
 data/gnomecat.desktop.in])
 
+AC_OUTPUT
+
 echo "
     gnomecat ${VERSION}
 
@@ -64,5 +66,3 @@ echo "
 
     Now type 'make' to build ${PACKAGE}
 "
-
-AC_OUTPUT
