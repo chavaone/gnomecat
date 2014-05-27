@@ -65,6 +65,10 @@ namespace GNOMECAT.UI
         private Gtk.CheckButton plurals_text;
         [GtkChild]
         private Gtk.Box window_box;
+        [GtkChild]
+        public Gtk.Notebook headerbar;
+        [GtkChild]
+        public Gtk.StackSwitcher preferences_stack;
 
         public GNOMECAT.UI.Notebook notebook;
 
