@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.0 on Fri Oct 18 12:53:23 2013
+
+This file is part of GNOMECAT.
+
+GNOMECAT is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+GNOMECAT is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<interface>
+	<template class="GNOMECATUISearchBar" parent="GtkSearchBar">
+		<property name="visible">True</property>
+		<child>
+			<object class="GtkBox" id="box2">
+				<property name="visible">True</property>
+				<property name="can_focus">False</property>
+				<property name="orientation">vertical</property>
+				<property name="spacing">5</property>
+				<child>
+					<object class="GtkBox" id="hbox">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<property name="spacing">10</property>
+						<child>
+							<object class="GtkSearchEntry" id="search_entry">
+								<property name="width_request">200</property>
+								<property name="visible">True</property>
+								<property name="can_focus">True</property>
+								<property name="input_purpose">digits</property>
+								<signal name="search-changed" handler="on_search_changed" swapped="no"/>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkEntry" id="replace_entry">
+								<property name="width_request">200</property>
+								<property name="visible">False</property>
+								<property name="can_focus">True</property>
+								<property name="primary_icon_name">view-refresh-symbolic</property>
+								<property name="primary_icon_activatable">False</property>
+								<property name="primary_icon_sensitive">False</property>
+								<property name="secondary_icon_tooltip_markup" translatable="yes">Replace...</property>
+							</object>
+							<packing>
+								<property name="expand">True</property>
+								<property name="fill">True</property>
+								<property name="position">1</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkButton" id="go_up_button">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="receives_default">False</property>
+								<property name="action_name">win.search-previous</property>
+								<child>
+									<object class="GtkImage" id="up_image">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="icon_name">go-up-symbolic</property>
+										<property name="icon_size">1</property>
+									</object>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">2</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkButton" id="go_down_button">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="receives_default">False</property>
+								<property name="action_name">win.search-next</property>
+								<child>
+									<object class="GtkImage" id="down_image">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="icon_name">go-down-symbolic</property>
+										<property name="icon_size">1</property>
+									</object>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">3</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkButton" id="replace_button">
+								<property name="visible">False</property>
+								<property name="can_focus">True</property>
+								<property name="receives_default">True</property>
+								<property name="action_name">win.on-search-replace</property>
+								<child>
+									<object class="GtkImage" id="image2">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="icon_name">view-refresh-symbolic</property>
+										<property name="icon_size">1</property>
+									</object>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">4</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkToggleButton" id="advanced_search_button">
+								<property name="visible">True</property>
+								<property name="can_focus">True</property>
+								<property name="receives_default">True</property>
+								<child>
+									<object class="GtkImage" id="image1">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="icon_name">emblem-system-symbolic</property>
+										<property name="icon_size">2</property>
+									</object>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">5</property>
+							</packing>
+						</child>
+					</object>
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="position">0</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkSeparator" id="separator_search">
+						<property name="visible">False</property>
+						<property name="can_focus">False</property>
+					</object>
+					<packing>
+						<property name="expand">True</property>
+						<property name="fill">True</property>
+						<property name="position">1</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkBox" id="advanced_box">
+						<property name="visible">False</property>
+						<property name="can_focus">False</property>
+						<property name="orientation">vertical</property>
+						<child>
+							<object class="GtkBox" id="box5">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="spacing">10</property>
+								<child>
+									<object class="GtkCheckButton" id="translated_messages">
+										<property name="label" translatable="yes">Translated Messages</property>
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">False</property>
+										<property name="xalign">0</property>
+										<property name="yalign">0.52999997138977051</property>
+										<property name="active">True</property>
+										<property name="draw_indicator">True</property>
+										<signal name="clicked" handler="on_search_changed" swapped="no"/>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">0</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkCheckButton" id="untranslated_messages">
+										<property name="label" translatable="yes">Untranslated Messages</property>
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">False</property>
+										<property name="xalign">0</property>
+										<property name="active">True</property>
+										<property name="draw_indicator">True</property>
+										<signal name="clicked" handler="on_search_changed" swapped="no"/>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">1</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkCheckButton" id="fuzzy_messages">
+										<property name="label" translatable="yes">Fuzzy Messages</property>
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">False</property>
+										<property name="xalign">0</property>
+										<property name="active">True</property>
+										<property name="draw_indicator">True</property>
+										<signal name="clicked" handler="on_search_changed" swapped="no"/>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">2</property>
+									</packing>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">0</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkBox" id="box4">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="spacing">10</property>
+								<child>
+									<object class="GtkCheckButton" id="original_text">
+										<property name="label" translatable="yes">Original Text</property>
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">False</property>
+										<property name="xalign">0</property>
+										<property name="active">True</property>
+										<property name="draw_indicator">True</property>
+										<signal name="clicked" handler="on_search_changed" swapped="no"/>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">0</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkCheckButton" id="translation_text">
+										<property name="label" translatable="yes">Translated Text</property>
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">False</property>
+										<property name="xalign">0</property>
+										<property name="active">True</property>
+										<property name="draw_indicator">True</property>
+										<signal name="clicked" handler="on_search_changed" swapped="no"/>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">1</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkCheckButton" id="plurals_text">
+										<property name="label" translatable="yes">Plurals Text</property>
+										<property name="visible">True</property>
+										<property name="can_focus">True</property>
+										<property name="receives_default">False</property>
+										<property name="xalign">0</property>
+										<property name="active">True</property>
+										<property name="draw_indicator">True</property>
+										<signal name="clicked" handler="on_search_changed" swapped="no"/>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">2</property>
+									</packing>
+								</child>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">1</property>
+							</packing>
+						</child>
+						<child>
+							<object class="GtkCheckButton" id="search_project">
+								<property name="label" translatable="yes">Search in Current Project</property>
+								<property name="visible">True</property>
+								<property name="can_focus">True</property>
+								<property name="receives_default">False</property>
+								<property name="xalign">0</property>
+								<property name="yalign">0.57999998331069946</property>
+								<property name="draw_indicator">True</property>
+							</object>
+							<packing>
+								<property name="expand">False</property>
+								<property name="fill">True</property>
+								<property name="position">2</property>
+							</packing>
+						</child>
+					</object>
+					<packing>
+						<property name="expand">False</property>
+						<property name="fill">True</property>
+						<property name="position">2</property>
+					</packing>
+				</child>
+			</object>
+		</child>
+	</template>
+</interface>

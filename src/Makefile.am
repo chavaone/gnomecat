@@ -41,6 +41,7 @@ VALASOURCES = \
 	filter.vala \
 	filenavigator.vala \
 	notebook.vala \
+	searchbar.vala \
 	preferencespanel.vala
 
 gnomecat_SOURCES = \
