@@ -18,101 +18,123 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gtk;
-using Gee;
-using GNOMECAT.FileProject;
-using GNOMECAT.Iterators;
-using GNOMECAT.Search;
-using GNOMECAT.UI;
+ using Gtk;
+ using Gee;
+ using GNOMECAT.FileProject;
+ using GNOMECAT.Iterators;
+ using GNOMECAT.Search;
 
-namespace GNOMECAT.Search
-{
-    public abstract class Search : GNOMECAT.Navigator.Navigator
-    {
-        public abstract string search_text {get; set;}
+ namespace GNOMECAT.Search
+ {
 
-        public abstract string replace_text {get; set;}
+    public class SearchInfo : Object {
+        public string replace_text {get; private set;}
+        public string search_text {get; private set;}
+        public bool translated {get; private set;}
+        public bool untranslated {get; private set;}
+        public bool fuzzy {get; private set;}
+        public bool original {get; private set;}
+        public bool translation {get; private set;}
+        public bool plurals {get; private set;}
 
-        public abstract void replace ();
 
-        public abstract void select ();
-
-        public abstract void deselect ();
+        public SearchInfo (bool translated, bool untranslated, bool fuzzy,
+            bool original, bool translation, bool plurals, string search_text,
+            string replace_text)
+        {
+            this.translated = translated;
+            this.untranslated = untranslated;
+            this.fuzzy = fuzzy;
+            this.original = original;
+            this.translation = translation;
+            this.plurals = plurals;
+            this.replace_text = replace_text;
+            this.search_text = search_text;
+        }
     }
 
-
-    /*
-    public class ProjectSearch : Search
-    {
-    }
-    */
-
-    public class FileSearch : Search
+    public class Search : GNOMECAT.Navigator.Navigator
     {
 
-        public override string replace_text {get; private set;}
-        public override string search_text {get; private set;}
+        private SearchInfo search_info;
+        private GNOMECAT.UI.EditPanel edit_panel;
 
         private FileIterator file_iterator;
         private MessageIterator message_iterator;
         private IteratorFilter<MessageFragment> filter_marks;
 
-        public FileSearch (GNOMECAT.FileProject.File file,
-            bool translated, bool untranslated, bool fuzzy,
-            bool original, bool translation, string search_text,
-            string replace_text)
-        {
 
-            this.replace_text = replace_text;
-            this.search_text = search_text;
+        private GNOMECAT.FileProject.File _file;
+        public GNOMECAT.FileProject.File file {
+            get {
+                return _file;
+            }
+            set {
 
-            file_iterator = new FileIterator (file, get_message_filter(translated,
-                untranslated, fuzzy));
+                assert(value == edit_panel.file);
 
-            filter_marks = get_fragments_filter (original, translation);
-            message_iterator = new MessageIterator (file_iterator.current,
-                search_text, filter_marks);
+                file_iterator = new FileIterator (value,
+                    get_message_filter(search_info.translated,
+                        search_info.untranslated, search_info.fuzzy));
+
+                filter_marks = get_fragments_filter (search_info.original,
+                    search_info.translation);
+                message_iterator = new MessageIterator (file_iterator.current,
+                    search_info.search_text, filter_marks);
+            }
         }
+
+
+        public Search (GNOMECAT.UI.EditPanel edit_panel, SearchInfo search_info)
+        {
+            this.search_info = search_info;
+            this.edit_panel = edit_panel;
+            if (edit_panel.file != null)
+            {
+                this.file = edit_panel.file;
+            }
+        }
+
 
         private IteratorFilter<Message>? get_message_filter (bool translated,
             bool untranslated, bool fuzzy)
         {
             ArrayList<IteratorFilter<Message>> filters_file
-                = new ArrayList<IteratorFilter<Message>> ();
+            = new ArrayList<IteratorFilter<Message>> ();
             if (translated)
-                filters_file.add (new TranslatedFilter ());
+            filters_file.add (new TranslatedFilter ());
 
             if (untranslated)
-                filters_file.add (new UntranslatedFilter ());
+            filters_file.add (new UntranslatedFilter ());
 
             if (fuzzy)
-                filters_file.add (new FuzzyFilter ());
+            filters_file.add (new FuzzyFilter ());
 
             if (filters_file.size == 0)
-                return null;
+            return null;
             else if (filters_file.size == 1)
-                return filters_file.get (0);
+            return filters_file.get (0);
             else
-                return new ORFilter<Message> (filters_file);
+            return new ORFilter<Message> (filters_file);
         }
 
         private IteratorFilter<MessageFragment>? get_fragments_filter (bool original,
             bool translation)
         {
             ArrayList<IteratorFilter<MessageFragment>> filters_mark_array
-                = new ArrayList<IteratorFilter<MessageFragment>> ();
+            = new ArrayList<IteratorFilter<MessageFragment>> ();
             if (original)
-                filters_mark_array.add (new OriginalFilter ());
+            filters_mark_array.add (new OriginalFilter ());
 
             if (translation)
-                filters_mark_array.add (new TranslationFilter ());
+            filters_mark_array.add (new TranslationFilter ());
 
             if (filters_mark_array.size == 0)
-                return null;
+            return null;
             else if (filters_mark_array.size == 1)
-                return filters_mark_array.get (0);
+            return filters_mark_array.get (0);
             else
-                return new ORFilter<MessageFragment> (filters_mark_array);
+            return new ORFilter<MessageFragment> (filters_mark_array);
         }
 
         public override bool next ()
@@ -126,11 +148,11 @@ namespace GNOMECAT.Search
                 Message msg = file_iterator.next ();
                 if (msg == null) return false;
 
-                message_iterator = new MessageIterator (msg, search_text, filter_marks);
+                message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
                 mf = message_iterator.current;
             }
 
-            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            edit_panel.select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -145,11 +167,11 @@ namespace GNOMECAT.Search
                 Message msg = file_iterator.previous ();
                 if (msg == null) return false;
 
-                message_iterator = new MessageIterator (msg, search_text, filter_marks);
+                message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
                 mf = message_iterator.current;
             }
 
-            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            edit_panel.select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -160,11 +182,11 @@ namespace GNOMECAT.Search
             Message msg = file_iterator.first ();
             if (msg == null) return false;
 
-            message_iterator = new MessageIterator (msg, search_text, filter_marks);
+            message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
             MessageFragment mf = message_iterator.first ();
             if (mf == null) return next ();
 
-            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            edit_panel.select (SelectLevel.STRING, mf);
             return true;
         }
 
@@ -175,41 +197,41 @@ namespace GNOMECAT.Search
             Message msg = file_iterator.last ();
             if (msg == null) return false;
 
-            message_iterator = new MessageIterator (msg, search_text, filter_marks);
+            message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
             MessageFragment mf = message_iterator.last ();
             if (mf == null) return previous ();
 
-            GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            edit_panel.select (SelectLevel.STRING, mf);
             return true;
         }
 
-        public override void replace ()
+        public void replace ()
         {
             MessageFragment? mf = message_iterator.current;
 
             if (mf == null || mf.is_original)
-                return;
+            return;
 
             string original_string = mf.message.get_translation (mf.plural_number);
             mf.message.set_translation (mf.plural_number,
                 original_string.substring (0, mf.index) +
-                this.replace_text +
+                search_info.replace_text +
                 original_string.substring (mf.index + mf.length));
             next ();
         }
 
-        public override void select ()
+        public void select ()
         {
             MessageFragment mf = message_iterator.current;
             if (mf != null)
-                GNOMECAT.Application.get_default ().select (SelectLevel.STRING, mf);
+            edit_panel.select (SelectLevel.STRING, mf);
         }
 
-        public override void deselect ()
+        public void deselect ()
         {
             MessageFragment mf = message_iterator.current;
             if (mf != null)
-                GNOMECAT.Application.get_default ().deselect (SelectLevel.STRING, mf);
+            edit_panel.deselect (SelectLevel.STRING, mf);
         }
     }
 }
