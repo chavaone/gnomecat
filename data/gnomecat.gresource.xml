@@ -16,6 +16,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/searchbar.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/preferencespanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/toolbar.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/appmenu.ui</file>
 	<file compressed="true" preprocess="xml-stripblanks">ui/editpanel.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>

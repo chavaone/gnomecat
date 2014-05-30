@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<interface>
+  <!-- interface-requires gtk+ 3.0 -->
+  <menu id="appmenu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+        <attribute name="action">win.preferences</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_About GNOMECAT</attribute>
+        <attribute name="action">win.about</attribute>
+        <attribute name="accel"><![CDATA[<Ctrl>A]]></attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="action">app.quit</attribute>
+        <attribute name="accel"><![CDATA[<Ctrl>Q]]></attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

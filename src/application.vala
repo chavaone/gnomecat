@@ -68,6 +68,10 @@ namespace GNOMECAT
             }
         }
 
+        const GLib.ActionEntry[] action_entries = {
+            { "quit", on_quit }
+        };
+
         private Application ()
         {
             Object (application_id: "info.aquelando.gnomecat",
@@ -85,6 +89,8 @@ namespace GNOMECAT
 
             checkers = new ArrayList<Checker> ();
             add_checker (new GNOMECAT.Demo.DemoChecker ()); //DEMO
+
+            add_action_entries (action_entries, this);
         }
 
         public static new GNOMECAT.Application get_default ()
@@ -198,6 +204,22 @@ namespace GNOMECAT
             }
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
                 css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            var builder = new Gtk.Builder ();
+            try {
+                builder.add_from_resource ("/info/aquelando/gnomecat/ui/appmenu.ui");
+            } catch (Error e) {
+                error ("loading main builder file: %s", e.message);
+            }
+            var app_menu = builder.get_object ("appmenu") as MenuModel;
+            set_app_menu (app_menu);
+        }
+
+        public void on_quit ()
+        {
+            foreach (var w in get_windows ())
+                w.destroy();
+            Gtk.main_quit ();
         }
 
         public static int main (string[] args)

@@ -71,7 +71,8 @@ namespace GNOMECAT.UI
             { "preferences", on_preferences},
             { "open-file", on_open_file},
             { "done", on_done},
-            { "back", on_back}
+            { "back", on_back},
+            { "about", on_about}
         };
 
         public Window (GNOMECAT.Application app)
@@ -252,6 +253,27 @@ namespace GNOMECAT.UI
         {
             headerbar.set_preferences_toolbar();
             window_panels.page = WindowStatus.PREFERENCES;
+        }
+
+        public void on_about ()
+        {
+            const string copyright = "Copyright \xc2\xa9 2014 Marcos Chavarría Teijeiro\n";
+
+            const string authors[] = {
+                "Marcos Chavarría Teijeiro",
+                null
+            };
+
+            Gtk.show_about_dialog (this,
+                                   "program-name", _("GNOMECAT"),
+                                   "logo-icon-name", "gnomecat",
+                                   "version", Config.VERSION,
+                                   "copyright", copyright,
+                                   "authors", authors,
+                                   "license-type", Gtk.License.GPL_3_0,
+                                   "wrap-license", false,
+                                   "translator-credits", _("translator-credits"),
+                                   null);
         }
 
 
