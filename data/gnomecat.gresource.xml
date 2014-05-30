@@ -9,7 +9,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/contextpanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/profiledialog.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/simpleprofilepanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/profilerow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelwidget.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelrow.ui</file>

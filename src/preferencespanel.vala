@@ -44,6 +44,13 @@ namespace GNOMECAT.UI
         [GtkChild]
         private Gtk.ListBox profiles_list;
 
+        public GNOMECAT.UI.Window window
+        {
+            get
+            {
+                return this.get_parent().get_parent() as GNOMECAT.UI.Window;
+            }
+        }
 
         public PreferencesPanel ()
         {
@@ -62,7 +69,13 @@ namespace GNOMECAT.UI
             settings.bind ("custom-font", editor_font_hbox, "sensitive", SettingsBindFlags.DEFAULT);
             settings.bind ("message-changed-state", changed_state, "active_id", SettingsBindFlags.DEFAULT);
 
+            reload_profiles();
+        }
+
+        public void reload_profiles ()
+        {
             ArrayList<Profile> profs = GNOMECAT.Profiles.Profile.get_profiles ();
+            profiles_list.forall((w) => {profiles_list.remove(w);});
             foreach (Profile p in profs)
                 profiles_list.add (new ProfileRow (p));
         }
@@ -70,16 +83,27 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_create_profile ()
         {
-            ProfileDialog prof_dialog = new ProfileDialog ();
+            GNOMECAT.UI.SimpleProfilePanel prof_panel = new SimpleProfilePanel();
+            window.window_panels.insert_page(prof_panel, null, WindowStatus.OTHER);
+            window.window_panels.page = WindowStatus.OTHER;
+            window.headerbar.set_doneback_toolbar();
 
-            if (prof_dialog.run () == 0)
-            {
-                profiles_list.add (new ProfileRow (new Profile (prof_dialog.profile_name,
-                    prof_dialog.translator_name, prof_dialog.translator_email,
-                    prof_dialog.language, prof_dialog.plural_form, "8-bits",
-                    prof_dialog.encoding, prof_dialog.team_email)));
-            }
-            prof_dialog.destroy ();
+            window.custom_done_callback = () => {
+                new Profile (prof_panel.profile_name, prof_panel.translator_name,
+                    prof_panel.translator_email, prof_panel.language,
+                    prof_panel.plural_form, "8-bits", prof_panel.encoding,
+                    prof_panel.team_email);
+                (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
+                window.window_panels.page = WindowStatus.PREFERENCES;
+                window.headerbar.set_preferences_toolbar();
+                window.custom_done_callback = null;
+            };
+
+            window.custom_back_callback = () => {
+                window.window_panels.page = WindowStatus.PREFERENCES;
+                window.headerbar.set_preferences_toolbar();
+                window.custom_back_callback = null;
+            };
         }
 
         [GtkCallback]
@@ -138,6 +162,14 @@ namespace GNOMECAT.UI
             }
         }
 
+        public GNOMECAT.UI.Window window
+        {
+            get
+            {
+                return GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window;
+            }
+        }
+
         public ProfileRow (Profile p)
         {
             profile = p;
@@ -154,20 +186,32 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_edit_profile ()
         {
-            ProfileDialog prof_dialog = new ProfileDialog.from_profile (this.profile);
+            GNOMECAT.UI.SimpleProfilePanel prof_panel = new SimpleProfilePanel.from_profile (this.profile);
+            window.window_panels.insert_page(prof_panel, null, WindowStatus.OTHER);
+            window.window_panels.page = WindowStatus.OTHER;
+            window.headerbar.set_doneback_toolbar();
 
-            if (prof_dialog.run () == 0)
-            {
-                profile.name = prof_dialog.profile_name;
-                profile.translator_name = prof_dialog.translator_name;
-                profile.translator_email = prof_dialog.translator_email;
-                profile.language = prof_dialog.language;
-                profile.plural_form = prof_dialog.plural_form;
+            window.custom_done_callback = () => {
+                profile.name = prof_panel.profile_name;
+                profile.translator_name = prof_panel.translator_name;
+                profile.translator_email = prof_panel.translator_email;
+                profile.language = prof_panel.language;
+                profile.plural_form = prof_panel.plural_form;
                 profile.char_set = "8-bits";
-                profile.encoding = prof_dialog.encoding;
-                profile.team_email = prof_dialog.team_email;
-            }
-            prof_dialog.destroy ();
+                profile.encoding = prof_panel.encoding;
+                profile.team_email = prof_panel.team_email;
+
+                (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
+                window.window_panels.page = WindowStatus.PREFERENCES;
+                window.headerbar.set_preferences_toolbar();
+                window.custom_done_callback = null;
+            };
+
+            window.custom_back_callback = () => {
+                window.window_panels.page = WindowStatus.PREFERENCES;
+                window.headerbar.set_preferences_toolbar();
+                window.custom_back_callback = null;
+            };
         }
     }
 }
