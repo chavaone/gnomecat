@@ -38,6 +38,7 @@ VALASOURCES = \
 	select.vala \
 	filter.vala \
 	filenavigator.vala \
+	toolbar.vala \
 	editpanel.vala \
 	searchbar.vala \
 	utils.vala \
