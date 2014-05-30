@@ -341,6 +341,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <signal name="clicked" handler="on_create_profile" swapped="no"/>
                             <child>
                               <object class="GtkImage" id="image1">
                                 <property name="visible">True</property>
@@ -361,6 +362,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
+                            <signal name="clicked" handler="on_remove_profile" swapped="no"/>
                             <child>
                               <object class="GtkImage" id="image2">
                                 <property name="visible">True</property>

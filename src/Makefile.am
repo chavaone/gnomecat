@@ -35,7 +35,6 @@ VALASOURCES = \
 	search.vala \
 	navigator.vala \
 	pofile.vala \
-	preferencesdialog.vala \
 	hints.vala \
 	checker.vala \
 	select.vala \
