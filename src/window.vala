@@ -28,7 +28,8 @@ namespace GNOMECAT.UI
         OPEN,
         PROJECT,
         EDIT,
-        PREFERENCES
+        PREFERENCES,
+        OTHER
     }
 
     [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/window.ui")]
@@ -37,6 +38,9 @@ namespace GNOMECAT.UI
         [GtkChild]
         public Gtk.Notebook window_panels;
         public GNOMECAT.UI.ToolBar headerbar;
+
+        public GNOMECAT.Callback custom_done_callback;
+        public GNOMECAT.Callback custom_back_callback;
 
 
         public GNOMECAT.FileProject.File file
@@ -243,10 +247,18 @@ namespace GNOMECAT.UI
                 window_panels.page = WindowStatus.EDIT;
                 headerbar.set_edit_toolbar();
             }
+            else if (window_panels.page == WindowStatus.OTHER)
+            {
+                custom_done_callback();
+            }
         }
 
         private void on_back ()
         {
+            if (window_panels.page == WindowStatus.OTHER)
+            {
+                custom_back_callback();
+            }
         }
 
         private void on_preferences ()
