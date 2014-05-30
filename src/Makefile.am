@@ -20,9 +20,7 @@ AM_VALAFLAGS = \
 	--target-glib=2.38
 
 VALASOURCES = \
-	filelist.vala \
 	messagelist.vala \
-	tab.vala \
 	messageeditor.vala \
 	window.vala \
 	contextpanel.vala \
@@ -40,8 +38,9 @@ VALASOURCES = \
 	select.vala \
 	filter.vala \
 	filenavigator.vala \
-	notebook.vala \
+	editpanel.vala \
 	searchbar.vala \
+	utils.vala \
 	preferencespanel.vala
 
 gnomecat_SOURCES = \

@@ -7,18 +7,15 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditortab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditortabtiprow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/contextpanel.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/tab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/filelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/profiledialog.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/profilerow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelwidget.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelrow.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/notebook.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/tablabel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/searchbar.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/preferencespanel.ui</file>
+	<file compressed="true" preprocess="xml-stripblanks">ui/editpanel.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
         <file>css/gnomecat.css</file>
