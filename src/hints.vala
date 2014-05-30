@@ -99,7 +99,7 @@ namespace GNOMECAT.UI
         {
             string text = (r as HintPanelRow).hint.translation_hint;
             GNOMECAT.UI.MessageListWidget w = (this.get_parent ().get_parent
-                () as FileTab).message_list;
+                ().get_parent () as GNOMECAT.UI.EditPanel).message_list;
             w.get_active_editor_tab ().translation_text = text;
         }
     }

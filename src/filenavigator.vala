@@ -30,6 +30,7 @@ namespace GNOMECAT.Navigator
         private GNOMECAT.FileProject.File file;
         private FileIterator iterator;
         private IteratorFilter<Message> filter;
+        private GNOMECAT.UI.EditPanel edit_panel;
 
         private Message _message;
         public Message message
@@ -69,10 +70,11 @@ namespace GNOMECAT.Navigator
             }
         }
 
-        public FileNavigator (GNOMECAT.FileProject.File file,
+        public FileNavigator (GNOMECAT.UI.EditPanel edit_panel,
             IteratorFilter<Message> filter)
         {
-            this.file = file;
+            this.edit_panel = edit_panel;
+            this.file = edit_panel.file;
             this.filter = filter;
             iterator = new FileIterator (file, filter);
         }
@@ -117,7 +119,7 @@ namespace GNOMECAT.Navigator
         {
             Message? m = iterator.current;
             if (m != null)
-                GNOMECAT.Application.get_default ().select (SelectLevel.ROW,
+                edit_panel.select (SelectLevel.ROW,
                     new MessageFragment (m, 0, false, 0, 0));
         }
     }

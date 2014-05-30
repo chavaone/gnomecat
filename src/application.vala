@@ -153,34 +153,6 @@ namespace GNOMECAT
             }
         }
 
-        public void select (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
-        {
-            bool success = false;
-            foreach (var w in get_windows ())
-            {
-                success |= (w as GNOMECAT.UI.Window).select(level, fragment);
-            }
-
-            if (!success && fragment.file != null)
-            {
-                GNOMECAT.FileProject.File file = open_file (fragment.file.path);
-                if (file != null)
-                    (get_active_window () as GNOMECAT.UI.Window).add_file (file);
-                else
-                    stderr.printf ("Error while open %s file.\n", fragment.file.path);
-            }
-        }
-
-        public void deselect (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
-        {
-            foreach (var w in get_windows ())
-            {
-                (w as GNOMECAT.UI.Window).deselect(level, fragment);
-            }
-        }
-
         private void on_window_removed ()
         {
             foreach (var w in get_windows ())
@@ -203,16 +175,11 @@ namespace GNOMECAT
             {
                 GNOMECAT.FileProject.File file = open_file (f.get_path ());
                 if (file != null)
-                    window.add_file (file);
+                    window.file = file;
                 else
                     stderr.printf ("Error while open %s file.\n", f.get_path ());
+                return;
             }
-
-            //DEMO
-            GNOMECAT.FileProject.Project p = new Project ("/home/ch01");
-            GNOMECAT.FileProject.File f = new GNOMECAT.Demo.DemoFile ();
-            window.add_project (p);
-            window.add_file (f);
 
             window.show ();
             Gtk.main ();
