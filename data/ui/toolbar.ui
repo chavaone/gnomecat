@@ -66,45 +66,18 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 				<child>
 					<object class="GtkButton" id="openmenubutton">
 						<property name="visible">True</property>
+						<property name="valign">center</property>
 						<property name="can_focus">True</property>
-						<property name="receives_default">True</property>
 						<property name="action_name">win.open-file</property>
+						<style>
+							<class name="image-button"/>
+						</style>
 						<child>
-							<object class="GtkBox" id="open_button_hbox">
+							<object class="GtkImage" id="open_button_image">
 								<property name="visible">True</property>
-								<property name="orientation">horizontal</property>
-								<property name="spacing">5</property>
-								<child>
-									<object class="GtkLabel" id="open_button_label">
-										<property name="visible">True</property>
-										<property name="label">Open</property>
-									</object>
-									<packing>
-										<property name="expand">True</property>
-										<property name="fill">True</property>
-										<property name="position">0</property>
-									</packing>
-								</child>
-								<child>
-									<object class="GtkVSeparator" id="open_button_separator"></object>
-									<packing>
-										<property name="expand">True</property>
-										<property name="fill">False</property>
-										<property name="position">1</property>
-									</packing>
-								</child>
-								<child>
-									<object class="GtkImage" id="open_button_image">
-										<property name="visible">True</property>
-										<property name="icon_size">1</property>
-										<property name="icon_name">go-down-symbolic</property>
-									</object>
-									<packing>
-										<property name="expand">True</property>
-										<property name="fill">True</property>
-										<property name="position">2</property>
-									</packing>
-								</child>
+								<property name="valign">center</property>
+								<property name="icon_size">1</property>
+								<property name="icon_name">go-next-rtl-symbolic</property>
 							</object>
 						</child>
 					</object>
@@ -198,8 +171,8 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 				<child>
 					<object class="GtkMenuButton" id="gobutton">
 						<property name="visible">True</property>
+						<property name="valign">center</property>
 						<property name="can_focus">True</property>
-						<property name="receives_default">True</property>
 						<property name="popup">gomenu</property>
 						<property name="halign">end</property>
 						<property name="direction">down</property>
@@ -215,14 +188,14 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 						</child>
 					</object>
 					<packing>
-						<property name="pack-type">end</property>
+						<property name="pack_type">end</property>
 					</packing>
 				</child>
 				<child>
 					<object class="GtkButton" id="preferencesbutton">
 						<property name="visible">True</property>
+						<property name="valign">center</property>
 						<property name="can_focus">True</property>
-						<property name="receives_default">True</property>
 						<property name="action_name">win.preferences</property>
 						<style>
 							<class name="image-button"/>
@@ -236,7 +209,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 						</child>
 					</object>
 					<packing>
-						<property name="pack-type">end</property>
+						<property name="pack_type">end</property>
 					</packing>
 				</child>
 			</object>
@@ -312,9 +285,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 						<property name="valign">center</property>
 						<property name="use-underline">True</property>
 						<property name="label" translatable="yes">Done</property>
-										<property name="action_name">win.done</property>
-
-
+						<property name="action_name">win.done</property>
 					</object>
 					<packing>
 						<property name="pack-type">end</property>
