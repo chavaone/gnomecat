@@ -23,7 +23,7 @@ using GNOMECAT.Languages;
 
 namespace GNOMECAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/simpleprofilepanel.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/simpleprofilepanel.ui")]
     public class SimpleProfilePanel : Gtk.Grid
     {
 

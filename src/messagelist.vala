@@ -28,7 +28,7 @@ namespace GNOMECAT.UI
      * Widget that dislays the strings to be translated.
      *  This widget can be dockable.
      */
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messagelist.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messagelist.ui")]
     public class MessageListWidget : Gtk.Box
     {
         [GtkChild]
@@ -131,7 +131,7 @@ namespace GNOMECAT.UI
     /**
      *
      */
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messagelistrow.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messagelistrow.ui")]
     public class MessageListRow : ListBoxRow
     {
 

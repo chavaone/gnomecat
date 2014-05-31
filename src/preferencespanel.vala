@@ -23,7 +23,7 @@ using Gee;
 
 namespace GNOMECAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/preferencespanel.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/preferencespanel.ui")]
     public class PreferencesPanel : Gtk.Stack
     {
 
@@ -54,7 +54,7 @@ namespace GNOMECAT.UI
 
         public PreferencesPanel ()
         {
-            settings = new Settings ("info.aquelando.gnomecat.Editor");
+            settings = new Settings ("org.gnome.gnomecat.Editor");
 
             highlight_checkbutton.active = settings.get_boolean ("highlight");
             visible_whitespace_checkbutton.active = settings.get_boolean ("visible-whitespace");
@@ -114,7 +114,7 @@ namespace GNOMECAT.UI
     }
 
 
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/profilerow.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/profilerow.ui")]
     public class ProfileRow : Gtk.ListBoxRow
     {
 

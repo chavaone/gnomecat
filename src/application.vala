@@ -52,7 +52,7 @@ namespace GNOMECAT
         {
             get
             {
-                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.gnomecat.ProfilesList");
+                GLib.Settings prof_set = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
                 if (_enabled_profile == null)
                 {
                     string prof_uuid = prof_set.get_string ("default");
@@ -62,7 +62,7 @@ namespace GNOMECAT
             }
             set
             {
-                GLib.Settings prof_set = new GLib.Settings ("info.aquelando.gnomecat.ProfilesList");
+                GLib.Settings prof_set = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
                 _enabled_profile = value;
                 prof_set.set_string ("default", value == null ? "" : value.uuid);
             }
@@ -74,7 +74,7 @@ namespace GNOMECAT
 
         private Application ()
         {
-            Object (application_id: "info.aquelando.gnomecat",
+            Object (application_id: "org.gnome.gnomecat",
                 flags: ApplicationFlags.HANDLES_OPEN);
         }
 
@@ -197,7 +197,7 @@ namespace GNOMECAT
 
             var css_provider = new Gtk.CssProvider ();
             try {
-                var file = GLib.File.new_for_uri("resource:///info/aquelando/gnomecat/css/gnomecat.css");
+                var file = GLib.File.new_for_uri("resource:///org/gnome/gnomecat/css/gnomecat.css");
                 css_provider.load_from_file (file);
             } catch (Error e) {
                 warning ("loading css: %s", e.message);
@@ -207,7 +207,7 @@ namespace GNOMECAT
 
             var builder = new Gtk.Builder ();
             try {
-                builder.add_from_resource ("/info/aquelando/gnomecat/ui/appmenu.ui");
+                builder.add_from_resource ("/org/gnome/gnomecat/ui/appmenu.ui");
             } catch (Error e) {
                 error ("loading main builder file: %s", e.message);
             }

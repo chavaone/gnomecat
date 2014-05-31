@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema path="/info/aquelando/gnomecat/editor/" id="info.aquelando.gnomecat.Editor">
+  <schema path="/org/gnome/gnomecat/editor/" id="org.gnome.gnomecat.Editor">
     <key name="highlight" type="b">
       <default>false</default>
       <summary>Highlight syntax</summary>
@@ -31,8 +31,8 @@
       <description>The state to set when an untranslated message is translated.</description>
     </key>
   </schema>
-  <schema id="info.aquelando.gnomecat.ProfilesList"
-          path="/info/aquelando/gnomecat/profiles:/">
+  <schema path="/org/gnome/gnomecat/profiles:/"
+      id="org.gnome.gnomecat.ProfilesList">
     <key name="list" type="as">
       <default>[]</default>
     </key>
@@ -40,7 +40,7 @@
       <default>""</default>
     </key>
   </schema>
-  <schema id="info.aquelando.gnomecat.Profile">
+  <schema id="org.gnome.gnomecat.Profile">
       <key name="uuid" type="s">
         <default>""</default>
       </key>

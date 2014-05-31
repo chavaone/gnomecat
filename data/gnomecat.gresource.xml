@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-    <gresource prefix="/info/aquelando/gnomecat">
+    <gresource prefix="/org/gnome/gnomecat">
         <file compressed="true" preprocess="xml-stripblanks">ui/messagelist.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messagelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditor.ui</file>

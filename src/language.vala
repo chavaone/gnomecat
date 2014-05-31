@@ -112,7 +112,7 @@ namespace GNOMECAT.Languages
             try{
 
                 var parser = new Json.Parser ();
-                File file = File.new_for_uri ("resource:///info/aquelando/gnomecat/plurals.json");
+                File file = File.new_for_uri ("resource:///org/gnome/gnomecat/plurals.json");
                 InputStream stream = file.read ();
                 parser.load_from_stream (stream);
 
@@ -195,7 +195,7 @@ namespace GNOMECAT.Languages
 
             try {
                 var parser = new Json.Parser ();
-                File file = File.new_for_uri ("resource:///info/aquelando/gnomecat/languages.json");
+                File file = File.new_for_uri ("resource:///org/gnome/gnomecat/languages.json");
                 InputStream stream = file.read ();
                 parser.load_from_stream (stream);
 

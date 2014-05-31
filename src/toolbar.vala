@@ -21,7 +21,7 @@
 namespace GNOMECAT.UI
 {
 
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/toolbar.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/toolbar.ui")]
     public class ToolBar : Gtk.Notebook
     {
 

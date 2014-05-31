@@ -32,7 +32,7 @@ namespace GNOMECAT.UI
         OTHER
     }
 
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/window.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/window.ui")]
     public class Window : Gtk.ApplicationWindow
     {
         [GtkChild]

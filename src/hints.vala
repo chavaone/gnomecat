@@ -23,7 +23,7 @@ using GNOMECAT.FileProject;
 namespace GNOMECAT.UI
 {
 
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/hintpanelrow.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintpanelrow.ui")]
     public class HintPanelRow : Gtk.ListBoxRow
     {
         [GtkChild]
@@ -55,7 +55,7 @@ namespace GNOMECAT.UI
         }
     }
 
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/hintpanelwidget.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintpanelwidget.ui")]
     public class HintPanelWidget : Gtk.Box, ChangedMessageSensible
     {
         [GtkChild]

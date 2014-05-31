@@ -36,7 +36,7 @@ namespace GNOMECAT.UI
     /**
      * Editor pannel tabs.
      */
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messageeditortab.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditortab.ui")]
     public class MessageEditorTab : Box
     {
         public Label label {get; private set;}
@@ -212,7 +212,7 @@ namespace GNOMECAT.UI
 
         construct
         {
-            settings = new GLib.Settings ("info.aquelando.gnomecat.Editor");
+            settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
 
             settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
             settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
@@ -403,7 +403,7 @@ namespace GNOMECAT.UI
     /**
      * Rows of the tips displaying box.
      */
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/messageeditortabtiprow.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditortabtiprow.ui")]
     public class MessageTipRow : ListBoxRow
     {
 

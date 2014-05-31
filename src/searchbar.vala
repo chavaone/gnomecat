@@ -23,7 +23,7 @@ using GNOMECAT.Search;
  namespace GNOMECAT.UI
  {
 
- 	[GtkTemplate (ui = "/info/aquelando/gnomecat/ui/searchbar.ui")]
+ 	[GtkTemplate (ui = "/org/gnome/gnomecat/ui/searchbar.ui")]
  	public class SearchBar : Gtk.SearchBar
  	{
 

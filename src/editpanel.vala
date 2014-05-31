@@ -28,7 +28,7 @@ using Gee;
 
 namespace GNOMECAT.UI {
 
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/editpanel.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/editpanel.ui")]
     public class EditPanel : Gtk.Box
     {
 

@@ -109,8 +109,8 @@ namespace GNOMECAT.Profiles
 
         public Profile.from_uuid (string uuid)
         {
-            GLib.Settings set_prof = new GLib.Settings.with_path ("info.aquelando.gnomecat.Profile",
-                "/info/aquelando/gnomecat/profiles:/" + uuid);
+            GLib.Settings set_prof = new GLib.Settings.with_path ("org.gnome.gnomecat.Profile",
+                "/org/gnome/gnomecat/profiles:/" + uuid);
 
             this.uuid = uuid;
             set_prof.bind ("profile-name", this, "name",  SettingsBindFlags.DEFAULT);
@@ -137,7 +137,8 @@ namespace GNOMECAT.Profiles
 
         public static ArrayList<Profile> get_profiles ()
         {
-            string[] prof_arr = (new GLib.Settings ("info.aquelando.gnomecat.ProfilesList")).get_strv ("list");
+            GLib.Settings set_prof_list = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
+            string[] prof_arr = set_prof_list.get_strv ("list");
             ArrayList<Profile> ret_arr = new ArrayList<Profile> ();
 
             foreach (string uuid in prof_arr)
@@ -147,13 +148,14 @@ namespace GNOMECAT.Profiles
 
         public static void remove_profile (Profile p)
         {
-            string[] prof_arr = (new GLib.Settings ("info.aquelando.gnomecat.ProfilesList")).get_strv ("list");
+            GLib.Settings set_prof_list = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
+            string[] prof_arr = set_prof_list.get_strv ("list");
             string[] new_prof_arr = {};
 
             foreach (string prof in prof_arr)
                 if (prof != p.uuid)
                     new_prof_arr += prof;
-            (new GLib.Settings ("info.aquelando.gnomecat.ProfilesList")).set_strv ("list", new_prof_arr);
+            set_prof_list.set_strv ("list", new_prof_arr);
         }
     }
 }

@@ -23,7 +23,7 @@ using GNOMECAT.FileProject;
 
 namespace GNOMECAT.UI
 {
-    [GtkTemplate (ui = "/info/aquelando/gnomecat/ui/contextpanel.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/contextpanel.ui")]
     public class ContextPanel : Gtk.Box, ChangedMessageSensible
     {
         [GtkChild]
