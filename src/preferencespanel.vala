@@ -89,10 +89,15 @@ namespace GNOMECAT.UI
             window.headerbar.set_doneback_toolbar();
 
             window.custom_done_callback = () => {
-                new Profile (prof_panel.profile_name, prof_panel.translator_name,
-                    prof_panel.translator_email, prof_panel.language,
-                    prof_panel.plural_form, "8-bits", prof_panel.encoding,
-                    prof_panel.team_email);
+
+                Profile new_prof = new Profile (prof_panel.profile_name,
+                    prof_panel.translator_name, prof_panel.translator_email,
+                    prof_panel.language, prof_panel.plural_form, "8-bits",
+                    prof_panel.encoding, prof_panel.team_email);
+                new_prof.save();
+                if (GNOMECAT.Application.get_default ().enabled_profile == null)
+                    new_prof.set_default();
+
                 (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
                 window.window_panels.page = WindowStatus.PREFERENCES;
                 window.headerbar.set_preferences_toolbar();

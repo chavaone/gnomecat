@@ -121,18 +121,21 @@ namespace GNOMECAT.Profiles
             set_prof.bind ("char-set", this, "char_set",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("encoding", this, "encoding",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("team-email", this, "team_email",  SettingsBindFlags.DEFAULT);
-
-            string[] prof_arr = (new GLib.Settings ("info.aquelando.gnomecat.ProfilesList")).get_strv ("list");
-            if (! (uuid in prof_arr))
-                prof_arr += uuid;
-            (new GLib.Settings ("info.aquelando.gnomecat.ProfilesList")).set_strv ("list", prof_arr);
         }
 
-        construct
+        public void save ()
+        {
+            GLib.Settings set_prof_list = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
+            string[] prof_arr = set_prof_list.get_strv ("list");
+            if (! (uuid in prof_arr))
+                prof_arr += uuid;
+            set_prof_list.set_strv ("list", prof_arr);
+        }
+
+        public void set_default ()
         {
             GNOMECAT.Application app = GNOMECAT.Application.get_default ();
-            if (app.enabled_profile == null)
-                app.enabled_profile = this;
+            app.enabled_profile = this;
         }
 
         public static ArrayList<Profile> get_profiles ()
