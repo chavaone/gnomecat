@@ -115,148 +115,87 @@ namespace GNOMECAT.UI
 
         private void on_go_next ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_next();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next (this);
         }
 
         private void on_go_previous ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_previous ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous (this);
         }
 
         private void on_go_next_fuzzy ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_next_fuzzy ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next_fuzzy (this);
         }
 
         private void on_go_previous_fuzzy ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_previous_fuzzy ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_fuzzy (this);
         }
 
         private void on_go_next_translated ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_next_translated ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next_translated (this);
         }
 
         private void on_go_previous_translated ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_previous_translated ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_translated (this);
         }
 
         private void on_go_next_untranslated ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_next_untranslated ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next_untranslated (this);
         }
 
         private void on_go_previous_untranslated ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).go_previous_untranslated ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_untranslated (this);
         }
 
         private void on_edit_save ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file.save_file ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save (this);
         }
 
         private void on_edit_undo ()
         {
-           if (window_panels.get_current_page () == WindowStatus.EDIT)
-           {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).undo ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_undo (this);
         }
 
         private void on_edit_redo ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).redo ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_redo (this);
         }
 
         private void on_search_next ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).search_next ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_search_next (this);
         }
 
         private void on_search_previous ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).search_previous ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_search_previous (this);
         }
 
         private void on_search_replace ()
         {
-            if (window_panels.get_current_page () == WindowStatus.EDIT)
-            {
-                (window_panels.get_nth_page(WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).replace ();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_search_replace (this);
         }
 
         private void on_open_file ()
         {
-            if (window_panels.page == WindowStatus.OPENEDFILES)
-            {
-                (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel).on_open_file (this);
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_open_file (this);
         }
 
         private void on_done ()
         {
-            if (window_panels.page == WindowStatus.PREFERENCES)
-            {
-                window_panels.page = WindowStatus.EDIT;
-                headerbar.set_edit_toolbar();
-            }
-            else if (window_panels.page == WindowStatus.OTHER)
-            {
-                custom_done_callback();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_done (this);
         }
 
         private void on_back ()
         {
-            if (window_panels.page == WindowStatus.OTHER)
-            {
-                custom_back_callback();
-            }
-            else if (window_panels.page == WindowStatus.EDIT)
-            {
-                window_panels.page = WindowStatus.OPENEDFILES;
-                headerbar.set_openedfiles_toolbar();
-            }
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_back (this);
         }
 
         private void on_preferences ()

@@ -24,7 +24,7 @@ using Gee;
 namespace GNOMECAT.UI
 {
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/preferencespanel.ui")]
-    public class PreferencesPanel : Gtk.Stack
+    public class PreferencesPanel : Gtk.Stack, GNOMECAT.UI.Panel
     {
 
         private Settings settings;
@@ -87,28 +87,6 @@ namespace GNOMECAT.UI
             window.window_panels.insert_page(prof_panel, null, WindowStatus.OTHER);
             window.window_panels.page = WindowStatus.OTHER;
             window.headerbar.set_doneback_toolbar();
-
-            window.custom_done_callback = () => {
-
-                Profile new_prof = new Profile (prof_panel.profile_name,
-                    prof_panel.translator_name, prof_panel.translator_email,
-                    prof_panel.language, prof_panel.plural_form, "8-bits",
-                    prof_panel.encoding, prof_panel.team_email);
-                new_prof.save();
-                if (GNOMECAT.Application.get_default ().enabled_profile == null)
-                    new_prof.set_default();
-
-                (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
-                window.window_panels.page = WindowStatus.PREFERENCES;
-                window.headerbar.set_preferences_toolbar();
-                window.custom_done_callback = null;
-            };
-
-            window.custom_back_callback = () => {
-                window.window_panels.page = WindowStatus.PREFERENCES;
-                window.headerbar.set_preferences_toolbar();
-                window.custom_back_callback = null;
-            };
         }
 
         [GtkCallback]
@@ -116,6 +94,11 @@ namespace GNOMECAT.UI
         {
         }
 
+        public void on_done (GNOMECAT.UI.Window window)
+        {
+            window.window_panels.page = WindowStatus.EDIT;
+            window.headerbar.set_edit_toolbar();
+        }
     }
 
 
@@ -195,28 +178,6 @@ namespace GNOMECAT.UI
             window.window_panels.insert_page(prof_panel, null, WindowStatus.OTHER);
             window.window_panels.page = WindowStatus.OTHER;
             window.headerbar.set_doneback_toolbar();
-
-            window.custom_done_callback = () => {
-                profile.name = prof_panel.profile_name;
-                profile.translator_name = prof_panel.translator_name;
-                profile.translator_email = prof_panel.translator_email;
-                profile.language = prof_panel.language;
-                profile.plural_form = prof_panel.plural_form;
-                profile.char_set = "8-bits";
-                profile.encoding = prof_panel.encoding;
-                profile.team_email = prof_panel.team_email;
-
-                (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
-                window.window_panels.page = WindowStatus.PREFERENCES;
-                window.headerbar.set_preferences_toolbar();
-                window.custom_done_callback = null;
-            };
-
-            window.custom_back_callback = () => {
-                window.window_panels.page = WindowStatus.PREFERENCES;
-                window.headerbar.set_preferences_toolbar();
-                window.custom_back_callback = null;
-            };
         }
     }
 }

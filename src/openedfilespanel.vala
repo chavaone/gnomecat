@@ -21,7 +21,7 @@
  namespace GNOMECAT.UI
  {
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/openedfilespanel.ui")]
-    public class OpenedFilesPanel : Gtk.Box
+    public class OpenedFilesPanel : Gtk.Box, GNOMECAT.UI.Panel
     {
         [GtkChild]
         private Gtk.ListBox files;

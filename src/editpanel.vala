@@ -29,7 +29,7 @@ using Gee;
 namespace GNOMECAT.UI {
 
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/editpanel.ui")]
-    public class EditPanel : Gtk.Box
+    public class EditPanel : Gtk.Box, GNOMECAT.UI.Panel
     {
 
         [GtkChild]
@@ -112,73 +112,79 @@ namespace GNOMECAT.UI {
             }
         }
 
-        public void undo ()
+        public void on_edit_undo (GNOMECAT.UI.Window window)
         {
             MessageEditorTab tab;
             if ((tab = message_list.get_active_editor_tab ()) != null)
                 tab.undo ();
         }
 
-        public void redo ()
+        public void on_edit_redo (GNOMECAT.UI.Window window)
         {
             MessageEditorTab tab;
             if ((tab = message_list.get_active_editor_tab ()) != null)
                 tab.redo ();
         }
 
-        public void go_next ()
+        public void on_go_next (GNOMECAT.UI.Window window)
         {
             navigator_all.next ();
         }
 
-        public void go_previous ()
+        public void on_go_previous (GNOMECAT.UI.Window window)
         {
             navigator_all.previous ();
         }
 
-        public void go_next_fuzzy ()
+        public void on_go_next_fuzzy (GNOMECAT.UI.Window window)
         {
             navigator_fuzzy.next ();
         }
 
-        public void go_previous_fuzzy ()
+        public void on_go_previous_fuzzy (GNOMECAT.UI.Window window)
         {
             navigator_fuzzy.previous ();
         }
 
-        public void go_next_translated ()
+        public void on_go_next_translated (GNOMECAT.UI.Window window)
         {
             navigator_translated.next ();
         }
 
-        public void go_previous_translated ()
+        public void on_go_previous_translated (GNOMECAT.UI.Window window)
         {
             navigator_translated.previous ();
         }
 
-        public void go_next_untranslated ()
+        public void on_go_next_untranslated (GNOMECAT.UI.Window window)
         {
             navigator_untranslated.next ();
         }
 
-        public void go_previous_untranslated ()
+        public void on_go_previous_untranslated (GNOMECAT.UI.Window window)
         {
             navigator_untranslated.previous ();
         }
 
-        public void search_next ()
+        public void on_search_next (GNOMECAT.UI.Window window)
         {
             if (active_search != null) active_search.next ();
         }
 
-        public void search_previous ()
+        public void on_search_previous (GNOMECAT.UI.Window window)
         {
             if (active_search != null) active_search.previous ();
         }
 
-        public void replace ()
+        public void on_search_replace (GNOMECAT.UI.Window window)
         {
             if (active_search != null) active_search.replace ();
+        }
+
+        public void on_back (GNOMECAT.UI.Window window)
+        {
+            window.window_panels.page = WindowStatus.OPENEDFILES;
+            window.headerbar.set_openedfiles_toolbar();
         }
 
         public void select (GNOMECAT.SelectLevel level,

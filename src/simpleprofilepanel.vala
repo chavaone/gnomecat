@@ -24,7 +24,7 @@ using GNOMECAT.Languages;
 namespace GNOMECAT.UI
 {
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/simpleprofilepanel.ui")]
-    public class SimpleProfilePanel : Gtk.Grid
+    public class SimpleProfilePanel : Gtk.Grid, GNOMECAT.UI.Panel
     {
 
         [GtkChild]
@@ -150,6 +150,8 @@ namespace GNOMECAT.UI
             }
         }
 
+        private GNOMECAT.Profiles.Profile edit_profile;
+
         public SimpleProfilePanel ()
         {
             foreach (var entry in Language.languages.entries)
@@ -161,6 +163,8 @@ namespace GNOMECAT.UI
             {
                 plural_form_combobox.append_text (pf.expression);
             }
+
+            edit_profile = null;
         }
 
         public SimpleProfilePanel.from_profile (GNOMECAT.Profiles.Profile prof)
@@ -173,6 +177,42 @@ namespace GNOMECAT.UI
             this.encoding = prof.encoding;
             this.language = prof.language;
             this.plural_form = prof.plural_form;
+            edit_profile = prof;
+        }
+
+
+        public void on_done (GNOMECAT.UI.Window window)
+        {
+            if (edit_profile == null){
+                GNOMECAT.Profiles.Profile new_prof = new GNOMECAT.Profiles.Profile (this.profile_name,
+                    this.translator_name, this.translator_email,
+                    this.language, this.plural_form, "8-bits",
+                    this.encoding, this.team_email);
+                new_prof.save();
+                if (GNOMECAT.Application.get_default ().enabled_profile == null)
+                    new_prof.set_default();
+            }
+            else
+            {
+                edit_profile.name = this.profile_name;
+                edit_profile.translator_name = this.translator_name;
+                edit_profile.translator_email = this.translator_email;
+                edit_profile.language = this.language;
+                edit_profile.plural_form = this.plural_form;
+                edit_profile.char_set = "8-bits";
+                edit_profile.encoding = this.encoding;
+                edit_profile.team_email = this.team_email;
+            }
+
+            (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
+            window.window_panels.page = WindowStatus.PREFERENCES;
+            window.headerbar.set_preferences_toolbar();
+        }
+
+        public void on_back (GNOMECAT.UI.Window window)
+        {
+            window.window_panels.page = WindowStatus.PREFERENCES;
+            window.headerbar.set_preferences_toolbar();
         }
     }
 }
