@@ -19,7 +19,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <interface>
   <!-- interface-requires gtk+ 3.10 -->
-  <template class="GNOMECATUIFileListWidget" parent="GtkBox">
+  <template class="GNOMECATUIOpenedFilesPanel" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <child>
@@ -28,7 +28,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
         <property name="can_focus">True</property>
         <property name="shadow_type">in</property>
         <child>
-          <object class="GtkListBox" id="file_list_box">
+          <object class="GtkListBox" id="files">
             <property name="visible">True</property>
             <property name="activate-on-single-click">False</property>
             <signal name="row_activated" handler="on_row_activated" swapped="no"/>

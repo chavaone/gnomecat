@@ -25,27 +25,34 @@ namespace GNOMECAT.UI
     public class ToolBar : Gtk.Notebook
     {
 
-    	[GtkChild]
-        public Gtk.Label edit_label_title;
         [GtkChild]
         public Gtk.ProgressBar progressbar_title;
         [GtkChild]
         public Gtk.StackSwitcher preferences_switch;
 
-        public void set_edit_toolbar(){
+        public void set_edit_toolbar()
+        {
             this.page = 0;
         }
 
-        public void set_doneback_toolbar(){
-            this.page = 2;
-        }
-
-        public void set_preferences_toolbar(){
+        public void set_openedfiles_toolbar()
+        {
             this.page = 1;
         }
 
-        public void set_back_toolbar(){
+        public void set_doneback_toolbar()
+        {
             this.page = 3;
+        }
+
+        public void set_preferences_toolbar()
+        {
+            this.page = 2;
+        }
+
+        public void set_back_toolbar()
+        {
+            this.page = 4;
         }
 
         public void set_progressbar_info (int translated, int untranslated, int fuzzy)

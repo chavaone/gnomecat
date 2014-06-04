@@ -26,7 +26,7 @@ namespace GNOMECAT.UI
     public enum WindowStatus {
         WELLCOME,
         OPEN,
-        PROJECT,
+        OPENEDFILES,
         EDIT,
         PREFERENCES,
         OTHER
@@ -49,6 +49,7 @@ namespace GNOMECAT.UI
                 return (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file;
             }
             set {
+                (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel).add_file(value);
                 headerbar.set_edit_toolbar();
                 window_panels.page = WindowStatus.EDIT;
                 (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = value;
@@ -88,10 +89,20 @@ namespace GNOMECAT.UI
 
             window_panels.insert_page(new Gtk.Label("wellcome"), null, WindowStatus.WELLCOME); //Wellcome Panel
             window_panels.insert_page(new Gtk.Label("open"), null, WindowStatus.OPEN); //Open File
-            window_panels.insert_page(new Gtk.Label("project"), null, WindowStatus.PROJECT); //Project
+            window_panels.insert_page(new OpenedFilesPanel(), null, WindowStatus.OPENEDFILES); //Project
             window_panels.insert_page(new EditPanel(), null, WindowStatus.EDIT); //Edit Panel
             window_panels.insert_page(new PreferencesPanel(), null, WindowStatus.PREFERENCES); //Preferences Panel
 
+            window_panels.page = WindowStatus.OPENEDFILES;
+            headerbar.set_openedfiles_toolbar();
+
+            (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel)
+                .on_file_activated.connect( (file) =>
+                    {
+                        headerbar.set_edit_toolbar();
+                        window_panels.page = WindowStatus.EDIT;
+                        (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = file;
+                    });
             headerbar.preferences_switch.stack = window_panels.get_nth_page(WindowStatus.PREFERENCES) as Gtk.Stack;
         }
 
@@ -216,28 +227,10 @@ namespace GNOMECAT.UI
 
         private void on_open_file ()
         {
-            Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog (_("Select a file to open."),
-                this, Gtk.FileChooserAction.OPEN,
-                _("Cancel"), Gtk.ResponseType.CANCEL,
-                _("Open"), Gtk.ResponseType.ACCEPT);
-
-            chooser.filter = new FileFilter ();
-            var app = GNOMECAT.Application.get_default ();
-            foreach (string ext in (app as GNOMECAT.Application).extensions)
+            if (window_panels.page == WindowStatus.OPENEDFILES)
             {
-                chooser.filter.add_pattern ("*." + ext);
+                (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel).on_open_file (this);
             }
-
-            chooser.select_multiple = false;
-
-            chooser.file_activated.connect ((src) =>
-                {
-                    do_open_file ((src as Gtk.FileChooserDialog).get_file());
-                });
-
-            if (chooser.run () == Gtk.ResponseType.ACCEPT)
-                do_open_file (chooser.get_file());
-            chooser.destroy ();
         }
 
         private void on_done ()
@@ -258,6 +251,11 @@ namespace GNOMECAT.UI
             if (window_panels.page == WindowStatus.OTHER)
             {
                 custom_back_callback();
+            }
+            else if (window_panels.page == WindowStatus.EDIT)
+            {
+                window_panels.page = WindowStatus.OPENEDFILES;
+                headerbar.set_openedfiles_toolbar();
             }
         }
 
