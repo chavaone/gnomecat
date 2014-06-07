@@ -61,14 +61,15 @@ namespace GNOMECAT.UI {
 
         }
 
-        private GNOMECAT.Navigator.FileNavigator navigator_fuzzy;
-        private GNOMECAT.Navigator.FileNavigator navigator_translated;
-        private GNOMECAT.Navigator.FileNavigator navigator_untranslated;
-        private GNOMECAT.Navigator.FileNavigator navigator_all;
-        private GNOMECAT.Search.Search active_search;
+        public GNOMECAT.UI.ToolBarMode toolbarmode
+        {
+            get
+            {
+                return GNOMECAT.UI.ToolBarMode.EDIT;
+            }
+        }
 
-
-        private ArrayList<ChangedMessageSensible> change_messages_sensible;
+        public int window_page {get; set;}
 
         public EditPanel ()
         {
@@ -81,6 +82,11 @@ namespace GNOMECAT.UI {
                 });
         }
 
+        private GNOMECAT.Navigator.FileNavigator navigator_fuzzy;
+        private GNOMECAT.Navigator.FileNavigator navigator_translated;
+        private GNOMECAT.Navigator.FileNavigator navigator_untranslated;
+        private GNOMECAT.Navigator.FileNavigator navigator_all;
+        private GNOMECAT.Search.Search active_search;
 
         [GtkCallback]
         public void on_message_selected (Message m)
@@ -177,8 +183,7 @@ namespace GNOMECAT.UI {
 
         public void on_back (GNOMECAT.UI.Window window)
         {
-            window.window_panels.page = WindowStatus.OPENEDFILES;
-            window.headerbar.set_openedfiles_toolbar();
+            window.set_panel (WindowStatus.OPENEDFILES);
         }
 
         public void select (GNOMECAT.SelectLevel level,

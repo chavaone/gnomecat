@@ -52,6 +52,16 @@ namespace GNOMECAT.UI
             }
         }
 
+        public GNOMECAT.UI.ToolBarMode toolbarmode
+        {
+            get
+            {
+                return GNOMECAT.UI.ToolBarMode.PREFERENCES;
+            }
+        }
+
+        public int window_page {get; set;}
+
         public PreferencesPanel ()
         {
             settings = new Settings ("org.gnome.gnomecat.Editor");
@@ -84,9 +94,7 @@ namespace GNOMECAT.UI
         private void on_create_profile ()
         {
             GNOMECAT.UI.SimpleProfilePanel prof_panel = new SimpleProfilePanel();
-            window.window_panels.insert_page(prof_panel, null, WindowStatus.OTHER);
-            window.window_panels.page = WindowStatus.OTHER;
-            window.headerbar.set_doneback_toolbar();
+            window.set_panel (WindowStatus.OTHER, prof_panel);
         }
 
         [GtkCallback]
@@ -96,8 +104,7 @@ namespace GNOMECAT.UI
 
         public void on_done (GNOMECAT.UI.Window window)
         {
-            window.window_panels.page = WindowStatus.EDIT;
-            window.headerbar.set_edit_toolbar();
+            window.set_panel(WindowStatus.EDIT);
         }
     }
 
@@ -175,9 +182,7 @@ namespace GNOMECAT.UI
         private void on_edit_profile ()
         {
             GNOMECAT.UI.SimpleProfilePanel prof_panel = new SimpleProfilePanel.from_profile (this.profile);
-            window.window_panels.insert_page(prof_panel, null, WindowStatus.OTHER);
-            window.window_panels.page = WindowStatus.OTHER;
-            window.headerbar.set_doneback_toolbar();
+            window.set_panel (WindowStatus.OTHER, prof_panel);
         }
     }
 }

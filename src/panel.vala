@@ -5,6 +5,10 @@ namespace GNOMECAT.UI
 	public interface Panel
 	{
 
+		public abstract GNOMECAT.UI.ToolBarMode toolbarmode {get;}
+
+		public abstract int window_page {get; set;}
+
 		public virtual void on_go_next (GNOMECAT.UI.Window window) {}
 
 		public virtual void on_go_previous (GNOMECAT.UI.Window window) {}

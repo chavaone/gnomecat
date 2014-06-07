@@ -21,6 +21,15 @@
 namespace GNOMECAT.UI
 {
 
+    public enum ToolBarMode
+    {
+        EDIT = 0,
+        OPENEDFILES = 1,
+        PREFERENCES = 2,
+        DONEBACK = 3,
+        BACK = 4
+    }
+
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/toolbar.ui")]
     public class ToolBar : Gtk.Notebook
     {
@@ -29,30 +38,12 @@ namespace GNOMECAT.UI
         public Gtk.ProgressBar progressbar_title;
         [GtkChild]
         public Gtk.StackSwitcher preferences_switch;
+        [GtkChild]
+        public Gtk.ToggleButton searchbutton;
 
-        public void set_edit_toolbar()
+        public void set_toolbar_mode(ToolBarMode mode)
         {
-            this.page = 0;
-        }
-
-        public void set_openedfiles_toolbar()
-        {
-            this.page = 1;
-        }
-
-        public void set_doneback_toolbar()
-        {
-            this.page = 3;
-        }
-
-        public void set_preferences_toolbar()
-        {
-            this.page = 2;
-        }
-
-        public void set_back_toolbar()
-        {
-            this.page = 4;
+            this.page = mode;
         }
 
         public void set_progressbar_info (int translated, int untranslated, int fuzzy)

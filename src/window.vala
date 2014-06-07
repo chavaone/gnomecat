@@ -50,13 +50,10 @@ namespace GNOMECAT.UI
             }
             set {
                 (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel).add_file(value);
-                headerbar.set_edit_toolbar();
-                window_panels.page = WindowStatus.EDIT;
+                set_panel(WindowStatus.EDIT);
                 (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = value;
             }
         }
-
-        public signal void file_changed (GNOMECAT.FileProject.File? file);
 
         private const GLib.ActionEntry[] action_entries = {
             { "edit-undo", on_edit_undo },
@@ -92,8 +89,16 @@ namespace GNOMECAT.UI
         construct
         {
             add_action_entries (action_entries, this);
+        }
 
-            this.file_changed.connect (on_file_changed);
+        public void set_panel (WindowStatus status, Panel? custom_panel = null)
+        {
+            assert(status != WindowStatus.OTHER || custom_panel != null);
+
+            int page_num = status == WindowStatus.OTHER ? window_panels.append_page(custom_panel as Gtk.Widget, null) : status;
+            window_panels.page = page_num;
+            (window_panels.get_nth_page (page_num) as Panel).window_page = page_num;
+            headerbar.set_toolbar_mode ((window_panels.get_nth_page (page_num) as Panel).toolbarmode);
         }
 
         private void on_go_next ()
@@ -207,8 +212,8 @@ namespace GNOMECAT.UI
                                    null);
         }
 
-
-        private void on_file_changed (Window src, GNOMECAT.FileProject.File? file)
+        [GtkCallback]
+        private void on_file_changed (GNOMECAT.FileProject.File? file)
         {
             if (file == null)
             {
@@ -223,5 +228,11 @@ namespace GNOMECAT.UI
             }
         }
 
+        [GtkCallback]
+        private void on_file_activated (GNOMECAT.FileProject.File? file)
+        {
+            set_panel (WindowStatus.EDIT);
+            (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = file;
+        }
     }
 }

@@ -150,6 +150,16 @@ namespace GNOMECAT.UI
             }
         }
 
+        public GNOMECAT.UI.ToolBarMode toolbarmode
+        {
+            get
+            {
+                return GNOMECAT.UI.ToolBarMode.DONEBACK;
+            }
+        }
+
+        public int window_page {get; set;}
+
         private GNOMECAT.Profiles.Profile edit_profile;
 
         public SimpleProfilePanel ()
@@ -205,14 +215,13 @@ namespace GNOMECAT.UI
             }
 
             (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
-            window.window_panels.page = WindowStatus.PREFERENCES;
-            window.headerbar.set_preferences_toolbar();
+            on_back(window);
         }
 
         public void on_back (GNOMECAT.UI.Window window)
         {
-            window.window_panels.page = WindowStatus.PREFERENCES;
-            window.headerbar.set_preferences_toolbar();
+            window.set_panel (WindowStatus.PREFERENCES);
+            window.window_panels.remove_page (window_page);
         }
     }
 }

@@ -170,6 +170,7 @@ namespace GNOMECAT
         {
             GNOMECAT.UI.Window window = new GNOMECAT.UI.Window (this);
             window.show ();
+            window.set_panel(WindowStatus.OPENEDFILES);
             Gtk.main ();
         }
 

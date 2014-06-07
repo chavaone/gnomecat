@@ -26,7 +26,17 @@
         [GtkChild]
         private Gtk.ListBox files;
 
-        public signal void on_file_activated (GNOMECAT.FileProject.File file);
+        public GNOMECAT.UI.ToolBarMode toolbarmode
+        {
+            get
+            {
+                return GNOMECAT.UI.ToolBarMode.OPENEDFILES;
+            }
+        }
+
+        public int window_page {get; set;}
+
+        public signal void file_activated (GNOMECAT.FileProject.File file);
 
         public void add_file (GNOMECAT.FileProject.File file)
         {
@@ -85,14 +95,14 @@
             if (f != null)
             {
                 add_file (file);
-                on_file_activated (file);
+                file_activated (file);
             }
         }
 
         [GtkCallback]
         private void on_row_activated (Gtk.ListBox list_box, Gtk.ListBoxRow row)
         {
-            on_file_activated ((row as GNOMECAT.UI.FileListRow).file);
+            file_activated ((row as GNOMECAT.UI.FileListRow).file);
         }
     }
 
