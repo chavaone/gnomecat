@@ -222,15 +222,48 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 				<property name="can_focus">False</property>
 				<property name="show_close_button">True</property>
 				<child>
-					<object class="GtkButton" id="open_file_btn">
+					<object class="GtkButton" id="filelist_open_file_btn">
 						<property name="visible">True</property>
 						<property name="valign">center</property>
 						<property name="use-underline">True</property>
-						<property name="label" translatable="yes">Add File</property>
+						<property name="label" translatable="yes">Open File</property>
 						<property name="action_name">win.open-file</property>
 					</object>
 					<packing>
-						<property name="pack-type">end</property>
+						<property name="pack-type">start</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkButton" id="filelist_open_project_btn">
+						<property name="visible">True</property>
+						<property name="valign">center</property>
+						<property name="use-underline">True</property>
+						<property name="label" translatable="yes">Open Project</property>
+						<property name="action_name">win.open-project</property>
+					</object>
+					<packing>
+						<property name="pack-type">start</property>
+					</packing>
+				</child>
+				<child>
+					<object class="GtkButton" id="filelist_preferencesbutton">
+						<property name="visible">True</property>
+						<property name="valign">center</property>
+						<property name="can_focus">True</property>
+						<property name="action_name">win.preferences</property>
+						<style>
+							<class name="image-button"/>
+						</style>
+						<child>
+							<object class="GtkImage" id="filelist_preferences_button_image">
+								<property name="visible">True</property>
+								<property name="icon_size">1</property>
+								<property name="icon_name">emblem-system-symbolic</property>
+							</object>
+						</child>
+					</object>
+					<packing>
+						<property name="pack_type">end</property>
 					</packing>
 				</child>
 			</object>
