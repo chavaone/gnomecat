@@ -39,9 +39,6 @@ namespace GNOMECAT.UI
         public Gtk.Notebook window_panels;
         public GNOMECAT.UI.ToolBar headerbar;
 
-        public GNOMECAT.Callback custom_done_callback;
-        public GNOMECAT.Callback custom_back_callback;
-
 
         public GNOMECAT.FileProject.File file
         {
@@ -84,6 +81,10 @@ namespace GNOMECAT.UI
             headerbar = new ToolBar();
             set_titlebar(headerbar);
             headerbar.preferences_switch.stack = window_panels.get_nth_page(WindowStatus.PREFERENCES) as Gtk.Stack;
+
+            headerbar.searchbutton.bind_property ("active",
+                window_panels.get_nth_page(WindowStatus.EDIT) as EditPanel,
+                "search_enabled", BindingFlags.BIDIRECTIONAL);
         }
 
         construct

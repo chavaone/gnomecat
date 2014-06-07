@@ -71,15 +71,21 @@ namespace GNOMECAT.UI {
 
         public int window_page {get; set;}
 
-        public EditPanel ()
+        public bool search_enabled
         {
+            get
+            {
+                return searchbar.search_mode_enabled;
+            }
+            set
+            {
+                searchbar.search_mode_enabled = value;
 
+                if (active_search == null) return;
 
-            this._file.file_changed.connect (() =>
-                {
-                    (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
-                        .file_changed (file);
-                });
+                if (value) active_search.select ();
+                else active_search.deselect ();
+            }
         }
 
         private GNOMECAT.Navigator.FileNavigator navigator_fuzzy;
