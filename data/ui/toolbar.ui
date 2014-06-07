@@ -30,37 +30,10 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 				<property name="can_focus">False</property>
 				<property name="show_close_button">True</property>
 				<child type="title">
-					<object class="GtkBox" id="box1">
-						<property name="visible">True</property>
+					<object class="GtkProgressBar" id="progressbar_title">
+						<property name="visible">False</property>
 						<property name="can_focus">False</property>
-						<property name="orientation">vertical</property>
-						<child>
-							<object class="GtkLabel" id="edit_label_title">
-								<property name="visible">True</property>
-								<property name="can_focus">False</property>
-								<property name="label">GNOMECAT</property>
-								<attributes>
-									<attribute name="weight" value="bold"/>
-								</attributes>
-							</object>
-							<packing>
-								<property name="expand">True</property>
-								<property name="fill">True</property>
-								<property name="position">0</property>
-							</packing>
-						</child>
-						<child>
-							<object class="GtkProgressBar" id="progressbar_title">
-								<property name="visible">False</property>
-								<property name="can_focus">False</property>
-								<property name="show_text">True</property>
-							</object>
-							<packing>
-								<property name="expand">False</property>
-								<property name="fill">True</property>
-								<property name="position">1</property>
-							</packing>
-						</child>
+						<property name="show_text">True</property>
 					</object>
 				</child>
 				<child>

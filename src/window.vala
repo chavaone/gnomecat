@@ -218,12 +218,12 @@ namespace GNOMECAT.UI
         {
             if (file == null)
             {
-                headerbar.edit_label_title.set_text ("GNOMECAT");
+                this.title = "GNOMECAT - " + file.name;
                 headerbar.progressbar_title.hide ();
             }
             else
             {
-                headerbar.edit_label_title.set_text ("GNOMECAT - " + file.name);
+                this.title = "GNOMECAT - " + file.name;
                 headerbar.set_progressbar_info (file.number_of_translated,
                     file.number_of_untranslated, file.number_of_fuzzy);
             }
