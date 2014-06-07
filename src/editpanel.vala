@@ -52,6 +52,11 @@ namespace GNOMECAT.UI {
             {
                 _file = value;
                 message_list.file = value;
+                _file.file_changed.connect(() =>
+                    {
+                        file_changed(_file);
+                    }
+                );
 
                 navigator_all = new FileNavigator (this, new TransparentFilter<Message> ());
                 navigator_fuzzy = new FileNavigator (this, new FuzzyFilter ());
@@ -93,6 +98,8 @@ namespace GNOMECAT.UI {
         private GNOMECAT.Navigator.FileNavigator navigator_untranslated;
         private GNOMECAT.Navigator.FileNavigator navigator_all;
         private GNOMECAT.Search.Search active_search;
+
+        public signal void file_changed (GNOMECAT.FileProject.File? file);
 
         [GtkCallback]
         public void on_message_selected (Message m)
