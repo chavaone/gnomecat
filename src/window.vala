@@ -26,9 +26,9 @@ namespace GNOMECAT.UI
     public enum WindowStatus {
         WELLCOME,
         OPEN,
-        OPENEDFILES,
-        EDIT,
-        PREFERENCES,
+        OPENEDFILES = 0,
+        EDIT = 1,
+        PREFERENCES = 2,
         OTHER
     }
 
@@ -86,23 +86,6 @@ namespace GNOMECAT.UI
 
             headerbar = new ToolBar();
             set_titlebar(headerbar);
-
-            window_panels.insert_page(new Gtk.Label("wellcome"), null, WindowStatus.WELLCOME); //Wellcome Panel
-            window_panels.insert_page(new Gtk.Label("open"), null, WindowStatus.OPEN); //Open File
-            window_panels.insert_page(new OpenedFilesPanel(), null, WindowStatus.OPENEDFILES); //Project
-            window_panels.insert_page(new EditPanel(), null, WindowStatus.EDIT); //Edit Panel
-            window_panels.insert_page(new PreferencesPanel(), null, WindowStatus.PREFERENCES); //Preferences Panel
-
-            window_panels.page = WindowStatus.OPENEDFILES;
-            headerbar.set_openedfiles_toolbar();
-
-            (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel)
-                .on_file_activated.connect( (file) =>
-                    {
-                        headerbar.set_edit_toolbar();
-                        window_panels.page = WindowStatus.EDIT;
-                        (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = file;
-                    });
             headerbar.preferences_switch.stack = window_panels.get_nth_page(WindowStatus.PREFERENCES) as Gtk.Stack;
         }
 
@@ -200,8 +183,7 @@ namespace GNOMECAT.UI
 
         private void on_preferences ()
         {
-            headerbar.set_preferences_toolbar();
-            window_panels.page = WindowStatus.PREFERENCES;
+            set_panel (WindowStatus.PREFERENCES);
         }
 
         public void on_about ()

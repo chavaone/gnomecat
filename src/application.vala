@@ -195,6 +195,15 @@ namespace GNOMECAT
         {
             base.startup ();
 
+            //This is a workaround to be able to use custom templates inside another templates.
+            new GNOMECAT.UI.SearchBar();
+            new GNOMECAT.UI.MessageListWidget();
+            new GNOMECAT.UI.HintPanelWidget();
+            new GNOMECAT.UI.ToolBar();
+            new GNOMECAT.UI.OpenedFilesPanel();
+            new GNOMECAT.UI.EditPanel();
+            new GNOMECAT.UI.PreferencesPanel();
+
             var css_provider = new Gtk.CssProvider ();
             try {
                 var file = GLib.File.new_for_uri("resource:///org/gnome/gnomecat/css/gnomecat.css");

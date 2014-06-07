@@ -33,10 +33,12 @@ namespace GNOMECAT.UI {
     {
 
         [GtkChild]
-        public Gtk.Box box;
-
-        public MessageListWidget message_list;
         public SearchBar searchbar;
+
+        [GtkChild]
+        public MessageListWidget message_list;
+
+        [GtkChild]
         public HintPanelWidget hints_panel;
 
         public GNOMECAT.FileProject.File? _file;
@@ -71,16 +73,6 @@ namespace GNOMECAT.UI {
         public EditPanel ()
         {
 
-            //FIXME: move the next block to ui file
-            message_list = new MessageListWidget ();
-            hints_panel = new HintPanelWidget();
-            searchbar = new SearchBar();
-            message_list.message_selected.connect (on_message_selected);
-            searchbar.search_changed.connect (on_search_changed);
-            this.pack_start(searchbar, false);;
-            box.pack_start (message_list, true);
-            box.pack_start (hints_panel, false);
-
 
             this._file.file_changed.connect (() =>
                 {
@@ -90,6 +82,7 @@ namespace GNOMECAT.UI {
         }
 
 
+        [GtkCallback]
         public void on_message_selected (Message m)
         {
             hints_panel.message = m;
@@ -99,6 +92,7 @@ namespace GNOMECAT.UI {
             if (navigator_untranslated != null) navigator_untranslated.message = m;
         }
 
+        [GtkCallback]
         public void on_search_changed (SearchInfo search_info)
         {
             if (search_info != null)

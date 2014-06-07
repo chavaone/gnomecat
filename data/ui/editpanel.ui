@@ -26,11 +26,43 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
     <property name="expand">True</property>
     <property name="orientation">vertical</property>
     <child>
+      <object class="GNOMECATUISearchBar" id="searchbar">
+        <property name="visible">True</property>
+        <signal name="search_changed" handler="on_search_changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
       <object class="GtkBox" id="box">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="spacing">5</property>
         <property name="expand">True</property>
+        <child>
+          <object class="GNOMECATUIMessageListWidget" id="message_list">
+            <property name="visible">True</property>
+            <signal name="message_selected" handler="on_message_selected" swapped="no"/>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GNOMECATUIHintPanelWidget" id="hints_panel">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
       </object>
       <packing>
         <property name="expand">True</property>
