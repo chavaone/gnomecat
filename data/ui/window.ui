@@ -30,6 +30,12 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
         <property name="show_tabs">False</property>
 
         <child>
+          <object class="GNOMECATUIOpenFilePanel" id="openfilepanel">
+            <property name="visible">True</property>
+          </object>
+        </child>
+
+        <child>
           <object class="GNOMECATUIOpenedFilesPanel" id="openedfilespanel">
             <property name="visible">True</property>
             <signal name="file_activated" handler="on_file_activated" swapped="no"/>
@@ -48,6 +54,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="visible">True</property>
           </object>
         </child>
+
       </object>
     </child>
   </template>

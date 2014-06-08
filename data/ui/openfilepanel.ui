@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.16.1 -->
+<interface>
+  <requires lib="gtk+" version="3.10"/>
+  <object class="GtkRecentFilter" id="recent_filter">
+    <patterns>
+      <pattern>*.po</pattern>
+    </patterns>
+  </object>
+  <template class="GNOMECATUIOpenFilePanel" parent="GtkBox">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="orientation">vertical</property>
+    <property name="baseline_position">top</property>
+    <child>
+      <object class="GtkButton" id="open_file_btn">
+        <property name="label" translatable="yes">Open File</property>
+        <property name="visible">True</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
+        <signal name="clicked" handler="on_new_file" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">False</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkLabel" id="label1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">5</property>
+        <property name="label" translatable="yes">Recent Files</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkRecentChooserWidget" id="recent_widget">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_bottom">10</property>
+        <property name="filter">recent_filter</property>
+        <property name="limit">-1</property>
+        <property name="sort_type">mru</property>
+        <signal name="item-activated" handler="on_recent_file_activated" swapped="no"/>
+      </object>
+      <packing>
+        <property name="expand">True</property>
+        <property name="fill">True</property>
+        <property name="position">2</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkButton" id="button2">
+        <property name="label" translatable="yes">Fetch File from Damned Lies</property>
+        <property name="visible">True</property>
+        <property name="sensitive">False</property>
+        <property name="can_focus">True</property>
+        <property name="receives_default">True</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
+        <property name="yalign">0.51999998092651367</property>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">3</property>
+      </packing>
+    </child>
+  </template>
+</interface>

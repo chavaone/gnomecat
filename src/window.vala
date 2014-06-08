@@ -25,10 +25,10 @@ namespace GNOMECAT.UI
 
     public enum WindowStatus {
         WELLCOME,
-        OPEN,
-        OPENEDFILES = 0,
-        EDIT = 1,
-        PREFERENCES = 2,
+        OPEN = 0,
+        OPENEDFILES = 1,
+        EDIT = 2,
+        PREFERENCES = 3,
         OTHER
     }
 

@@ -66,37 +66,7 @@
 
         public void on_open_file (GNOMECAT.UI.Window window)
         {
-            Gtk.FileChooserDialog chooser = new Gtk.FileChooserDialog (_("Select a file to open."),
-                window, Gtk.FileChooserAction.OPEN,
-                _("Cancel"), Gtk.ResponseType.CANCEL,
-                _("Open"), Gtk.ResponseType.ACCEPT);
-
-            chooser.filter = new Gtk.FileFilter ();
-            var app = GNOMECAT.Application.get_default ();
-            foreach (string ext in (app as GNOMECAT.Application).extensions)
-            {
-                chooser.filter.add_pattern ("*." + ext);
-            }
-
-            chooser.select_multiple = false;
-
-            if (chooser.run () == Gtk.ResponseType.ACCEPT)
-            {
-                do_open_file (chooser.get_file());
-            }
-
-            chooser.destroy ();
-        }
-
-        private void do_open_file (GLib.File f)
-        {
-            GNOMECAT.FileProject.File? file = GNOMECAT.Application.get_default ()
-            .open_file (f.get_path ());
-            if (f != null)
-            {
-                add_file (file);
-                file_activated (file);
-            }
+            window.set_panel(WindowStatus.OPEN);
         }
 
         [GtkCallback]
