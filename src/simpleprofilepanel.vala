@@ -223,5 +223,8 @@ namespace GNOMECAT.UI
             window.set_panel (WindowStatus.PREFERENCES);
             window.window_panels.remove_page (window_page);
         }
+
+        public void on_preferences (GNOMECAT.UI.Window window)
+        {}
     }
 }

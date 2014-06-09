@@ -104,8 +104,11 @@ namespace GNOMECAT.UI
 
         public void on_done (GNOMECAT.UI.Window window)
         {
-            window.set_panel(WindowStatus.EDIT);
+            window.set_panel(window.last_page);
         }
+
+        public void on_preferences (GNOMECAT.UI.Window window)
+        {}
     }
 
 

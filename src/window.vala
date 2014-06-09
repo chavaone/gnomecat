@@ -39,6 +39,7 @@ namespace GNOMECAT.UI
         public Gtk.Notebook window_panels;
         public GNOMECAT.UI.ToolBar headerbar;
 
+        public WindowStatus last_page {get; private set;}
 
         public GNOMECAT.FileProject.File file
         {
@@ -92,9 +93,29 @@ namespace GNOMECAT.UI
             add_action_entries (action_entries, this);
         }
 
+        public WindowStatus get_panel ()
+        {
+            switch (window_panels.page)
+            {
+            case 0:
+                return WindowStatus.OPEN;
+            case 1:
+                return WindowStatus.OPENEDFILES;
+            case 2:
+                return WindowStatus.EDIT;
+            case 3:
+                return WindowStatus.PREFERENCES;
+            default:
+                return WindowStatus.OTHER;
+            }
+        }
+
         public void set_panel (WindowStatus status, Panel? custom_panel = null)
         {
             assert(status != WindowStatus.OTHER || custom_panel != null);
+
+            if (status == WindowStatus.PREFERENCES && get_panel() != WindowStatus.OTHER)
+                last_page = get_panel ();
 
             int page_num = status == WindowStatus.OTHER ? window_panels.append_page(custom_panel as Gtk.Widget, null) : status;
             window_panels.page = page_num;
@@ -189,7 +210,7 @@ namespace GNOMECAT.UI
 
         private void on_preferences ()
         {
-            set_panel (WindowStatus.PREFERENCES);
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_preferences (this);
         }
 
         public void on_about ()
