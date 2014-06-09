@@ -25,37 +25,13 @@ namespace GNOMECAT.Languages
 {
     public class PluralForm : GLib.Object
     {
-        /**
-         *
-         */
-         public int id {get; private set;}
 
-        /**
-         *
-         */
+        public int id {get; private set;}
         public int number_of_plurals {get; private set;}
-
-        /**
-         *
-         */
         public string expression {get; private set;}
-
-        /**
-         *
-         */
         public HashMap<int, string> plural_tags {get; private set;}
 
-
-        private static HashMap<int, PluralForm> _plural_forms;
-        public static HashMap<int,PluralForm> plural_forms
-        {
-            get
-            {
-                if (_plural_forms == null)
-                    lazy_init();
-                return _plural_forms;
-            }
-        }
+        public static HashMap<int,PluralForm> plural_forms {get; private set;}
 
 
         /**
@@ -101,13 +77,9 @@ namespace GNOMECAT.Languages
             return plural_forms.get (id);
         }
 
-        /**
-         * Method that initializes the instances of the
-         *  existent plural forms.
-         */
-        private static void lazy_init ()
+        static construct
         {
-            _plural_forms = new HashMap<int, PluralForm> ();
+            plural_forms = new HashMap<int, PluralForm> ();
 
             try{
 
@@ -133,7 +105,7 @@ namespace GNOMECAT.Languages
                         tags.set (int.parse (tag_object.get_int_member ("number").to_string ()), tag_object.get_string_member ("tag"));
                     }
 
-                    _plural_forms.set (id, new PluralForm (id, number_of_plurals, expression, tags));
+                    plural_forms.set (id, new PluralForm (id, number_of_plurals, expression, tags));
                 }
 
             } catch (Error e) {
@@ -145,21 +117,21 @@ namespace GNOMECAT.Languages
 
     public class Language : GLib.Object
     {
-        private static HashMap<string,Language> _languages;
-        public static HashMap<string,Language> languages
-        {
-            get
-            {
-                if (_languages == null)
-                    lazy_init ();
-                return _languages;
-            }
-        }
-
+        public static HashMap<string,Language> languages {get; private set;}
 
         public string name {get; private set;}
         public string code {get; private set;}
         public PluralForm plural_form {get; set;}
+
+        public int number_of_plurals
+        {
+            get
+            {
+                if (plural_form == null)
+                    return 1;
+                return plural_form.number_of_plurals;
+            }
+        }
 
 
         public static Language get_language_by_code (string code)
@@ -175,12 +147,6 @@ namespace GNOMECAT.Languages
                 PluralForm.get_plural_from_id (pluralform);
         }
 
-        public int get_number_of_plurals ()
-        {
-            if (plural_form == null)
-                return 1;
-            return plural_form.number_of_plurals;
-        }
 
         public string? get_plural_form_tag (int plural)
         {
@@ -189,9 +155,9 @@ namespace GNOMECAT.Languages
             return this.plural_form.get_plural_form_tag (plural);
         }
 
-        private static void lazy_init ()
+        static construct
         {
-            _languages = new HashMap<string, Language> ();
+            languages = new HashMap<string, Language> ();
 
             try {
                 var parser = new Json.Parser ();
@@ -211,11 +177,11 @@ namespace GNOMECAT.Languages
                     if (lang_object.has_member ("pluralform") )
                     {
                         int plural_form_id = int.parse (lang_object.get_int_member ("pluralform").to_string ());
-                        _languages.set (code, new Language (code, name, plural_form_id));
+                        languages.set (code, new Language (code, name, plural_form_id));
                     }
                     else
                     {
-                        _languages.set (code, new Language (code, name, null));
+                        languages.set (code, new Language (code, name, null));
                     }
                 }
             } catch (Error e) {
