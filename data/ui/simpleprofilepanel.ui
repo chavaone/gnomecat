@@ -18,7 +18,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 <interface>
-  <!-- interface-requires gtk+ 3.10 -->
+  <requires lib="gtk+" version="3.10"/>
   <template class="GNOMECATUISimpleProfilePanel" parent="GtkGrid">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -97,6 +97,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkEntry" id="profile_name_entry">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -109,6 +110,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkEntry" id="translator_name_entry">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -172,6 +174,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkEntry" id="translator_email_entry">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -184,6 +187,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkEntry" id="team_email_entry">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -196,6 +200,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkComboBoxText" id="language_combobox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>
@@ -208,6 +213,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkComboBoxText" id="plural_form_combobox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>

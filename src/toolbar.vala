@@ -42,10 +42,67 @@ namespace GNOMECAT.UI
         public Gtk.StackSwitcher preferences_switch;
         [GtkChild]
         public Gtk.ToggleButton searchbutton;
+        [GtkChild]
+        public Gtk.Button done_back_bar_done_btn;
+        [GtkChild]
+        public Gtk.Button prefs_done_btn;
+        [GtkChild]
+        public Gtk.Button done_bar_done_btn;
 
-        public void set_toolbar_mode(ToolBarMode mode)
+
+
+        public bool done_button_sensitive
         {
-            this.page = mode;
+            set
+            {
+                if (get_enabled_done_button () != null)
+                    get_enabled_done_button ().sensitive = value;
+            }
+        }
+
+        public ToolBarMode mode
+        {
+            get
+            {
+                switch (page)
+                {
+                case 0:
+                    return ToolBarMode.EDIT;
+                case 1:
+                    return ToolBarMode.OPENEDFILES;
+                case 2:
+                    return ToolBarMode.PREFERENCES;
+                case 3:
+                    return ToolBarMode.DONEBACK;
+                case 4:
+                    return ToolBarMode.BACK;
+                case 5:
+                    return ToolBarMode.DONE;
+                case 6:
+                    return ToolBarMode.EMPTY;
+                default:
+                    return ToolBarMode.EMPTY;
+                }
+            }
+            set
+            {
+                page = value;
+            }
+        }
+
+        private Gtk.Button? get_enabled_done_button ()
+        {
+            switch (page)
+                {
+                case 2:
+                    return prefs_done_btn;
+                case 3:
+                    return done_back_bar_done_btn;
+                case 5:
+                    return done_bar_done_btn;
+                default:
+                    return null;
+                }
         }
 
         public void set_progressbar_info (int translated, int untranslated, int fuzzy)

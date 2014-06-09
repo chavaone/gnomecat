@@ -120,7 +120,7 @@ namespace GNOMECAT.UI
             int page_num = status == WindowStatus.OTHER ? window_panels.append_page(custom_panel as Gtk.Widget, null) : status;
             window_panels.page = page_num;
             (window_panels.get_nth_page (page_num) as Panel).window_page = page_num;
-            headerbar.set_toolbar_mode ((window_panels.get_nth_page (page_num) as Panel).toolbarmode);
+            headerbar.mode =  ((window_panels.get_nth_page (page_num) as Panel).toolbarmode);
         }
 
         private void on_go_next ()

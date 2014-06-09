@@ -220,11 +220,27 @@ namespace GNOMECAT.UI
 
         public void on_back (GNOMECAT.UI.Window window)
         {
+            (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
+                .headerbar.done_button_sensitive = true;
             window.set_panel (WindowStatus.PREFERENCES);
             window.window_panels.remove_page (window_page);
         }
 
         public void on_preferences (GNOMECAT.UI.Window window)
         {}
+
+        [GtkCallback]
+        public void on_profile_entry_changed (Gtk.Widget w)
+        {
+            (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
+                .headerbar.done_button_sensitive =
+                    profile_name != "" &&
+                    translator_name != "" &&
+                    translator_email != "" &&
+                    team_email != "" &&
+                    encoding != "" &&
+                    language != null &&
+                    plural_form != null;
+        }
     }
 }
