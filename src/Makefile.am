@@ -46,7 +46,9 @@ VALASOURCES = \
 	simpleprofilepanel.vala \
 	openedfilespanel.vala \
 	panel.vala \
-	openfilepanel.vala
+	openfilepanel.vala \
+	firstprofilepanel.vala \
+	wellcomepanel.vala
 
 gnomecat_SOURCES = \
 	$(VALASOURCES) \

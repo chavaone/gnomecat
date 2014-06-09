@@ -170,7 +170,16 @@ namespace GNOMECAT
         {
             GNOMECAT.UI.Window window = new GNOMECAT.UI.Window (this);
             window.show ();
-            window.set_panel(WindowStatus.OPENEDFILES);
+
+            if (enabled_profile == null)
+            {
+                window.set_panel(WindowStatus.OTHER, new GNOMECAT.UI.WellcomePanel());
+            }
+            else
+            {
+                window.set_panel(WindowStatus.OPENEDFILES);
+            }
+
             Gtk.main ();
         }
 

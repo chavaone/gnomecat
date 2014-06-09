@@ -150,7 +150,7 @@ namespace GNOMECAT.UI
             }
         }
 
-        public GNOMECAT.UI.ToolBarMode toolbarmode
+        public virtual GNOMECAT.UI.ToolBarMode toolbarmode
         {
             get
             {
@@ -191,7 +191,7 @@ namespace GNOMECAT.UI
         }
 
 
-        public void on_done (GNOMECAT.UI.Window window)
+        public virtual void on_done (GNOMECAT.UI.Window window)
         {
             if (edit_profile == null){
                 GNOMECAT.Profiles.Profile new_prof = new GNOMECAT.Profiles.Profile (this.profile_name,

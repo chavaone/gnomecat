@@ -20,6 +20,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/editpanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/openedfilespanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/openfilepanel.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/wellcomepanel.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
         <file>css/gnomecat.css</file>

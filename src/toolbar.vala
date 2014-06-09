@@ -27,7 +27,9 @@ namespace GNOMECAT.UI
         OPENEDFILES = 1,
         PREFERENCES = 2,
         DONEBACK = 3,
-        BACK = 4
+        BACK = 4,
+        DONE = 5,
+        EMPTY = 6
     }
 
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/toolbar.ui")]
