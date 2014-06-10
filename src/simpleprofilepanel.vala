@@ -226,6 +226,17 @@ namespace GNOMECAT.UI
             window.window_panels.remove_page (window_page);
         }
 
+        public void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        {
+            toolbar.mode = toolbarmode;
+            on_profile_entry_changed (this);
+        }
+
+        public void clean_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        {
+            toolbar.done_button_sensitive = true;
+        }
+
         public void on_preferences (GNOMECAT.UI.Window window)
         {}
 

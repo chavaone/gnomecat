@@ -2,12 +2,19 @@
 
 namespace GNOMECAT.UI
 {
-	public interface Panel
+	public interface Panel : GLib.Object
 	{
 
 		public abstract GNOMECAT.UI.ToolBarMode toolbarmode {get;}
 
 		public abstract int window_page {get; set;}
+
+		public virtual void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+		{
+			toolbar.mode = toolbarmode;
+		}
+
+		public virtual void clean_headerbar (GNOMECAT.UI.ToolBar toolbar) {}
 
 		public virtual void on_go_next (GNOMECAT.UI.Window window) {}
 

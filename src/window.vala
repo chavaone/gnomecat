@@ -114,13 +114,19 @@ namespace GNOMECAT.UI
         {
             assert(status != WindowStatus.OTHER || custom_panel != null);
 
+            Panel old_panel = window_panels.get_nth_page (window_panels.page) as Panel;
+            old_panel.clean_headerbar (headerbar);
+
             if (status == WindowStatus.PREFERENCES && get_panel() != WindowStatus.OTHER)
                 last_page = get_panel ();
 
             int page_num = status == WindowStatus.OTHER ? window_panels.append_page(custom_panel as Gtk.Widget, null) : status;
             window_panels.page = page_num;
-            (window_panels.get_nth_page (page_num) as Panel).window_page = page_num;
-            headerbar.mode =  ((window_panels.get_nth_page (page_num) as Panel).toolbarmode);
+
+            Panel new_panel = window_panels.get_nth_page (page_num) as Panel;
+            new_panel.window_page = page_num;
+            new_panel.setup_headerbar (headerbar);
+
         }
 
         private void on_go_next ()
