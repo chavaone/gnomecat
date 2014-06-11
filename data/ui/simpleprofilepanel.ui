@@ -19,12 +19,43 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
+  <object class="GtkListStore" id="encoding">
+    <columns>
+      <!-- column-name encoding -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">UTF-8</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">ASCII</col>
+      </row>
+    </data>
+  </object>
+  <object class="GtkListStore" id="languages">
+    <columns>
+      <!-- column-name languages -->
+      <column type="gchararray"/>
+      <!-- column-name codes -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="plural_forms">
+    <columns>
+      <!-- column-name plurals -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <template class="GNOMECATUISimpleProfilePanel" parent="GtkGrid">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="row_spacing">5</property>
+    <property name="margin_left">10</property>
+    <property name="margin_right">10</property>
+    <property name="margin_top">10</property>
+    <property name="margin_bottom">10</property>
+    <property name="row_spacing">10</property>
     <property name="column_spacing">20</property>
-    <property name="row_homogeneous">True</property>
     <child>
       <object class="GtkLabel" id="profile_name_label">
         <property name="visible">True</property>
@@ -95,8 +126,10 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
     </child>
     <child>
       <object class="GtkEntry" id="profile_name_entry">
+        <property name="width_request">30</property>
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <property name="hexpand">True</property>
         <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
@@ -108,8 +141,10 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
     </child>
     <child>
       <object class="GtkEntry" id="translator_name_entry">
+        <property name="width_request">30</property>
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <property name="hexpand">True</property>
         <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
@@ -174,6 +209,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkEntry" id="translator_email_entry">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <property name="hexpand">True</property>
         <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
@@ -187,6 +223,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       <object class="GtkEntry" id="team_email_entry">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <property name="hexpand">True</property>
         <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
@@ -197,22 +234,11 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       </packing>
     </child>
     <child>
-      <object class="GtkComboBoxText" id="language_combobox">
+      <object class="GtkComboBox" id="plural_form_combobox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
-      </object>
-      <packing>
-        <property name="left_attach">1</property>
-        <property name="top_attach">3</property>
-        <property name="width">1</property>
-        <property name="height">1</property>
-      </packing>
-    </child>
-    <child>
-      <object class="GtkComboBoxText" id="plural_form_combobox">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="hexpand">True</property>
+        <property name="model">plural_forms</property>
         <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
@@ -223,12 +249,27 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       </packing>
     </child>
     <child>
-      <object class="GtkComboBoxText" id="encoding_combobox">
+      <object class="GtkComboBox" id="language_combobox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <items>
-          <item translatable="yes">UTF-8</item>
-        </items>
+        <property name="hexpand">True</property>
+        <property name="model">languages</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
+      </object>
+      <packing>
+        <property name="left_attach">1</property>
+        <property name="top_attach">3</property>
+        <property name="width">1</property>
+        <property name="height">1</property>
+      </packing>
+    </child>
+    <child>
+      <object class="GtkComboBox" id="encoding_combobox">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="hexpand">True</property>
+        <property name="model">encoding</property>
+        <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
       </object>
       <packing>
         <property name="left_attach">1</property>

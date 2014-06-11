@@ -84,47 +84,77 @@ namespace GNOMECAT.UI
         }
 
         [GtkChild]
-        private Gtk.ComboBoxText encoding_combobox;
+        private Gtk.ComboBox encoding_combobox;
         public string encoding
         {
             get
             {
-                return "UTF-8"; //FIXME
+                Gtk.TreeIter iter;
+
+                if (! encoding_combobox.get_active_iter(out iter))
+                    return "";
+
+                Value enc_val;
+                (encoding_combobox.model as Gtk.ListStore).get_value (iter, 0, out enc_val);
+                return enc_val.get_string ();
             }
             set
             {
+                Gtk.TreeIter iter;
+
+                encoding_combobox.model.get_iter_first(out iter);
+
+                do
+                {
+                    Value enc_val;
+                    (encoding_combobox.model as Gtk.ListStore).get_value (iter, 0, out enc_val);
+                    print(value + "-" + enc_val.get_string () + "\n");
+                    if (enc_val.get_string () == value)
+                        encoding_combobox.set_active_iter (iter);
+                } while(encoding_combobox.model.iter_next (ref iter));
             }
         }
 
         [GtkChild]
-        private Gtk.ComboBoxText language_combobox;
+        private Gtk.ComboBox language_combobox;
         public Language? language
         {
             get
             {
-                int active_item = language_combobox.get_active ();
-                if (active_item == -1)
+                Gtk.TreeIter iter;
+
+                if (! language_combobox.get_active_iter(out iter))
                     return null;
 
+                Value lang_code;
+                (language_combobox.model as Gtk.ListStore).get_value (iter, 1, out lang_code);
+                string code = lang_code.get_string ().substring (1, 2);
+
+                //FIXME:We should use get_language_by_code_method
                 foreach (var entry in Language.languages.entries)
-                    if (active_item-- == 0)
+                    if (entry.value.code == code)
                         return entry.value;
                 return null;
             }
             set
             {
-                int index = 0;
-                foreach (var entry in Language.languages.entries)
+                Gtk.TreeIter iter;
+
+                language_combobox.model.get_iter_first(out iter);
+
+                do
                 {
-                    if (entry.value == value)
-                        plural_form_combobox.active = index;
-                    index++;
-                }
+                    Value lang_code;
+                    (language_combobox.model as Gtk.ListStore).get_value (iter, 1, out lang_code);
+                    string code = lang_code.get_string ().substring (1, 2);
+                    if (code == value.code)
+                        language_combobox.set_active_iter (iter);
+                } while(language_combobox.model.iter_next (ref iter));
             }
         }
 
         [GtkChild]
-        private Gtk.ComboBoxText plural_form_combobox;
+        private Gtk.ComboBox plural_form_combobox;
         public PluralForm? plural_form
         {
             get
@@ -164,14 +194,42 @@ namespace GNOMECAT.UI
 
         public SimpleProfilePanel ()
         {
+            Gtk.TreeIter iter;
+
+            Gtk.CellRendererText cell = new Gtk.CellRendererText();
+            language_combobox.pack_start (cell, false);
+            language_combobox.add_attribute (cell, "text", 0);
+            language_combobox.active = 0;
+            (language_combobox.model as Gtk.ListStore).set_sort_column_id (0, Gtk.SortType.ASCENDING);
+
+            cell = new Gtk.CellRendererText();
+            cell.ellipsize = Pango.EllipsizeMode.END;
+            cell.ellipsize_set = true;
+            plural_form_combobox.pack_start (cell, true);
+            plural_form_combobox.add_attribute (cell, "text", 0);
+            plural_form_combobox.active = 0;
+
+            cell = new Gtk.CellRendererText();
+            cell.ellipsize = Pango.EllipsizeMode.END;
+            cell.ellipsize_set = true;
+            encoding_combobox.pack_start (cell, true);
+            encoding_combobox.add_attribute (cell, "text", 0);
+            encoding_combobox.active = 0;
+
             foreach (var entry in Language.languages.entries)
             {
-                language_combobox.append_text (entry.value.name + " (" + entry.key + ")");
+                (language_combobox.model as Gtk.ListStore).append (out iter);
+                (language_combobox.model as Gtk.ListStore).set_value (iter,
+                    0, entry.value.name);
+                (language_combobox.model as Gtk.ListStore).set_value (iter,
+                    1, "(%s)".printf(entry.key));
             }
 
             foreach (PluralForm pf in PluralForm.plural_forms)
             {
-                plural_form_combobox.append_text (pf.expression);
+                (plural_form_combobox.model as Gtk.ListStore).append (out iter);
+                (plural_form_combobox.model as Gtk.ListStore).set_value (iter,
+                    0, pf.expression);
             }
 
             edit_profile = null;
