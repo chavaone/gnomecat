@@ -100,6 +100,12 @@ namespace GNOMECAT.UI
             }
             set
             {
+                if (value == "")
+                {
+                    encoding_combobox.active = -1;
+                    return;
+                }
+
                 Gtk.TreeIter iter;
 
                 encoding_combobox.model.get_iter_first(out iter);
@@ -108,10 +114,13 @@ namespace GNOMECAT.UI
                 {
                     Value enc_val;
                     (encoding_combobox.model as Gtk.ListStore).get_value (iter, 0, out enc_val);
-                    print(value + "-" + enc_val.get_string () + "\n");
                     if (enc_val.get_string () == value)
+                    {
                         encoding_combobox.set_active_iter (iter);
+                        return;
+                    }
                 } while(encoding_combobox.model.iter_next (ref iter));
+                language_combobox.active = -1;
             }
         }
 
@@ -128,7 +137,7 @@ namespace GNOMECAT.UI
 
                 Value lang_code;
                 (language_combobox.model as Gtk.ListStore).get_value (iter, 1, out lang_code);
-                string code = lang_code.get_string ().substring (1, 2);
+                string code = lang_code.get_string ();
 
                 //FIXME:We should use get_language_by_code_method
                 foreach (var entry in Language.languages.entries)
@@ -138,6 +147,12 @@ namespace GNOMECAT.UI
             }
             set
             {
+                if (value == null)
+                {
+                    language_combobox.active = -1;
+                    return;
+                }
+
                 Gtk.TreeIter iter;
 
                 language_combobox.model.get_iter_first(out iter);
@@ -146,10 +161,14 @@ namespace GNOMECAT.UI
                 {
                     Value lang_code;
                     (language_combobox.model as Gtk.ListStore).get_value (iter, 1, out lang_code);
-                    string code = lang_code.get_string ().substring (1, 2);
+                    string code = lang_code.get_string ();
                     if (code == value.code)
+                    {
                         language_combobox.set_active_iter (iter);
+                        return;
+                    }
                 } while(language_combobox.model.iter_next (ref iter));
+                language_combobox.active = -1;
             }
         }
 
@@ -170,13 +189,23 @@ namespace GNOMECAT.UI
             }
             set
             {
+                if (value == null)
+                {
+                    plural_form_combobox.active = -1;
+                    return;
+                }
+
                 int index = 0;
                 foreach (var entry in PluralForm.plural_forms.entries)
                 {
                     if (entry.value == value)
+                    {
                         plural_form_combobox.active = index;
+                        return;
+                    }
                     index++;
                 }
+                plural_form_combobox.active = -1;
             }
         }
 
@@ -190,16 +219,46 @@ namespace GNOMECAT.UI
 
         public int window_page {get; set;}
 
-        private GNOMECAT.Profiles.Profile edit_profile;
+        private GNOMECAT.Profiles.Profile? _profile;
+        public GNOMECAT.Profiles.Profile? profile
+        {
+            get
+            {
+                return _profile;
+            }
+            set
+            {
+                _profile = value;
+                if (_profile == null)
+                {
+                    this.profile_name = "";
+                    this.translator_name = "";
+                    this.translator_email = "";
+                    this.team_email = "";
+                    this.encoding = "";
+                    this.language = null;
+                    this.plural_form = null;
+                }
+                else
+                {
+                    this.profile_name = _profile.name;
+                    this.translator_name = _profile.translator_name;
+                    this.translator_email = _profile.translator_email;
+                    this.team_email = _profile.team_email;
+                    this.encoding = _profile.encoding;
+                    this.language = _profile.language;
+                    this.plural_form = _profile.plural_form;
+                }
+            }
+        }
 
         public SimpleProfilePanel ()
         {
             Gtk.TreeIter iter;
 
             Gtk.CellRendererText cell = new Gtk.CellRendererText();
-            language_combobox.pack_start (cell, false);
+            language_combobox.pack_start (cell, true);
             language_combobox.add_attribute (cell, "text", 0);
-            language_combobox.active = 0;
             (language_combobox.model as Gtk.ListStore).set_sort_column_id (0, Gtk.SortType.ASCENDING);
 
             cell = new Gtk.CellRendererText();
@@ -207,51 +266,32 @@ namespace GNOMECAT.UI
             cell.ellipsize_set = true;
             plural_form_combobox.pack_start (cell, true);
             plural_form_combobox.add_attribute (cell, "text", 0);
-            plural_form_combobox.active = 0;
 
             cell = new Gtk.CellRendererText();
-            cell.ellipsize = Pango.EllipsizeMode.END;
-            cell.ellipsize_set = true;
             encoding_combobox.pack_start (cell, true);
             encoding_combobox.add_attribute (cell, "text", 0);
-            encoding_combobox.active = 0;
 
             foreach (var entry in Language.languages.entries)
             {
-                (language_combobox.model as Gtk.ListStore).append (out iter);
-                (language_combobox.model as Gtk.ListStore).set_value (iter,
-                    0, entry.value.name);
-                (language_combobox.model as Gtk.ListStore).set_value (iter,
-                    1, "(%s)".printf(entry.key));
+                Gtk.ListStore model = language_combobox.model as Gtk.ListStore;
+                model.append (out iter);
+                model.set_value (iter, 0, entry.value.name);
+                model.set_value (iter, 1, entry.value.code);
             }
 
             foreach (PluralForm pf in PluralForm.plural_forms)
             {
-                (plural_form_combobox.model as Gtk.ListStore).append (out iter);
-                (plural_form_combobox.model as Gtk.ListStore).set_value (iter,
-                    0, pf.expression);
+                Gtk.ListStore model = plural_form_combobox.model as Gtk.ListStore;
+                model.append (out iter);
+                model.set_value (iter, 0, pf.expression);
             }
-
-            edit_profile = null;
-        }
-
-        public SimpleProfilePanel.from_profile (GNOMECAT.Profiles.Profile prof)
-        {
-            this ();
-            this.profile_name = prof.name;
-            this.translator_name = prof.translator_name;
-            this.translator_email = prof.translator_email;
-            this.team_email = prof.team_email;
-            this.encoding = prof.encoding;
-            this.language = prof.language;
-            this.plural_form = prof.plural_form;
-            edit_profile = prof;
         }
 
 
         public virtual void on_done (GNOMECAT.UI.Window window)
         {
-            if (edit_profile == null){
+            if (profile == null)
+            {
                 GNOMECAT.Profiles.Profile new_prof = new GNOMECAT.Profiles.Profile (this.profile_name,
                     this.translator_name, this.translator_email,
                     this.language, this.plural_form, "8-bits",
@@ -262,14 +302,14 @@ namespace GNOMECAT.UI
             }
             else
             {
-                edit_profile.name = this.profile_name;
-                edit_profile.translator_name = this.translator_name;
-                edit_profile.translator_email = this.translator_email;
-                edit_profile.language = this.language;
-                edit_profile.plural_form = this.plural_form;
-                edit_profile.char_set = "8-bits";
-                edit_profile.encoding = this.encoding;
-                edit_profile.team_email = this.team_email;
+                profile.name = this.profile_name;
+                profile.translator_name = this.translator_name;
+                profile.translator_email = this.translator_email;
+                profile.language = this.language;
+                profile.plural_form = this.plural_form;
+                profile.char_set = "8-bits";
+                profile.encoding = this.encoding;
+                profile.team_email = this.team_email;
             }
 
             (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
@@ -281,7 +321,6 @@ namespace GNOMECAT.UI
             (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
                 .headerbar.done_button_sensitive = true;
             window.set_panel (WindowStatus.PREFERENCES);
-            window.window_panels.remove_page (window_page);
         }
 
         public void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
@@ -301,8 +340,11 @@ namespace GNOMECAT.UI
         [GtkCallback]
         public void on_profile_entry_changed (Gtk.Widget w)
         {
-            (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
-                .headerbar.done_button_sensitive =
+            GNOMECAT.UI.Window? window = (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window);
+
+            if (window != null)
+            {
+                window.headerbar.done_button_sensitive =
                     profile_name != "" &&
                     translator_name != "" &&
                     translator_email != "" &&
@@ -310,6 +352,7 @@ namespace GNOMECAT.UI
                     encoding != "" &&
                     language != null &&
                     plural_form != null;
+            }
         }
     }
 }

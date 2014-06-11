@@ -29,6 +29,7 @@ namespace GNOMECAT.UI
         OPENEDFILES = 1,
         EDIT = 2,
         PREFERENCES = 3,
+        PROFILE = 4,
         OTHER
     }
 
@@ -86,6 +87,9 @@ namespace GNOMECAT.UI
             headerbar.searchbutton.bind_property ("active",
                 window_panels.get_nth_page(WindowStatus.EDIT) as EditPanel,
                 "search_enabled", BindingFlags.BIDIRECTIONAL);
+
+            //FIXME: Include this insert into the ui file.
+            window_panels.insert_page (new SimpleProfilePanel(), null, WindowStatus.PROFILE);
         }
 
         construct
@@ -105,6 +109,8 @@ namespace GNOMECAT.UI
                 return WindowStatus.EDIT;
             case 3:
                 return WindowStatus.PREFERENCES;
+            case 4:
+                return WindowStatus.PROFILE;
             default:
                 return WindowStatus.OTHER;
             }
@@ -117,7 +123,7 @@ namespace GNOMECAT.UI
             Panel old_panel = window_panels.get_nth_page (window_panels.page) as Panel;
             old_panel.clean_headerbar (headerbar);
 
-            if (status == WindowStatus.PREFERENCES && get_panel() != WindowStatus.OTHER)
+            if (status == WindowStatus.PREFERENCES && get_panel() != WindowStatus.PROFILE)
                 last_page = get_panel ();
 
             int page_num = status == WindowStatus.OTHER ? window_panels.append_page(custom_panel as Gtk.Widget, null) : status;

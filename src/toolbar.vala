@@ -49,14 +49,13 @@ namespace GNOMECAT.UI
         [GtkChild]
         public Gtk.Button done_bar_done_btn;
 
-
-
         public bool done_button_sensitive
         {
             set
             {
-                if (get_enabled_done_button () != null)
-                    get_enabled_done_button ().sensitive = value;
+                done_back_bar_done_btn.sensitive = value;
+                prefs_done_btn.sensitive = value;
+                done_bar_done_btn.sensitive = value;
             }
         }
 

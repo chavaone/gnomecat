@@ -93,8 +93,8 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_create_profile ()
         {
-            GNOMECAT.UI.SimpleProfilePanel prof_panel = new SimpleProfilePanel();
-            window.set_panel (WindowStatus.OTHER, prof_panel);
+            (window.window_panels.get_nth_page (WindowStatus.PROFILE) as SimpleProfilePanel).profile = null;
+            window.set_panel (WindowStatus.PROFILE);
         }
 
         [GtkCallback]
@@ -184,8 +184,8 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_edit_profile ()
         {
-            GNOMECAT.UI.SimpleProfilePanel prof_panel = new SimpleProfilePanel.from_profile (this.profile);
-            window.set_panel (WindowStatus.OTHER, prof_panel);
+            (window.window_panels.get_nth_page (WindowStatus.PROFILE) as SimpleProfilePanel).profile = profile;
+            window.set_panel (WindowStatus.PROFILE);
         }
     }
 }
