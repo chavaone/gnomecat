@@ -50,6 +50,7 @@ namespace GNOMECAT.UI
             set
             {
                 _file = value;
+                clean_messages ();
                 foreach (Message m in value.messages)
                     messages_list_box.add (new MessageListRow.with_message (m));
             }
@@ -106,25 +107,19 @@ namespace GNOMECAT.UI
             return null;
         }
 
-        public MessageEditorTab? get_tab_by_plural_number (int plural_number)
-        {
-            return selected_row == null ? null :
-                selected_row.get_tab_by_plural_number (plural_number);
-        }
-
-        public MessageEditorTab? get_active_editor_tab ()
-        {
-            return selected_row == null ? null :
-                selected_row.get_active_tab ();
-        }
-
         [GtkCallback]
-        private void on_row_selected (Gtk.ListBox src, Gtk.ListBoxRow row)
+        private void on_row_selected (Gtk.ListBoxRow? row)
         {
-            selected_row.edition_mode = false;
             selected_row = (row as MessageListRow);
-            selected_row.edition_mode = true;
             message_selected (selected_row.message);
+        }
+
+        private void clean_messages ()
+        {
+            foreach (Widget w in messages_list_box.get_children ())
+            {
+                messages_list_box.remove (w);
+            }
         }
     }
 
@@ -149,8 +144,6 @@ namespace GNOMECAT.UI
         private Image error_image;
         [GtkChild]
         private Gtk.Box info_box;
-        [GtkChild]
-        private Gtk.Notebook editor_notebook;
 
 
         private Message _message;
@@ -168,82 +161,9 @@ namespace GNOMECAT.UI
             }
         }
 
-        public bool edition_mode
-        {
-            get
-            {
-                return editor_notebook.visible;
-            }
-            set
-            {
-                editor_notebook.visible = value;
-                info_box.visible = ! value;
-                if (value)
-                    set_editor_box_properties ();
-                else
-                    clean_tabs ();
-            }
-        }
-
         public MessageListRow.with_message (Message m)
         {
             message = m;
-        }
-
-        public MessageEditorTab? get_active_tab ()
-        {
-            int curr_page = editor_notebook.get_current_page ();
-            return editor_notebook.get_nth_page (curr_page) as MessageEditorTab;
-        }
-
-        public MessageEditorTab? get_tab_by_plural_number (int plural_number)
-        {
-            if (plural_number > editor_notebook.get_n_pages ())
-                return null;
-
-            return editor_notebook.get_nth_page (plural_number) as MessageEditorTab;
-        }
-
-        public void select_tab_by_plural_number (int plural_number)
-        {
-            if (plural_number > editor_notebook.get_n_pages ())
-                return;
-            editor_notebook.set_current_page (plural_number);
-        }
-
-        private void add_tab (MessageEditorTab t)
-        {
-            editor_notebook.append_page (t, t.label);
-        }
-
-        private void clean_tabs ()
-        {
-            int number_of_tabs = this.editor_notebook.get_n_pages ();
-            for (int i=0; i<number_of_tabs; i++)
-            {
-                this.editor_notebook.remove_page (0);
-            }
-        }
-
-        private void set_editor_box_properties ()
-        {
-            int i;
-            clean_tabs ();
-            PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
-
-            string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
-            add_tab (new MessageEditorTab (label, message, 0));
-
-            if (message.has_plural ())
-            {
-                int num_plurals = enabled_plural_form.number_of_plurals;
-
-                for (i = 1; i < num_plurals; i++)
-                {
-                    label = _("Plural %i (%s)").printf (i, enabled_plural_form.plural_tags.get (i));
-                    add_tab (new MessageEditorTab (label, message, i));
-                }
-            }
         }
 
         private void set_info_box_properties ()
@@ -313,25 +233,12 @@ namespace GNOMECAT.UI
             }
         }
 
-        [GtkCallback]
-        private void on_page_added (Gtk.Widget pate, uint page_num)
-        {
-            if (editor_notebook.get_n_pages () > 1)
-                editor_notebook.show_tabs = true;
-        }
-
-        [GtkCallback]
-        private void on_page_removed (Gtk.Widget pate, uint page_num)
-        {
-            if (editor_notebook.get_n_pages () <= 1)
-                editor_notebook.show_tabs = false;
-        }
-
         public void select (GNOMECAT.SelectLevel level,
             GNOMECAT.FileProject.MessageFragment? fragment)
         {
             assert (fragment != null);
 
+            /*
             if (fragment.plural_number >= editor_notebook.get_n_pages ())
             {
                 //TODO:include debug info!
@@ -344,6 +251,7 @@ namespace GNOMECAT.UI
                 (editor_notebook.get_nth_page (fragment.plural_number)
                     as MessageEditorTab).select (level, fragment);
             }
+            */
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
@@ -351,6 +259,7 @@ namespace GNOMECAT.UI
         {
             assert (fragment != null);
 
+            /*
             if (this.edition_mode
                 && fragment.plural_number < editor_notebook.get_n_pages ())
             {

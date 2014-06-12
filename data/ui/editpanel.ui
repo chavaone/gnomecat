@@ -1,30 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.0 on Fri Oct 18 12:53:23 2013
-
-This file is part of GNOMECAT.
-
-GNOMECAT is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-GNOMECAT is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+<!-- Generated with glade 3.16.1 -->
 <interface>
-  <!-- interface-requires gtk+ 3.10 -->
+  <requires lib="gtk+" version="3.10"/>
   <template class="GNOMECATUIEditPanel" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="spacing">5</property>
-    <property name="expand">True</property>
     <property name="orientation">vertical</property>
+    <property name="spacing">5</property>
     <child>
       <object class="GNOMECATUISearchBar" id="searchbar">
         <property name="visible">True</property>
@@ -41,7 +23,6 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="spacing">5</property>
-        <property name="expand">True</property>
         <child>
           <object class="GNOMECATUIMessageListWidget" id="message_list">
             <property name="visible">True</property>
@@ -60,7 +41,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
       </object>
