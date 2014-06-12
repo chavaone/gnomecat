@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3
-
-This file is part of GNOMECAT.
-
-GNOMECAT is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-GNOMECAT is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+<!-- Generated with glade 3.16.1 -->
 <interface>
   <requires lib="gtk+" version="3.8"/>
   <template class="GNOMECATUIWindow" parent="GtkApplicationWindow">
@@ -33,6 +16,9 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
           <object class="GNOMECATUIOpenFilePanel" id="openfilepanel">
             <property name="visible">True</property>
           </object>
+          <packing>
+            <property name="position">0</property>
+          </packing>
         </child>
 
         <child>
@@ -40,6 +26,9 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="visible">True</property>
             <signal name="file_activated" handler="on_file_activated" swapped="no"/>
           </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
         </child>
 
         <child>
@@ -47,12 +36,18 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="visible">True</property>
             <signal name="file_changed" handler="on_file_changed" swapped="no"/>
           </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
         </child>
 
         <child>
           <object class="GNOMECATUIPreferencesPanel" id="preferencespanel">
             <property name="visible">True</property>
           </object>
+          <packing>
+            <property name="position">3</property>
+          </packing>
         </child>
       </object>
     </child>
