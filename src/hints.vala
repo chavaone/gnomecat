@@ -26,12 +26,13 @@ namespace GNOMECAT.UI
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintpanelrow.ui")]
     public class HintPanelRow : Gtk.ListBoxRow
     {
+
         [GtkChild]
-        private Gtk.Entry hint_entry;
+        private Gtk.TextView hint_text;
+        [GtkChild]
+        private Gtk.LevelBar accuracy;
         [GtkChild]
         private Gtk.Label origin;
-        [GtkChild]
-        private Gtk.Label accuracy_label;
 
         private Hint _hint;
         public Hint hint
@@ -43,9 +44,9 @@ namespace GNOMECAT.UI
             set
             {
                 _hint = value;
-                hint_entry.set_text (value.translation_hint);
+                hint_text.buffer.text = value.translation_hint;
                 origin.set_text (value.origin);
-                accuracy_label.set_text ((value.accuracy * 100).to_string () + "%");
+                accuracy.value = value.accuracy;
             }
         }
 
@@ -98,9 +99,13 @@ namespace GNOMECAT.UI
         public void on_row_activated (Gtk.ListBoxRow r)
         {
             string text = (r as HintPanelRow).hint.translation_hint;
-            GNOMECAT.UI.MessageListWidget w = (this.get_parent ().get_parent
+            GNOMECAT.UI.EditPanel w = parent.parent as GNOMECAT.UI.EditPanel;
+            w.message_editor.get_active_tab ().translation_text = text;
+            /*
+            GNOMECAT.UI.MessageEditor w = (get_parent ().get_parent
                 ().get_parent () as GNOMECAT.UI.EditPanel).message_list;
             w.get_active_editor_tab ().translation_text = text;
+            */
         }
     }
 }
