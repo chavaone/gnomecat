@@ -47,8 +47,6 @@ namespace GNOMECAT.UI
         private SourceView textview_original_text;
         [GtkChild]
         private SourceView textview_translated_text;
-        [GtkChild]
-        private ListBox tips_box;
 
         private string _original_text;
         public string original_text
@@ -194,9 +192,6 @@ namespace GNOMECAT.UI
 
             textview_translated_text.buffer.end_user_action.connect (update_translation);
 
-            foreach (MessageTip t in message.get_tips_plural_form (plural_number))
-                add_tip (t);
-
             int height_orig = string_lines (original_text) * 25;
             int height_tran = string_lines (translation_text) * 25;
             int height = height_orig > height_tran ? height_orig : height_tran;
@@ -226,33 +221,6 @@ namespace GNOMECAT.UI
                 return;
 
             this.translation_text = new_string;
-        }
-
-        private void on_added_tip (Message m, MessageTip t)
-        {
-            add_tip (t);
-        }
-
-        private void on_removed_tip (Message m, MessageTip t)
-        {
-            remove_tip (t);
-        }
-
-        public void add_tip (MessageTip t)
-        {
-            tips_box.add (new MessageTipRow (t));
-        }
-
-        public void remove_tip (MessageTip t)
-        {
-            foreach (Widget w in tips_box.get_children ())
-            {
-                if ((w as MessageTipRow).tip == t)
-                {
-                    tips_box.remove (w);
-                    return;
-                }
-            }
         }
 
         public void replace_tags_original_string (ArrayList<TextTag> tags)
@@ -313,12 +281,6 @@ namespace GNOMECAT.UI
                 source_buffer.get_undo_manager ().redo ();
         }
 
-        [GtkCallback]
-        private void tip_enabled (ListBox source, ListBoxRow row)
-        {
-            this.replace_tags_original_string ((row as MessageTipRow).tip.tags_original);
-            this.replace_tags_translation_string ((row as MessageTipRow).tip.tags_translation);
-        }
 
         private void update_translation (TextBuffer buff)
         {
@@ -403,21 +365,20 @@ namespace GNOMECAT.UI
     /**
      * Rows of the tips displaying box.
      */
-    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditortabtiprow.ui")]
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messagetiprow.ui")]
     public class MessageTipRow : ListBoxRow
     {
 
-        /**
-         *
-         */
         public MessageTip tip {get; private set;}
 
         [GtkChild]
         private Image icon;
+        [GtkChild]
+        private Gtk.TextView tip_description;
+        [GtkChild]
+        private Gtk.Label tip_name;
 
-        /**
-         *
-         */
+
         public MessageTipRow (MessageTip t)
         {
             this.tip = t;
@@ -434,7 +395,25 @@ namespace GNOMECAT.UI
                 icon.icon_name = "dialog-information-symbolic";
                 break;
             }
-            icon.tooltip_text = t.name + ": " + t.description;
+            tip_name.set_text (t.name);
+            tip_description.buffer.text = t.description;
+        }
+
+
+        [GtkCallback]
+        private bool on_selected (Gdk.EventButton e)
+        {
+            if (tip_description.visible)
+            {
+                tip_description.visible = false;
+            }
+            else
+            {
+                tip_description.visible = true;
+                (this.get_parent() as ListBox).row_activated (this);
+            }
+
+            return false;
         }
     }
 }

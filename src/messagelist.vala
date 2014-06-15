@@ -269,6 +269,20 @@ namespace GNOMECAT.UI
                         as MessageEditorTab).deselect (level, fragment);
                 }
             }
+            */
         }
+
+       [GtkCallback]
+       private bool on_clicked (Gdk.EventButton e)
+       {
+            (get_parent() as ListBox).row_selected (this);
+            return false;
+       }
+
+       [GtkCallback]
+       private void on_entry_selected ()
+       {
+            (get_parent() as ListBox).row_selected (this);
+       }
     }
 }

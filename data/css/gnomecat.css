@@ -1,6 +1,7 @@
 
 
-GNOMECATUIMessageListRow:selected {
+GNOMECATUIMessageListRow:selected,
+GNOMECATUIMessageTipRow:selected {
 	color: black;
  	background-color: transparent;
 }

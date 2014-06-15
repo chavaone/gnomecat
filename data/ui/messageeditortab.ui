@@ -138,17 +138,5 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
         <property name="position">0</property>
       </packing>
     </child>
-    <child>
-      <object class="GtkListBox" id="tips_box">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <signal name="row-activated" handler="tip_enabled" swapped="no"/>
-      </object>
-      <packing>
-        <property name="expand">False</property>
-        <property name="fill">True</property>
-        <property name="position">1</property>
-      </packing>
-    </child>
   </template>
 </interface>
