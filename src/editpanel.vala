@@ -41,6 +41,9 @@ namespace GNOMECAT.UI {
         [GtkChild]
         public HintPanelWidget hints_panel;
 
+        [GtkChild]
+        public MessageEditor message_editor;
+
         public GNOMECAT.FileProject.File? _file;
         public GNOMECAT.FileProject.File? file
         {
@@ -109,6 +112,7 @@ namespace GNOMECAT.UI {
             if (navigator_translated != null) navigator_translated.message = m;
             if (navigator_fuzzy != null) navigator_fuzzy.message = m;
             if (navigator_untranslated != null) navigator_untranslated.message = m;
+            message_editor.message = m;
         }
 
         [GtkCallback]
@@ -127,15 +131,15 @@ namespace GNOMECAT.UI {
 
         public void on_edit_undo (GNOMECAT.UI.Window window)
         {
-            MessageEditorTab tab;
-            if ((tab = message_list.get_active_editor_tab ()) != null)
-                tab.undo ();
+             MessageEditorTab tab;
+             if ((tab = message_editor.get_active_tab ()) != null)
+                 tab.undo ();
         }
 
         public void on_edit_redo (GNOMECAT.UI.Window window)
         {
             MessageEditorTab tab;
-            if ((tab = message_list.get_active_editor_tab ()) != null)
+            if ((tab = message_editor.get_active_tab ()) != null)
                 tab.redo ();
         }
 

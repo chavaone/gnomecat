@@ -214,6 +214,7 @@ namespace GNOMECAT
             new GNOMECAT.UI.EditPanel();
             new GNOMECAT.UI.PreferencesPanel();
             new GNOMECAT.UI.OpenFilePanel();
+            new GNOMECAT.UI.MessageEditor ();
             new GNOMECAT.Languages.PluralForm (0, 0, "", new Gee.HashMap<int, string>());
             new GNOMECAT.Languages.Language ("", "", null);
 

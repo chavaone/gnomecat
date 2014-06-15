@@ -33,9 +33,111 @@ namespace GNOMECAT.UI
         return ret;
     }
 
-    /**
-     * Editor pannel tabs.
-     */
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditor.ui")]
+    public class MessageEditor : Box
+    {
+
+        [GtkChild]
+        Gtk.Notebook edit_notebook;
+
+        [GtkChild]
+        Gtk.ListBox tips;
+
+
+        private Message _message;
+        public Message message
+        {
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                _message = value;
+                clean_tabs ();
+                PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
+
+                string label = _("Singular (%s)").printf (enabled_plural_form.plural_tags.get (0));
+                add_tab (new MessageEditorTab (label, _message, 0));
+
+                if (_message.has_plural () && enabled_plural_form != null)
+                {
+                    int num_plurals = enabled_plural_form.number_of_plurals;
+
+                    for (int i = 1; i < num_plurals; i++)
+                    {
+                        label = _("Plural %i (%s)").printf (i, enabled_plural_form.plural_tags.get (i));
+                        add_tab (new MessageEditorTab (label, _message, i));
+                    }
+                }
+
+                this.message.added_tip.connect (on_change_tips);
+                this.message.removed_tip.connect (on_change_tips);
+
+                reload_tips ();
+
+            }
+        }
+
+        private void clean_tabs ()
+        {
+            edit_notebook.foreach ( (w) => {edit_notebook.remove(w);});
+        }
+
+        private void add_tab (MessageEditorTab t)
+        {
+            edit_notebook.append_page (t, t.label);
+        }
+
+        public MessageEditorTab? get_active_tab ()
+        {
+            int curr_page = edit_notebook.get_current_page ();
+            return edit_notebook.get_nth_page (curr_page) as MessageEditorTab;
+        }
+
+        public MessageEditorTab? get_tab_by_plural_number (int plural_number)
+        {
+            if (plural_number > edit_notebook.get_n_pages ())
+                return null;
+
+            return edit_notebook.get_nth_page (plural_number) as MessageEditorTab;
+        }
+
+        public void select_tab_by_plural_number (int plural_number)
+        {
+            if (plural_number > edit_notebook.get_n_pages ())
+                return;
+            edit_notebook.set_current_page (plural_number);
+        }
+
+        [GtkCallback]
+        private void on_nth_pages_changed (Gtk.Widget pate, uint page_num)
+        {
+            edit_notebook.show_tabs = edit_notebook.get_n_pages () > 1;
+        }
+
+        private void on_change_tips (Message m, MessageTip t)
+        {
+            reload_tips ();
+        }
+
+        private void reload_tips ()
+        {
+            tips.foreach ((w) => {tips.remove(w);});
+            foreach (MessageTip t in message.get_tips_plural_form (edit_notebook.page))
+                tips.add (new MessageTipRow (t));
+        }
+
+        [GtkCallback]
+        private void on_tip_enabled (ListBox source, ListBoxRow row)
+        {
+            get_active_tab ().replace_tags_original_string ((row as MessageTipRow).tip.tags_original);
+            get_active_tab ().replace_tags_translation_string ((row as MessageTipRow).tip.tags_translation);
+        }
+
+    }
+
+
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditortab.ui")]
     public class MessageEditorTab : Box
     {
@@ -201,8 +303,6 @@ namespace GNOMECAT.UI
             this.height_request = height * 2 + 60;
 
             this.message.modified_translation.connect (on_modified_translation);
-            this.message.added_tip.connect (on_added_tip);
-            this.message.removed_tip.connect (on_removed_tip);
         }
 
         construct

@@ -26,17 +26,29 @@
         <child>
           <object class="GNOMECATUIMessageListWidget" id="message_list">
             <property name="visible">True</property>
+            <property name="width-request">300</property>
             <signal name="message_selected" handler="on_message_selected" swapped="no"/>
           </object>
           <packing>
-            <property name="expand">True</property>
+            <property name="expand">False</property>
             <property name="fill">True</property>
             <property name="position">0</property>
           </packing>
         </child>
         <child>
+          <object class="GNOMECATUIMessageEditor" id="message_editor">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <object class="GNOMECATUIHintPanelWidget" id="hints_panel">
             <property name="visible">True</property>
+            <property name="width-request">300</property>
           </object>
           <packing>
             <property name="expand">False</property>
