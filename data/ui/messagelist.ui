@@ -1,43 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.0 on Fri Oct 18 12:53:23 2013
-
-This file is part of GNOMECAT.
-
-GNOMECAT is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-GNOMECAT is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
-
--->
+<!-- Generated with glade 3.16.1 -->
 <interface>
-  <!-- interface-requires gtk+ 3.10 -->
+  <requires lib="gtk+" version="3.10"/>
   <template class="GNOMECATUIMessageListWidget" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
+    <property name="orientation">vertical</property>
+    <child>
+      <object class="GtkLabel" id="label1">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="halign">start</property>
+        <property name="margin_left">5</property>
+        <property name="label" translatable="yes">Messages:</property>
+        <attributes>
+          <attribute name="weight" value="bold"/>
+        </attributes>
+      </object>
+      <packing>
+        <property name="expand">False</property>
+        <property name="fill">True</property>
+        <property name="position">0</property>
+      </packing>
+    </child>
     <child>
       <object class="GtkScrolledWindow" id="scrolled_window">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
+        <property name="margin_left">5</property>
+        <property name="margin_right">5</property>
+        <property name="margin_bottom">5</property>
         <property name="shadow_type">in</property>
         <child>
-          <object class="GtkListBox" id="messages_list_box">
+          <object class="GtkViewport" id="viewport1">
             <property name="visible">True</property>
-            <signal name="row_selected" handler="on_row_selected" swapped="no"/>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GtkListBox" id="messages_list_box">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <signal name="row-selected" handler="on_row_selected" swapped="no"/>
+              </object>
+            </child>
           </object>
         </child>
       </object>
       <packing>
         <property name="expand">True</property>
         <property name="fill">True</property>
-        <property name="position">0</property>
+        <property name="position">1</property>
       </packing>
     </child>
   </template>
