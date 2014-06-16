@@ -85,6 +85,7 @@ namespace GNOMECAT.UI
 
         [GtkChild]
         private Gtk.ComboBox encoding_combobox;
+        private string _encoding;
         public string encoding
         {
             get
@@ -96,7 +97,8 @@ namespace GNOMECAT.UI
 
                 Value enc_val;
                 (encoding_combobox.model as Gtk.ListStore).get_value (iter, 0, out enc_val);
-                return enc_val.get_string ();
+                _encoding = enc_val.get_string ();
+                return _encoding;
             }
             set
             {
