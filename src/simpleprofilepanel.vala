@@ -312,7 +312,7 @@ namespace GNOMECAT.UI
                 profile.team_email = this.team_email;
             }
 
-            (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_profiles();
+            (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_data ();
             on_back(window);
         }
 

@@ -62,8 +62,9 @@ namespace GNOMECAT.UI
 
         public int window_page {get; set;}
 
-        public PreferencesPanel ()
+        public void reload_data ()
         {
+
             settings = new Settings ("org.gnome.gnomecat.Editor");
 
             highlight_checkbutton.active = settings.get_boolean ("highlight");
@@ -79,11 +80,7 @@ namespace GNOMECAT.UI
             settings.bind ("custom-font", editor_font_hbox, "sensitive", SettingsBindFlags.DEFAULT);
             settings.bind ("message-changed-state", changed_state, "active_id", SettingsBindFlags.DEFAULT);
 
-            reload_profiles();
-        }
 
-        public void reload_profiles ()
-        {
             ArrayList<Profile> profs = GNOMECAT.Profiles.Profile.get_profiles ();
             profiles_list.forall((w) => {profiles_list.remove(w);});
             foreach (Profile p in profs)

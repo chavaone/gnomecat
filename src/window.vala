@@ -90,6 +90,8 @@ namespace GNOMECAT.UI
 
             //FIXME: Include this insert into the ui file.
             window_panels.insert_page (new SimpleProfilePanel(), null, WindowStatus.PROFILE);
+
+            (window_panels.get_nth_page (WindowStatus.PREFERENCES) as PreferencesPanel).reload_data ();
         }
 
         construct
