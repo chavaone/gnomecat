@@ -6,7 +6,6 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditor.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditortab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messagetiprow.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/contextpanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/window.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/filelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/simpleprofilepanel.ui</file>

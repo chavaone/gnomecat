@@ -43,6 +43,9 @@ namespace GNOMECAT.UI
         [GtkChild]
         Gtk.ListBox tips;
 
+        [GtkChild]
+        Gtk.TextView context;
+
 
         private Message _message;
         public Message message
@@ -70,6 +73,8 @@ namespace GNOMECAT.UI
                         add_tab (new MessageEditorTab (label, _message, i));
                     }
                 }
+
+                context.buffer.text = value == null ? "" : value.get_context ();
 
                 this.message.added_tip.connect (on_change_tips);
                 this.message.removed_tip.connect (on_change_tips);

@@ -23,7 +23,6 @@ VALASOURCES = \
 	messagelist.vala \
 	messageeditor.vala \
 	window.vala \
-	contextpanel.vala \
 	application.vala \
 	demofile.vala \
 	profile.vala \
