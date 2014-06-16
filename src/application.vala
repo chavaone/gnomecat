@@ -173,7 +173,7 @@ namespace GNOMECAT
 
             if (enabled_profile == null)
             {
-                window.set_panel(WindowStatus.OTHER, new GNOMECAT.UI.WellcomePanel());
+                window.set_panel(WindowStatus.OTHER, new GNOMECAT.UI.WelcomePanel());
             }
             else
             {

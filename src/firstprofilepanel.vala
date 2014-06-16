@@ -37,6 +37,7 @@ namespace GNOMECAT.UI
         {
         	base.on_done(window);
         	window.set_panel(WindowStatus.OPENEDFILES);
+            window.window_panels.remove_page (window_page);
         }
 
 	}

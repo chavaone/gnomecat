@@ -22,11 +22,13 @@ namespace GNOMECAT.UI
 {
 
 
-    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/wellcomepanel.ui")]
-    public class WellcomePanel : Gtk.Box, Panel
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/welcomepanel.ui")]
+    public class WelcomePanel : Gtk.Box, Panel
     {
 
-    	public GNOMECAT.UI.ToolBarMode toolbarmode
+        private GNOMECAT.UI.FirstProfilePanel fstprofilepanel;
+
+        public GNOMECAT.UI.ToolBarMode toolbarmode
         {
             get
             {
@@ -44,10 +46,15 @@ namespace GNOMECAT.UI
             }
         }
 
+        public WelcomePanel ()
+        {
+            fstprofilepanel = new GNOMECAT.UI.FirstProfilePanel();
+        }
+
         [GtkCallback]
         private void on_create_profile (Gtk.Widget w)
         {
-            window.set_panel(WindowStatus.OTHER, new GNOMECAT.UI.FirstProfilePanel());
+            window.set_panel(WindowStatus.OTHER, fstprofilepanel);
             window.window_panels.remove_page (window_page);
         }
     }
