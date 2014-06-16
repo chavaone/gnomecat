@@ -56,7 +56,7 @@ namespace GNOMECAT
             tag = new Gtk.TextTag (tag_name);
 
             Gdk.RGBA color_background = Gdk.RGBA ();
-            color_background.parse ("blue");
+            color_background.parse ("#ABBAE3");
             tag.background_rgba = color_background;
             tag.background_set = true;
 
