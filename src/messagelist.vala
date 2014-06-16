@@ -53,6 +53,9 @@ namespace GNOMECAT.UI
                 clean_messages ();
                 foreach (Message m in value.messages)
                     messages_list_box.add (new MessageListRow.with_message (m));
+
+                Gtk.ListBoxRow row = messages_list_box.get_row_at_index (0);
+                messages_list_box.select_row (row);
             }
         }
 
