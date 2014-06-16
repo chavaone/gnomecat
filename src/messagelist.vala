@@ -72,10 +72,6 @@ namespace GNOMECAT.UI
                 return;
 
             messages_list_box.select_row (row);
-            if(level != SelectLevel.ROW)
-            {
-                row.select (level, fragment);
-            }
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
@@ -86,11 +82,6 @@ namespace GNOMECAT.UI
             MessageListRow row = get_row_by_message(fragment.message);
             if (row == null)
                 return;
-
-            if(level != SelectLevel.ROW)
-            {
-                row.deselect (level, fragment);
-            }
         }
 
         public MessageListRow? get_row_by_message (Message m)
@@ -231,45 +222,6 @@ namespace GNOMECAT.UI
                 this.error_image.tooltip_text = ngettext ("There is %i error tip.",
                     "There are %i error tips.", number_error_tips).printf (number_error_tips);
             }
-        }
-
-        public void select (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
-        {
-            assert (fragment != null);
-
-            /*
-            if (fragment.plural_number >= editor_notebook.get_n_pages ())
-            {
-                //TODO:include debug info!
-                return;
-            }
-
-            editor_notebook.set_current_page (fragment.plural_number);
-            if (level != SelectLevel.PLURAL)
-            {
-                (editor_notebook.get_nth_page (fragment.plural_number)
-                    as MessageEditorTab).select (level, fragment);
-            }
-            */
-        }
-
-        public void deselect (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
-        {
-            assert (fragment != null);
-
-            /*
-            if (this.edition_mode
-                && fragment.plural_number < editor_notebook.get_n_pages ())
-            {
-                if (level != SelectLevel.PLURAL)
-                {
-                    (editor_notebook.get_nth_page (fragment.plural_number)
-                        as MessageEditorTab).deselect (level, fragment);
-                }
-            }
-            */
         }
 
        [GtkCallback]

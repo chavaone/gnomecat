@@ -70,7 +70,7 @@ using GNOMECAT.Search;
             }
         }
 
- 		public signal void search_changed (SearchInfo serch);
+ 		public signal void search_changed (SearchInfo? serch);
 
  		construct {
         	advanced_search_button.bind_property ("active", this,
@@ -84,7 +84,7 @@ using GNOMECAT.Search;
  			SearchInfo search = null;
  			if (search_entry.get_text () != "")
  			{
- 				new SearchInfo (translated_messages.active,
+ 				search = new SearchInfo (translated_messages.active,
  					untranslated_messages.active,
  					fuzzy_messages.active,
  					original_text.active,

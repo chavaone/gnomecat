@@ -116,16 +116,19 @@ namespace GNOMECAT.UI {
         }
 
         [GtkCallback]
-        public void on_search_changed (SearchInfo search_info)
+        public void on_search_changed (SearchInfo? search_info)
         {
             if (search_info != null)
             {
-                this.active_search = new GNOMECAT.Search.Search(this, search_info);
+                active_search.deselect ();
+                active_search = new GNOMECAT.Search.Search(this, search_info);
+                active_search.next ();
+                active_search.select ();
             }
             else
             {
-                this.active_search.deselect();
-                this.active_search = null;
+                active_search.deselect();
+                active_search = null;
             }
         }
 
@@ -207,12 +210,22 @@ namespace GNOMECAT.UI {
             GNOMECAT.FileProject.MessageFragment? fragment)
         {
             message_list.select (level, fragment);
+
+            if(level != SelectLevel.ROW)
+            {
+                message_editor.select (level, fragment);
+            }
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
             GNOMECAT.FileProject.MessageFragment? fragment)
         {
             message_list.deselect (level, fragment);
+
+            if(level != SelectLevel.ROW)
+            {
+                message_editor.deselect (level, fragment);
+            }
         }
     }
 }

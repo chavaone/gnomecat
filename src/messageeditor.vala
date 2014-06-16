@@ -135,6 +135,38 @@ namespace GNOMECAT.UI
             get_active_tab ().replace_tags_translation_string ((row as MessageTipRow).tip.tags_translation);
         }
 
+        public void select (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
+        {
+            assert (fragment != null);
+
+            if (fragment.plural_number >= edit_notebook.get_n_pages ())
+            {
+                //TODO:include debug info!
+                return;
+            }
+
+            edit_notebook.set_current_page (fragment.plural_number);
+            if (level != SelectLevel.PLURAL)
+            {
+                (edit_notebook.get_nth_page (fragment.plural_number)
+                    as MessageEditorTab).select (level, fragment);
+            }
+        }
+
+        public void deselect (GNOMECAT.SelectLevel level,
+            GNOMECAT.FileProject.MessageFragment? fragment)
+        {
+            assert (fragment != null);
+
+            if (fragment.plural_number < edit_notebook.get_n_pages () &&
+                    level != SelectLevel.PLURAL)
+            {
+                (edit_notebook.get_nth_page (fragment.plural_number)
+                    as MessageEditorTab).deselect (level, fragment);
+            }
+        }
+
     }
 
 
