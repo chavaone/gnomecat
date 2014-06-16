@@ -128,6 +128,7 @@ namespace GNOMECAT.UI
 
         [GtkChild]
         private Gtk.ComboBox language_combobox;
+        private Language? _language;
         public Language? language
         {
             get
@@ -141,11 +142,8 @@ namespace GNOMECAT.UI
                 (language_combobox.model as Gtk.ListStore).get_value (iter, 1, out lang_code);
                 string code = lang_code.get_string ();
 
-                //FIXME:We should use get_language_by_code_method
-                foreach (var entry in Language.languages.entries)
-                    if (entry.value.code == code)
-                        return entry.value;
-                return null;
+                _language = Language.get_language_by_code (code);
+                return _language;
             }
             set
             {
