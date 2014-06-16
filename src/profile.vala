@@ -86,7 +86,6 @@ namespace GNOMECAT.Profiles
         public string encoding {get; set;}
         public string team_email {get; set;}
 
-        private GLib.Settings set_prof;
         public string language_code {get; set;}
         public int plural_form_id {get; set;}
 
@@ -109,8 +108,9 @@ namespace GNOMECAT.Profiles
 
         public Profile.from_uuid (string uuid)
         {
+            string new_path = "/org/gnome/gnomecat/profiles:/:%s/".printf(uuid);
             GLib.Settings set_prof = new GLib.Settings.with_path ("org.gnome.gnomecat.Profile",
-                "/org/gnome/gnomecat/profiles:/" + uuid);
+                new_path);
 
             this.uuid = uuid;
             set_prof.bind ("profile-name", this, "name",  SettingsBindFlags.DEFAULT);
