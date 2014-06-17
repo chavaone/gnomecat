@@ -9,4 +9,11 @@ namespace GNOMECAT
     {
         public abstract GNOMECAT.FileProject.Message message {get;set;}
     }
+
+
+    struct Accel
+    {
+        string name;
+        string accel;
+    }
 }

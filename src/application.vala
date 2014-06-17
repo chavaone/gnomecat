@@ -72,6 +72,24 @@ namespace GNOMECAT
             { "quit", on_quit }
         };
 
+        const GNOMECAT.Accel[] accel_entries = {
+            { "win.edit-undo", "<Control>Z" },
+            { "win.edit-redo", "<Control>Y" },
+            { "win.search-next", "<Control>H" },
+            { "win.search-previous", "<Control>G" },
+            { "win.edit-save", "<Control>S"},
+            { "win.go-next", "<Control>K"},
+            { "win.go-previous", "<Control>J"},
+            { "win.go-next-untranslated", "<Control>I"},
+            { "win.go-previous-untranslated", "<Control>U"},
+            { "win.go-next-translated", "<Control>P"},
+            { "win.go-previous-translated", "<Control>O"},
+            { "win.go-next-fuzzy", "<Control>y"},
+            { "win.go-previous-fuzzy", "<Control>t"},
+            { "win.done", "<Control>D"},
+            { "win.back", "Escape"}
+        };
+
         private Application ()
         {
             Object (application_id: "org.gnome.gnomecat",
@@ -91,6 +109,16 @@ namespace GNOMECAT
             add_checker (new GNOMECAT.Demo.DemoChecker ()); //DEMO
 
             add_action_entries (action_entries, this);
+            add_accel_entries (accel_entries);
+
+        }
+
+        private void add_accel_entries (Accel[] entries)
+        {
+            foreach (var accel in entries)
+            {
+                add_accelerator(accel.accel, accel.name, null);
+            }
         }
 
         public static new GNOMECAT.Application get_default ()
