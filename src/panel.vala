@@ -50,6 +50,8 @@ namespace GNOMECAT.UI
 
 		public virtual void on_back (GNOMECAT.UI.Window window) {}
 
+		public virtual void on_search (GNOMECAT.UI.Window window) {}
+
 		public virtual void on_preferences (GNOMECAT.UI.Window window)
 		{
 			window.set_panel (WindowStatus.PREFERENCES);

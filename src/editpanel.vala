@@ -89,6 +89,8 @@ namespace GNOMECAT.UI {
             {
                 searchbar.search_mode_enabled = value;
 
+                if (value) searchbar.grab_focus ();
+
                 if (active_search == null) return;
 
                 if (value) active_search.select ();
@@ -204,6 +206,11 @@ namespace GNOMECAT.UI {
         public void on_back (GNOMECAT.UI.Window window)
         {
             window.set_panel (WindowStatus.OPENEDFILES);
+        }
+
+        public void on_search (GNOMECAT.UI.Window window)
+        {
+            search_enabled = ! search_enabled;
         }
 
         public void select (GNOMECAT.SelectLevel level,

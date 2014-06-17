@@ -23,36 +23,36 @@ using GNOMECAT.Search;
  namespace GNOMECAT.UI
  {
 
- 	[GtkTemplate (ui = "/org/gnome/gnomecat/ui/searchbar.ui")]
- 	public class SearchBar : Gtk.SearchBar
- 	{
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/searchbar.ui")]
+    public class SearchBar : Gtk.SearchBar
+    {
 
- 		[GtkChild]
- 		private Gtk.Box advanced_box;
- 		[GtkChild]
- 		private Gtk.ToggleButton advanced_search_button;
- 		[GtkChild]
- 		private Gtk.Button replace_button;
- 		[GtkChild]
- 		private Gtk.Entry search_entry;
- 		[GtkChild]
- 		private Gtk.Entry replace_entry;
- 		[GtkChild]
- 		private Gtk.CheckButton translated_messages;
- 		[GtkChild]
- 		private Gtk.CheckButton untranslated_messages;
- 		[GtkChild]
- 		private Gtk.CheckButton fuzzy_messages;
- 		[GtkChild]
- 		private Gtk.CheckButton original_text;
- 		[GtkChild]
- 		private Gtk.CheckButton translation_text;
- 		[GtkChild]
- 		private Gtk.CheckButton plurals_text;
+        [GtkChild]
+        private Gtk.Box advanced_box;
+        [GtkChild]
+        private Gtk.ToggleButton advanced_search_button;
+        [GtkChild]
+        private Gtk.Button replace_button;
+        [GtkChild]
+        private Gtk.Entry search_entry;
+        [GtkChild]
+        private Gtk.Entry replace_entry;
+        [GtkChild]
+        private Gtk.CheckButton translated_messages;
+        [GtkChild]
+        private Gtk.CheckButton untranslated_messages;
+        [GtkChild]
+        private Gtk.CheckButton fuzzy_messages;
+        [GtkChild]
+        private Gtk.CheckButton original_text;
+        [GtkChild]
+        private Gtk.CheckButton translation_text;
+        [GtkChild]
+        private Gtk.CheckButton plurals_text;
         [GtkChild]
         private Gtk.Separator separator_search;
 
- 		private bool _advanded_search_enabled;
+        private bool _advanded_search_enabled;
         public bool advanded_search_enabled
         {
             get
@@ -70,32 +70,36 @@ using GNOMECAT.Search;
             }
         }
 
- 		public signal void search_changed (SearchInfo? serch);
+        public signal void search_changed (SearchInfo? serch);
 
- 		construct {
-        	advanced_search_button.bind_property ("active", this,
+        construct {
+            advanced_search_button.bind_property ("active", this,
                 "advanded_search_enabled", BindingFlags.BIDIRECTIONAL);
- 		}
+        }
 
+        public void grab_focus ()
+        {
+            search_entry.grab_focus ();
+        }
 
- 		[GtkCallback]
- 		private void on_search_changed (Gtk.Widget w)
- 		{
- 			SearchInfo search = null;
- 			if (search_entry.get_text () != "")
- 			{
- 				search = new SearchInfo (translated_messages.active,
- 					untranslated_messages.active,
- 					fuzzy_messages.active,
- 					original_text.active,
- 					translation_text.active,
- 					plurals_text.active,
- 					search_entry.get_text (),
- 					replace_entry.get_text()
- 					);
- 			}
+        [GtkCallback]
+        private void on_search_changed (Gtk.Widget w)
+        {
+            SearchInfo search = null;
+            if (search_entry.get_text () != "")
+            {
+                search = new SearchInfo (translated_messages.active,
+                    untranslated_messages.active,
+                    fuzzy_messages.active,
+                    original_text.active,
+                    translation_text.active,
+                    plurals_text.active,
+                    search_entry.get_text (),
+                    replace_entry.get_text()
+                    );
+            }
 
- 			search_changed(search);
- 		}
- 	}
+            search_changed(search);
+        }
+    }
  }

@@ -87,7 +87,8 @@ namespace GNOMECAT
             { "win.go-next-fuzzy", "<Control>y"},
             { "win.go-previous-fuzzy", "<Control>t"},
             { "win.done", "<Control>D"},
-            { "win.back", "Escape"}
+            { "win.back", "Escape"},
+            { "win.search", "<Control>F"}
         };
 
         private Application ()

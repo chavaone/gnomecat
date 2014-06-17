@@ -73,7 +73,8 @@ namespace GNOMECAT.UI
             { "open-file", on_open_file},
             { "done", on_done},
             { "back", on_back},
-            { "about", on_about}
+            { "about", on_about},
+            { "search", on_search}
         };
 
         public Window (GNOMECAT.Application app)
@@ -225,6 +226,11 @@ namespace GNOMECAT.UI
         private void on_preferences ()
         {
             (window_panels.get_nth_page(window_panels.page) as Panel).on_preferences (this);
+        }
+
+        private void on_search ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_search (this);
         }
 
         public void on_about ()
