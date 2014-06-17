@@ -194,7 +194,6 @@ namespace GNOMECAT
                     window.file = file;
                 else
                     stderr.printf ("Error while open %s file.\n", f.get_path ());
-                return;
             }
 
             window.show ();
