@@ -46,6 +46,11 @@ namespace GNOMECAT.UI
         [GtkChild]
         Gtk.TextView context;
 
+        [GtkChild]
+        Gtk.Button btn_origins;
+
+        GNOMECAT.UI.OriginsPopover origins;
+
 
         private Message _message;
         public Message message
@@ -78,6 +83,10 @@ namespace GNOMECAT.UI
 
                 this.message.added_tip.connect (on_change_tips);
                 this.message.removed_tip.connect (on_change_tips);
+
+                if (origins == null) init_origins_popover ();
+
+                origins.message = value;
 
                 reload_tips ();
 
@@ -170,6 +179,18 @@ namespace GNOMECAT.UI
                 (edit_notebook.get_nth_page (fragment.plural_number)
                     as MessageEditorTab).deselect (level, fragment);
             }
+        }
+
+        [GtkCallback]
+        private void on_origins ()
+        {
+            origins.visible = ! origins.visible;
+        }
+
+        private void init_origins_popover ()
+        {
+            origins = new GNOMECAT.UI.OriginsPopover ();
+            origins.relative_to = btn_origins;
         }
 
     }
