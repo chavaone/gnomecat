@@ -48,7 +48,8 @@ VALASOURCES = \
 	pluralform.vala \
 	hintswidget.vala \
 	api.vala \
-	welcomepanel.vala
+	welcomepanel.vala \
+	originspopover.vala
 
 gnomecat_SOURCES = \
 	$(VALASOURCES) \

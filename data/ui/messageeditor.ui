@@ -151,13 +151,13 @@
         <property name="margin_bottom">5</property>
         <property name="spacing">5</property>
         <child>
-          <object class="GtkButton" id="btn_origenes">
+          <object class="GtkButton" id="btn_origins">
             <property name="visible">True</property>
-            <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Origins</property>
             <property name="halign">end</property>
+            <signal name="clicked" handler="on_origins" swapped="no"/>
             <child>
               <object class="GtkImage" id="image1">
                 <property name="visible">True</property>
