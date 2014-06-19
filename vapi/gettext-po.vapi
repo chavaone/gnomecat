@@ -63,7 +63,7 @@ namespace GettextPo {
 		public void set_comments (string comments);
 		public unowned string extracted_comments ();
 		public void set_extracted_comments (string comments);
-		public GettextPo.FilePos filepos (int i);
+		public GettextPo.Filepos filepos (int i);
 		public void remove_filepos (int i);
 		public void add_filepos (string file, size_t start_line);
 		public unowned bool is_obsolete();
@@ -76,12 +76,12 @@ namespace GettextPo {
 	}
 
 
-	[CCode(cheader_filename = "gettext-po.h", cname="struct po_filepos")]
+	[CCode(cheader_filename = "gettext-po.h", free_function = "", cname="struct po_filepos")]
 	[Compact]
-	public class FilePos  {
+	public class Filepos  {
 
 		[CCode (has_construct_function = false)]
-		public FilePos ();
+		public Filepos ();
 		public string file ();
 		public size_t start_line ();
 

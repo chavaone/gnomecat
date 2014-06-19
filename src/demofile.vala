@@ -58,6 +58,15 @@ namespace GNOMECAT.Demo
         private string context;
         private bool fuzzy;
 
+        public Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> _origins;
+        public override Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
+        {
+            get
+            {
+                return _origins;
+            }
+        }
+
         public override MessageState state
         {
             get
@@ -122,6 +131,8 @@ namespace GNOMECAT.Demo
                             null));
                 }
             }
+
+            _origins = new Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> ();
         }
 
         /**

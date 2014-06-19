@@ -28,6 +28,15 @@ namespace GNOMECAT.PoFiles
     {
         private unowned GettextPo.Message message;
 
+        public Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> _origins;
+        public override Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
+        {
+            get
+            {
+                return _origins;
+            }
+        }
+
         public override MessageState state
         {
             get
@@ -60,13 +69,21 @@ namespace GNOMECAT.PoFiles
             {
                 message.set_fuzzy (value == MessageState.FUZZY);
             }
-
         }
 
         public PoMessage (PoFile owner_file, GettextPo.Message msg)
         {
+            GettextPo.Filepos origin;
+
             base (owner_file);
             this.message = msg;
+
+            _origins = new Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> ();
+
+            for (int i = 0; (origin = message.filepos (i)) != null; i++)
+            {
+                _origins.add (new GNOMECAT.FileProject.MessageOrigin (origin.file (), origin.start_line ()));
+            }
         }
 
 
@@ -136,10 +153,10 @@ namespace GNOMECAT.PoFiles
          public override string get_context ()
          {
             string ctx = "";
-            if (this.message.comments () != null)
-                ctx += "Coments\n" + this.message.comments () + "\n";
-            if (this.message.extracted_comments () != null)
-                ctx += "Extracted Comments\n" + this.message.extracted_comments () + "\n";
+            if (this.message.comments () != "")
+                ctx += "Coments:\n" + this.message.comments () + "\n";
+            if (this.message.extracted_comments () != "")
+                ctx += "Extracted Comments:\n" + this.message.extracted_comments () + "\n";
             return ctx;
 
          }

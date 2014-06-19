@@ -158,6 +158,17 @@ namespace GNOMECAT.FileProject
         OBSOLETE
     }
 
+    public class MessageOrigin : Object
+    {
+        public string file {get; set construct;}
+        public size_t line {get; set construct;}
+
+        public MessageOrigin (string file, size_t line)
+        {
+            Object(file:file, line:line);
+        }
+    }
+
 
     /**
      * Represents a instace of each message to be translated.
@@ -177,6 +188,11 @@ namespace GNOMECAT.FileProject
         {
             get;
             set;
+        }
+
+        public abstract ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
+        {
+            get;
         }
 
         /*
