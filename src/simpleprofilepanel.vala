@@ -313,7 +313,7 @@ namespace GNOMECAT.UI
             }
 
             (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_data ();
-            on_back(window);
+            on_back (window);
         }
 
         public void on_back (GNOMECAT.UI.Window window)
