@@ -174,7 +174,7 @@ namespace GNOMECAT.UI
                 break;
             case MessageState.UNTRANSLATED:
                 status_icon_name = "window-close-symbolic";
-                status_tooltip_text = _("Untraslated");
+                status_tooltip_text = _("Untranslated");
                 break;
             case MessageState.FUZZY:
                 status_icon_name = "dialog-question-symbolic";
