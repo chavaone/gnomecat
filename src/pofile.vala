@@ -176,18 +176,17 @@ namespace GNOMECAT.PoFiles
          * Method that saves the instance of this File into
          *  a file indicated as parameter.
          */
-        public override void save_file (string? file_path=null)
+        protected override void save_file (string file_path)
         {
             XErrorHandler err_hand = XErrorHandler ();
-            GettextPo.File.file_write (this.file,
-                file_path == null ? this.path : file_path, err_hand);
+            GettextPo.File.file_write (file, file_path, err_hand);
         }
 
         /**
          * Method that parses a file in order to populate
          *  this instance of File.
          */
-        public override void parse_file (string path)
+        public override void parse (string path)
         {
             XErrorHandler err_hand = XErrorHandler ();
             this.file = GettextPo.File.file_read (path, err_hand);

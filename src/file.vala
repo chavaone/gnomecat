@@ -437,6 +437,7 @@ namespace GNOMECAT.FileProject
                 }
             }
 
+        public bool has_changed {get; set;}
 
         private int cache_number_of_untranslated;
         private int cache_number_of_fuzzy;
@@ -477,7 +478,7 @@ namespace GNOMECAT.FileProject
             {
                 int index_last_slash = path.last_index_of_char ('/');
                 name = path.substring (index_last_slash + 1);
-                parse_file (path);
+                parse (path);
             }
         }
 
@@ -490,7 +491,6 @@ namespace GNOMECAT.FileProject
         public void add_message (Message m)
         {
             this.messages.add (m);
-            this.connect_message (m);
 
             switch (m.state) //Updates file statistics.
             {
@@ -507,6 +507,7 @@ namespace GNOMECAT.FileProject
 
             m.message_changed.connect ((src) =>
             {
+                has_changed = true;
                 file_changed ();
                 project.project_changed ();
             });
@@ -520,7 +521,6 @@ namespace GNOMECAT.FileProject
         public void remove_message (Message m)
         {
             this.messages.remove (m);
-            this.disconnect_message (m);
 
             switch (m.state) //Updates file statistics.
             {
@@ -563,33 +563,20 @@ namespace GNOMECAT.FileProject
             }
         }
 
-        /**
-         *
-         */
-        private void connect_message (Message m)
+
+        public void save (string? file_path)
         {
-            //TODO
+            save_file (file_path == null ? path : file_path);
+            has_changed = false;
         }
 
-        /**
-         *
-         */
-        private void disconnect_message (Message m)
-        {
-            //TODO
-        }
-
-        /**
-         * Method that saves the instance of this File into
-         *  a file indicated as parameter.
-         */
-        public abstract void save_file (string? file_path=null);
+        protected abstract void save_file (string file_path);
 
         /**
          * Method that parses a file in order to populate
          *  this instance of File.
          */
-        public abstract void parse_file (string path);
+        public abstract void parse (string path);
     }
 
 

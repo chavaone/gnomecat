@@ -37,38 +37,16 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 					</object>
 				</child>
 				<child>
-					<object class="GtkButton" id="openmenubutton">
+					<object class="GtkButton" id="edit_bar_save_back_btn">
 						<property name="visible">True</property>
 						<property name="valign">center</property>
 						<property name="can_focus">True</property>
-						<property name="action_name">win.back</property>
+						<property name="action_name">win.edit-save-back</property>
 						<style>
 							<class name="image-button"/>
 						</style>
 						<child>
-							<object class="GtkImage" id="open_button_image">
-								<property name="visible">True</property>
-								<property name="valign">center</property>
-								<property name="icon_size">1</property>
-								<property name="icon_name">go-previous-symbolic</property>
-							</object>
-						</child>
-					</object>
-					<packing>
-						<property name="pack-type">start</property>
-					</packing>
-				</child>
-				<child>
-					<object class="GtkButton" id="savebutton">
-						<property name="visible">True</property>
-						<property name="valign">center</property>
-						<property name="can_focus">True</property>
-						<property name="action_name">win.edit-save</property>
-						<style>
-							<class name="image-button"/>
-						</style>
-						<child>
-							<object class="GtkImage" id="save_button_image">
+							<object class="GtkImage" id="edit_bar_save_back_img">
 								<property name="visible">True</property>
 								<property name="icon_size">1</property>
 								<property name="icon_name">document-save-symbolic</property>

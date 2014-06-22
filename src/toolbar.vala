@@ -48,6 +48,8 @@ namespace GNOMECAT.UI
         public Gtk.Button prefs_done_btn;
         [GtkChild]
         public Gtk.Button done_bar_done_btn;
+        [GtkChild]
+        public Gtk.Image edit_bar_save_back_img;
 
         public bool done_button_sensitive
         {
@@ -104,13 +106,21 @@ namespace GNOMECAT.UI
                 }
         }
 
-        public void set_progressbar_info (int translated, int untranslated, int fuzzy)
+        public void on_file_changed (GNOMECAT.FileProject.File? file)
         {
-                progressbar_title.show ();
-                progressbar_title.set_text (_("%iT + %iU + %iF").printf (translated,
-                    untranslated, fuzzy));
-                double total = translated + untranslated + fuzzy;
-                progressbar_title.fraction = translated / total;
+            if (file == null)
+            {
+                progressbar_title.hide ();
+                return;
+            }
+
+            progressbar_title.show ();
+            progressbar_title.set_text (_("%iT + %iU + %iF").printf (file.number_of_translated,
+                file.number_of_untranslated, file.number_of_fuzzy));
+            double total = file.number_of_translated + file.number_of_untranslated + file.number_of_fuzzy;
+            progressbar_title.fraction = file.number_of_translated / total;
+
+            edit_bar_save_back_img.icon_name = file.has_changed ? "document-save-symbolic" : "go-previous-symbolic";
         }
 
     }

@@ -39,13 +39,13 @@ namespace GNOMECAT.Demo
             }
         }
 
-        public override void save_file (string? file_path=null){}
+        protected override void save_file (string file_path){}
 
         /**
          * Method that parses a file in order to populate
          *  this instance of File.
          */
-        public override void parse_file (string path){}
+        public override void parse (string path){}
 
     }
 

@@ -48,9 +48,9 @@ namespace GNOMECAT.UI
                 return (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file;
             }
             set {
-                (window_panels.get_nth_page(WindowStatus.OPENEDFILES) as GNOMECAT.UI.OpenedFilesPanel).add_file(value);
                 set_panel(WindowStatus.EDIT);
                 (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = value;
+                on_file_changed (file);
             }
         }
 
@@ -59,7 +59,7 @@ namespace GNOMECAT.UI
             { "edit-redo", on_edit_redo },
             { "search-next", on_search_next },
             { "search-previous", on_search_previous },
-            { "edit-save", on_edit_save},
+            { "edit-save-back", on_edit_save_back},
             { "go-next", on_go_next},
             { "go-previous", on_go_previous},
             { "go-next-untranslated", on_go_next_untranslated},
@@ -83,7 +83,7 @@ namespace GNOMECAT.UI
 
             headerbar = new ToolBar();
             set_titlebar(headerbar);
-            headerbar.preferences_switch.stack = window_panels.get_nth_page(WindowStatus.PREFERENCES) as Gtk.Stack;
+            headerbar.preferences_switch.stack = window_panels.get_nth_page (WindowStatus.PREFERENCES) as Gtk.Stack;
 
             headerbar.searchbutton.bind_property ("active",
                 window_panels.get_nth_page(WindowStatus.EDIT) as EditPanel,
@@ -178,9 +178,9 @@ namespace GNOMECAT.UI
             (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_untranslated (this);
         }
 
-        private void on_edit_save ()
+        private void on_edit_save_back ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save (this);
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save_back (this);
         }
 
         private void on_edit_undo ()
@@ -257,24 +257,14 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_file_changed (GNOMECAT.FileProject.File? file)
         {
-            if (file == null)
-            {
-                this.title = "GNOMECAT - " + file.name;
-                headerbar.progressbar_title.hide ();
-            }
-            else
-            {
-                this.title = "GNOMECAT - " + file.name;
-                headerbar.set_progressbar_info (file.number_of_translated,
-                    file.number_of_untranslated, file.number_of_fuzzy);
-            }
+            this.title = "GNOMECAT" + (file != null ? " - " + file.name : "");
+            headerbar.on_file_changed (file);
         }
 
         [GtkCallback]
         private void on_file_activated (GNOMECAT.FileProject.File? file)
         {
-            set_panel (WindowStatus.EDIT);
-            (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = file;
+            this.file = file;
         }
     }
 }

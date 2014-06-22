@@ -32,7 +32,7 @@ namespace GNOMECAT.UI
 
 		public virtual void on_go_previous_untranslated (GNOMECAT.UI.Window window) {}
 
-		public virtual void on_edit_save (GNOMECAT.UI.Window window) {}
+		public virtual void on_edit_save_back (GNOMECAT.UI.Window window) {}
 
 		public virtual void on_edit_undo (GNOMECAT.UI.Window window) {}
 
