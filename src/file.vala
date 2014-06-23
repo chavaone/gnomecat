@@ -568,6 +568,7 @@ namespace GNOMECAT.FileProject
         {
             save_file (file_path == null ? path : file_path);
             has_changed = false;
+            file_changed ();
         }
 
         protected abstract void save_file (string file_path);
