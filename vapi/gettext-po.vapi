@@ -22,7 +22,7 @@ namespace GettextPo {
 							XErrorHandler handler);
 
 		[CCode (cname="po_file_write")]
-		public static GettextPo.File file_write (GettextPo.File file,
+		public static unowned GettextPo.File file_write (GettextPo.File file,
 							string filename,
 							XErrorHandler handler);
 
