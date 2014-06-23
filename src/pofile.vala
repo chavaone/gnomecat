@@ -163,9 +163,34 @@ namespace GNOMECAT.PoFiles
     }
 
 
+    public class PoHeader : PoMessage
+    {
+
+        public PoHeader (PoFile owner_file, GettextPo.Message msg)
+        {
+            assert (msg.msgid () == "");
+            base (owner_file, msg);
+        }
+
+        public string? get_info (string key)
+        {
+            return GettextPo.File.header_field (get_translation (0), key);
+        }
+
+        public void set_info (string key, string value)
+        {
+            string new_header = GettextPo.File.header_set_field (get_translation (0),
+                                    key, value);
+            set_translation_impl (0, new_header);
+        }
+
+    }
+
+
     public class PoFile : GNOMECAT.FileProject.File
     {
         private GettextPo.File file;
+        private PoHeader header;
 
         public PoFile.full (string path, Project? p)
         {
@@ -179,6 +204,7 @@ namespace GNOMECAT.PoFiles
         protected override void save_file (string file_path)
         {
             XErrorHandler err_hand = XErrorHandler ();
+            update_header_info ();
             GettextPo.File.file_write (file, file_path, err_hand);
         }
 
@@ -196,10 +222,35 @@ namespace GNOMECAT.PoFiles
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
-                    if (! m.is_obsolete ())
+                    if (m.msgid () == "")
+                        this.header = new PoHeader (this, m);
+                    else if (! m.is_obsolete ())
                         this.add_message (new PoMessage (this, m));
                 }
             }
+        }
+
+        public override string? get_info (string key)
+        {
+            if (header == null)
+                return null;
+
+            return header.get_info (key);
+        }
+
+        public override void set_info (string key, string value)
+        {
+            if (header == null)
+                return;
+
+            header.set_info (key, value);
+        }
+
+        private void update_header_info ()
+        {
+            GNOMECAT.Profiles.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
+            string last_translator = "%s <%s>".printf (profile.translator_name, profile.translator_email);
+            set_info ("Last-Translator", last_translator);
         }
     }
 

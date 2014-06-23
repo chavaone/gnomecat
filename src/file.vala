@@ -571,6 +571,14 @@ namespace GNOMECAT.FileProject
             file_changed ();
         }
 
+        public virtual string? get_info (string key)
+        {
+            return null;
+        }
+
+        public virtual void set_info (string key, string value)
+        {}
+
         protected abstract void save_file (string file_path);
 
         /**
