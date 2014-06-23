@@ -60,6 +60,7 @@ namespace GNOMECAT.UI
             { "search-next", on_search_next },
             { "search-previous", on_search_previous },
             { "edit-save-back", on_edit_save_back},
+            { "edit-save", on_edit_save},
             { "go-next", on_go_next},
             { "go-previous", on_go_previous},
             { "go-next-untranslated", on_go_next_untranslated},
@@ -176,6 +177,11 @@ namespace GNOMECAT.UI
         private void on_go_previous_untranslated ()
         {
             (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_untranslated (this);
+        }
+
+        private void on_edit_save ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save (this);
         }
 
         private void on_edit_save_back ()

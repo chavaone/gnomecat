@@ -213,6 +213,14 @@ namespace GNOMECAT.UI {
             search_enabled = ! search_enabled;
         }
 
+        public void on_edit_save (GNOMECAT.UI.Window window)
+        {
+            if (file.has_changed)
+            {
+                file.save (null);
+            }
+        }
+
         public void on_edit_save_back (GNOMECAT.UI.Window window)
         {
             if (file.has_changed)
