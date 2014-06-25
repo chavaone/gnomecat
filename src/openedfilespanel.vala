@@ -44,11 +44,11 @@
             files.foreach (
                 (fr) =>
                 {
-                    exists |= (fr as GNOMECAT.UI.FileListRow).file == file;
+                    exists |= (fr as GNOMECAT.UI.PoFileRow).file == file;
                 }
             );
-            if (! exists)
-                files.add (new FileListRow (file));
+            if (! exists && file is GNOMECAT.PoFiles.PoFile)
+                files.add (new PoFileRow (file as GNOMECAT.PoFiles.PoFile));
         }
 
         public void remove_file (GNOMECAT.FileProject.File file)
@@ -56,7 +56,7 @@
             files.foreach (
                 (fr) =>
                 {
-                    if ((fr as GNOMECAT.UI.FileListRow).file == file)
+                    if ((fr as GNOMECAT.UI.PoFileRow).file == file)
                     {
                         files.remove(fr);
                     }
@@ -72,43 +72,7 @@
         [GtkCallback]
         private void on_row_activated (Gtk.ListBox list_box, Gtk.ListBoxRow row)
         {
-            file_activated ((row as GNOMECAT.UI.FileListRow).file);
-        }
-    }
-
-
-    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/filelistrow.ui")]
-    public class FileListRow : Gtk.ListBoxRow
-    {
-        [GtkChild]
-        private Gtk.Label label_file_name;
-        [GtkChild]
-        private Gtk.Label label_info_trans;
-        [GtkChild]
-        private Gtk.ProgressBar progressbar_file;
-
-        private GNOMECAT.FileProject.File _file;
-        public GNOMECAT.FileProject.File file
-        {
-            get
-            {
-                return _file;
-            }
-            private set
-            {
-                _file = value;
-                label_file_name.set_text (_file.name);
-                label_info_trans.set_text ("%iT %iU %iF".printf (_file.number_of_translated,
-                    _file.number_of_untranslated, _file.number_of_fuzzy));
-                double total = _file.number_of_translated + _file.number_of_untranslated
-                + _file.number_of_fuzzy;
-                progressbar_file.fraction = _file.number_of_translated / total;
-            }
-        }
-
-        public FileListRow (GNOMECAT.FileProject.File f)
-        {
-            file = f;
+            file_activated ((row as GNOMECAT.UI.PoFileRow).file);
         }
     }
 }
