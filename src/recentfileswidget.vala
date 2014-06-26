@@ -39,6 +39,9 @@ namespace GNOMECAT.UI {
             foreach (Gtk.RecentInfo f in Gtk.RecentManager.get_default ().get_items ())
             {
 
+                if (! f.exists ())
+                    continue;
+
                 string file_path;
                 try
                 {
