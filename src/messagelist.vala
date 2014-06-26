@@ -185,9 +185,15 @@ namespace GNOMECAT.UI
             this.state_image.icon_name = status_icon_name;
             this.state_image.tooltip_text = status_tooltip_text;
 
-            this.original.set_text (this.message.get_original_singular ());
-            if (this.message.get_translation (0) != null)
-                this.translation.set_text (this.message.get_translation (0));
+            if (message.get_original_singular () != null)
+            {
+                original.set_text (message.get_original_singular ());
+            }
+
+            if (message.get_translation (0) != null)
+            {
+                translation.set_text (message.get_translation (0));
+            }
 
             foreach (MessageTip t in this.message.tips)
             {

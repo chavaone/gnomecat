@@ -335,15 +335,6 @@ namespace GNOMECAT.UI
             translation_text_tags = new ArrayList<GNOMECAT.TextTag> ();
 
             textview_translated_text.buffer.end_user_action.connect (update_translation);
-
-            int height_orig = string_lines (original_text) * 25;
-            int height_tran = string_lines (translation_text) * 25;
-            int height = height_orig > height_tran ? height_orig : height_tran;
-            height = height > 225 ? 225 : height;
-            textview_original_text.height_request = height;
-            textview_translated_text.height_request = height;
-            this.height_request = height * 2 + 60;
-
         }
 
         construct
