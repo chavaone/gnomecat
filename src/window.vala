@@ -75,7 +75,8 @@ namespace GNOMECAT.UI
             { "done", on_done},
             { "back", on_back},
             { "about", on_about},
-            { "search", on_search}
+            { "search", on_search},
+            { "change-state", on_change_state}
         };
 
         public Window (GNOMECAT.Application app)
@@ -237,6 +238,11 @@ namespace GNOMECAT.UI
         private void on_search ()
         {
             (window_panels.get_nth_page(window_panels.page) as Panel).on_search (this);
+        }
+
+        private void on_change_state ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_change_state (this);
         }
 
         public void on_about ()

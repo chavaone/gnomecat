@@ -233,6 +233,16 @@ namespace GNOMECAT.UI {
             }
         }
 
+        public void on_change_state (GNOMECAT.UI.Window window)
+        {
+            Message m = message_editor.message;
+
+            if (m.state == MessageState.TRANSLATED)
+                m.state = MessageState.FUZZY;
+            else if (m.state == MessageState.FUZZY)
+                m.state = MessageState.TRANSLATED;
+        }
+
         public void select (GNOMECAT.SelectLevel level,
             GNOMECAT.FileProject.MessageFragment? fragment)
         {

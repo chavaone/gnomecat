@@ -46,6 +46,12 @@ namespace GNOMECAT.UI
         [GtkChild]
         Gtk.TextView context;
 
+        [GtkChild]
+        Gtk.Image img_btn_state;
+
+        [GtkChild]
+        Gtk.Button btn_state;
+
 
         private Message _message;
         public Message message
@@ -78,7 +84,9 @@ namespace GNOMECAT.UI
 
                 this.message.added_tip.connect (on_change_tips);
                 this.message.removed_tip.connect (on_change_tips);
+                this.message.notify["state"].connect (on_state_changed);
 
+                on_state_changed ();
                 reload_tips ();
 
             }
@@ -138,6 +146,24 @@ namespace GNOMECAT.UI
         {
             get_active_tab ().replace_tags_original_string ((row as MessageTipRow).tip.tags_original);
             get_active_tab ().replace_tags_translation_string ((row as MessageTipRow).tip.tags_translation);
+        }
+
+        private void on_state_changed ()
+        {
+            switch (message.state)
+            {
+            case MessageState.TRANSLATED:
+                btn_state.sensitive = true;
+                img_btn_state.icon_name = "dialog-question-symbolic";
+                break;
+            case MessageState.FUZZY:
+                btn_state.sensitive = true;
+                img_btn_state.icon_name = "emblem-default-symbolic";
+                break;
+            case MessageState.UNTRANSLATED:
+                btn_state.sensitive = false;
+                break;
+            }
         }
 
         public void select (GNOMECAT.SelectLevel level,

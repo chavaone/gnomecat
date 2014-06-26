@@ -68,6 +68,7 @@ namespace GNOMECAT.PoFiles
             set
             {
                 message.set_fuzzy (value == MessageState.FUZZY);
+                message_changed ();
             }
         }
 
