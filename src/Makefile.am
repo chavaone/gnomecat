@@ -48,6 +48,7 @@ VALASOURCES = \
 	openfilepanel.vala \
 	firstprofilepanel.vala \
 	pofilerow.vala \
+	recentfileswidget.vala \
 	welcomepanel.vala
 
 gnomecat_SOURCES = \
