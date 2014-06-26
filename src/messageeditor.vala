@@ -193,45 +193,24 @@ namespace GNOMECAT.UI
             get
             {
                 _original_text = this.plural_number == 0 ?
-                this.message.get_original_singular () :
-                this.message.get_original_plural ();
+                    this.message.get_original_singular () :
+                    this.message.get_original_plural ();
                 return _original_text;
             }
         }
 
-        private string _tranlation_text;
+        private string _translation_text;
         public string? translation_text
         {
             get
             {
-                _tranlation_text = this.message.get_translation (this.plural_number);
-                return _tranlation_text;
+                _translation_text = message.get_translation (this.plural_number);
+                return _translation_text;
             }
             set
             {
-                string old_text = translation_text;
-                string new_text = value;
-
-                message.set_translation (this.plural_number, new_text);
-                if (old_text != null && new_text == "")
-                this.message.state = MessageState.UNTRANSLATED;
-
-                if (old_text == null && new_text != null)
-                {
-                    bool untrans_msg = false;
-                    PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
-                    int num_plurals = message.has_plural () ?
-                        enabled_plural_form.number_of_plurals : 1;
-                    for (int i = 0; i < num_plurals; i++)
-                        untrans_msg |= message.get_translation (i) == null;
-
-                    if (! untrans_msg)
-                        this.message.state = settings.get_string ("message-changed-state") == "fuzzy" ?
-                            MessageState.FUZZY :
-                            MessageState.TRANSLATED;
-                }
-                textview_translated_text.buffer.set_text (new_text);
-                message.message_changed ();
+                message.set_translation (plural_number, value);
+                //textview_translated_text.buffer.set_text (value == null ? "" : value);
             }
         }
 
@@ -339,7 +318,6 @@ namespace GNOMECAT.UI
             textview_translated_text.height_request = height;
             this.height_request = height * 2 + 60;
 
-            this.message.modified_translation.connect (on_modified_translation);
         }
 
         construct
@@ -349,15 +327,6 @@ namespace GNOMECAT.UI
             settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
             settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
             settings.bind ("font", this, "font", SettingsBindFlags.GET);
-        }
-
-        private void on_modified_translation (Message m, int index,
-            string? old_string, string? new_string)
-        {
-            if (index != this.plural_number || m != this.message)
-                return;
-
-            this.translation_text = new_string;
         }
 
         public void replace_tags_original_string (ArrayList<TextTag> tags)
