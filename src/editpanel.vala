@@ -109,11 +109,36 @@ namespace GNOMECAT.UI {
         [GtkCallback]
         public void on_message_selected (Message m)
         {
+            if (navigator_all != null)
+            {
+                navigator_all.message = m;
+            }
+
+            if (navigator_translated != null)
+            {
+                if (file.number_of_translated != 0)
+                    navigator_translated.message = m;
+                else
+                    navigator_translated.first ();
+            }
+
+            if (navigator_fuzzy != null)
+            {
+                if (file.number_of_fuzzy != 0)
+                    navigator_fuzzy.message = m;
+                else
+                    navigator_fuzzy.first ();
+            }
+
+            if (navigator_untranslated != null)
+            {
+                if (file.number_of_untranslated != 0)
+                    navigator_untranslated.message = m;
+                else
+                    navigator_untranslated.first ();
+            }
+
             hints_panel.message = m;
-            if (navigator_all != null) navigator_all.message = m;
-            if (navigator_translated != null) navigator_translated.message = m;
-            if (navigator_fuzzy != null) navigator_fuzzy.message = m;
-            if (navigator_untranslated != null) navigator_untranslated.message = m;
             message_editor.message = m;
         }
 

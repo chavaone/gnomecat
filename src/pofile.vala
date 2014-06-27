@@ -37,37 +37,35 @@ namespace GNOMECAT.PoFiles
             }
         }
 
+        private MessageState _state;
         public override MessageState state
         {
             get
             {
-                if (message.is_fuzzy ())
-                {
-                    return MessageState.FUZZY;
-                }
-                else if (this.has_plural ())
-                {
-                    bool untrans = false;
-                    PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
-                    for (int i = 0; i < enabled_plural_form.number_of_plurals; i++)
-                    {
-                        untrans |= this.get_translation (i) == "";
-                    }
-
-                    return untrans ? MessageState.UNTRANSLATED :
-                        MessageState.TRANSLATED;
-                }
-                else
-                {
-                    return this.get_translation (0) == "" ?
-                        MessageState.UNTRANSLATED :
-                        MessageState.TRANSLATED;
-                }
+                return _state;
             }
 
             set
             {
-                message.set_fuzzy (value == MessageState.FUZZY);
+                MessageState old_value = _state;
+
+                bool untrans = false;
+
+                int number_of_plurals = has_plural () ? GNOMECAT.Application.get_default ()
+                    .enabled_profile.plural_form.number_of_plurals : 1;
+
+                for (int i = 0; i < number_of_plurals && ! untrans; i++)
+                {
+                    untrans |= get_translation (i) == "";
+                }
+
+                _state = untrans ? MessageState.UNTRANSLATED :
+                    value == MessageState.FUZZY ? MessageState.FUZZY :
+                    MessageState.TRANSLATED;
+
+                message.set_fuzzy (_state == MessageState.FUZZY);
+
+                state_changed (old_value, _state);
                 message_changed ();
             }
         }
@@ -77,7 +75,9 @@ namespace GNOMECAT.PoFiles
             GettextPo.Filepos origin;
 
             base (owner_file);
-            this.message = msg;
+            message = msg;
+
+            state = msg.is_fuzzy () ? MessageState.FUZZY : MessageState.TRANSLATED;
 
             _origins = new Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> ();
 

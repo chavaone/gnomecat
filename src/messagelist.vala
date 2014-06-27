@@ -104,6 +104,9 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_row_selected (Gtk.ListBoxRow? row)
         {
+            if (selected_row == row)
+                return;
+
             selected_row = (row as MessageListRow);
             message_selected (selected_row.message);
         }

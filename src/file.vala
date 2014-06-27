@@ -233,6 +233,11 @@ namespace GNOMECAT.FileProject
         public signal void message_changed ();
 
         /**
+         * Signal emited when the message changed.
+         */
+        public signal void state_changed (MessageState old_state, MessageState new_state);
+
+        /**
          * Method that indicates if this string has or has not
          *  a plural form.
          */
@@ -272,24 +277,14 @@ namespace GNOMECAT.FileProject
 
             if (translation != null)
             {
-                    bool untrans_msg = false;
-                    GNOMECAT.Languages.PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
-                    int num_plurals = has_plural () ? enabled_plural_form.number_of_plurals : 1;
-                    for (int i = 0; i < num_plurals; i++)
-                        untrans_msg |= get_translation (i) == null;
+                string message_changed_state = new GLib.Settings ("org.gnome.gnomecat.Editor")
+                    .get_string ("message-changed-state");
 
-                    if (! untrans_msg)
-                    {
-                        string message_changed_state = new GLib.Settings ("org.gnome.gnomecat.Editor")
-                            .get_string ("message-changed-state");
-                        state = message_changed_state == "fuzzy" ?
-                            MessageState.FUZZY :
-                            MessageState.TRANSLATED;
-                    }
+                state = message_changed_state == "fuzzy" ? MessageState.FUZZY : MessageState.TRANSLATED;
             }
             else
             {
-                state = state; //We call to the set function and notify! :)
+                state = MessageState.UNTRANSLATED;
             }
 
             message_changed ();
@@ -391,7 +386,6 @@ namespace GNOMECAT.FileProject
             {
                 get
                 {
-                    rebuild_numbers_cache ();
                     return cache_number_of_untranslated;
                 }
             }
@@ -403,7 +397,6 @@ namespace GNOMECAT.FileProject
             {
                 get
                 {
-                    rebuild_numbers_cache ();
                     return cache_number_of_translated;
                 }
             }
@@ -415,7 +408,6 @@ namespace GNOMECAT.FileProject
             {
                 get
                 {
-                    rebuild_numbers_cache ();
                     return cache_number_of_fuzzy;
                 }
             }
@@ -488,7 +480,7 @@ namespace GNOMECAT.FileProject
         {
             this.messages.add (m);
 
-            switch (m.state) //Updates file statistics.
+            switch (m.state)
             {
             case MessageState.TRANSLATED:
                 this.cache_number_of_translated++;
@@ -500,6 +492,8 @@ namespace GNOMECAT.FileProject
                 this.cache_number_of_fuzzy++;
                 break;
             }
+
+            m.state_changed.connect (on_state_changed);
 
             m.message_changed.connect ((src) =>
             {
@@ -555,6 +549,35 @@ namespace GNOMECAT.FileProject
                     this.cache_number_of_fuzzy++;
                     break;
                 }
+            }
+        }
+
+        private void on_state_changed (MessageState old_state, MessageState new_state)
+        {
+            switch (old_state)
+            {
+            case MessageState.TRANSLATED:
+                this.cache_number_of_translated--;
+                break;
+            case MessageState.UNTRANSLATED:
+                this.cache_number_of_untranslated--;
+                break;
+            case MessageState.FUZZY:
+                this.cache_number_of_fuzzy--;
+                break;
+            }
+
+            switch (new_state) //Updates file statistics.
+            {
+            case MessageState.TRANSLATED:
+                this.cache_number_of_translated++;
+                break;
+            case MessageState.UNTRANSLATED:
+                this.cache_number_of_untranslated++;
+                break;
+            case MessageState.FUZZY:
+                this.cache_number_of_fuzzy++;
+                break;
             }
         }
 
