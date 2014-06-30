@@ -2,657 +2,1113 @@
 	"languages" : [
 	{
 		"code" : "ab",
-		"name" : "Abkhazian"},
+		"name" : "Abkhazian",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "aa",
-		"name" : "Afar"},
+		"name" : "Afar",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "af",
 		"name" : "Afrikaans",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ak",
-		"name" : "Akan"},
+		"name" : "Akan",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sq",
 		"name" : "Albanian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "am",
 		"name" : "Amharic",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ar",
 		"name" : "Arabic",
-		"pluralform" : 5},
+		"pluralform" : 5,
+		"default-team-email": ""
+	},
 	{
 		"code" : "an",
 		"name" : "Aragonese",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "hy",
 		"name" : "Armenian",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "as",
 		"name" : "Assamese",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "av",
-		"name" : "Avaric"},
+		"name" : "Avaric",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ae",
-		"name" : "Avestan"},
+		"name" : "Avestan",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ay",
-		"name" : "Aymara"},
+		"name" : "Aymara",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "az",
 		"name" : "Azerbaijani",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bm",
-		"name" : "Bambara"},
+		"name" : "Bambara",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ba",
-		"name" : "Bashkir"},
+		"name" : "Bashkir",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "eu",
 		"name" : "Basque",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "be",
 		"name" : "Belarusian",
-		"pluralform" : 1},
+		"pluralform" : 1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bn",
 		"name" : "Bengali",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bh",
-		"name" : "Bihari languages"},
+		"name" : "Bihari languages",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bi",
-		"name" : "Bislama"},
+		"name" : "Bislama",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "nb",
-		"name" : "Bokmål, Norwegian; Norwegian Bokmål"},
+		"name" : "Bokmål, Norwegian; Norwegian Bokmål",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bs",
 		"name" : "Bosnian",
-		"pluralform" : 1},
+		"pluralform" : 1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "br",
 		"name" : "Breton",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bg",
 		"name" : "Bulgarian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "my",
 		"name" : "Burmese",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ca",
 		"name" : "Catalan; Valencian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "km",
 		"name" : "Central Khmer",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ch",
-		"name" : "Chamorro"},
+		"name" : "Chamorro",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ce",
-		"name" : "Chechen"},
+		"name" : "Chechen",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ny",
-		"name" : "Chichewa; Chewa; Nyanja"},
+		"name" : "Chichewa; Chewa; Nyanja",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "zh",
-		"name" : "Chinese"},
+		"name" : "Chinese",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "cu",
-		"name" : "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic"},
+		"name" : "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "cv",
-		"name" : "Chuvash"},
+		"name" : "Chuvash",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kw",
-		"name" : "Cornish"},
+		"name" : "Cornish",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "co",
-		"name" : "Corsican"},
+		"name" : "Corsican",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "cr",
-		"name" : "Cree"},
+		"name" : "Cree",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "hr",
 		"name" : "Croatian",
-		"pluralform" : 1},
+		"pluralform" : 1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "cs",
 		"name" : "Czech",
-		"pluralform" : 6},
+		"pluralform" : 6,
+		"default-team-email": ""
+	},
 	{
 		"code" : "da",
 		"name" : "Danish",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "dv",
-		"name" : "Divehi; Dhivehi; Maldivian"},
+		"name" : "Divehi; Dhivehi; Maldivian",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "nl",
 		"name" : "Dutch; Flemish",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "dz",
 		"name" : "Dzongkha",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "en",
-		"name" : "English"},
+		"name" : "English",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "eo",
 		"name" : "Esperanto",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "et",
 		"name" : "Estonian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ee",
-		"name" : "Ewe"},
+		"name" : "Ewe",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "fo",
-		"name" : "Faroese"},
+		"name" : "Faroese",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "fj",
-		"name" : "Fijian"},
+		"name" : "Fijian",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "fi",
 		"name" : "Finnish",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "fr",
 		"name" : "French",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ff",
-		"name" : "Fulah"},
+		"name" : "Fulah",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "gd",
-		"name" : "Gaelic; Scottish Gaelic"},
+		"name" : "Gaelic; Scottish Gaelic",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "gl",
 		"name" : "Galician",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": "gnome-gl-list@gnome.org"
+	},
 	{
 		"code" : "lg",
 		"name" : "Ganda",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ka",
 		"name" : "Georgian",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "de",
 		"name" : "German",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "el",
 		"name" : "Greek, Modern (1453-)",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "gn",
-		"name" : "Guarani"},
+		"name" : "Guarani",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "gu",
 		"name" : "Gujarati",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ht",
-		"name" : "Haitian; Haitian Creole"},
+		"name" : "Haitian; Haitian Creole",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ha",
 		"name" : "Hausa",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "he",
 		"name" : "Hebrew",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "hz",
-		"name" : "Herero"},
+		"name" : "Herero",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "hi",
 		"name" : "Hindi",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ho",
-		"name" : "Hiri Motu"},
+		"name" : "Hiri Motu",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "hu",
 		"name" : "Hungarian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "is",
 		"name" : "Icelandic",
-		"pluralform" : 16},
+		"pluralform" : 16,
+		"default-team-email": ""
+	},
 	{
 		"code" : "io",
 		"name" : "Ido",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ig",
-		"name" : "Igbo"},
+		"name" : "Igbo",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "id",
 		"name" : "Indonesian",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ia",
-		"name" : "Interlingua (International Auxiliary Language Association)"},
+		"name" : "Interlingua (International Auxiliary Language Association)",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ie",
-		"name" : "Interlingue; Occidental"},
+		"name" : "Interlingue; Occidental",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "iu",
-		"name" : "Inuktitut"},
+		"name" : "Inuktitut",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ik",
-		"name" : "Inupiaq"},
+		"name" : "Inupiaq",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ga",
 		"name" : "Irish",
-		"pluralform" : 15},
+		"pluralform" : 15,
+		"default-team-email": ""
+	},
 	{
 		"code" : "it",
 		"name" : "Italian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ja",
 		"name" : "Japanese",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "jv",
-		"name" : "Javanese"},
+		"name" : "Javanese",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kl",
-		"name" : "Kalaallisut; Greenlandic"},
+		"name" : "Kalaallisut; Greenlandic",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kn",
 		"name" : "Kannada",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kr",
-		"name" : "Kanuri"},
+		"name" : "Kanuri",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ks",
 		"name" : "Kashmiri",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kk",
 		"name" : "Kazakh",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ki",
-		"name" : "Kikuyu; Gikuyu"},
+		"name" : "Kikuyu; Gikuyu",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "rw",
 		"name" : "Kinyarwanda",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ky",
 		"name" : "Kirghiz; Kyrgyz",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kv",
-		"name" : "Komi"},
+		"name" : "Komi",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kg",
 		"name" : "Kongo",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ko",
 		"name" : "Korean",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "kj",
-		"name" : "Kuanyama; Kwanyama"},
+		"name" : "Kuanyama; Kwanyama",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ku",
 		"name" : "Kurdish",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "lo",
 		"name" : "Lao",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "la",
-		"name" : "Latin"},
+		"name" : "Latin",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "lv",
 		"name" : "Latvian",
-		"pluralform" : 13},
+		"pluralform" : 13,
+		"default-team-email": ""
+	},
 	{
 		"code" : "li",
-		"name" : "Limburgan; Limburger; Limburgish"},
+		"name" : "Limburgan; Limburger; Limburgish",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ln",
-		"name" : "Lingala"},
+		"name" : "Lingala",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "lt",
 		"name" : "Lithuanian",
-		"pluralform" : 9},
+		"pluralform" : 9,
+		"default-team-email": ""
+	},
 	{
 		"code" : "lu",
-		"name" : "Luba-Katanga"},
+		"name" : "Luba-Katanga",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "lb",
-		"name" : "Luxembourgish; Letzeburgesch"},
+		"name" : "Luxembourgish; Letzeburgesch",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mk",
 		"name" : "Macedonian",
-		"pluralform" : 8},
+		"pluralform" : 8,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mg",
 		"name" : "Malagasy",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ms",
 		"name" : "Malay",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ml",
 		"name" : "Malayalam",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mt",
-		"name" : "Maltese"},
+		"name" : "Maltese",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "gv",
 		"name" : "Manx",
-		"pluralform" : 2},
+		"pluralform" : 2,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mi",
 		"name" : "Maori",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mr",
 		"name" : "Marathi",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mh",
-		"name" : "Marshallese"},
+		"name" : "Marshallese",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mo",
-		"name" : "Moldavian; Moldovan"},
+		"name" : "Moldavian; Moldovan",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "mn",
 		"name" : "Mongolian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "na",
-		"name" : "Nauru"},
+		"name" : "Nauru",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "nv",
-		"name" : "Navajo; Navaho"},
+		"name" : "Navajo; Navaho",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "nd",
-		"name" : "Ndebele, North; North Ndebele"},
+		"name" : "Ndebele, North; North Ndebele",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "nr",
-		"name" : "Ndebele, South; South Ndebele"},
+		"name" : "Ndebele, South; South Ndebele",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ng",
-		"name" : "Ndonga"},
+		"name" : "Ndonga",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ne",
 		"name" : "Nepali",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "se",
-		"name" : "Northern Sami"},
+		"name" : "Northern Sami",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "no",
 		"name" : "Norwegian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "nn",
-		"name" : "Norwegian Nynorsk; Nynorsk, Norwegian"},
+		"name" : "Norwegian Nynorsk; Nynorsk, Norwegian",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "oc",
 		"name" : "Occitan (post 1500)",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "oj",
-		"name" : "Ojibwa"},
+		"name" : "Ojibwa",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "or",
 		"name" : "Oriya",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "om",
-		"name" : "Oromo"},
+		"name" : "Oromo",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "os",
 		"name" : "Ossetian; Ossetic",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "pi",
-		"name" : "Pali"},
+		"name" : "Pali",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "pa",
 		"name" : "Panjabi; Punjabi",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "fa",
 		"name" : "Persian",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "pl",
 		"name" : "Polish",
-		"pluralform" : 11},
+		"pluralform" : 11,
+		"default-team-email": ""
+	},
 	{
 		"code" : "pt",
 		"name" : "Portuguese",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ps",
-		"name" : "Pushto; Pashto"},
+		"name" : "Pushto; Pashto",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "qu",
-		"name" : "Quechua"},
+		"name" : "Quechua",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ro",
 		"name" : "Romanian",
-		"pluralform" : 14},
+		"pluralform" : 14,
+		"default-team-email": ""
+	},
 	{
 		"code" : "rm",
-		"name" : "Romansh"},
+		"name" : "Romansh",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "rn",
-		"name" : "Rundi"},
+		"name" : "Rundi",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ru",
 		"name" : "Russian",
-		"pluralform" : 1},
+		"pluralform" : 1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sm",
-		"name" : "Samoan"},
+		"name" : "Samoan",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sg",
-		"name" : "Sango"},
+		"name" : "Sango",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sa",
-		"name" : "Sanskrit"},
+		"name" : "Sanskrit",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sc",
-		"name" : "Sardinian"},
+		"name" : "Sardinian",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sr",
 		"name" : "Serbian",
-		"pluralform" : 10},
+		"pluralform" : 10,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sn",
-		"name" : "Shona"},
+		"name" : "Shona",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ii",
-		"name" : "Sichuan Yi; Nuosu"},
+		"name" : "Sichuan Yi; Nuosu",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sd",
-		"name" : "Sindhi"},
+		"name" : "Sindhi",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "si",
 		"name" : "Sinhala; Sinhalese",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sk",
 		"name" : "Slovak",
-		"pluralform" : 4},
+		"pluralform" : 4,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sl",
 		"name" : "Slovenian",
-		"pluralform" : 7},
+		"pluralform" : 7,
+		"default-team-email": ""
+	},
 	{
 		"code" : "so",
-		"name" : "Somali"},
+		"name" : "Somali",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "st",
-		"name" : "Sotho, Southern"},
+		"name" : "Sotho, Southern",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "es",
 		"name" : "Spanish; Castilian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": "gnome-es-list@gnome.org"
+	},
 	{
 		"code" : "su",
-		"name" : "Sundanese"},
+		"name" : "Sundanese",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sw",
 		"name" : "Swahili",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ss",
-		"name" : "Swati"},
+		"name" : "Swati",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "sv",
 		"name" : "Swedish",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tl",
 		"name" : "Tagalog",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ty",
-		"name" : "Tahitian"},
+		"name" : "Tahitian",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tg",
 		"name" : "Tajik",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ta",
 		"name" : "Tamil",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tt",
 		"name" : "Tatar",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "te",
 		"name" : "Telugu",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "th",
 		"name" : "Thai",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "bo",
-		"name" : "Tibetan"},
+		"name" : "Tibetan",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ti",
-		"name" : "Tigrinya"},
+		"name" : "Tigrinya",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "to",
-		"name" : "Tonga (Tonga Islands)"},
+		"name" : "Tonga (Tonga Islands)",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ts",
 		"name" : "Tsonga",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tn",
-		"name" : "Tswana"},
+		"name" : "Tswana",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tr",
 		"name" : "Turkish",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tk",
 		"name" : "Turkmen",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "tw",
-		"name" : "Twi"},
+		"name" : "Twi",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ug",
 		"name" : "Uighur; Uyghur",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "uk",
 		"name" : "Ukrainian",
-		"pluralform" : 1},
+		"pluralform" : 1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ur",
 		"name" : "Urdu",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "uz",
 		"name" : "Uzbek",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "ve",
-		"name" : "Venda"},
+		"name" : "Venda",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "vi",
 		"name" : "Vietnamese",
-		"pluralform" : 3},
+		"pluralform" : 3,
+		"default-team-email": ""
+	},
 	{
 		"code" : "vo",
-		"name" : "Volapük"},
+		"name" : "Volapük",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "wa",
 		"name" : "Walloon",
-		"pluralform" : 0},
+		"pluralform" : 0,
+		"default-team-email": ""
+	},
 	{
 		"code" : "cy",
 		"name" : "Welsh",
-		"pluralform" : 12},
+		"pluralform" : 12,
+		"default-team-email": ""
+	},
 	{
 		"code" : "fy",
 		"name" : "Western Frisian",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "wo",
-		"name" : "Wolof"},
+		"name" : "Wolof",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "xh",
 		"name" : "Xhosa",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "yi",
-		"name" : "Yiddish"},
+		"name" : "Yiddish",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "yo",
 		"name" : "Yoruba",
-		"pluralform" : 17},
+		"pluralform" : 17,
+		"default-team-email": ""
+	},
 	{
 		"code" : "za",
-		"name" : "Zhuang; Chuang"},
+		"name" : "Zhuang; Chuang",
+		"pluralform" : -1,
+		"default-team-email": ""
+	},
 	{
 		"code" : "zu",
 		"name" : "Zulu",
-		"pluralform" : 17}
+		"pluralform" : 17,
+		"default-team-email": ""
+	}
 	]
 }

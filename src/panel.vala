@@ -34,6 +34,8 @@ namespace GNOMECAT.UI
 
 		public virtual void on_edit_save_back (GNOMECAT.UI.Window window) {}
 
+		public virtual void on_edit_save (GNOMECAT.UI.Window window) {}
+
 		public virtual void on_edit_undo (GNOMECAT.UI.Window window) {}
 
 		public virtual void on_edit_redo (GNOMECAT.UI.Window window) {}
@@ -51,6 +53,8 @@ namespace GNOMECAT.UI
 		public virtual void on_back (GNOMECAT.UI.Window window) {}
 
 		public virtual void on_search (GNOMECAT.UI.Window window) {}
+
+		public virtual void on_change_state (GNOMECAT.UI.Window window) {}
 
 		public virtual void on_preferences (GNOMECAT.UI.Window window)
 		{

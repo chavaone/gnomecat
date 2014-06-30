@@ -16,16 +16,27 @@ namespace GettextPo {
 		[CCode (cname="po_message_iterator")]
 		public GettextPo.MessageIterator message_iterator (string domain);
 
+		[CCode (cname="po_file_domain_header")]
+		public string domain_header (string domain);
+
+		[CCode (cname="po_file_check_all")]
+		public void check (XErrorHandler handler);
 
 		[CCode (cname="po_file_read")]
 		public static GettextPo.File file_read (string filename,
 							XErrorHandler handler);
 
 		[CCode (cname="po_file_write")]
-		public static GettextPo.File file_write (GettextPo.File file,
+		public static unowned GettextPo.File file_write (GettextPo.File file,
 							string filename,
 							XErrorHandler handler);
 
+		[CCode (cname="po_header_field")]
+		public static string header_field (string header, string field);
+
+
+		[CCode (cname="po_header_set_field")]
+		public static string header_set_field (string header, string field, string value);
 	}
 
 
@@ -72,7 +83,7 @@ namespace GettextPo {
 		public void set_fuzzy (bool fuzzy);
 		public unowned bool is_format (string format_type);
 		public void set_format(string format_type, int bool);
-		public void check_format (GettextPo.ErrorHandler handler);
+		public void check_format (GettextPo.XErrorHandler handler);
 	}
 
 

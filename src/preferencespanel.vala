@@ -56,7 +56,7 @@ namespace GNOMECAT.UI
         {
             get
             {
-                return GNOMECAT.UI.ToolBarMode.PREFERENCES;
+                return GNOMECAT.UI.ToolBarMode.COMPLETE;
             }
         }
 
@@ -106,6 +106,15 @@ namespace GNOMECAT.UI
 
         public void on_preferences (GNOMECAT.UI.Window window)
         {}
+
+        public void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        {
+            toolbar.mode = toolbarmode;
+            toolbar.stack_switch.stack = this;
+            toolbar.stack_switch.visible = true;
+            toolbar.done_btn.visible = true;
+            toolbar.back_btn.visible = false;
+        }
     }
 
 

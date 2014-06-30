@@ -9,7 +9,7 @@
     <property name="icon_name">go-next-symbolic</property>
     <property name="use_fallback">True</property>
   </object>
-  <template class="GNOMECATUIWellcomePanel" parent="GtkBox">
+  <template class="GNOMECATUIWelcomePanel" parent="GtkBox">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="margin_left">5</property>
@@ -34,7 +34,7 @@
       <object class="GtkLabel" id="label">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="label" translatable="yes">Wellcome to GNOMECAT. To start translating files you should create a new profile</property>
+        <property name="label" translatable="yes">Welcome to GNOMECAT. To start translating files you should create a new profile</property>
         <property name="justify">fill</property>
         <property name="wrap">True</property>
         <property name="wrap_mode">word-char</property>

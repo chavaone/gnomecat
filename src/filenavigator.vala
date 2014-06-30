@@ -48,10 +48,10 @@ namespace GNOMECAT.Navigator
                 }
                 else
                 {
-                    Gee.ArrayList<Message> msgs = file.messages;
                     int index;
-                    for (index = msgs.index_of (value);
-                        index >= 0 && ! filter.check (msgs.get (index));
+
+                    for (index = file.messages.index_of (value);
+                        index >= 0 && ! filter.check (file.messages.get (index));
                         index--);
 
                     if (index == -1)
@@ -60,7 +60,7 @@ namespace GNOMECAT.Navigator
                     }
                     else
                     {
-                        _message = msgs.get (index);
+                        _message = file.messages.get (index);
                     }
                 }
 

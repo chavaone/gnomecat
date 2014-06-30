@@ -50,16 +50,27 @@
       </packing>
     </child>
     <child>
-      <object class="GtkRecentChooserWidget" id="recent_widget">
+      <object class="GtkScrolledWindow" id="scrolledwindow1">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="margin_left">10</property>
-        <property name="margin_right">10</property>
-        <property name="margin_bottom">10</property>
-        <property name="filter">recent_filter</property>
-        <property name="limit">-1</property>
-        <property name="sort_type">mru</property>
-        <signal name="item-activated" handler="on_recent_file_activated" swapped="no"/>
+        <property name="can_focus">True</property>
+        <property name="margin_left">5</property>
+        <property name="margin_right">5</property>
+        <property name="margin_bottom">5</property>
+        <property name="shadow_type">in</property>
+        <child>
+          <object class="GtkViewport" id="viewport1">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <child>
+              <object class="GNOMECATUIRecentFilesWidget" id="recent_widget">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="activate_on_single_click">False</property>
+                <signal name="file_activated" handler="on_recent_file_activated" swapped="no"/>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
       <packing>
         <property name="expand">True</property>

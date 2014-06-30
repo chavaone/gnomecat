@@ -37,37 +37,36 @@ namespace GNOMECAT.PoFiles
             }
         }
 
+        private MessageState _state;
         public override MessageState state
         {
             get
             {
-                if (message.is_fuzzy ())
-                {
-                    return MessageState.FUZZY;
-                }
-                else if (this.has_plural ())
-                {
-                    bool untrans = false;
-                    PluralForm enabled_plural_form = GNOMECAT.Application.get_default ().enabled_profile.plural_form;
-                    for (int i = 0; i < enabled_plural_form.number_of_plurals; i++)
-                    {
-                        untrans |= this.get_translation (i) == "";
-                    }
-
-                    return untrans ? MessageState.UNTRANSLATED :
-                        MessageState.TRANSLATED;
-                }
-                else
-                {
-                    return this.get_translation (0) == "" ?
-                        MessageState.UNTRANSLATED :
-                        MessageState.TRANSLATED;
-                }
+                return _state;
             }
 
             set
             {
-                message.set_fuzzy (value == MessageState.FUZZY);
+                MessageState old_value = _state;
+
+                bool untrans = false;
+
+                int number_of_plurals = has_plural () ? GNOMECAT.Application.get_default ()
+                    .enabled_profile.plural_form.number_of_plurals : 1;
+
+                for (int i = 0; i < number_of_plurals && ! untrans; i++)
+                {
+                    untrans |= get_translation (i) == "";
+                }
+
+                _state = untrans ? MessageState.UNTRANSLATED :
+                    value == MessageState.FUZZY ? MessageState.FUZZY :
+                    MessageState.TRANSLATED;
+
+                message.set_fuzzy (_state == MessageState.FUZZY);
+
+                state_changed (old_value, _state);
+                message_changed ();
             }
         }
 
@@ -76,7 +75,9 @@ namespace GNOMECAT.PoFiles
             GettextPo.Filepos origin;
 
             base (owner_file);
-            this.message = msg;
+            message = msg;
+
+            state = msg.is_fuzzy () ? MessageState.FUZZY : MessageState.TRANSLATED;
 
             _origins = new Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> ();
 
@@ -163,9 +164,34 @@ namespace GNOMECAT.PoFiles
     }
 
 
+    public class PoHeader : PoMessage
+    {
+
+        public PoHeader (PoFile owner_file, GettextPo.Message msg)
+        {
+            assert (msg.msgid () == "");
+            base (owner_file, msg);
+        }
+
+        public string? get_info (string key)
+        {
+            return GettextPo.File.header_field (get_translation (0), key);
+        }
+
+        public void set_info (string key, string value)
+        {
+            string new_header = GettextPo.File.header_set_field (get_translation (0),
+                                    key, value);
+            set_translation_impl (0, new_header);
+        }
+
+    }
+
+
     public class PoFile : GNOMECAT.FileProject.File
     {
         private GettextPo.File file;
+        private PoHeader header;
 
         public PoFile.full (string path, Project? p)
         {
@@ -179,6 +205,7 @@ namespace GNOMECAT.PoFiles
         protected override void save_file (string file_path)
         {
             XErrorHandler err_hand = XErrorHandler ();
+            update_header_info ();
             GettextPo.File.file_write (file, file_path, err_hand);
         }
 
@@ -196,10 +223,35 @@ namespace GNOMECAT.PoFiles
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
-                    if (! m.is_obsolete ())
+                    if (m.msgid () == "")
+                        this.header = new PoHeader (this, m);
+                    else if (! m.is_obsolete ())
                         this.add_message (new PoMessage (this, m));
                 }
             }
+        }
+
+        public override string? get_info (string key)
+        {
+            if (header == null)
+                return null;
+
+            return header.get_info (key);
+        }
+
+        public override void set_info (string key, string value)
+        {
+            if (header == null)
+                return;
+
+            header.set_info (key, value);
+        }
+
+        private void update_header_info ()
+        {
+            GNOMECAT.Profiles.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
+            string last_translator = "%s <%s>".printf (profile.translator_name, profile.translator_email);
+            set_info ("Last-Translator", last_translator);
         }
     }
 

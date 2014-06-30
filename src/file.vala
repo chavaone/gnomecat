@@ -213,25 +213,6 @@ namespace GNOMECAT.FileProject
             message_changed.connect (check_message);
         }
 
-
-        /**
-         * Signal for modified translations.
-         *
-         * @param modified_message The modified message.
-         * @param index Index of the modified translation.
-         * @param old_string Previous translation if any.
-         * @param new_string New translation if any.
-         */
-        public signal void modified_translation (int index,
-                                            string? old_string,
-                                            string? new_string);
-
-        /**
-         * Signal emited when the state of a message changes.
-         */
-        public signal void changed_state (MessageState old_state,
-                                        MessageState new_state);
-
         /**
          * Signal emited when a new tip is added to this message.
          *
@@ -250,6 +231,11 @@ namespace GNOMECAT.FileProject
          * Signal emited when the message changed.
          */
         public signal void message_changed ();
+
+        /**
+         * Signal emited when the message changed.
+         */
+        public signal void state_changed (MessageState old_state, MessageState new_state);
 
         /**
          * Method that indicates if this string has or has not
@@ -287,16 +273,21 @@ namespace GNOMECAT.FileProject
         public void set_translation (int index,
                                     string? translation)
         {
-            string old_string = get_translation (index);
-            MessageState old_state = this.state;
-
             set_translation_impl (index, translation);
 
-            if (old_string != get_translation (index))
-                this.modified_translation (index, old_string, translation);
+            if (translation != null)
+            {
+                string message_changed_state = new GLib.Settings ("org.gnome.gnomecat.Editor")
+                    .get_string ("message-changed-state");
 
-            if (old_state != this.state)
-                this.changed_state (old_state, this.state);
+                state = message_changed_state == "fuzzy" ? MessageState.FUZZY : MessageState.TRANSLATED;
+            }
+            else
+            {
+                state = MessageState.UNTRANSLATED;
+            }
+
+            message_changed ();
         }
 
         public abstract void set_translation_impl (int index,
@@ -395,7 +386,6 @@ namespace GNOMECAT.FileProject
             {
                 get
                 {
-                    rebuild_numbers_cache ();
                     return cache_number_of_untranslated;
                 }
             }
@@ -407,7 +397,6 @@ namespace GNOMECAT.FileProject
             {
                 get
                 {
-                    rebuild_numbers_cache ();
                     return cache_number_of_translated;
                 }
             }
@@ -419,7 +408,6 @@ namespace GNOMECAT.FileProject
             {
                 get
                 {
-                    rebuild_numbers_cache ();
                     return cache_number_of_fuzzy;
                 }
             }
@@ -492,7 +480,7 @@ namespace GNOMECAT.FileProject
         {
             this.messages.add (m);
 
-            switch (m.state) //Updates file statistics.
+            switch (m.state)
             {
             case MessageState.TRANSLATED:
                 this.cache_number_of_translated++;
@@ -505,11 +493,12 @@ namespace GNOMECAT.FileProject
                 break;
             }
 
+            m.state_changed.connect (on_state_changed);
+
             m.message_changed.connect ((src) =>
             {
                 has_changed = true;
                 file_changed ();
-                project.project_changed ();
             });
         }
 
@@ -563,12 +552,50 @@ namespace GNOMECAT.FileProject
             }
         }
 
+        private void on_state_changed (MessageState old_state, MessageState new_state)
+        {
+            switch (old_state)
+            {
+            case MessageState.TRANSLATED:
+                this.cache_number_of_translated--;
+                break;
+            case MessageState.UNTRANSLATED:
+                this.cache_number_of_untranslated--;
+                break;
+            case MessageState.FUZZY:
+                this.cache_number_of_fuzzy--;
+                break;
+            }
+
+            switch (new_state) //Updates file statistics.
+            {
+            case MessageState.TRANSLATED:
+                this.cache_number_of_translated++;
+                break;
+            case MessageState.UNTRANSLATED:
+                this.cache_number_of_untranslated++;
+                break;
+            case MessageState.FUZZY:
+                this.cache_number_of_fuzzy++;
+                break;
+            }
+        }
+
 
         public void save (string? file_path)
         {
             save_file (file_path == null ? path : file_path);
             has_changed = false;
+            file_changed ();
         }
+
+        public virtual string? get_info (string key)
+        {
+            return null;
+        }
+
+        public virtual void set_info (string key, string value)
+        {}
 
         protected abstract void save_file (string file_path);
 
@@ -736,6 +763,7 @@ namespace GNOMECAT.FileProject
                             if (f != null)
                             {
                                 files.add (f);
+                                f.file_changed.connect (() => { project_changed ();});
                                 file_added (f);
                             }
                         }

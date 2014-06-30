@@ -109,11 +109,36 @@ namespace GNOMECAT.UI {
         [GtkCallback]
         public void on_message_selected (Message m)
         {
+            if (navigator_all != null)
+            {
+                navigator_all.message = m;
+            }
+
+            if (navigator_translated != null)
+            {
+                if (file.number_of_translated != 0)
+                    navigator_translated.message = m;
+                else
+                    navigator_translated.first ();
+            }
+
+            if (navigator_fuzzy != null)
+            {
+                if (file.number_of_fuzzy != 0)
+                    navigator_fuzzy.message = m;
+                else
+                    navigator_fuzzy.first ();
+            }
+
+            if (navigator_untranslated != null)
+            {
+                if (file.number_of_untranslated != 0)
+                    navigator_untranslated.message = m;
+                else
+                    navigator_untranslated.first ();
+            }
+
             hints_panel.message = m;
-            if (navigator_all != null) navigator_all.message = m;
-            if (navigator_translated != null) navigator_translated.message = m;
-            if (navigator_fuzzy != null) navigator_fuzzy.message = m;
-            if (navigator_untranslated != null) navigator_untranslated.message = m;
             message_editor.message = m;
         }
 
@@ -213,6 +238,14 @@ namespace GNOMECAT.UI {
             search_enabled = ! search_enabled;
         }
 
+        public void on_edit_save (GNOMECAT.UI.Window window)
+        {
+            if (file.has_changed)
+            {
+                file.save (null);
+            }
+        }
+
         public void on_edit_save_back (GNOMECAT.UI.Window window)
         {
             if (file.has_changed)
@@ -223,6 +256,16 @@ namespace GNOMECAT.UI {
             {
                 on_back (window);
             }
+        }
+
+        public void on_change_state (GNOMECAT.UI.Window window)
+        {
+            Message m = message_editor.message;
+
+            if (m.state == MessageState.TRANSLATED)
+                m.state = MessageState.FUZZY;
+            else if (m.state == MessageState.FUZZY)
+                m.state = MessageState.TRANSLATED;
         }
 
         public void select (GNOMECAT.SelectLevel level,

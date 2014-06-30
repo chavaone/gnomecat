@@ -149,7 +149,6 @@
         <property name="margin_left">5</property>
         <property name="margin_right">5</property>
         <property name="margin_bottom">5</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">5</property>
         <child>
           <object class="GtkButton" id="btn_origins">
@@ -171,7 +170,30 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="pack_type">end</property>
             <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_state">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="action_name">win.change-state</property>
+            <child>
+              <object class="GtkImage" id="img_btn_state">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="pixel_size">20</property>
+                <property name="icon_name">help-faq</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>

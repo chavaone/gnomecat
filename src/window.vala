@@ -60,6 +60,7 @@ namespace GNOMECAT.UI
             { "search-next", on_search_next },
             { "search-previous", on_search_previous },
             { "edit-save-back", on_edit_save_back},
+            { "edit-save", on_edit_save},
             { "go-next", on_go_next},
             { "go-previous", on_go_previous},
             { "go-next-untranslated", on_go_next_untranslated},
@@ -74,7 +75,8 @@ namespace GNOMECAT.UI
             { "done", on_done},
             { "back", on_back},
             { "about", on_about},
-            { "search", on_search}
+            { "search", on_search},
+            { "change-state", on_change_state}
         };
 
         public Window (GNOMECAT.Application app)
@@ -83,7 +85,6 @@ namespace GNOMECAT.UI
 
             headerbar = new ToolBar();
             set_titlebar(headerbar);
-            headerbar.preferences_switch.stack = window_panels.get_nth_page (WindowStatus.PREFERENCES) as Gtk.Stack;
 
             headerbar.searchbutton.bind_property ("active",
                 window_panels.get_nth_page(WindowStatus.EDIT) as EditPanel,
@@ -178,6 +179,11 @@ namespace GNOMECAT.UI
             (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_untranslated (this);
         }
 
+        private void on_edit_save ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save (this);
+        }
+
         private void on_edit_save_back ()
         {
             (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save_back (this);
@@ -231,6 +237,11 @@ namespace GNOMECAT.UI
         private void on_search ()
         {
             (window_panels.get_nth_page(window_panels.page) as Panel).on_search (this);
+        }
+
+        private void on_change_state ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_change_state (this);
         }
 
         public void on_about ()

@@ -24,20 +24,17 @@ namespace GNOMECAT.UI
 	public class FirstProfilePanel : GNOMECAT.UI.SimpleProfilePanel
 	{
 
-
-		public override GNOMECAT.UI.ToolBarMode toolbarmode
-        {
-            get
-            {
-                return GNOMECAT.UI.ToolBarMode.DONE;
-            }
-        }
-
         public override void on_done (GNOMECAT.UI.Window window)
         {
         	base.on_done(window);
         	window.set_panel(WindowStatus.OPENEDFILES);
             window.window_panels.remove_page (window_page);
+        }
+
+        public override void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        {
+            base.setup_headerbar (toolbar);
+            toolbar.back_btn.visible = false;
         }
 
 	}
