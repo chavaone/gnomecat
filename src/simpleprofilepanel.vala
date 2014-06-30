@@ -195,16 +195,21 @@ namespace GNOMECAT.UI
                     return;
                 }
 
-                int index = 0;
-                foreach (var entry in PluralForm.plural_forms.entries)
+                Gtk.TreeIter iter;
+                plural_form_combobox.model.get_iter_first (out iter);
+
+                do
                 {
-                    if (entry.value == value)
+                    Value exp_val;
+                    (plural_form_combobox.model as Gtk.ListStore).get_value (iter, 0, out exp_val);
+                    string exp = exp_val.get_string ();
+                    if (exp == value.expression)
                     {
-                        plural_form_combobox.active = index;
+                        plural_form_combobox.set_active_iter (iter);
                         return;
                     }
-                    index++;
-                }
+                } while(plural_form_combobox.model.iter_next (ref iter));
+
                 plural_form_combobox.active = -1;
             }
         }
@@ -235,7 +240,7 @@ namespace GNOMECAT.UI
                     this.translator_name = "";
                     this.translator_email = "";
                     this.team_email = "";
-                    this.encoding = "";
+                    this.encoding = "UTF-8";
                     this.language = null;
                     this.plural_form = null;
                 }
@@ -356,6 +361,20 @@ namespace GNOMECAT.UI
                     encoding != "" &&
                     language != null &&
                     plural_form != null;
+            }
+        }
+
+        [GtkCallback]
+        public void on_language_changed (Gtk.Widget w)
+        {
+            if (plural_form == null)
+            {
+                plural_form = language.default_plural_form;
+            }
+
+            if (team_email == "")
+            {
+                team_email = language.default_team_email;
             }
         }
     }

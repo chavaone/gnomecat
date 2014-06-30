@@ -182,6 +182,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
             <property name="hexpand">True</property>
             <property name="model">languages</property>
             <signal name="changed" handler="on_profile_entry_changed" swapped="no"/>
+            <signal name="changed" handler="on_language_changed" swapped="no"/>
           </object>
           <packing>
             <property name="left_attach">1</property>

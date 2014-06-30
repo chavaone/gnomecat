@@ -121,15 +121,16 @@ namespace GNOMECAT.Languages
 
         public string name {get; private set;}
         public string code {get; private set;}
-        public PluralForm plural_form {get; set;}
+        public PluralForm default_plural_form {get; set;}
+        public string default_team_email {get; private set;}
 
         public int number_of_plurals
         {
             get
             {
-                if (plural_form == null)
+                if (default_plural_form == null)
                     return 1;
-                return plural_form.number_of_plurals;
+                return default_plural_form.number_of_plurals;
             }
         }
 
@@ -139,20 +140,21 @@ namespace GNOMECAT.Languages
             return languages.get (code);
         }
 
-        public Language (string code, string name, int? pluralform)
+        public Language (string code, string name, int pluralform, string email)
         {
             this.name = name;
             this.code = code;
-            this.plural_form = pluralform == null ? null :
+            this.default_plural_form = pluralform == -1 ? null :
                 PluralForm.get_plural_from_id (pluralform);
+            this.default_team_email = email;
         }
 
 
         public string? get_plural_form_tag (int plural)
         {
-            if (plural_form == null)
+            if (default_plural_form == null)
                 return null;
-            return this.plural_form.get_plural_form_tag (plural);
+            return this.default_plural_form.get_plural_form_tag (plural);
         }
 
         static construct
@@ -173,16 +175,11 @@ namespace GNOMECAT.Languages
 
                     string name = lang_object.get_string_member ("name");
                     string code = lang_object.get_string_member ("code");
+                    int plural_form_id = int.parse (lang_object.get_int_member ("pluralform").to_string ());
+                    string email = lang_object.get_string_member ("default-team-email");
 
-                    if (lang_object.has_member ("pluralform") )
-                    {
-                        int plural_form_id = int.parse (lang_object.get_int_member ("pluralform").to_string ());
-                        languages.set (code, new Language (code, name, plural_form_id));
-                    }
-                    else
-                    {
-                        languages.set (code, new Language (code, name, null));
-                    }
+                    languages.set (code, new Language (code, name, plural_form_id, email));
+
                 }
             } catch (Error e) {
                 //TODO: print some error info.
