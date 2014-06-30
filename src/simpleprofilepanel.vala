@@ -24,7 +24,7 @@ using GNOMECAT.Languages;
 namespace GNOMECAT.UI
 {
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/simpleprofilepanel.ui")]
-    public class SimpleProfilePanel : Gtk.Grid, GNOMECAT.UI.Panel
+    public class SimpleProfilePanel : Gtk.Stack, GNOMECAT.UI.Panel
     {
 
         [GtkChild]
