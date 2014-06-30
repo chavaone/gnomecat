@@ -32,7 +32,7 @@ namespace GNOMECAT.UI
         {
             get
             {
-                return GNOMECAT.UI.ToolBarMode.EMPTY;
+                return GNOMECAT.UI.ToolBarMode.COMPLETE;
             }
         }
 
@@ -56,6 +56,14 @@ namespace GNOMECAT.UI
         {
             window.set_panel(WindowStatus.OTHER, fstprofilepanel);
             window.window_panels.remove_page (window_page);
+        }
+
+        public void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        {
+            toolbar.mode = toolbarmode;
+            toolbar.stack_switch.visible = false;
+            toolbar.done_btn.visible = false;
+            toolbar.back_btn.visible = false;
         }
     }
 }

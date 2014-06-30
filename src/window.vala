@@ -85,7 +85,6 @@ namespace GNOMECAT.UI
 
             headerbar = new ToolBar();
             set_titlebar(headerbar);
-            headerbar.preferences_switch.stack = window_panels.get_nth_page (WindowStatus.PREFERENCES) as Gtk.Stack;
 
             headerbar.searchbutton.bind_property ("active",
                 window_panels.get_nth_page(WindowStatus.EDIT) as EditPanel,

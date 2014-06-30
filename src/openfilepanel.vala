@@ -28,7 +28,7 @@
         {
             get
             {
-                return GNOMECAT.UI.ToolBarMode.BACK;
+                return GNOMECAT.UI.ToolBarMode.COMPLETE;
             }
         }
 
@@ -88,6 +88,14 @@
                 (window.window_panels.get_nth_page (WindowStatus.OPENEDFILES) as OpenedFilesPanel).add_file (file);
                 (window.window_panels.get_nth_page (WindowStatus.OPENEDFILES) as OpenedFilesPanel).file_activated (file);
             }
+        }
+
+        public void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        {
+            toolbar.mode = toolbarmode;
+            toolbar.stack_switch.visible = false;
+            toolbar.done_btn.visible = false;
+            toolbar.back_btn.visible = true;
         }
 
     }

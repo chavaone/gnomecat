@@ -213,7 +213,7 @@ namespace GNOMECAT.UI
         {
             get
             {
-                return GNOMECAT.UI.ToolBarMode.DONEBACK;
+                return GNOMECAT.UI.ToolBarMode.COMPLETE;
             }
         }
 
@@ -319,19 +319,23 @@ namespace GNOMECAT.UI
         public void on_back (GNOMECAT.UI.Window window)
         {
             (GNOMECAT.Application.get_default ().get_active_window () as GNOMECAT.UI.Window)
-                .headerbar.done_button_sensitive = true;
+                .headerbar.done_btn.sensitive = true;
             window.set_panel (WindowStatus.PREFERENCES);
         }
 
-        public void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
+        public virtual void setup_headerbar (GNOMECAT.UI.ToolBar toolbar)
         {
             toolbar.mode = toolbarmode;
+            toolbar.stack_switch.stack = this;
+            toolbar.stack_switch.visible = true;
+            toolbar.done_btn.visible = true;
+            toolbar.back_btn.visible = true;
             on_profile_entry_changed (this);
         }
 
         public void clean_headerbar (GNOMECAT.UI.ToolBar toolbar)
         {
-            toolbar.done_button_sensitive = true;
+            toolbar.done_btn.sensitive = true;
         }
 
         public void on_preferences (GNOMECAT.UI.Window window)
@@ -344,7 +348,7 @@ namespace GNOMECAT.UI
 
             if (window != null)
             {
-                window.headerbar.done_button_sensitive =
+                window.headerbar.done_btn.sensitive =
                     profile_name != "" &&
                     translator_name != "" &&
                     translator_email != "" &&
