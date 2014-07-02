@@ -154,12 +154,26 @@ namespace GNOMECAT.PoFiles
          public override string get_context ()
          {
             string ctx = "";
+            string? format;
             if (this.message.comments () != "")
                 ctx += "Coments:\n" + this.message.comments () + "\n";
             if (this.message.extracted_comments () != "")
                 ctx += "Extracted Comments:\n" + this.message.extracted_comments () + "\n";
+            if ((format = this.get_format ()) != null)
+                ctx += "Format: " + GettextPo.format_pretty_name (format) + "\n";
             return ctx;
 
+         }
+
+         public string? get_format ()
+         {
+            foreach (string format in GettextPo.format_list ())
+            {
+                if (message.is_format (format))
+                    return format;
+            }
+
+            return null;
          }
     }
 
