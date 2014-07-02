@@ -299,6 +299,8 @@ namespace GNOMECAT.PoFiles
             string last_translator = "%s <%s>".printf (profile.translator_name, profile.translator_email);
             set_info ("Last-Translator", last_translator);
 
+            set_info ("X-Generator", "GNOMECAT " + Config.VERSION);
+
             DateTime now = new DateTime.now_local ();
             header.set_comment (profile.translator_name, profile.translator_email, now.get_year ());
         }
