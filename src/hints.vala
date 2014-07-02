@@ -34,6 +34,22 @@ namespace GNOMECAT.UI
         [GtkChild]
         private Gtk.Label origin;
 
+        private GLib.Settings settings;
+
+        public string font
+        {
+            set
+            {
+                Pango.FontDescription font_desc = Pango.FontDescription.from_string (value);
+                if (font_desc != null)
+                {
+                    hint_text.override_font (font_desc);
+                }
+
+            }
+        }
+
+
         private Hint _hint;
         public Hint hint
         {
@@ -53,6 +69,13 @@ namespace GNOMECAT.UI
         public HintPanelRow (Hint h)
         {
             hint = h;
+        }
+
+        construct
+        {
+            settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
+
+            settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
     }
 

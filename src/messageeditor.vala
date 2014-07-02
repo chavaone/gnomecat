@@ -26,13 +26,6 @@ using Gee;
 namespace GNOMECAT.UI
 {
 
-    int string_lines (string s)
-    {
-        int index, ret;
-        for (ret = 1, index = -1; (index = s.index_of_char ('\n', index+1)) != -1; ret++);
-        return ret;
-    }
-
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditor.ui")]
     public class MessageEditor : Box
     {
@@ -52,6 +45,21 @@ namespace GNOMECAT.UI
         [GtkChild]
         Gtk.Button btn_state;
 
+
+        private GLib.Settings settings;
+
+        public string font
+        {
+            set
+            {
+                Pango.FontDescription font_desc = Pango.FontDescription.from_string (value);
+                if (font_desc != null)
+                {
+                    context.override_font (font_desc);
+                }
+
+            }
+        }
 
         private Message _message;
         public Message message
@@ -88,8 +96,14 @@ namespace GNOMECAT.UI
 
                 on_state_changed ();
                 reload_tips ();
-
             }
+        }
+
+        construct
+        {
+            settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
+
+            settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 
         private void clean_tabs ()
@@ -197,7 +211,6 @@ namespace GNOMECAT.UI
                     as MessageEditorTab).deselect (level, fragment);
             }
         }
-
     }
 
 
@@ -501,6 +514,23 @@ namespace GNOMECAT.UI
         [GtkChild]
         private Gtk.Label tip_name;
 
+        private GLib.Settings settings;
+
+        public string font
+        {
+            set
+            {
+                Pango.FontDescription font_desc = Pango.FontDescription.from_string (value);
+                if (font_desc != null)
+                {
+                    tip_description.override_font (font_desc);
+                    if (tip_name.attributes == null)
+                        tip_name.attributes = new Pango.AttrList ();
+                    tip_name.attributes.change (new Pango.AttrFontDesc (font_desc));
+                }
+
+            }
+        }
 
         public MessageTipRow (MessageTip t)
         {
@@ -522,6 +552,12 @@ namespace GNOMECAT.UI
             tip_description.buffer.text = t.description;
         }
 
+        construct
+        {
+            settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
+
+            settings.bind ("font", this, "font", SettingsBindFlags.GET);
+        }
 
         [GtkCallback]
         private bool on_selected (Gdk.EventButton e)

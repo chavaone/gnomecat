@@ -142,6 +142,26 @@ namespace GNOMECAT.UI
         [GtkChild]
         private Gtk.Box info_box;
 
+        private GLib.Settings settings;
+
+        public string font
+        {
+            set
+            {
+                Pango.FontDescription font_desc = Pango.FontDescription.from_string (value);
+                if (font_desc != null)
+                {
+                    if (original.attributes == null)
+                        original.attributes = new Pango.AttrList ();
+                    original.attributes.change (new Pango.AttrFontDesc (font_desc));
+
+                    if (translation.attributes == null)
+                        translation.attributes = new Pango.AttrList ();
+                    translation.attributes.change (new Pango.AttrFontDesc (font_desc));
+                }
+
+            }
+        }
 
         private Message _message;
         public Message message
@@ -161,6 +181,13 @@ namespace GNOMECAT.UI
         public MessageListRow.with_message (Message m)
         {
             message = m;
+        }
+
+        construct
+        {
+            settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
+
+            settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 
         private void set_info_box_properties ()
