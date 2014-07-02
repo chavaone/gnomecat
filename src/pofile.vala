@@ -26,7 +26,7 @@ namespace GNOMECAT.PoFiles
 {
     public class PoMessage : GNOMECAT.FileProject.Message
     {
-        private unowned GettextPo.Message message;
+        protected unowned GettextPo.Message message;
 
         public Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> _origins;
         public override Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
@@ -199,6 +199,38 @@ namespace GNOMECAT.PoFiles
             set_translation_impl (0, new_header);
         }
 
+        public void set_comment (string prof_name, string email, int curr_year)
+        {
+            string new_comment = "";
+            string years_string = ", ";
+
+            foreach (string line in message.comments ().split ("\n"))
+            {
+                if (! line.has_prefix (prof_name))
+                {
+                    if (line != "") new_comment += line + "\n";
+                    continue;
+                }
+
+                years_string = ", ";
+
+                foreach (string year in line.split (","))
+                {
+                    string year_parsed = year.has_suffix (".") ? year.substring (0, year.length - 1).strip () : year.strip ();
+                    int64 year_int = 0;
+
+                    if (year_parsed == "" || ! int64.try_parse (year_parsed, out year_int))
+                        continue;
+
+                    if (year_int != curr_year)
+                        years_string += "%s, ".printf (year_parsed);
+                }
+            }
+
+            new_comment += "%s <%s>%s%i.\n\n\n".printf (prof_name, email, years_string, curr_year);
+            message.set_comments (new_comment);
+        }
+
     }
 
 
@@ -266,6 +298,9 @@ namespace GNOMECAT.PoFiles
             GNOMECAT.Profiles.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
             string last_translator = "%s <%s>".printf (profile.translator_name, profile.translator_email);
             set_info ("Last-Translator", last_translator);
+
+            DateTime now = new DateTime.now_local ();
+            header.set_comment (profile.translator_name, profile.translator_email, now.get_year ());
         }
     }
 
