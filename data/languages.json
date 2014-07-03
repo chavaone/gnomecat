@@ -40,7 +40,7 @@
 		"code" : "ar",
 		"name" : "Arabic",
 		"pluralform" : 5,
-		"default-team-email": ""
+		"default-team-email": "doc@arabeyes.org"
 	},
 	{
 		"code" : "an",
