@@ -74,7 +74,6 @@
                 <property name="tooltip_text" translatable="yes">Origin</property>
                 <property name="margin_left">5</property>
                 <property name="margin_right">5</property>
-                <property name="label" translatable="yes">(origin)</property>
                 <attributes>
                   <attribute name="style" value="italic"/>
                   <attribute name="weight" value="light"/>
