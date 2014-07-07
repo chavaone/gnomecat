@@ -1,4 +1,4 @@
-SUBDIRS = po src data po
+SUBDIRS = po src data plugins
 
 ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 

@@ -28,6 +28,7 @@ namespace GNOMECAT
     public class Application : Gtk.Application
     {
         private ArrayList<FileOpener> file_openers;
+        private GNOMECAT.PluginManager manager;
         private ArrayList<HintProvider> hint_providers;
         private ArrayList<Checker> checkers;
         private static GNOMECAT.Application _instance;
@@ -103,11 +104,12 @@ namespace GNOMECAT
             add_opener (new GNOMECAT.PoFiles.PoFileOpener ());
             this.window_removed.connect (on_window_removed);
 
+            manager = new PluginManager (this);
+
             hint_providers = new ArrayList<HintProvider> ();
             add_hint_provider (new GNOMECAT.Demo.DemoHintProvider ()); //DEMO
 
             checkers = new ArrayList<Checker> ();
-            add_checker (new GNOMECAT.Demo.DemoChecker ()); //DEMO
 
             add_action_entries (action_entries, this);
             add_accel_entries (accel_entries);

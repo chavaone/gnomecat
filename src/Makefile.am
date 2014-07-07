@@ -7,7 +7,8 @@ AM_CFLAGS = \
 AM_CPPFLAGS = \
 	-DGETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\"  \
 	-DGNOMELOCALEDIR=\""$(localedir)"\" \
-	-DDATADIR=\""$(pkgdatadir)"\"
+	-DDATADIR=\""$(pkgdatadir)"\" \
+	-DLIBDIR=\""$(pkglibdir)"\"
 
 AM_VALAFLAGS = \
 	--vapidir $(top_srcdir)/vapi \
@@ -16,6 +17,7 @@ AM_VALAFLAGS = \
 	--pkg json-glib-1.0 \
 	--pkg gtksourceview-3.0 \
 	--pkg gettext-po \
+	--pkg libpeas-1.0 \
 	--gresources "$(top_srcdir)/data/gnomecat.gresource.xml" \
 	--target-glib=2.38
 
@@ -49,6 +51,7 @@ VALASOURCES = \
 	firstprofilepanel.vala \
 	pofilerow.vala \
 	recentfileswidget.vala \
+	pluginmanager.vala \
 	welcomepanel.vala
 
 gnomecat_SOURCES = \

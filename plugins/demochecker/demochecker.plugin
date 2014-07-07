@@ -1,0 +1,6 @@
+[Plugin]
+Module=demochecker
+Name=Demo Checker :O
+Description=Demo message checker...
+Authors=Marcos Chavarría Teijeiro <chavarría@gmail.com>
+Copyright=Copyright © 2014 Marcos Chavarría Teijeiro

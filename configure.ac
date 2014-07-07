@@ -36,6 +36,7 @@ PKG_CHECK_MODULES(GNOMECAT, [
     gtksourceview-3.0 >= 3.0.0
     gee-0.8
     json-glib-1.0
+    libpeas-1.0
 ])
 
 # Checks for libraries
@@ -52,7 +53,11 @@ Makefile
 src/Makefile
 po/Makefile.in
 data/Makefile
-data/gnomecat.desktop.in])
+data/gnomecat.desktop.in
+plugins/Makefile
+plugins/demochecker/Makefile])
+
+LT_INIT
 
 AC_OUTPUT
 
