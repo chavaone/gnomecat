@@ -37,6 +37,7 @@ PKG_CHECK_MODULES(GNOMECAT, [
     gee-0.8
     json-glib-1.0
     libpeas-1.0
+    libpeas-gtk-1.0
 ])
 
 # Checks for libraries

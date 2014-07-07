@@ -18,6 +18,7 @@ AM_VALAFLAGS = \
 	--pkg gtksourceview-3.0 \
 	--pkg gettext-po \
 	--pkg libpeas-1.0 \
+	--pkg libpeas-gtk-1.0 \
 	--gresources "$(top_srcdir)/data/gnomecat.gresource.xml" \
 	--target-glib=2.38
 

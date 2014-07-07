@@ -402,5 +402,16 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
       </packing>
     </child>
 
+    <child>
+      <object class="PeasGtkPluginManagerView" id="plugin">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+      </object>
+      <packing>
+        <property name="name">plugins_pannel</property>
+        <property name="position">2</property>
+        <property name="title">Plugins</property>
+      </packing>
+    </child>
   </template>
 </interface>
