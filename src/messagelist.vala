@@ -48,6 +48,8 @@ namespace GNOMECAT.UI
             }
             set
             {
+                if (_file == value)
+                    return;
                 _file = value;
                 clean_messages ();
                 foreach (Message m in value.messages)
