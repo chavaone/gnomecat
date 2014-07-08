@@ -1,7 +1,6 @@
 
 
 using GNOMECAT.FileProject;
-using GNOMECAT.Languages;
 using GNOMECAT.UI;
 using Gee;
 
@@ -20,7 +19,7 @@ namespace GNOMECAT.Demo
         return random;
     }
 
-    PluralForm get_enabled_plural_form ()
+    GNOMECAT.PluralForm get_enabled_plural_form ()
     {
         return GNOMECAT.Application.get_default ().enabled_profile.plural_form;
     }

@@ -20,7 +20,6 @@
 
 using Gee;
 using GNOMECAT.FileProject;
-using GNOMECAT.Languages;
 
 namespace GNOMECAT.Iterators
 {
@@ -295,7 +294,7 @@ namespace GNOMECAT.Iterators
                         message.get_original_plural (), search_string,
                         filter, 1, true));
 
-                PluralForm plural_form = GNOMECAT.Application
+                GNOMECAT.PluralForm plural_form = GNOMECAT.Application
                     .get_default ().enabled_profile.plural_form;
                 for (int plural_number = 1;
                     plural_number < plural_form.number_of_plurals;

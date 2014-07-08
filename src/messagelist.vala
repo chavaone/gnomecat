@@ -20,7 +20,6 @@
 
 using Gtk;
 using GNOMECAT.FileProject;
-using GNOMECAT.Languages;
 
 namespace GNOMECAT.UI
 {

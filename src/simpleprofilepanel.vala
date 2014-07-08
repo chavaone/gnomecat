@@ -19,7 +19,6 @@
  */
 
 using Gee;
-using GNOMECAT.Languages;
 
 namespace GNOMECAT.UI
 {

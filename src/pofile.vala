@@ -20,7 +20,6 @@
 
 using GettextPo;
 using GNOMECAT.FileProject;
-using GNOMECAT.Languages;
 
 namespace GNOMECAT.PoFiles
 {

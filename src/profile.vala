@@ -19,7 +19,6 @@
  */
 
 using Gee;
-using GNOMECAT.Languages;
 
 namespace GNOMECAT.Profiles
 {
@@ -91,7 +90,7 @@ namespace GNOMECAT.Profiles
 
 
         public Profile (string name, string translator_name, string translator_email,
-                        Language language, PluralForm plural_form, string char_set,
+                        GNOMECAT.Language language, GNOMECAT.PluralForm plural_form, string char_set,
                         string encoding, string team_email)
         {
             string new_uuid = string_random (10); //FIXME: substitute by a call to uuid library.

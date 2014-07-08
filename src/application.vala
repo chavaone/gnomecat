@@ -243,8 +243,8 @@ namespace GNOMECAT
             new GNOMECAT.UI.EditPanel();
             new PeasGtk.PluginManagerView (null);
             new GNOMECAT.UI.PreferencesPanel();
-            new GNOMECAT.Languages.PluralForm (0, 0, "", new Gee.HashMap<int, string>());
-            new GNOMECAT.Languages.Language ("", "", -1, "");
+            new GNOMECAT.PluralForm (0, 0, "", new Gee.HashMap<int, string>());
+            new GNOMECAT.Language ("", "", -1, "");
             new GNOMECAT.UI.RecentFilesWidget ();
             new GNOMECAT.UI.OpenFilePanel();
 
