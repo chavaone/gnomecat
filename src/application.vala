@@ -194,7 +194,7 @@ namespace GNOMECAT
         {
             foreach (var w in get_windows ())
                 return;
-            Gtk.main_quit ();
+            quit ();
         }
 
         public override void activate ()
@@ -211,7 +211,6 @@ namespace GNOMECAT
                 window.set_panel(WindowStatus.OPENEDFILES);
             }
 
-            Gtk.main ();
         }
 
         public override void open (GLib.File[] files, string hint)
@@ -228,7 +227,6 @@ namespace GNOMECAT
             }
 
             window.show ();
-            Gtk.main ();
         }
 
         public override void startup ()
@@ -274,7 +272,6 @@ namespace GNOMECAT
         {
             foreach (var w in get_windows ())
                 w.destroy();
-            Gtk.main_quit ();
         }
 
         public static int main (string[] args)
