@@ -77,7 +77,7 @@ using GNOMECAT.Search;
                 "advanded_search_enabled", BindingFlags.BIDIRECTIONAL);
         }
 
-        public void grab_focus ()
+        public void get_focus ()
         {
             search_entry.grab_focus ();
         }

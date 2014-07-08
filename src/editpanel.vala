@@ -89,7 +89,7 @@ namespace GNOMECAT.UI {
             {
                 searchbar.search_mode_enabled = value;
 
-                if (value) searchbar.grab_focus ();
+                if (value) searchbar.get_focus ();
 
                 if (active_search == null) return;
 

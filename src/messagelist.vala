@@ -139,8 +139,6 @@ namespace GNOMECAT.UI
         private Image warning_image;
         [GtkChild]
         private Image error_image;
-        [GtkChild]
-        private Gtk.Box info_box;
 
         private GLib.Settings settings;
 
