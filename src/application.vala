@@ -224,20 +224,7 @@ namespace GNOMECAT
         {
             base.startup ();
 
-            //This is a workaround to be able to use custom templates inside another templates.
-            new GNOMECAT.UI.SearchBar();
-            new GNOMECAT.UI.MessageListWidget();
-            new GNOMECAT.UI.HintPanelWidget();
-            new GNOMECAT.UI.ToolBar();
-            new GNOMECAT.UI.OpenedFilesPanel();
-            new GNOMECAT.UI.MessageEditor ();
-            new GNOMECAT.UI.EditPanel();
-            new PeasGtk.PluginManagerView (null);
-            new GNOMECAT.UI.PreferencesPanel();
-            new GNOMECAT.PluralForm (0, 0, "", new Gee.HashMap<int, string>());
-            new GNOMECAT.Language ("", "", -1, "");
-            new GNOMECAT.UI.RecentFilesWidget ();
-            new GNOMECAT.UI.OpenFilePanel();
+            initialize_workaround ();
 
             var css_provider = new Gtk.CssProvider ();
             try {
@@ -257,6 +244,25 @@ namespace GNOMECAT
             }
             var app_menu = builder.get_object ("appmenu") as MenuModel;
             set_app_menu (app_menu);
+        }
+
+
+        //This is a workaround to be able to use custom templates inside another templates.
+        private void initialize_workaround ()
+        {
+            new GNOMECAT.UI.SearchBar();
+            new GNOMECAT.UI.MessageListWidget();
+            new GNOMECAT.UI.HintPanelWidget();
+            new GNOMECAT.UI.ToolBar();
+            new GNOMECAT.UI.OpenedFilesPanel();
+            new GNOMECAT.UI.MessageEditor ();
+            new GNOMECAT.UI.EditPanel();
+            new PeasGtk.PluginManagerView (null);
+            new GNOMECAT.UI.PreferencesPanel();
+            new GNOMECAT.PluralForm (0, 0, "", new Gee.HashMap<int, string>());
+            new GNOMECAT.Language ("", "", -1, "");
+            new GNOMECAT.UI.RecentFilesWidget ();
+            new GNOMECAT.UI.OpenFilePanel();
         }
 
         public void on_quit ()
