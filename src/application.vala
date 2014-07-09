@@ -200,7 +200,6 @@ namespace GNOMECAT
         public override void activate ()
         {
             GNOMECAT.UI.Window window = new GNOMECAT.UI.Window (this);
-            window.show ();
 
             if (enabled_profile == null)
             {
@@ -211,6 +210,7 @@ namespace GNOMECAT
                 window.set_panel(WindowStatus.OPENEDFILES);
             }
 
+            window.show ();
         }
 
         public override void open (GLib.File[] files, string hint)
