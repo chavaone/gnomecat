@@ -36,7 +36,6 @@ VALASOURCES = \
 	navigator.vala \
 	pofile.vala \
 	hints.vala \
-	checker.vala \
 	select.vala \
 	filter.vala \
 	filenavigator.vala \

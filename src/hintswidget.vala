@@ -80,7 +80,7 @@ namespace GNOMECAT.UI
     }
 
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintpanelwidget.ui")]
-    public class HintPanelWidget : Gtk.Box, ChangedMessageSensible
+    public class HintPanelWidget : Gtk.Box, ChangedMessageSensible, HintViewer
     {
         [GtkChild]
         private Gtk.ListBox hints_list;
@@ -109,10 +109,10 @@ namespace GNOMECAT.UI
                 return;
 
             GNOMECAT.Application app = GNOMECAT.Application.get_default ();
-            app.get_hints (this.message, this);
+            app.provide_hints (this.message, this);
         }
 
-        public void add_hint (Message m, Hint h)
+        public void display_hint (Message m, Hint h)
         {
             if (m == this.message)
                 hints_list.add (new HintPanelRow (h));

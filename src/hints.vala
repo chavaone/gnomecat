@@ -36,8 +36,8 @@ namespace GNOMECAT
         }
     }
 
-    public abstract class HintProvider : Object
+    public interface HintViewer : Object
     {
-        public abstract void get_hints (GNOMECAT.FileProject.Message m, GNOMECAT.UI.HintPanelWidget hpw);
+        public abstract void display_hint (GNOMECAT.FileProject.Message m, Hint h);
     }
 }

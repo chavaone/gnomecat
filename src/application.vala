@@ -29,8 +29,6 @@ namespace GNOMECAT
     {
         private ArrayList<FileOpener> file_openers;
         private GNOMECAT.PluginManager manager;
-        private ArrayList<HintProvider> hint_providers;
-        private ArrayList<Checker> checkers;
         private static GNOMECAT.Application _instance;
 
         private ArrayList<string> _extensions;
@@ -92,6 +90,10 @@ namespace GNOMECAT
             { "win.search", "<Control>F"}
         };
 
+
+        public signal void provide_hints (GNOMECAT.FileProject.Message m, GNOMECAT.HintViewer hv);
+        public signal void check_message (GNOMECAT.FileProject.Message m);
+
         private Application ()
         {
             Object (application_id: "org.gnome.gnomecat",
@@ -106,10 +108,36 @@ namespace GNOMECAT
 
             manager = new PluginManager (this);
 
-            hint_providers = new ArrayList<HintProvider> ();
-            add_hint_provider (new GNOMECAT.Demo.DemoHintProvider ()); //DEMO
+            // -------------------------------
+            // ------------ DEMO -------------
+            // -------------------------------
 
-            checkers = new ArrayList<Checker> ();
+            provide_hints.connect ((m, hv) => {
+                GNOMECAT.Hint h = new Hint (m.get_original_singular (), "DEMO", 0.3);
+                hv.display_hint (m, h);
+            });
+
+            check_message.connect ((m) => {
+                int random;
+                if (m.state != MessageState.UNTRANSLATED)
+                {
+                    random = Random.int_range (0,9);
+                    for (int i = 0; i < random; i++)
+                    {
+                        int n = Random.int_range (0,3);
+                        m.add_tip (
+                            new MessageTip (
+                                "Just a tip",
+                                "fkldsajlfkjdalkdfjalksdjflñ",
+                                n == 0 ? TipLevel.INFO :
+                                n == 1 ? TipLevel.WARNING :
+                                TipLevel.ERROR,
+                                null,
+                                null));
+                    }
+                }
+
+                });
 
             add_action_entries (action_entries, this);
             add_accel_entries (accel_entries);
@@ -151,43 +179,6 @@ namespace GNOMECAT
                     return o.open_file (path, null);
             }
             return null;
-        }
-
-        public void add_hint_provider (HintProvider hp)
-        {
-            hint_providers.add (hp);
-        }
-
-        public void remove_hint_provider (HintProvider hp)
-        {
-            hint_providers.remove (hp);
-        }
-
-        public void get_hints (GNOMECAT.FileProject.Message m,
-            GNOMECAT.UI.HintPanelWidget pannel)
-        {
-            foreach (HintProvider hp in hint_providers)
-            {
-                hp.get_hints (m, pannel);
-            }
-        }
-
-        public void add_checker (Checker c)
-        {
-            checkers.add (c);
-        }
-
-        public void remove_checker (Checker c)
-        {
-            checkers.remove (c);
-        }
-
-        public void check_message (Message m)
-        {
-            foreach (Checker c in checkers)
-            {
-                c.check (m);
-            }
         }
 
         private void on_window_removed ()
