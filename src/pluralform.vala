@@ -28,7 +28,7 @@ namespace GNOMECAT
         public string expression {get; private set;}
         public Gee.HashMap<int, string> plural_tags {get; private set;}
 
-        public static Gee.HashMap<int,PluralForm> plural_forms {get; private set;}
+        public static Gee.HashMap<string, PluralForm> plural_forms {get; private set;}
 
 
         /**
@@ -41,12 +41,10 @@ namespace GNOMECAT
          *  plural forms.
          * @param plural_tags Distinguishable names for each plural form.
          */
-        public PluralForm   (int id,
-                            int number_of_plurals,
+        public PluralForm   (int number_of_plurals,
                             string expression,
                             Gee.HashMap<int, string> plural_tags)
         {
-            this.id = id;
             this.number_of_plurals = number_of_plurals;
             this.expression = expression;
             this.plural_tags = plural_tags;
@@ -69,14 +67,14 @@ namespace GNOMECAT
          * Method that returns the instance corresponding the
          * id number provided as parameter.
          */
-        public static PluralForm get_plural_from_id (int id)
+        public static PluralForm get_plural_from_expression (string exp)
         {
-            return plural_forms.get (id);
+            return plural_forms.get (exp);
         }
 
         static construct
         {
-            plural_forms = new Gee.HashMap<int, PluralForm> ();
+            plural_forms = new Gee.HashMap<string, PluralForm> ();
 
             try{
 
@@ -91,10 +89,9 @@ namespace GNOMECAT
                 {
                     var form_object = form.get_object ();
 
-                    int id = int.parse (form_object.get_int_member ("id").to_string ());
                     string expression = form_object.get_string_member ("expression");
                     int number_of_plurals = int.parse (form_object.get_int_member ("number_of_plurals").to_string ());
-                    Gee.HashMap<int,string> tags = new Gee.HashMap<int, string> ();
+                    Gee.HashMap<int, string> tags = new Gee.HashMap<int, string> ();
 
                     foreach (var tag in form_object.get_array_member ("tags").get_elements ())
                     {
@@ -102,7 +99,7 @@ namespace GNOMECAT
                         tags.set (int.parse (tag_object.get_int_member ("number").to_string ()), tag_object.get_string_member ("tag"));
                     }
 
-                    plural_forms.set (id, new PluralForm (id, number_of_plurals, expression, tags));
+                    plural_forms.set (expression, new PluralForm (number_of_plurals, expression, tags));
                 }
 
             } catch (Error e) {

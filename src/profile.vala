@@ -63,12 +63,12 @@ namespace GNOMECAT.Profiles
         {
             get
             {
-                _plural_form = PluralForm.get_plural_from_id (this.plural_form_id);
+                _plural_form = PluralForm.get_plural_from_expression (plural_form_exp);
                 return _plural_form;
             }
             set
             {
-                this.plural_form_id = value.id;
+                plural_form_exp = value.expression;
             }
         }
         public bool enabled
@@ -86,7 +86,7 @@ namespace GNOMECAT.Profiles
         public string team_email {get; set;}
 
         public string language_code {get; set;}
-        public int plural_form_id {get; set;}
+        public string plural_form_exp {get; set;}
 
 
         public Profile (string name, string translator_name, string translator_email,
@@ -116,7 +116,7 @@ namespace GNOMECAT.Profiles
             set_prof.bind ("translator-name", this, "translator_name",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("translator-email", this, "translator_email",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("language", this, "language_code",  SettingsBindFlags.DEFAULT);
-            set_prof.bind ("plural-form", this, "plural_form_id",  SettingsBindFlags.DEFAULT);
+            set_prof.bind ("plural-form", this, "plural_form_exp",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("char-set", this, "char_set",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("encoding", this, "encoding",  SettingsBindFlags.DEFAULT);
             set_prof.bind ("team-email", this, "team_email",  SettingsBindFlags.DEFAULT);

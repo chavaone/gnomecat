@@ -56,8 +56,8 @@
       <key name="language" type="s">
         <default>""</default>
       </key>
-      <key name="plural-form" type="i">
-        <default>0</default>
+      <key name="plural-form" type="s">
+        <default>""</default>
       </key>
       <key name="char-set" type="s">
         <default>""</default>

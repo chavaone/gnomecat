@@ -45,12 +45,12 @@ namespace GNOMECAT
             return languages.get (code);
         }
 
-        public Language (string code, string name, int pluralform, string email)
+        public Language (string code, string name, string pluralform, string email)
         {
             this.name = name;
             this.code = code;
-            this.default_plural_form = pluralform == -1 ? null :
-                GNOMECAT.PluralForm.get_plural_from_id (pluralform);
+            this.default_plural_form = pluralform == "" ? null :
+                GNOMECAT.PluralForm.get_plural_from_expression (pluralform);
             this.default_team_email = email;
         }
 
@@ -80,10 +80,10 @@ namespace GNOMECAT
 
                     string name = lang_object.get_string_member ("name");
                     string code = lang_object.get_string_member ("code");
-                    int plural_form_id = int.parse (lang_object.get_int_member ("pluralform").to_string ());
+                    string plural_form_exp = lang_object.get_string_member ("pluralform");
                     string email = lang_object.get_string_member ("default-team-email");
 
-                    languages.set (code, new Language (code, name, plural_form_id, email));
+                    languages.set (code, new Language (code, name, plural_form_exp, email));
 
                 }
             } catch (Error e) {

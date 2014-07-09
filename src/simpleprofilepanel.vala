@@ -121,7 +121,7 @@ namespace GNOMECAT.UI
                         return;
                     }
                 } while(encoding_combobox.model.iter_next (ref iter));
-                language_combobox.active = -1;
+                encoding_combobox.active = -1;
             }
         }
 
@@ -173,18 +173,23 @@ namespace GNOMECAT.UI
 
         [GtkChild]
         private Gtk.ComboBox plural_form_combobox;
+        private PluralForm? _plural_form;
         public PluralForm? plural_form
         {
             get
             {
-                int active_item = plural_form_combobox.get_active ();
-                if (active_item == -1)
+
+                Gtk.TreeIter iter;
+
+                if (! plural_form_combobox.get_active_iter(out iter))
                     return null;
 
-                foreach (var entry in PluralForm.plural_forms.entries)
-                    if (active_item-- == 0)
-                        return entry.value;
-                return null;
+                Value exp;
+                (plural_form_combobox.model as Gtk.ListStore).get_value (iter, 0, out exp);
+                string expression = exp.get_string ();
+
+                _plural_form = PluralForm.get_plural_from_expression (expression);
+                return _plural_form;
             }
             set
             {
@@ -283,11 +288,11 @@ namespace GNOMECAT.UI
                 model.set_value (iter, 1, entry.value.code);
             }
 
-            foreach (PluralForm pf in PluralForm.plural_forms)
+            foreach (var entry in PluralForm.plural_forms.entries)
             {
                 Gtk.ListStore model = plural_form_combobox.model as Gtk.ListStore;
                 model.append (out iter);
-                model.set_value (iter, 0, pf.expression);
+                model.set_value (iter, 0, entry.value.expression);
             }
         }
 
