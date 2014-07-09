@@ -24,6 +24,11 @@ namespace GNOMECAT.UI
 	public class FirstProfilePanel : GNOMECAT.UI.SimpleProfilePanel
 	{
 
+        public FirstProfilePanel ()
+        {
+            encoding = "UTF-8";
+        }
+
         public override void on_done (GNOMECAT.UI.Window window)
         {
         	base.on_done(window);
