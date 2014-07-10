@@ -79,6 +79,26 @@ namespace GNOMECAT.Profiles
                 Profile? p = app.enabled_profile;
                 return p != null && p.uuid == this.uuid;
             }
+            set
+            {
+                GNOMECAT.Application app = GNOMECAT.Application.get_default();
+
+                if (value)
+                {
+                    app.enabled_profile = this;
+                }
+                else if (app.enabled_profile == this)
+                {
+                    if (get_profiles ().size == 1)
+                    {
+                        app.enabled_profile = null;
+                    }
+                    else
+                    {
+                        app.enabled_profile = get_profiles ().get (0);
+                    }
+                }
+            }
         }
 
         public string char_set {get; set;}
@@ -131,10 +151,18 @@ namespace GNOMECAT.Profiles
             set_prof_list.set_strv ("list", prof_arr);
         }
 
-        public void set_default ()
+        public void remove ()
         {
-            GNOMECAT.Application app = GNOMECAT.Application.get_default ();
-            app.enabled_profile = this;
+            GLib.Settings set_prof_list = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
+            string[] prof_arr = set_prof_list.get_strv ("list");
+            string[] new_prof_arr = {};
+
+            foreach (string prof in prof_arr)
+                if (prof != this.uuid)
+                    new_prof_arr += prof;
+            set_prof_list.set_strv ("list", new_prof_arr);
+
+            this.enabled == false;
         }
 
         public static ArrayList<Profile> get_profiles ()
@@ -146,18 +174,6 @@ namespace GNOMECAT.Profiles
             foreach (string uuid in prof_arr)
                 ret_arr.add (new Profile.from_uuid (uuid));
             return ret_arr;
-        }
-
-        public static void remove_profile (Profile p)
-        {
-            GLib.Settings set_prof_list = new GLib.Settings ("org.gnome.gnomecat.ProfilesList");
-            string[] prof_arr = set_prof_list.get_strv ("list");
-            string[] new_prof_arr = {};
-
-            foreach (string prof in prof_arr)
-                if (prof != p.uuid)
-                    new_prof_arr += prof;
-            set_prof_list.set_strv ("list", new_prof_arr);
         }
     }
 }

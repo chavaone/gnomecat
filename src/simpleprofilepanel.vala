@@ -306,8 +306,9 @@ namespace GNOMECAT.UI
                     this.language, this.plural_form, "8-bits",
                     this.encoding, this.team_email);
                 new_prof.save();
+
                 if (GNOMECAT.Application.get_default ().enabled_profile == null)
-                    new_prof.set_default();
+                    new_prof.enabled = true;
             }
             else
             {

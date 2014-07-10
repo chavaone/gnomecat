@@ -97,6 +97,14 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_remove_profile ()
         {
+            if (GNOMECAT.Profiles.Profile.get_profiles ().size == 1)
+            {
+                //TODO: display message.
+                return;
+            }
+
+            (profiles_list.get_selected_row () as ProfileRow).profile.remove ();
+            reload_data ();
         }
 
         public void on_done (GNOMECAT.UI.Window window)
