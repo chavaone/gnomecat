@@ -107,6 +107,18 @@ namespace GNOMECAT.UI
             reload_data ();
         }
 
+        [GtkCallback]
+        private void on_enable_profile ()
+        {
+            ProfileRow pr = (profiles_list.get_selected_row () as ProfileRow);
+
+            if (pr != null)
+            {
+                pr.profile.enabled = true;
+            }
+            reload_data ();
+        }
+
         public void on_done (GNOMECAT.UI.Window window)
         {
             window.set_panel(window.last_page);
