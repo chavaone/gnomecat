@@ -99,6 +99,8 @@ namespace GNOMECAT.UI
             }
         }
 
+        public signal void hint_activated (Hint h);
+
         private void populate_list ()
         {
             hints_list.foreach ((w) => {
@@ -121,14 +123,14 @@ namespace GNOMECAT.UI
         [GtkCallback]
         public void on_row_activated (Gtk.ListBoxRow r)
         {
-            string text = (r as HintPanelRow).hint.translation_hint;
-            GNOMECAT.UI.EditPanel w = parent.parent as GNOMECAT.UI.EditPanel;
-            w.message_editor.get_active_tab ().translation_text = text;
-            /*
-            GNOMECAT.UI.MessageEditor w = (get_parent ().get_parent
-                ().get_parent () as GNOMECAT.UI.EditPanel).message_list;
-            w.get_active_editor_tab ().translation_text = text;
-            */
+            hint_activated ((r as HintPanelRow).hint);
+        }
+
+        public void activate_row_by_num (int num)
+        {
+            Gtk.ListBoxRow lbr = hints_list.get_row_at_index (num - 1);
+            if (lbr != null)
+                hints_list.row_activated (lbr);
         }
     }
 }

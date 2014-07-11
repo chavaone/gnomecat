@@ -76,7 +76,11 @@ namespace GNOMECAT.UI
             { "back", on_back},
             { "about", on_about},
             { "search", on_search},
-            { "change-state", on_change_state}
+            { "change-state", on_change_state},
+            { "hint1", on_hint1},
+            { "hint2", on_hint2},
+            { "hint3", on_hint3},
+            { "hint4", on_hint4}
         };
 
         public Window (GNOMECAT.Application app)
@@ -263,6 +267,26 @@ namespace GNOMECAT.UI
                                    "wrap-license", false,
                                    "translator-credits", _("translator-credits"),
                                    null);
+        }
+
+        public void on_hint1 ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 1);
+        }
+
+        public void on_hint2 ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 2);
+        }
+
+        public void on_hint3 ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 3);
+        }
+
+        public void on_hint4 ()
+        {
+            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 4);
         }
 
         [GtkCallback]

@@ -248,7 +248,7 @@ namespace GNOMECAT.UI
             set
             {
                 message.set_translation (plural_number, value);
-                //textview_translated_text.buffer.set_text (value == null ? "" : value);
+                textview_translated_text.buffer.set_text (value == null ? "" : value);
             }
         }
 

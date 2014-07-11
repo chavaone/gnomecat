@@ -60,5 +60,7 @@ namespace GNOMECAT.UI
 		{
 			window.set_panel (WindowStatus.PREFERENCES);
 		}
+
+		public virtual void on_hint (GNOMECAT.UI.Window window, int num) {}
 	}
 }

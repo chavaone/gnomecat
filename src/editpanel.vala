@@ -159,6 +159,13 @@ namespace GNOMECAT.UI {
             }
         }
 
+        [GtkCallback]
+        public void on_hint_activated (Hint hint)
+        {
+            string text = hint.translation_hint;
+            message_editor.get_active_tab ().translation_text = text;
+        }
+
         public void on_edit_undo (GNOMECAT.UI.Window window)
         {
              MessageEditorTab tab;
@@ -266,6 +273,11 @@ namespace GNOMECAT.UI {
                 m.state = MessageState.FUZZY;
             else if (m.state == MessageState.FUZZY)
                 m.state = MessageState.TRANSLATED;
+        }
+
+        public void on_hint (GNOMECAT.UI.Window window, int num)
+        {
+            hints_panel.activate_row_by_num (num);
         }
 
         public void select (GNOMECAT.SelectLevel level,

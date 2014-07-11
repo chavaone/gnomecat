@@ -87,7 +87,11 @@ namespace GNOMECAT
             { "win.go-previous-fuzzy", "<Control>t"},
             { "win.done", "<Control>D"},
             { "win.back", "Escape"},
-            { "win.search", "<Control>F"}
+            { "win.search", "<Control>F"},
+            { "win.hint1", "<Control>1"},
+            { "win.hint2", "<Control>2"},
+            { "win.hint3", "<Control>3"},
+            { "win.hint4", "<Control>4"}
         };
 
 
@@ -214,7 +218,7 @@ namespace GNOMECAT
                 if (file != null)
                     window.file = file;
                 else
-                    stderr.printf ("Error while open %s file.\n", f.get_path ());
+                    stderr.printf (_("Error while open %s file.\n"), f.get_path ());
             }
 
             window.show ();
