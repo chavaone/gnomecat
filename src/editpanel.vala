@@ -149,7 +149,6 @@ namespace GNOMECAT.UI {
             {
                 active_search.deselect ();
                 active_search = new GNOMECAT.Search.Search(this, search_info);
-                active_search.next ();
                 active_search.select ();
             }
             else
