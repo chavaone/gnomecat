@@ -66,7 +66,6 @@ namespace GNOMECAT.UI {
                 navigator_translated = new FileNavigator (this, new TranslatedFilter ());
                 navigator_untranslated = new FileNavigator (this, new UntranslatedFilter ());
             }
-
         }
 
         public GNOMECAT.UI.ToolBarMode toolbarmode
@@ -147,9 +146,16 @@ namespace GNOMECAT.UI {
         {
             if (search_info != null)
             {
-                active_search.deselect ();
+                GNOMECAT.UI.Window window = get_parent().get_parent().get_parent ()
+                    as GNOMECAT.UI.Window;
+
+                if (active_search != null) active_search.deselect ();
                 active_search = new GNOMECAT.Search.Search(this, search_info);
-                active_search.select ();
+
+                if (! active_search.first ())
+                    window.show_notification (_("There isn't any message which follows the search criteria."));
+                else
+                    window.hide_notification ();
             }
             else
             {
@@ -181,52 +187,68 @@ namespace GNOMECAT.UI {
 
         public void on_go_next (GNOMECAT.UI.Window window)
         {
-            navigator_all.next ();
+            if (! navigator_all.next ())
+                window.show_notification (_("There isn't any next message."));
         }
 
         public void on_go_previous (GNOMECAT.UI.Window window)
         {
-            navigator_all.previous ();
+            if (! navigator_all.previous ())
+                window.show_notification (_("There isn't any previous message."));
         }
 
         public void on_go_next_fuzzy (GNOMECAT.UI.Window window)
         {
-            navigator_fuzzy.next ();
+            if (! navigator_fuzzy.next ())
+                window.show_notification (_("There isn't any next fuzzy message."));
         }
 
         public void on_go_previous_fuzzy (GNOMECAT.UI.Window window)
         {
-            navigator_fuzzy.previous ();
+            if (! navigator_fuzzy.previous ())
+                window.show_notification (_("There isn't any previous fuzzy message."));
         }
 
         public void on_go_next_translated (GNOMECAT.UI.Window window)
         {
-            navigator_translated.next ();
+            if (! navigator_translated.next ())
+                window.show_notification (_("There isn't any next translated message."));
         }
 
         public void on_go_previous_translated (GNOMECAT.UI.Window window)
         {
-            navigator_translated.previous ();
+            if (! navigator_translated.previous ())
+                window.show_notification (_("There isn't any previous translated message."));
         }
 
         public void on_go_next_untranslated (GNOMECAT.UI.Window window)
         {
-            navigator_untranslated.next ();
+            if (! navigator_untranslated.next ())
+                window.show_notification (_("There isn't any next untranslated message."));
         }
 
         public void on_go_previous_untranslated (GNOMECAT.UI.Window window)
         {
-            navigator_untranslated.previous ();
+            if (! navigator_untranslated.previous ())
+                window.show_notification (_("There isn't any previous untranslated message."));
         }
 
         public void on_search_next (GNOMECAT.UI.Window window)
         {
-            if (active_search != null) active_search.next ();
+            if (active_search == null)
+                return;
+
+            if (! active_search.next ())
+                window.show_notification (_("There isn't any next message which follows the search criteria."));
         }
 
         public void on_search_previous (GNOMECAT.UI.Window window)
         {
-            if (active_search != null) active_search.previous ();
+            if (active_search == null)
+                return;
+
+            if (! active_search.previous ())
+                window.show_notification (_("There isn't any previous message which follows the search criteria."));
         }
 
         public void on_search_replace (GNOMECAT.UI.Window window)

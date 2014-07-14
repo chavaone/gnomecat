@@ -38,6 +38,11 @@ namespace GNOMECAT.UI
     {
         [GtkChild]
         public Gtk.Notebook window_panels;
+        [GtkChild]
+        public Gtk.InfoBar notification_bar;
+        [GtkChild]
+        public Gtk.Label notification_label;
+
         public GNOMECAT.UI.ToolBar headerbar;
 
         public WindowStatus last_page {get; private set;}
@@ -300,6 +305,28 @@ namespace GNOMECAT.UI
         private void on_file_activated (GNOMECAT.FileProject.File? file)
         {
             this.file = file;
+        }
+
+        [GtkCallback]
+        private void on_notification_response (int response_id)
+        {
+            notification_bar.visible = false;
+        }
+
+        public void show_notification (string text)
+        {
+            notification_label.label = text;
+            notification_bar.visible = true;
+            Timeout.add_seconds (3,
+                () => {
+                    notification_bar.hide ();
+                    return true;
+                });
+        }
+
+        public void hide_notification ()
+        {
+            notification_bar.visible = false;
         }
     }
 }
