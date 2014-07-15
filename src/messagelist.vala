@@ -76,6 +76,8 @@ namespace GNOMECAT.UI
                 return;
 
             messages_list_box.select_row (row);
+
+            row.grab_focus ();
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
