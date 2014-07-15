@@ -48,7 +48,7 @@ namespace GNOMECAT.UI
         {
             get
             {
-                return this.get_parent().get_parent() as GNOMECAT.UI.Window;
+                return get_parent ().get_parent ().get_parent () as GNOMECAT.UI.Window;
             }
         }
 
