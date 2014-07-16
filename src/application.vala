@@ -20,14 +20,14 @@
 
 using Gtk;
 using GNOMECAT.UI;
-using GNOMECAT.FileProject;
+
 using Gee;
 
 namespace GNOMECAT
 {
     public class Application : Gtk.Application, GNOMECAT.API
     {
-        private ArrayList<FileOpener> file_openers;
+        private ArrayList<GNOMECAT.FileOpener> file_openers;
         private GNOMECAT.PluginManager manager;
         private static GNOMECAT.Application _instance;
 
@@ -37,7 +37,7 @@ namespace GNOMECAT
             get
             {
                 _extensions = new ArrayList<string> ();
-                foreach (FileOpener fo in file_openers)
+                foreach (GNOMECAT.FileOpener fo in file_openers)
                 {
                     foreach (string ext in fo.extensions)
                         _extensions.add (ext);
@@ -102,7 +102,7 @@ namespace GNOMECAT
 
         construct
         {
-            file_openers = new ArrayList<FileOpener> ();
+            file_openers = new ArrayList<GNOMECAT.FileOpener> ();
             add_opener (new GNOMECAT.PoFiles.PoFileOpener ());
             this.window_removed.connect (on_window_removed);
 
@@ -169,7 +169,7 @@ namespace GNOMECAT
             file_openers.remove (o);
         }
 
-        public GNOMECAT.FileProject.File? open_file (string path)
+        public GNOMECAT.File? open_file (string path)
         {
             int index_last_point = path.last_index_of_char ('.');
             string extension = path.substring (index_last_point + 1);
@@ -179,6 +179,69 @@ namespace GNOMECAT
                     return o.open_file (path, null);
             }
             return null;
+        }
+
+        public GNOMECAT.Project? open_project (string path)
+        {
+            GNOMECAT.Project p = new GNOMECAT.Project(path);
+            scan_files (p);
+            return p;
+        }
+
+        private void scan_files (GNOMECAT.Project p)
+        {
+            GLib.File dir = GLib.File.new_for_path (p.path);
+            dir.query_info_async.begin("standard::type", 0, Priority.DEFAULT, null, (obj, res) => {
+                try
+                {
+                    FileInfo info = dir.query_info_async.end (res);
+                    if (info.get_file_type () == FileType.DIRECTORY)
+                    {
+                        add_files_from_dir (dir, p);
+                    }
+                }
+                catch (Error e)
+                {
+                    stdout.printf ("Error: %s\n", e.message);
+                }
+            });
+        }
+
+        private void add_files_from_dir (GLib.File dir, GNOMECAT.Project p)
+        {
+            dir.enumerate_children_async.begin ("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
+                Priority.DEFAULT, null, (obj, res) => {
+
+                try
+                {
+                    FileEnumerator enumerator = dir.enumerate_children_async.end (res);
+                    FileInfo info;
+                    while ((info = enumerator.next_file (null)) != null)
+                    {
+                        //FIXME: This doesn't work for Windows.
+                        string path = dir.get_path () + "/" + info.get_attribute_byte_string ("standard::name");
+
+                        if (info.get_file_type () == FileType.DIRECTORY)
+                        {
+                            add_files_from_dir (GLib.File.new_for_path (path), p);
+                        }
+                        else if (info.get_file_type () == FileType.REGULAR)
+                        {
+                            GNOMECAT.File f = open_file (path);
+                            if (f != null)
+                            {
+                                p.files.add (f);
+                                f.file_changed.connect (() => { p.project_changed ();});
+                                p.file_added (f);
+                            }
+                        }
+                    }
+                }
+                catch (Error e)
+                {
+                    stdout.printf ("Error while adding files from %s: %s\n", dir.get_path (), e.message);
+                }
+            });
         }
 
         private void on_window_removed ()
@@ -210,7 +273,7 @@ namespace GNOMECAT
 
             foreach (GLib.File f in files)
             {
-                GNOMECAT.FileProject.File file = open_file (f.get_path ());
+                GNOMECAT.File file = open_file (f.get_path ());
                 if (file != null)
                     window.file = file;
                 else

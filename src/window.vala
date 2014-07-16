@@ -47,7 +47,7 @@ namespace GNOMECAT.UI
 
         public WindowStatus last_page {get; private set;}
 
-        public GNOMECAT.FileProject.File file
+        public GNOMECAT.File file
         {
             get {
                 return (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file;
@@ -295,14 +295,14 @@ namespace GNOMECAT.UI
         }
 
         [GtkCallback]
-        private void on_file_changed (GNOMECAT.FileProject.File? file)
+        private void on_file_changed (GNOMECAT.File? file)
         {
             this.title = "GNOMECAT" + (file != null ? " - " + file.name : "");
             headerbar.on_file_changed (file);
         }
 
         [GtkCallback]
-        private void on_file_activated (GNOMECAT.FileProject.File? file)
+        private void on_file_activated (GNOMECAT.File? file)
         {
             this.file = file;
         }

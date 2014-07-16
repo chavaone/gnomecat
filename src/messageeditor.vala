@@ -19,7 +19,7 @@
  */
 
 using Gtk;
-using GNOMECAT.FileProject;
+
 using Gee;
 
 namespace GNOMECAT.UI
@@ -92,6 +92,7 @@ namespace GNOMECAT.UI
                 this.message.added_tip.connect (on_change_tips);
                 this.message.removed_tip.connect (on_change_tips);
                 this.message.notify["state"].connect (on_state_changed);
+                this.message.message_changed.connect (on_message_changed);
 
                 on_state_changed ();
                 reload_tips ();
@@ -179,8 +180,20 @@ namespace GNOMECAT.UI
             }
         }
 
+        private void on_message_changed ()
+        {
+            int length = message.tips.size;
+
+            for (int i = 0; i < length; i++)
+            {
+                message.remove_tip (message.tips.get (0));
+            }
+
+            GNOMECAT.Application.get_default ().check_message (message);
+        }
+
         public void select (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             assert (fragment != null);
 
@@ -199,7 +212,7 @@ namespace GNOMECAT.UI
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             assert (fragment != null);
 
@@ -461,7 +474,7 @@ namespace GNOMECAT.UI
         }
 
         public void select (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             assert (level == SelectLevel.STRING);
             assert (fragment != null);
@@ -480,7 +493,7 @@ namespace GNOMECAT.UI
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             assert (level == SelectLevel.STRING);
             assert (fragment != null);

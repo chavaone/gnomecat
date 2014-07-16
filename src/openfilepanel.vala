@@ -73,7 +73,7 @@
         }
 
         [GtkCallback]
-        private void on_recent_file_activated (GNOMECAT.FileProject.File file)
+        private void on_recent_file_activated (GNOMECAT.File file)
         {
             (window.window_panels.get_nth_page (WindowStatus.OPENEDFILES) as OpenedFilesPanel).add_file (file);
             (window.window_panels.get_nth_page (WindowStatus.OPENEDFILES) as OpenedFilesPanel).file_activated (file);
@@ -81,7 +81,7 @@
 
         private void do_open_file (GLib.File f)
         {
-            GNOMECAT.FileProject.File? file = GNOMECAT.Application.get_default ()
+            GNOMECAT.File? file = GNOMECAT.Application.get_default ()
             .open_file (f.get_path ());
             if (f != null)
             {

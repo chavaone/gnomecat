@@ -36,9 +36,9 @@
 
         public int window_page {get; set;}
 
-        public signal void file_activated (GNOMECAT.FileProject.File file);
+        public signal void file_activated (GNOMECAT.File file);
 
-        public void add_file (GNOMECAT.FileProject.File file)
+        public void add_file (GNOMECAT.File file)
         {
             bool exists = false;
             files.foreach (
@@ -51,7 +51,7 @@
                 files.add (new PoFileRow (file as GNOMECAT.PoFiles.PoFile));
         }
 
-        public void remove_file (GNOMECAT.FileProject.File file)
+        public void remove_file (GNOMECAT.File file)
         {
             files.foreach (
                 (fr) =>

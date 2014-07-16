@@ -67,7 +67,7 @@ namespace GNOMECAT.UI
             }
         }
 
-        public void on_file_changed (GNOMECAT.FileProject.File? file)
+        public void on_file_changed (GNOMECAT.File? file)
         {
             if (file == null)
             {

@@ -79,7 +79,7 @@ namespace GNOMECAT
             try{
 
                 var parser = new Json.Parser ();
-                File file = File.new_for_uri ("resource:///org/gnome/gnomecat/plurals.json");
+                GLib.File file = GLib.File.new_for_uri ("resource:///org/gnome/gnomecat/plurals.json");
                 InputStream stream = file.read ();
                 parser.load_from_stream (stream);
 

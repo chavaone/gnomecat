@@ -19,7 +19,7 @@
  */
 
 using Gee;
-using GNOMECAT.FileProject;
+
 
 namespace GNOMECAT.Iterators
 {
@@ -72,8 +72,8 @@ namespace GNOMECAT.Iterators
 
     public class FileIterator : Iterator<Message?>
     {
-        private GNOMECAT.FileProject.File _file;
-        public GNOMECAT.FileProject.File file
+        private GNOMECAT.File _file;
+        public GNOMECAT.File file
         {
             get
             {
@@ -106,7 +106,7 @@ namespace GNOMECAT.Iterators
             }
         }
 
-        public FileIterator (GNOMECAT.FileProject.File? f,
+        public FileIterator (GNOMECAT.File? f,
             IteratorFilter<Message> mf)
         {
             file = f;

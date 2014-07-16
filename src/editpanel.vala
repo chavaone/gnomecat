@@ -18,8 +18,7 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GNOMECAT;
-using GNOMECAT.FileProject;
+
 using GNOMECAT.UI;
 using GNOMECAT.Search;
 using GNOMECAT.Navigator;
@@ -44,8 +43,8 @@ namespace GNOMECAT.UI {
         [GtkChild]
         public MessageEditor message_editor;
 
-        public GNOMECAT.FileProject.File? _file;
-        public GNOMECAT.FileProject.File? file
+        public GNOMECAT.File? _file;
+        public GNOMECAT.File? file
         {
             get
             {
@@ -103,7 +102,7 @@ namespace GNOMECAT.UI {
         private GNOMECAT.Navigator.FileNavigator navigator_all;
         private GNOMECAT.Search.Search active_search;
 
-        public signal void file_changed (GNOMECAT.FileProject.File? file);
+        public signal void file_changed (GNOMECAT.File? file);
 
         [GtkCallback]
         public void on_message_selected (Message m)
@@ -302,7 +301,7 @@ namespace GNOMECAT.UI {
         }
 
         public void select (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             message_list.select (level, fragment);
 
@@ -313,7 +312,7 @@ namespace GNOMECAT.UI {
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             message_list.deselect (level, fragment);
 

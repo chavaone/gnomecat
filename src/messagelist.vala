@@ -19,7 +19,7 @@
  */
 
 using Gtk;
-using GNOMECAT.FileProject;
+
 
 namespace GNOMECAT.UI
 {
@@ -39,8 +39,8 @@ namespace GNOMECAT.UI
 
         public signal void message_selected (Message m);
 
-        private GNOMECAT.FileProject.File? _file;
-        public GNOMECAT.FileProject.File? file
+        private GNOMECAT.File? _file;
+        public GNOMECAT.File? file
         {
             get
             {
@@ -60,14 +60,14 @@ namespace GNOMECAT.UI
             }
         }
 
-        public MessageListWidget.with_file (GNOMECAT.FileProject.File f)
+        public MessageListWidget.with_file (GNOMECAT.File f)
         {
             this ();
             this.file = f;
         }
 
         public void select (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             assert (fragment != null && fragment.message != null);
 
@@ -81,7 +81,7 @@ namespace GNOMECAT.UI
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
-            GNOMECAT.FileProject.MessageFragment? fragment)
+            GNOMECAT.MessageFragment? fragment)
         {
             assert (fragment != null && fragment.message != null);
 
@@ -189,8 +189,8 @@ namespace GNOMECAT.UI
             set
             {
                 _message = value;
-                value.message_changed.connect (set_info_box_properties);
-                set_info_box_properties ();
+                _message.message_changed.connect (on_message_changed);
+                on_message_changed ();
             }
         }
 
@@ -206,31 +206,28 @@ namespace GNOMECAT.UI
             settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 
-        private void set_info_box_properties ()
-        {
-            string status_icon_name = "";
-            string status_tooltip_text = "";
-            int number_info_tips = 0, number_warning_tips = 0, number_error_tips = 0;
 
-            switch (this.message.state)
+        private void set_state_info ()
+        {
+            switch (message.state)
             {
             case MessageState.TRANSLATED:
-                status_icon_name = "emblem-default-symbolic";
-                status_tooltip_text = _("Translated");
+                state_image.icon_name = "emblem-default-symbolic";
+                state_image.tooltip_text = _("Translated");
                 break;
             case MessageState.UNTRANSLATED:
-                status_icon_name = "window-close-symbolic";
-                status_tooltip_text = _("Untranslated");
+                state_image.icon_name = "window-close-symbolic";
+                state_image.tooltip_text = _("Untranslated");
                 break;
             case MessageState.FUZZY:
-                status_icon_name = "dialog-question-symbolic";
-                status_tooltip_text = _("Fuzzy");
+                state_image.icon_name = "dialog-question-symbolic";
+                state_image.tooltip_text = _("Fuzzy");
                 break;
             }
+        }
 
-            this.state_image.icon_name = status_icon_name;
-            this.state_image.tooltip_text = status_tooltip_text;
-
+        private void set_texts_info ()
+        {
             if (message.get_original_singular () != null)
             {
                 original.set_text (message.get_original_singular ());
@@ -240,6 +237,11 @@ namespace GNOMECAT.UI
             {
                 translation.set_text (message.get_translation (0));
             }
+        }
+
+        private void set_tips_info ()
+        {
+            int number_info_tips = 0, number_warning_tips = 0, number_error_tips = 0;
 
             foreach (MessageTip t in this.message.tips)
             {
@@ -257,26 +259,24 @@ namespace GNOMECAT.UI
                 }
             }
 
-            if (number_info_tips > 0)
-            {
-                this.info_image.visible = true;
-                this.info_image.tooltip_text = ngettext ("There is %i info tip",
-                    "There are %i info tips.",number_info_tips).printf (number_info_tips);
-            }
+            this.info_image.visible = number_info_tips > 0;
+            this.info_image.tooltip_text = ngettext ("There is %i info tip",
+                "There are %i info tips.",number_info_tips).printf (number_info_tips);
 
-            if (number_warning_tips > 0)
-            {
-                this.warning_image.visible = true;
-                this.warning_image.tooltip_text = ngettext ("Ther is %i warning tip.",
-                    "There are %i warning tips.", number_warning_tips).printf (number_warning_tips);
-            }
+            this.warning_image.visible = number_warning_tips > 0;
+            this.warning_image.tooltip_text = ngettext ("Ther is %i warning tip.",
+                "There are %i warning tips.", number_warning_tips).printf (number_warning_tips);
 
-            if (number_error_tips > 0)
-            {
-                this.error_image.visible = true;
-                this.error_image.tooltip_text = ngettext ("There is %i error tip.",
-                    "There are %i error tips.", number_error_tips).printf (number_error_tips);
-            }
+            this.error_image.visible = number_error_tips > 0;
+            this.error_image.tooltip_text = ngettext ("There is %i error tip.",
+                "There are %i error tips.", number_error_tips).printf (number_error_tips);
+        }
+
+        private void on_message_changed ()
+        {
+            set_texts_info ();
+            set_state_info ();
+            set_tips_info ();
         }
 
        [GtkCallback]

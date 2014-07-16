@@ -20,7 +20,7 @@
 
  using Gtk;
  using Gee;
- using GNOMECAT.FileProject;
+
  using GNOMECAT.Iterators;
  using GNOMECAT.Search;
 
@@ -64,8 +64,8 @@
         private IteratorFilter<MessageFragment> filter_marks;
 
 
-        private GNOMECAT.FileProject.File _file;
-        public GNOMECAT.FileProject.File file {
+        private GNOMECAT.File _file;
+        public GNOMECAT.File file {
             get {
                 return _file;
             }

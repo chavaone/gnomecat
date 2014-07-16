@@ -19,16 +19,16 @@
  */
 
 using GettextPo;
-using GNOMECAT.FileProject;
+
 
 namespace GNOMECAT.PoFiles
 {
-    public class PoMessage : GNOMECAT.FileProject.Message
+    public class PoMessage : GNOMECAT.Message
     {
         protected unowned GettextPo.Message message;
 
-        public Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> _origins;
-        public override Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
+        public Gee.ArrayList<GNOMECAT.MessageOrigin> _origins;
+        public override Gee.ArrayList<GNOMECAT.MessageOrigin> origins
         {
             get
             {
@@ -78,11 +78,11 @@ namespace GNOMECAT.PoFiles
 
             state = msg.is_fuzzy () ? MessageState.FUZZY : MessageState.TRANSLATED;
 
-            _origins = new Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> ();
+            _origins = new Gee.ArrayList<GNOMECAT.MessageOrigin> ();
 
             for (int i = 0; (origin = message.filepos (i)) != null; i++)
             {
-                _origins.add (new GNOMECAT.FileProject.MessageOrigin (origin.file (), origin.start_line ()));
+                _origins.add (new GNOMECAT.MessageOrigin (origin.file (), origin.start_line ()));
             }
         }
 
@@ -233,7 +233,7 @@ namespace GNOMECAT.PoFiles
     }
 
 
-    public class PoFile : GNOMECAT.FileProject.File
+    public class PoFile : GNOMECAT.File
     {
         private GettextPo.File file;
         private PoHeader header;
@@ -319,7 +319,7 @@ namespace GNOMECAT.PoFiles
         }
 
 
-        public override GNOMECAT.FileProject.File? open_file (string path, Project? p)
+        public override GNOMECAT.File? open_file (string path, Project? p)
         {
             return new PoFile.full (path, p);
         }

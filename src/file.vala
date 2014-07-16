@@ -20,7 +20,7 @@
 
 using Gee;
 
-namespace GNOMECAT.FileProject
+namespace GNOMECAT
 {
     /**
      * Class that encapsulates a method to open files of
@@ -190,7 +190,7 @@ namespace GNOMECAT.FileProject
             set;
         }
 
-        public abstract ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
+        public abstract ArrayList<GNOMECAT.MessageOrigin> origins
         {
             get;
         }
@@ -210,7 +210,6 @@ namespace GNOMECAT.FileProject
         {
             this.file = owner_file;
             this.tips = new ArrayList<MessageTip> ();
-            message_changed.connect (check_message);
         }
 
         /**
@@ -338,16 +337,6 @@ namespace GNOMECAT.FileProject
             }
 
             return aux;
-        }
-
-        private void check_message ()
-        {
-            int length = tips.size;
-            for (int i = 0; i < length; i++)
-            {
-                remove_tip (tips.get (0));
-            }
-            GNOMECAT.Application.get_default ().check_message (this);
         }
     }
 
@@ -625,29 +614,14 @@ namespace GNOMECAT.FileProject
             {
                 if (_name == null)
                 {
-                    int bar = _path.last_index_of_char('/');
-                    _name = _path.substring (bar + 1);
+                    int bar = path.last_index_of_char('/');
+                    _name = path.substring (bar + 1);
                 }
                 return _name;
             }
         }
 
-        private string _path;
-        public string path
-        {
-            get
-            {
-                return _path;
-            }
-            private set
-            {
-                _path = value;
-                if (files == null)
-                    files = new ArrayList<File> ();
-                files.clear ();
-                scan_files ();
-            }
-        }
+        public string path {get; private set;}
 
         public int _number_of_messages;
         public int number_of_messages
@@ -715,65 +689,5 @@ namespace GNOMECAT.FileProject
                 });
         }
 
-
-        /**
-         * Explores the project directory searching compatible files and
-         *  it adds them to the project.
-         */
-        public void scan_files ()
-        {
-            GLib.File dir = GLib.File.new_for_path (this.path);
-            dir.query_info_async.begin("standard::type", 0, Priority.DEFAULT, null, (obj, res) => {
-                try
-                {
-                    FileInfo info = dir.query_info_async.end (res);
-                    if (info.get_file_type () == FileType.DIRECTORY)
-                    {
-                        add_files_from_dir (dir);
-                    }
-                }
-                catch (Error e)
-                {
-                    stdout.printf ("Error: %s\n", e.message);
-                }
-            });
-        }
-
-        private void add_files_from_dir (GLib.File dir)
-        {
-            dir.enumerate_children_async.begin ("standard::*", FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-                Priority.DEFAULT, null, (obj, res) => {
-
-                try
-                {
-                    FileEnumerator enumerator = dir.enumerate_children_async.end (res);
-                    FileInfo info;
-                    while ((info = enumerator.next_file (null)) != null)
-                    {
-                        //FIXME: This doesn't work for Windows.
-                        string path = dir.get_path () + "/" + info.get_attribute_byte_string ("standard::name");
-
-                        if (info.get_file_type () == FileType.DIRECTORY)
-                        {
-                            this.add_files_from_dir (GLib.File.new_for_path (path));
-                        }
-                        else if (info.get_file_type () == FileType.REGULAR)
-                        {
-                            File f = GNOMECAT.Application.get_default ().open_file (path);
-                            if (f != null)
-                            {
-                                files.add (f);
-                                f.file_changed.connect (() => { project_changed ();});
-                                file_added (f);
-                            }
-                        }
-                    }
-                }
-                catch (Error e)
-                {
-                    stdout.printf ("Error while adding files from %s: %s\n", dir.get_path (), e.message);
-                }
-            });
-        }
     }
 }

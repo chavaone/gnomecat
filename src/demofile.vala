@@ -1,6 +1,6 @@
 
 
-using GNOMECAT.FileProject;
+
 using GNOMECAT.UI;
 using Gee;
 
@@ -25,7 +25,7 @@ namespace GNOMECAT.Demo
     }
 
 
-    public class DemoFile : GNOMECAT.FileProject.File
+    public class DemoFile : GNOMECAT.File
     {
 
         public DemoFile ()
@@ -48,7 +48,7 @@ namespace GNOMECAT.Demo
 
     }
 
-    public class DemoMessage : GNOMECAT.FileProject.Message
+    public class DemoMessage : GNOMECAT.Message
     {
         private string original_singular;
         private string original_plural;
@@ -57,8 +57,8 @@ namespace GNOMECAT.Demo
         private string context;
         private bool fuzzy;
 
-        public Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> _origins;
-        public override Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> origins
+        public Gee.ArrayList<GNOMECAT.MessageOrigin> _origins;
+        public override Gee.ArrayList<GNOMECAT.MessageOrigin> origins
         {
             get
             {
@@ -91,7 +91,7 @@ namespace GNOMECAT.Demo
             }
         }
 
-        public DemoMessage (GNOMECAT.FileProject.File owner)
+        public DemoMessage (GNOMECAT.File owner)
         {
             base (owner);
 
@@ -131,7 +131,7 @@ namespace GNOMECAT.Demo
                 }
             }
 
-            _origins = new Gee.ArrayList<GNOMECAT.FileProject.MessageOrigin> ();
+            _origins = new Gee.ArrayList<GNOMECAT.MessageOrigin> ();
         }
 
         /**

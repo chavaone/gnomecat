@@ -38,6 +38,6 @@ namespace GNOMECAT
 
     public interface HintViewer : Object
     {
-        public abstract void display_hint (GNOMECAT.FileProject.Message m, Hint h);
+        public abstract void display_hint (GNOMECAT.Message m, Hint h);
     }
 }

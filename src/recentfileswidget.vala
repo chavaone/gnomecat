@@ -23,7 +23,7 @@ namespace GNOMECAT.UI {
     public class RecentFilesWidget : Gtk.ListBox
     {
 
-        public signal void file_activated (GNOMECAT.FileProject.File file);
+        public signal void file_activated (GNOMECAT.File file);
 
         construct
         {

@@ -18,7 +18,7 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GNOMECAT.FileProject;
+
 using Gee;
 using GNOMECAT.Iterators;
 using GNOMECAT.UI;
@@ -27,7 +27,7 @@ namespace GNOMECAT.Navigator
 {
     public class FileNavigator : Navigator, ChangedMessageSensible
     {
-        private GNOMECAT.FileProject.File file;
+        private GNOMECAT.File file;
         private FileIterator iterator;
         private IteratorFilter<Message> filter;
         private GNOMECAT.UI.EditPanel edit_panel;
