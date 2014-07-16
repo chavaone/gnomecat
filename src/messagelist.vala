@@ -33,7 +33,7 @@ namespace GNOMECAT.UI
         [GtkChild]
         private ListBox messages_list_box;
         [GtkChild]
-        private ScrolledWindow scrolled_window;
+        private Gtk.ScrolledWindow scrolled_window;
 
         public MessageListRow selected_row {get; private set;}
 
@@ -77,7 +77,7 @@ namespace GNOMECAT.UI
 
             messages_list_box.select_row (row);
 
-            row.grab_focus ();
+            update_scroll ();
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
@@ -120,6 +120,21 @@ namespace GNOMECAT.UI
             {
                 messages_list_box.remove (w);
             }
+        }
+
+        private void update_scroll ()
+        {
+            ListBoxRow row = messages_list_box.get_selected_row ();
+
+            if (row == null)
+                return;
+
+            uint index = row.get_index ();
+            uint n_items = messages_list_box.get_children ().length ();
+
+            Adjustment adj = scrolled_window.vadjustment;
+
+            adj.value = ((adj.upper - adj.lower) / n_items) * index;
         }
     }
 
