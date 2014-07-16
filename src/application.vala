@@ -25,7 +25,7 @@ using Gee;
 
 namespace GNOMECAT
 {
-    public class Application : Gtk.Application
+    public class Application : Gtk.Application, GNOMECAT.API
     {
         private ArrayList<FileOpener> file_openers;
         private GNOMECAT.PluginManager manager;
@@ -93,10 +93,6 @@ namespace GNOMECAT
             { "win.hint3", "<Control>3"},
             { "win.hint4", "<Control>4"}
         };
-
-
-        public signal void provide_hints (GNOMECAT.FileProject.Message m, GNOMECAT.HintViewer hv);
-        public signal void check_message (GNOMECAT.FileProject.Message m);
 
         private Application ()
         {

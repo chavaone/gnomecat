@@ -54,6 +54,7 @@ VALASOURCES = \
 	pluginmanager.vala \
 	pluralform.vala \
 	hintswidget.vala \
+	api.vala \
 	welcomepanel.vala
 
 gnomecat_SOURCES = \
