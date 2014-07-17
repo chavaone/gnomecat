@@ -16,6 +16,8 @@ libdemochecker_la_LIBADD = \
 
 libdemochecker_la_VALAFLAGS = \
 	--pkg libpeas-1.0 \
+	--pkg gnomecat \
+	--vapidir $(top_srcdir)/src
 	--library=demochecker
 
 plugins_DATA = demochecker.plugin

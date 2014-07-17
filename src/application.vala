@@ -117,28 +117,6 @@ namespace GNOMECAT
                 hv.display_hint (m, h);
             });
 
-            check_message.connect ((m) => {
-                int random;
-                if (m.state != MessageState.UNTRANSLATED)
-                {
-                    random = Random.int_range (0,9);
-                    for (int i = 0; i < random; i++)
-                    {
-                        int n = Random.int_range (0,3);
-                        m.add_tip (
-                            new MessageTip (
-                                "Just a tip",
-                                "fkldsajlfkjdalkdfjalksdjflñ",
-                                n == 0 ? TipLevel.INFO :
-                                n == 1 ? TipLevel.WARNING :
-                                TipLevel.ERROR,
-                                null,
-                                null));
-                    }
-                }
-
-                });
-
             add_action_entries (action_entries, this);
             add_accel_entries (accel_entries);
 
