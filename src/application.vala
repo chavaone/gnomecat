@@ -108,15 +108,6 @@ namespace GNOMECAT
 
             manager = new PluginManager (this);
 
-            // -------------------------------
-            // ------------ DEMO -------------
-            // -------------------------------
-
-            provide_hints.connect ((m, hv) => {
-                GNOMECAT.Hint h = new Hint (m.get_original_singular (), "DEMO", 0.3);
-                hv.display_hint (m, h);
-            });
-
             add_action_entries (action_entries, this);
             add_accel_entries (accel_entries);
 

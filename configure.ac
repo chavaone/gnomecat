@@ -61,7 +61,8 @@ po/Makefile.in
 data/Makefile
 data/gnomecat.desktop.in
 plugins/Makefile
-plugins/demochecker/Makefile])
+plugins/demochecker/Makefile
+plugins/demohintprovider/Makefile])
 
 LT_INIT
 

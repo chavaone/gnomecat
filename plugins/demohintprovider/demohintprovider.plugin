@@ -1,0 +1,6 @@
+[Plugin]
+Module=demohintprovider
+Name=Demo Hint Provider
+Description=Demo hint provider.
+Authors=Marcos Chavarría Teijeiro <chavarría@gmail.com>
+Copyright=Copyright © 2014 Marcos Chavarría Teijeiro

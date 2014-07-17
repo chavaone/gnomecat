@@ -1,2 +1,2 @@
 
-SUBDIRS = demochecker
+SUBDIRS = demochecker demohintprovider
