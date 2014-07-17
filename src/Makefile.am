@@ -86,3 +86,33 @@ gsettings_SCHEMAS = $(top_srcdir)/data/gnomecat.gschema.xml
 
 gschemas.compiled: $(top_srcdir)/data/gnomecat.gschema.xml
 	$(GLIB_COMPILE_SCHEMAS) $(top_srcdir)/data/
+
+BUILT_SOURCES = .libgnomecat.vala.stamp
+
+lib_LTLIBRARIES = libgnomecat.la
+
+libgnomecat_la_VALASOURCES = \
+	hints.vala \
+	file.vala \
+	api.vala \
+	select.vala \
+	config.vapi
+
+libgnomecat_la_SOURCES = \
+	.libgnomecat.vala.stamp \
+	$(libgnomecat_la_VALASOURCES:.vala=.c)
+
+.libgnomecat.vala.stamp: $(libgnomecat_la_VALASOURCES)
+	$(VALAC) $(LIBGNOMECAT_VALAFLAGS) -C -H gnomecat.h --library gnomecat $^
+	@touch $@
+
+libgnomecat_la_CPPFLAGS = \
+	$(LIBGNOMECAT_CFLAGS)
+
+libgnomecat_la_LIBADD = \
+	$(LIBGNOMECAT_LIBS)
+
+EXTRA_DIST = $(libgnomecat_la_VALASOURCES)
+
+MAINTAINERCLEANFILES = \
+	$(libgnomecat_la_VALASOURCES:.vala=.c)

@@ -30,7 +30,7 @@ AC_CHECK_TOOL([DESKTOP_FILE_VALIDATE], [desktop-file-validate], [/bin/true])
 
 PKG_PROG_PKG_CONFIG([0.22])
 
-PKG_CHECK_MODULES(GNOMECAT, [
+VALA_CHECK_MODULES(GNOMECAT, [
     glib-2.0 >= 2.38
     gtk+-3.0 >= 3.9.16
     gtksourceview-3.0 >= 3.0.0
@@ -38,6 +38,11 @@ PKG_CHECK_MODULES(GNOMECAT, [
     json-glib-1.0
     libpeas-1.0
     libpeas-gtk-1.0
+])
+
+VALA_CHECK_MODULES(LIBGNOMECAT, [
+    gtk+-3.0
+    gee-0.8
 ])
 
 # Checks for libraries

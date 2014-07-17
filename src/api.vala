@@ -21,7 +21,7 @@
 namespace GNOMECAT
 {
 
-    public interface API
+    public interface API : GLib.Object
     {
 
         public signal void provide_hints (GNOMECAT.Message m, GNOMECAT.HintViewer hv);
