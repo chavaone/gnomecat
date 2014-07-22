@@ -12,13 +12,8 @@ AM_CPPFLAGS = \
 
 AM_VALAFLAGS = \
 	--vapidir $(top_srcdir)/vapi \
-	--pkg gtk+-3.0 \
-	--pkg gee-0.8 \
-	--pkg json-glib-1.0 \
-	--pkg gtksourceview-3.0 \
+	$(GNOMECAT_VALAFLAGS) \
 	--pkg gettext-po \
-	--pkg libpeas-1.0 \
-	--pkg libpeas-gtk-1.0 \
 	--gresources "$(top_srcdir)/data/gnomecat.gresource.xml" \
 	--target-glib=2.38
 
