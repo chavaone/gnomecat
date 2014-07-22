@@ -150,7 +150,7 @@ namespace GNOMECAT.UI
 
         private void reload_tips ()
         {
-            tips.foreach ((w) => {tips.remove(w);});
+            tips.foreach ((w) => {w.destroy ();});
             foreach (MessageTip t in message.get_tips_plural_form (edit_notebook.page))
                 tips.add (new MessageTipRow (t));
         }

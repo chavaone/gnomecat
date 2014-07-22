@@ -103,9 +103,7 @@ namespace GNOMECAT.UI
 
         private void populate_list ()
         {
-            hints_list.foreach ((w) => {
-                hints_list.remove (w);
-            });
+            hints_list.foreach ((w) => {w.destroy ();});
 
             if (message == null)
                 return;

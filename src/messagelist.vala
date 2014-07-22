@@ -116,10 +116,7 @@ namespace GNOMECAT.UI
 
         private void clean_messages ()
         {
-            foreach (Widget w in messages_list_box.get_children ())
-            {
-                messages_list_box.remove (w);
-            }
+            messages_list_box.get_children ().foreach ((w) => {w.destroy ();});
         }
 
         private void update_scroll ()
