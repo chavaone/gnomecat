@@ -53,14 +53,15 @@ namespace GNOMECAT.UI {
 
                 if (file_path.substring (file_path.length - 3) == ".po")
                 {
-                    add (new PoFileRow (new GNOMECAT.PoFiles.PoFile.full (file_path, null)));
+                    add (new PoFileRow (new GNOMECAT.PoFiles.PoFileProxy.full (file_path, null)));
                 }
             }
         }
 
         private void on_row_activated (Gtk.ListBoxRow row)
         {
-            file_activated ((row as PoFileRow).file);
+            GNOMECAT.PoFiles.PoFile fp = (row as PoFileRow).file;
+            file_activated (new GNOMECAT.PoFiles.PoFile.full (fp.path, null));
         }
     }
 }

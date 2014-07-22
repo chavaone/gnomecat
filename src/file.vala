@@ -416,9 +416,9 @@ namespace GNOMECAT
 
         public bool has_changed {get; set;}
 
-        private int cache_number_of_untranslated;
-        private int cache_number_of_fuzzy;
-        private int cache_number_of_translated;
+        protected int cache_number_of_untranslated;
+        protected int cache_number_of_fuzzy;
+        protected int cache_number_of_translated;
 
 
         public signal void file_changed ();
@@ -511,33 +511,6 @@ namespace GNOMECAT
             case MessageState.FUZZY:
                 this.cache_number_of_fuzzy--;
                 break;
-            }
-        }
-
-        /**
-         * Method that rebuild file statistics about number
-         *  of fuzzy, translated and untranslated.
-         */
-        protected void rebuild_numbers_cache ()
-        {
-            this.cache_number_of_translated = 0;
-            this.cache_number_of_fuzzy = 0;
-            this.cache_number_of_untranslated = 0;
-
-            foreach (Message m in this.messages)
-            {
-                switch (m.state)
-                {
-                case MessageState.TRANSLATED:
-                    this.cache_number_of_translated++;
-                    break;
-                case MessageState.UNTRANSLATED:
-                    this.cache_number_of_untranslated++;
-                    break;
-                case MessageState.FUZZY:
-                    this.cache_number_of_fuzzy++;
-                    break;
-                }
             }
         }
 

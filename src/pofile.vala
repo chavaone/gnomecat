@@ -324,4 +324,71 @@ namespace GNOMECAT.PoFiles
             return new PoFile.full (path, p);
         }
     }
+
+
+    public class PoFileProxy : GNOMECAT.PoFiles.PoFile
+    {
+        private GettextPo.File file;
+        private PoHeader header;
+
+
+        public PoFileProxy.full (string path, Project? p)
+        {
+            base.full (path, p);
+        }
+
+        protected override void save_file (string file_path)
+        {}
+
+        public override void parse (string path)
+        {
+            XErrorHandler err_hand = XErrorHandler ();
+            this.file = GettextPo.File.file_read (path, err_hand);
+
+            cache_number_of_untranslated = 0;
+            cache_number_of_fuzzy = 0;
+            cache_number_of_translated = 0;
+
+            foreach (string d in this.file.domains ())
+            {
+                MessageIterator mi = this.file.message_iterator (d);
+                unowned GettextPo.Message m;
+                while ((m = mi.next_message ()) != null)
+                {
+                    if (m.msgid () == "")
+                    {
+                        this.header = new PoHeader (this, m);
+                    }
+                    else if (! m.is_obsolete ())
+                    {
+                        PoMessage msg = new PoMessage (this, m);
+
+                        switch (msg.state)
+                        {
+                        case MessageState.TRANSLATED:
+                            this.cache_number_of_translated++;
+                            break;
+                        case MessageState.UNTRANSLATED:
+                            this.cache_number_of_untranslated++;
+                            break;
+                        case MessageState.FUZZY:
+                            this.cache_number_of_fuzzy++;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        public override string? get_info (string key)
+        {
+            if (header == null)
+                return null;
+
+            return header.get_info (key);
+        }
+
+        public override void set_info (string key, string value)
+        {}
+    }
 }
