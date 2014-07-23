@@ -187,8 +187,8 @@ namespace GNOMECAT
                     FileInfo info;
                     while ((info = enumerator.next_file (null)) != null)
                     {
-                        //FIXME: This doesn't work for Windows.
-                        string path = dir.get_path () + "/" + info.get_attribute_byte_string ("standard::name");
+                        string path = Path.build_filename (dir.get_path (),
+                            info.get_attribute_byte_string ("standard::name"));
 
                         if (info.get_file_type () == FileType.DIRECTORY)
                         {
