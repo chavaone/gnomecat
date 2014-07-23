@@ -32,7 +32,6 @@ VALASOURCES = \
 	pofile.vala \
 	hints.vala \
 	select.vala \
-	filter.vala \
 	filenavigator.vala \
 	toolbar.vala \
 	editpanel.vala \

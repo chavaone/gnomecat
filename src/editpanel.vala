@@ -60,10 +60,14 @@ namespace GNOMECAT.UI {
                     }
                 );
 
-                navigator_all = new FileNavigator (this, new TransparentFilter<Message> ());
-                navigator_fuzzy = new FileNavigator (this, new FuzzyFilter ());
-                navigator_translated = new FileNavigator (this, new TranslatedFilter ());
-                navigator_untranslated = new FileNavigator (this, new UntranslatedFilter ());
+                navigator_all = new FileNavigator (this,
+                    (m) => {return true;});
+                navigator_fuzzy = new FileNavigator (this,
+                    (m) => {return (m.state == MessageState.FUZZY);});
+                navigator_translated = new FileNavigator (this,
+                    (m) => {return (m.state == MessageState.TRANSLATED);});
+                navigator_untranslated = new FileNavigator (this,
+                    (m) => {return (m.state == MessageState.UNTRANSLATED);});
             }
         }
 

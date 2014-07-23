@@ -23,6 +23,10 @@ using Gee;
 
 namespace GNOMECAT.Iterators
 {
+
+    public delegate bool CheckMessageFunction (GNOMECAT.Message msg);
+    public delegate bool CheckMessageFragmentFunction (GNOMECAT.MessageFragment msg);
+
     public abstract class Iterator<Element> : Object
     {
         /**
@@ -82,15 +86,21 @@ namespace GNOMECAT.Iterators
             private set
             {
                 _file = value;
-                messages = _file == null ? null : _file.messages;
                 current_index = 0;
             }
         }
 
-        public IteratorFilter<Message> filter {get; private set;}
+        private ArrayList<Message> messages
+        {
+            get
+            {
+                return file.messages;
+            }
+        }
+
+        private CheckMessageFunction check_function;
 
         private int current_index;
-        private ArrayList<Message> messages;
 
         private Message? _current;
         public override Message? current
@@ -107,10 +117,10 @@ namespace GNOMECAT.Iterators
         }
 
         public FileIterator (GNOMECAT.File? f,
-            IteratorFilter<Message> mf)
+            CheckMessageFunction chk_fnc)
         {
             file = f;
-            filter = mf;
+            check_function = chk_fnc;
         }
 
         public override Message? previous ()
@@ -119,9 +129,9 @@ namespace GNOMECAT.Iterators
                 return null;
 
             do current_index--;
-            while (!check_condition (current) && ! is_first ());
+            while (!check_function (current) && ! is_first ());
 
-            if (is_first () && !check_condition (current))
+            if (is_first () && !check_function (current))
                 return null;
 
             return current;
@@ -133,9 +143,9 @@ namespace GNOMECAT.Iterators
                 return null;
 
             do current_index++;
-            while (!check_condition (current) && ! is_last ());
+            while (!check_function (current) && ! is_last ());
 
-            if (is_last () && !check_condition (current))
+            if (is_last () && !check_function (current))
                 return null;
 
             return current;
@@ -148,7 +158,7 @@ namespace GNOMECAT.Iterators
 
             current_index = 0;
 
-            if (check_condition (current))
+            if (check_function (current))
                 return current;
             else
                 return next ();
@@ -161,7 +171,7 @@ namespace GNOMECAT.Iterators
 
             current_index = messages.size - 1;
 
-            if (check_condition (current))
+            if (check_function (current))
                 return current;
             else
                 return previous ();
@@ -178,7 +188,7 @@ namespace GNOMECAT.Iterators
                 return true;
 
             for(aux_index--; aux_index >= 0; aux_index--)
-                if (check_condition (messages.get(aux_index)))
+                if (check_function (messages.get(aux_index)))
                     return false;
             return true;
         }
@@ -194,14 +204,9 @@ namespace GNOMECAT.Iterators
                 return true;
 
             for(aux_index++; aux_index < messages.size; aux_index++)
-                if (check_condition (messages.get(aux_index)))
+                if (check_function (messages.get(aux_index)))
                     return false;
             return false;
-        }
-
-        private bool check_condition (Message m)
-        {
-            return  this.filter != null && this.filter.check (m);
         }
     }
 
@@ -227,10 +232,10 @@ namespace GNOMECAT.Iterators
         }
 
         public MessageIterator (Message msg, string search_string,
-            IteratorFilter<MessageFragment> filter)
+            CheckMessageFragmentFunction check_function)
         {
             message = msg;
-            get_message_fragments (msg, search_string, filter);
+            get_message_fragments (msg, search_string, check_function);
             current_index = 0;
         }
 
@@ -275,24 +280,24 @@ namespace GNOMECAT.Iterators
         }
 
         private void get_message_fragments (Message message, string search_string,
-            IteratorFilter<MessageFragment> filter)
+            CheckMessageFragmentFunction check_function)
         {
 
             message_fragments = new ArrayList<MessageFragment> ();
 
             message_fragments.add_all (get_fragments_from_string (message,
                 message.get_original_singular (), search_string,
-                filter, 0, true));
+                check_function, 0, true));
 
             message_fragments.add_all (get_fragments_from_string (message,
                 message.get_translation (0), search_string,
-                filter, 0, false));
+                check_function, 0, false));
 
             if (message.has_plural ())
             {
                 message_fragments.add_all (get_fragments_from_string (message,
                         message.get_original_plural (), search_string,
-                        filter, 1, true));
+                        check_function, 1, true));
 
                 GNOMECAT.PluralForm plural_form = GNOMECAT.Application
                     .get_default ().enabled_profile.plural_form;
@@ -302,14 +307,14 @@ namespace GNOMECAT.Iterators
                 {
                     message_fragments.add_all (get_fragments_from_string (message,
                         message.get_translation (plural_number), search_string,
-                        filter, plural_number, false));
+                        check_function, plural_number, false));
                 }
             }
         }
 
         private ArrayList<MessageFragment> get_fragments_from_string (
             Message message, string message_string, string search_string,
-            IteratorFilter<MessageFragment> filter, int plural_number,
+            CheckMessageFragmentFunction check_function, int plural_number,
             bool original)
         {
             int index = 0;
@@ -324,17 +329,11 @@ namespace GNOMECAT.Iterators
                 mm = new MessageFragment (message, plural_number,
                     original, index, search_string.char_count ());
 
-                if (check_mark (mm, filter))
+                if (check_function (mm))
                     ret_arr.add (mm);
                 index++;
             }
             return ret_arr;
-        }
-
-        private bool check_mark (MessageFragment mm,
-            IteratorFilter<MessageFragment> filter)
-        {
-            return filter != null && filter.check (mm);
         }
     }
 }

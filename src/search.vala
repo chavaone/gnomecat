@@ -56,13 +56,15 @@
     public class Search : GNOMECAT.Navigator.Navigator
     {
 
-        private SearchInfo search_info;
+        private string search_text;
+        private string replace_text;
+        private CheckMessageFunction msg_check_func;
+        private CheckMessageFragmentFunction msg_frag_check_func;
+
         private GNOMECAT.UI.EditPanel edit_panel;
 
         private FileIterator file_iterator;
         private MessageIterator message_iterator;
-        private IteratorFilter<MessageFragment> filter_marks;
-
 
         private GNOMECAT.File _file;
         public GNOMECAT.File file {
@@ -73,68 +75,46 @@
 
                 assert(value == edit_panel.file);
 
-                file_iterator = new FileIterator (value,
-                    get_message_filter(search_info.translated,
-                        search_info.untranslated, search_info.fuzzy));
+                _file = value;
 
-                filter_marks = get_fragments_filter (search_info.original,
-                    search_info.translation);
+                file_iterator = new FileIterator (value, msg_check_func);
+
                 message_iterator = new MessageIterator (file_iterator.current,
-                    search_info.search_text, filter_marks);
+                    search_text, msg_frag_check_func);
             }
         }
 
-
         public Search (GNOMECAT.UI.EditPanel edit_panel, SearchInfo search_info)
         {
-            this.search_info = search_info;
             this.edit_panel = edit_panel;
+
+            this.search_text = search_info.search_text;
+            this.replace_text = search_info.replace_text;
+
+            msg_check_func = (m) =>
+                {
+                    if (search_info.translated && m.state == MessageState.TRANSLATED)
+                        return true;
+                    if (search_info.untranslated && m.state == MessageState.UNTRANSLATED)
+                        return true;
+                    if (search_info.fuzzy && m.state == MessageState.FUZZY)
+                        return true;
+                    return false;
+                };
+
+            msg_frag_check_func = (mf) =>
+                {
+                    if (search_info.original  && mf.is_original)
+                        return true;
+                    if (search_info.translation && ! mf.is_original)
+                        return true;
+                    return false;
+                };
+
             if (edit_panel.file != null)
             {
                 this.file = edit_panel.file;
             }
-        }
-
-
-        private IteratorFilter<Message>? get_message_filter (bool translated,
-            bool untranslated, bool fuzzy)
-        {
-            ArrayList<IteratorFilter<Message>> filters_file
-            = new ArrayList<IteratorFilter<Message>> ();
-            if (translated)
-            filters_file.add (new TranslatedFilter ());
-
-            if (untranslated)
-            filters_file.add (new UntranslatedFilter ());
-
-            if (fuzzy)
-            filters_file.add (new FuzzyFilter ());
-
-            if (filters_file.size == 0)
-            return null;
-            else if (filters_file.size == 1)
-            return filters_file.get (0);
-            else
-            return new ORFilter<Message> (filters_file);
-        }
-
-        private IteratorFilter<MessageFragment>? get_fragments_filter (bool original,
-            bool translation)
-        {
-            ArrayList<IteratorFilter<MessageFragment>> filters_mark_array
-            = new ArrayList<IteratorFilter<MessageFragment>> ();
-            if (original)
-            filters_mark_array.add (new OriginalFilter ());
-
-            if (translation)
-            filters_mark_array.add (new TranslationFilter ());
-
-            if (filters_mark_array.size == 0)
-            return null;
-            else if (filters_mark_array.size == 1)
-            return filters_mark_array.get (0);
-            else
-            return new ORFilter<MessageFragment> (filters_mark_array);
         }
 
         public override bool next ()
@@ -148,7 +128,7 @@
                 Message msg = file_iterator.next ();
                 if (msg == null) return false;
 
-                message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
+                message_iterator = new MessageIterator (msg, search_text, msg_frag_check_func);
                 mf = message_iterator.current;
             }
 
@@ -167,7 +147,7 @@
                 Message msg = file_iterator.previous ();
                 if (msg == null) return false;
 
-                message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
+                message_iterator = new MessageIterator (msg, search_text, msg_frag_check_func);
                 mf = message_iterator.current;
             }
 
@@ -182,7 +162,7 @@
             Message msg = file_iterator.first ();
             if (msg == null) return false;
 
-            message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
+            message_iterator = new MessageIterator (msg, search_text, msg_frag_check_func);
             MessageFragment mf = message_iterator.first ();
             if (mf == null) return next ();
 
@@ -197,7 +177,7 @@
             Message msg = file_iterator.last ();
             if (msg == null) return false;
 
-            message_iterator = new MessageIterator (msg, search_info.search_text, filter_marks);
+            message_iterator = new MessageIterator (msg, search_text, msg_frag_check_func);
             MessageFragment mf = message_iterator.last ();
             if (mf == null) return previous ();
 
@@ -215,7 +195,7 @@
             string original_string = mf.message.get_translation (mf.plural_number);
             mf.message.set_translation (mf.plural_number,
                 original_string.substring (0, mf.index) +
-                search_info.replace_text +
+                replace_text +
                 original_string.substring (mf.index + mf.length));
             next ();
         }

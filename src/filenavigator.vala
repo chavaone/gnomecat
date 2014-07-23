@@ -29,7 +29,7 @@ namespace GNOMECAT.Navigator
     {
         private GNOMECAT.File file;
         private FileIterator iterator;
-        private IteratorFilter<Message> filter;
+        private CheckMessageFunction check_function;
         private GNOMECAT.UI.EditPanel edit_panel;
 
         private Message _message;
@@ -42,7 +42,7 @@ namespace GNOMECAT.Navigator
             }
             set
             {
-                if (filter.check (value))
+                if (check_function (value))
                 {
                     _message = value;
                 }
@@ -51,7 +51,7 @@ namespace GNOMECAT.Navigator
                     int index;
 
                     for (index = file.messages.index_of (value);
-                        index >= 0 && ! filter.check (file.messages.get (index));
+                        index >= 0 && ! check_function (file.messages.get (index));
                         index--);
 
                     if (index == -1)
@@ -71,12 +71,12 @@ namespace GNOMECAT.Navigator
         }
 
         public FileNavigator (GNOMECAT.UI.EditPanel edit_panel,
-            IteratorFilter<Message> filter)
+            CheckMessageFunction check_function)
         {
             this.edit_panel = edit_panel;
             this.file = edit_panel.file;
-            this.filter = filter;
-            iterator = new FileIterator (file, filter);
+            this.check_function = check_function;
+            iterator = new FileIterator (file, check_function);
         }
 
         public override bool next ()
