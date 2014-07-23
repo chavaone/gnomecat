@@ -31,7 +31,7 @@ namespace GNOMECAT.UI
     public class MessageListWidget : Gtk.Box
     {
         [GtkChild]
-        private ListBox messages_list_box;
+        private Gtk.ListBox messages_list_box;
         [GtkChild]
         private Gtk.ScrolledWindow scrolled_window;
 
@@ -50,13 +50,31 @@ namespace GNOMECAT.UI
             {
                 if (_file == value)
                     return;
-                _file = value;
-                clean_messages ();
-                foreach (Message m in value.messages)
-                    messages_list_box.add (new MessageListRow.with_message (m));
 
-                Gtk.ListBoxRow row = messages_list_box.get_row_at_index (0);
-                messages_list_box.select_row (row);
+                GLib.List<unowned Gtk.Widget> rows = messages_list_box.get_children ();
+                Gee.ArrayList<GNOMECAT.Message> msgs = value.messages;
+                int i;
+                uint num_rows = rows.length ();
+                int num_children = msgs.size;
+
+                for (i = 0; i < num_rows && i < num_children; i++)
+                {
+                    (rows.nth_data (i) as MessageListRow).message = msgs.get(i);
+                    rows.nth_data (i).visible = true;
+                }
+
+                if (num_rows < num_children)
+                {
+                    for (; i < num_children; i++)
+                        messages_list_box.add (new MessageListRow.with_message (msgs.get (i)));
+                }
+                else if (num_rows > num_children)
+                {
+                    for (; i < num_rows; i++)
+                        rows.nth_data (i).visible = false;
+                }
+
+                messages_list_box.select_row (rows.nth_data (0) as Gtk.ListBoxRow);
             }
         }
 
@@ -112,11 +130,6 @@ namespace GNOMECAT.UI
 
             selected_row = (row as MessageListRow);
             message_selected (selected_row.message);
-        }
-
-        private void clean_messages ()
-        {
-            messages_list_box.get_children ().foreach ((w) => {w.destroy ();});
         }
 
         private void update_scroll ()
@@ -185,6 +198,8 @@ namespace GNOMECAT.UI
             }
             set
             {
+                if (_message != null)
+                    _message.message_changed.disconnect (on_message_changed);
                 _message = value;
                 _message.message_changed.connect (on_message_changed);
                 on_message_changed ();
@@ -276,17 +291,17 @@ namespace GNOMECAT.UI
             set_tips_info ();
         }
 
-       [GtkCallback]
-       private bool on_clicked (Gdk.EventButton e)
-       {
+        [GtkCallback]
+        private bool on_clicked (Gdk.EventButton e)
+        {
             (get_parent() as ListBox).row_selected (this);
             return false;
-       }
+        }
 
-       [GtkCallback]
-       private void on_entry_selected ()
-       {
+        [GtkCallback]
+        private void on_entry_selected ()
+        {
             (get_parent() as ListBox).row_selected (this);
-       }
+        }
     }
 }
