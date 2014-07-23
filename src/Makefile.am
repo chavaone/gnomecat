@@ -2,7 +2,7 @@
 bin_PROGRAMS = gnomecat
 
 AM_CFLAGS = \
-	-g -Wall
+	-g -Wall -pg
 
 AM_CPPFLAGS = \
 	-DGETTEXT_PACKAGE=\""$(GETTEXT_PACKAGE)"\"  \
@@ -64,6 +64,8 @@ gnomecat_CFLAGS = \
 gnomecat_LDADD = \
 	$(GNOMECAT_LIBS)
 
+gnomecat_LDFLAGS = -pg
+
 CLEANFILES = \
 	$(VALASOURCES:.vala=.c) \
 	$(BUILT_SOURCES) \
@@ -91,7 +93,7 @@ libgnomecat_la_VALASOURCES = \
 	file.vala \
 	api.vala \
 	select.vala \
-	config.vapi
+	plugins.vala
 
 libgnomecat_la_SOURCES = \
 	.libgnomecat.vala.stamp \

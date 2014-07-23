@@ -43,6 +43,7 @@ VALA_CHECK_MODULES(GNOMECAT, [
 VALA_CHECK_MODULES(LIBGNOMECAT, [
     gtk+-3.0
     gee-0.8
+    libpeas-1.0
 ])
 
 # Checks for libraries
