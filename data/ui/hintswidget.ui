@@ -2,7 +2,7 @@
 <!-- Generated with glade 3.16.1 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
-  <template class="GNOMECATUIHintPanelWidget" parent="GtkBox">
+  <template class="GNOMECATUIHintsWidget" parent="GtkBox">
     <property name="width_request">260</property>
     <property name="visible">True</property>
     <property name="can_focus">False</property>

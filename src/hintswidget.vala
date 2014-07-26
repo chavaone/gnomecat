@@ -23,8 +23,8 @@
 namespace GNOMECAT.UI
 {
 
-    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintpanelrow.ui")]
-    public class HintPanelRow : Gtk.ListBoxRow
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintswidgetrow.ui")]
+    public class HintsWidgetRow : Gtk.ListBoxRow
     {
 
         [GtkChild]
@@ -66,7 +66,7 @@ namespace GNOMECAT.UI
             }
         }
 
-        public HintPanelRow (Hint h)
+        public HintsWidgetRow (Hint h)
         {
             hint = h;
         }
@@ -79,8 +79,8 @@ namespace GNOMECAT.UI
         }
     }
 
-    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintpanelwidget.ui")]
-    public class HintPanelWidget : Gtk.Box, ChangedMessageSensible, HintViewer
+    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintswidget.ui")]
+    public class HintsWidget : Gtk.Box, ChangedMessageSensible, HintViewer
     {
         [GtkChild]
         private Gtk.ListBox hints_list;
@@ -115,13 +115,13 @@ namespace GNOMECAT.UI
         public void display_hint (Message m, Hint h)
         {
             if (m == this.message)
-                hints_list.add (new HintPanelRow (h));
+                hints_list.add (new HintsWidgetRow (h));
         }
 
         [GtkCallback]
         public void on_row_activated (Gtk.ListBoxRow r)
         {
-            hint_activated ((r as HintPanelRow).hint);
+            hint_activated ((r as HintsWidgetRow).hint);
         }
 
         public void activate_row_by_num (int num)

@@ -10,8 +10,8 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/pofilerow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/simpleprofilepanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/profilerow.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelwidget.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/hintpanelrow.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/hintswidget.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/hintswidgetrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/searchbar.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/preferencespanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/toolbar.ui</file>

@@ -38,7 +38,7 @@ namespace GNOMECAT.UI {
         public MessageListWidget message_list;
 
         [GtkChild]
-        public HintPanelWidget hints_panel;
+        public HintsWidget hints_panel;
 
         [GtkChild]
         public MessageEditor message_editor;

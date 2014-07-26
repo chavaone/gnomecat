@@ -284,7 +284,7 @@ namespace GNOMECAT
         {
             new GNOMECAT.UI.SearchBar();
             new GNOMECAT.UI.MessageListWidget();
-            new GNOMECAT.UI.HintPanelWidget();
+            new GNOMECAT.UI.HintsWidget();
             new GNOMECAT.UI.ToolBar();
             new GNOMECAT.UI.OpenedFilesPanel();
             new GNOMECAT.UI.MessageEditor ();
