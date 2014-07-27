@@ -111,35 +111,6 @@ namespace GNOMECAT.UI {
         [GtkCallback]
         public void on_message_selected (Message m)
         {
-            if (navigator_all != null)
-            {
-                navigator_all.message = m;
-            }
-
-            if (navigator_translated != null)
-            {
-                if (file.number_of_translated != 0)
-                    navigator_translated.message = m;
-                else
-                    navigator_translated.first ();
-            }
-
-            if (navigator_fuzzy != null)
-            {
-                if (file.number_of_fuzzy != 0)
-                    navigator_fuzzy.message = m;
-                else
-                    navigator_fuzzy.first ();
-            }
-
-            if (navigator_untranslated != null)
-            {
-                if (file.number_of_untranslated != 0)
-                    navigator_untranslated.message = m;
-                else
-                    navigator_untranslated.first ();
-            }
-
             hints_panel.message = m;
             message_editor.message = m;
         }
@@ -309,7 +280,7 @@ namespace GNOMECAT.UI {
         {
             message_list.select (level, fragment);
 
-            if(level != SelectLevel.ROW)
+            if (level != SelectLevel.ROW)
             {
                 message_editor.select (level, fragment);
             }
@@ -320,7 +291,7 @@ namespace GNOMECAT.UI {
         {
             message_list.deselect (level, fragment);
 
-            if(level != SelectLevel.ROW)
+            if (level != SelectLevel.ROW)
             {
                 message_editor.deselect (level, fragment);
             }

@@ -25,102 +25,89 @@ using GNOMECAT.UI;
 
 namespace GNOMECAT.Navigator
 {
-    public class FileNavigator : Navigator, ChangedMessageSensible
+    public class FileNavigator : Navigator
     {
-        private GNOMECAT.File file;
-        private FileIterator iterator;
+
         private CheckMessageFunction check_function;
-        private GNOMECAT.UI.EditPanel edit_panel;
-
-        private Message _message;
-        public Message message
-        {
-            get
-            {
-                _message = iterator.current;
-                return _message;
-            }
-            set
-            {
-                if (check_function (value))
-                {
-                    _message = value;
-                }
-                else
-                {
-                    int index;
-
-                    for (index = file.messages.index_of (value);
-                        index >= 0 && ! check_function (file.messages.get (index));
-                        index--);
-
-                    if (index == -1)
-                    {
-                        _message = iterator.first ();
-                    }
-                    else
-                    {
-                        _message = file.messages.get (index);
-                    }
-                }
-
-                for (Message? current_message = iterator.first ();
-                    current_message != _message && current_message != null;
-                    current_message = iterator.next ());
-            }
-        }
+        private GNOMECAT.UI.MessageListWidget msg_list;
 
         public FileNavigator (GNOMECAT.UI.EditPanel edit_panel,
             CheckMessageFunction check_function)
         {
-            this.edit_panel = edit_panel;
-            this.file = edit_panel.file;
+            this.msg_list = edit_panel.message_list;
             this.check_function = check_function;
-            iterator = new FileIterator (file, check_function);
         }
 
         public override bool next ()
         {
-            if (iterator.next () == null)
-                return false;
+            Gtk.ListBox list = msg_list.messages_list_box;
+            Gtk.ListBoxRow? sr = list.get_selected_row ();
+            int selected_index = sr == null ? -1 : sr.get_index ();
+            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
 
-            select_current ();
-            return true;
+            for (uint i = selected_index + 1; i < rows.length (); i++)
+            {
+                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
+                if (check_function (row.message))
+                {
+                    msg_list.select_row (row);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override bool previous ()
         {
-            if (iterator.previous () == null)
-                return false;
+            Gtk.ListBox list = msg_list.messages_list_box;
+            Gtk.ListBoxRow? sr = list.get_selected_row ();
+            int selected_index = sr == null ? 1 : sr.get_index ();
+            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
 
-            select_current ();
-            return true;
+            for (uint i = selected_index - 1; i >= 0; i--)
+            {
+                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
+                if (check_function (row.message))
+                {
+                    msg_list.select_row (row);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override bool first ()
         {
-            if (iterator.first () == null)
-                return false;
+            Gtk.ListBox list = msg_list.messages_list_box;
+            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
 
-            select_current ();
-            return true;
+            for (uint i = 0; i < rows.length (); i++)
+            {
+                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
+                if (check_function (row.message))
+                {
+                    msg_list.select_row (row);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override bool last ()
         {
-            if (iterator.last () == null)
-                return false;
+            Gtk.ListBox list = msg_list.messages_list_box;
+            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
 
-            select_current ();
-            return true;
-        }
-
-        private void select_current ()
-        {
-            Message? m = iterator.current;
-            if (m != null)
-                edit_panel.select (SelectLevel.ROW,
-                    new MessageFragment (m, 0, false, 0, 0));
+            for (uint i = rows.length () - 1; i > 0; i--)
+            {
+                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
+                if (check_function (row.message))
+                {
+                    msg_list.select_row (row);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -31,13 +31,15 @@ namespace GNOMECAT.UI
     public class MessageListWidget : Gtk.Box
     {
         [GtkChild]
-        private Gtk.ListBox messages_list_box;
+        public Gtk.ListBox messages_list_box;
         [GtkChild]
         private Gtk.ScrolledWindow scrolled_window;
 
         public MessageListRow selected_row {get; private set;}
 
         public signal void message_selected (Message m);
+
+        private uint number_of_msgs;
 
         private GNOMECAT.File? _file;
         public GNOMECAT.File? file
@@ -74,7 +76,9 @@ namespace GNOMECAT.UI
                         rows.nth_data (i).visible = false;
                 }
 
-                messages_list_box.select_row (rows.nth_data (0) as Gtk.ListBoxRow);
+                number_of_msgs = num_children;
+
+                select_row (rows.nth_data (0) as GNOMECAT.UI.MessageListRow);
             }
         }
 
@@ -93,9 +97,7 @@ namespace GNOMECAT.UI
             if (row == null)
                 return;
 
-            messages_list_box.select_row (row);
-
-            update_scroll ();
+            select_row (row);
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
@@ -120,6 +122,13 @@ namespace GNOMECAT.UI
                 }
             }
             return null;
+        }
+
+        public void select_row (MessageListRow row)
+        {
+            messages_list_box.select_row (row);
+
+            update_scroll ();
         }
 
         [GtkCallback]
