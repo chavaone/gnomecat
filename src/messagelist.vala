@@ -149,11 +149,13 @@ namespace GNOMECAT.UI
                 return;
 
             uint index = row.get_index ();
-            uint n_items = messages_list_box.get_children ().length ();
 
             Adjustment adj = scrolled_window.vadjustment;
 
-            adj.value = ((adj.upper - adj.lower) / n_items) * index;
+            double new_value = ((adj.upper - adj.lower) / number_of_msgs) * index;
+
+            if (new_value < adj.value || new_value > adj.value + adj.page_size)
+                adj.value = new_value;
         }
     }
 
