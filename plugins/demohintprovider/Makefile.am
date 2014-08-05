@@ -8,13 +8,13 @@ libdemohintprovider_la_SOURCES = \
 libdemohintprovider_la_CFLAGS = \
 	-shared \
 	-fPIC \
-	$(GNOMECAT_CFLAGS)
+	$(GNOMECATPLUGINS_CFLAGS)
 
 libdemohintprovider_la_LIBADD = \
-	$(GNOMECAT_LIBS)
+	$(GNOMECATPLUGINS_LIBS)
 
 libdemohintprovider_la_VALAFLAGS = \
-	--pkg libpeas-1.0 \
+	$(GNOMECATPLUGINS_VALAFLAGS) \
 	--pkg gnomecat \
 	--vapidir $(top_srcdir)/src
 	--library=demohintprovider

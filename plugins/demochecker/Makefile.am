@@ -9,13 +9,13 @@ libdemochecker_la_SOURCES = \
 libdemochecker_la_CFLAGS = \
 	-shared \
 	-fPIC \
-	$(GNOMECAT_CFLAGS)
+	$(GNOMECATPLUGINS_CFLAGS)
 
 libdemochecker_la_LIBADD = \
-	$(GNOMECAT_LIBS)
+	$(GNOMECATPLUGINS_LIBS)
 
 libdemochecker_la_VALAFLAGS = \
-	--pkg libpeas-1.0 \
+	$(GNOMECATPLUGINS_VALAFLAGS) \
 	--pkg gnomecat \
 	--vapidir $(top_srcdir)/src
 	--library=demochecker

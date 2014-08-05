@@ -46,6 +46,13 @@ VALA_CHECK_MODULES(LIBGNOMECAT, [
     libpeas-1.0
 ])
 
+VALA_CHECK_MODULES(GNOMECATPLUGINS, [
+    gtk+-3.0
+    libpeas-1.0
+    libpeas-gtk-1.0
+    gee-0.8
+])
+
 # Checks for libraries
 AC_CHECK_LIB([gettextpo], [po_message_msgid_plural])
 
