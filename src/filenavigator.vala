@@ -29,84 +29,111 @@ namespace GNOMECAT.Navigator
     {
 
         private CheckMessageFunction check_function;
-        private GNOMECAT.UI.MessageListWidget msg_list;
+        private Gtk.TreeSelection selection;
 
         public FileNavigator (GNOMECAT.UI.EditPanel edit_panel,
             CheckMessageFunction check_function)
         {
-            this.msg_list = edit_panel.message_list;
+            this.selection = edit_panel.message_list.selection;
             this.check_function = check_function;
         }
 
         public override bool next ()
         {
-            Gtk.ListBox list = msg_list.messages_list_box;
-            Gtk.ListBoxRow? sr = list.get_selected_row ();
-            int selected_index = sr == null ? -1 : sr.get_index ();
-            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
 
-            for (uint i = selected_index + 1; i < rows.length (); i++)
-            {
-                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
-                if (check_function (row.message))
+            Gtk.TreeModel model;
+            Gtk.TreeIter iter;
+            GNOMECAT.Message curr_msg;
+
+            if (! selection.get_selected (out model, out iter)) first ();
+
+            if (! model.iter_next (ref iter)) return false;
+
+            do {
+
+                model.get (iter, 0, out curr_msg);
+                if (check_function (curr_msg))
                 {
-                    msg_list.select_row (row);
+                    selection.select_iter (iter);
                     return true;
                 }
-            }
+
+            } while (model.iter_next (ref iter));
+
             return false;
         }
 
         public override bool previous ()
         {
-            Gtk.ListBox list = msg_list.messages_list_box;
-            Gtk.ListBoxRow? sr = list.get_selected_row ();
-            int selected_index = sr == null ? 1 : sr.get_index ();
-            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
+            Gtk.TreeModel model;
+            Gtk.TreeIter iter;
+            GNOMECAT.Message curr_msg;
 
-            for (uint i = selected_index - 1; i >= 0; i--)
-            {
-                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
-                if (check_function (row.message))
+            if (! selection.get_selected (out model, out iter)) last ();
+
+            if (! model.iter_previous (ref iter)) return false;
+
+            do {
+
+                model.get (iter, 0, out curr_msg);
+                if (check_function (curr_msg))
                 {
-                    msg_list.select_row (row);
+                    selection.select_iter (iter);
                     return true;
                 }
-            }
+
+            } while (model.iter_previous (ref iter));
+
             return false;
         }
 
         public override bool first ()
         {
-            Gtk.ListBox list = msg_list.messages_list_box;
-            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
+            Gtk.TreeModel model;
+            Gtk.TreeIter iter;
+            GNOMECAT.Message curr_msg;
 
-            for (uint i = 0; i < rows.length (); i++)
-            {
-                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
-                if (check_function (row.message))
+            if (! selection.get_selected (out model, out iter)) last ();
+
+            if (! model.get_iter_first (out iter)) return false;
+
+            do {
+
+                model.get (iter, 0, out curr_msg);
+                if (check_function (curr_msg))
                 {
-                    msg_list.select_row (row);
+                    selection.select_iter (iter);
                     return true;
                 }
-            }
+
+            } while (model.iter_next (ref iter));
+
             return false;
         }
 
         public override bool last ()
         {
-            Gtk.ListBox list = msg_list.messages_list_box;
-            GLib.List<unowned Gtk.Widget> rows = list.get_children ();
+            Gtk.TreeModel model;
+            Gtk.TreeIter iter;
+            GNOMECAT.Message curr_msg;
 
-            for (uint i = rows.length () - 1; i > 0; i--)
-            {
-                GNOMECAT.UI.MessageListRow row = rows.nth_data (i) as GNOMECAT.UI.MessageListRow;
-                if (check_function (row.message))
+            while (next ());
+
+            if (! selection.get_selected (out model, out iter)) last ();
+
+            if (! model.iter_previous (ref iter)) return false;
+
+            do {
+
+                model.get (iter, 0, out curr_msg);
+                if (check_function (curr_msg))
                 {
-                    msg_list.select_row (row);
+                    selection.select_iter (iter);
                     return true;
                 }
-            }
+
+            } while (model.iter_previous (ref iter));
+
             return false;
         }
     }

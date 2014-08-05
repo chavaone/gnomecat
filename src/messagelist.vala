@@ -31,11 +31,11 @@ namespace GNOMECAT.UI
     public class MessageListWidget : Gtk.Box
     {
         [GtkChild]
-        public Gtk.ListBox messages_list_box;
+        public Gtk.TreeView messages;
         [GtkChild]
         private Gtk.ScrolledWindow scrolled_window;
-
-        public MessageListRow selected_row {get; private set;}
+        [GtkChild]
+        public Gtk.TreeSelection selection;
 
         public signal void message_selected (Message m);
 
@@ -53,32 +53,26 @@ namespace GNOMECAT.UI
                 if (_file == value)
                     return;
 
-                GLib.List<unowned Gtk.Widget> rows = messages_list_box.get_children ();
                 Gee.ArrayList<GNOMECAT.Message> msgs = value.messages;
-                int i;
-                uint num_rows = rows.length ();
-                int num_children = msgs.size;
 
-                for (i = 0; i < num_rows && i < num_children; i++)
+                number_of_msgs = 0;
+
+                Gtk.ListStore list_store = new Gtk.ListStore (1, typeof (GNOMECAT.Message));
+
+                messages.model = list_store;
+                Gtk.TreeIter iter;
+
+                foreach (GNOMECAT.Message m in msgs)
                 {
-                    (rows.nth_data (i) as MessageListRow).message = msgs.get(i);
-                    rows.nth_data (i).visible = true;
+                    number_of_msgs++;
+                    list_store.append (out iter);
+                    list_store.set (iter, 0, m, -1);
                 }
 
-                if (num_rows < num_children)
-                {
-                    for (; i < num_children; i++)
-                        messages_list_box.add (new MessageListRow.with_message (msgs.get (i)));
-                }
-                else if (num_rows > num_children)
-                {
-                    for (; i < num_rows; i++)
-                        rows.nth_data (i).visible = false;
-                }
+                GNOMECAT.UI.CellRendererMessage cell = new GNOMECAT.UI.CellRendererMessage ();
+                messages.insert_column_with_attributes (0, null, cell, "message", 0);
 
-                number_of_msgs = num_children;
-
-                select_row (rows.nth_data (0) as GNOMECAT.UI.MessageListRow);
+                selection.select_path (new TreePath.from_indices (0));
             }
         }
 
@@ -93,62 +87,60 @@ namespace GNOMECAT.UI
         {
             assert (fragment != null && fragment.message != null);
 
-            MessageListRow row = get_row_by_message(fragment.message);
-            if (row == null)
+            TreePath path = get_path_by_message (fragment.message);
+            if (path == null)
                 return;
 
-            select_row (row);
+            selection.select_path (path);
         }
 
         public void deselect (GNOMECAT.SelectLevel level,
             GNOMECAT.MessageFragment? fragment)
+        {}
+
+
+        public TreePath? get_path_by_message (GNOMECAT.Message msg)
         {
-            assert (fragment != null && fragment.message != null);
+            TreeIter iter;
+            GNOMECAT.Message curr_msg;
 
-            MessageListRow row = get_row_by_message(fragment.message);
-            if (row == null)
-                return;
-        }
+            messages.model.get_iter_first (out iter);
 
-        public MessageListRow? get_row_by_message (Message m)
-        {
-            foreach (Widget w in this.messages_list_box.get_children ())
-            {
-                GNOMECAT.UI.MessageListRow row = w as GNOMECAT.UI.MessageListRow;
+            do {
 
-                if (row.message == m)
+                messages.model.get (iter, 0, out curr_msg);
+                if (curr_msg == msg)
                 {
-                    return row;
+                    return messages.model.get_path (iter);
                 }
-            }
+
+            } while(messages.model.iter_next (ref iter));
+
             return null;
         }
 
-        public void select_row (MessageListRow row)
-        {
-            messages_list_box.select_row (row);
-
-            update_scroll ();
-        }
 
         [GtkCallback]
-        private void on_row_selected (Gtk.ListBoxRow? row)
+        private void on_selection_changed ()
         {
-            if (selected_row == row)
-                return;
+            TreeModel model;
+            TreeIter iter;
+            GNOMECAT.Message msg;
 
-            selected_row = (row as MessageListRow);
-            message_selected (selected_row.message);
+            if (selection.get_selected (out model, out iter))
+            {
+                model.get (iter, 0, out msg);
+
+                message_selected (msg);
+
+                update_scroll (model.get_path (iter));
+            }
         }
 
-        private void update_scroll ()
+
+        private void update_scroll (Gtk.TreePath path)
         {
-            ListBoxRow row = messages_list_box.get_selected_row ();
-
-            if (row == null)
-                return;
-
-            uint index = row.get_index ();
+            int index = path.get_indices () [0];
 
             Adjustment adj = scrolled_window.vadjustment;
 
@@ -159,160 +151,110 @@ namespace GNOMECAT.UI
         }
     }
 
-    /**
-     *
-     */
-    [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messagelistrow.ui")]
-    public class MessageListRow : ListBoxRow
+
+    public class CellRendererMessage : Gtk.CellRenderer
     {
 
-        [GtkChild]
-        private Image state_image;
-        [GtkChild]
-        private Gtk.Entry original;
-        [GtkChild]
-        private Gtk.Entry translation;
-        [GtkChild]
-        private Image info_image;
-        [GtkChild]
-        private Image warning_image;
-        [GtkChild]
-        private Image error_image;
 
         private GLib.Settings settings;
 
-        public string font
+        public GNOMECAT.Message message {get; set;}
+
+        public CellRendererMessage ()
         {
-            set
-            {
-                Pango.FontDescription font_desc = Pango.FontDescription.from_string (value);
-                if (font_desc != null)
-                {
-                    if (original.attributes == null)
-                        original.attributes = new Pango.AttrList ();
-                    original.attributes.change (new Pango.AttrFontDesc (font_desc));
+            GLib.Object ();
 
-                    if (translation.attributes == null)
-                        translation.attributes = new Pango.AttrList ();
-                    translation.attributes.change (new Pango.AttrFontDesc (font_desc));
-                }
-
-            }
-        }
-
-        private Message _message;
-        public Message message
-        {
-            get
-            {
-                return _message;
-            }
-            set
-            {
-                if (_message != null)
-                    _message.message_changed.disconnect (on_message_changed);
-                _message = value;
-                _message.message_changed.connect (on_message_changed);
-                on_message_changed ();
-            }
-        }
-
-        public MessageListRow.with_message (Message m)
-        {
-            message = m;
-        }
-
-        construct
-        {
             settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
-
-            settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 
+        public override void get_size ( Gtk.Widget widget,
+                                        Gdk.Rectangle? cell_area,
+                                        out int x_offset,
+                                        out int y_offset,
+                                        out int width,
+                                        out int height)
+        {
+            x_offset = 0;
+            y_offset = 0;
+            width = 280;
+            height = 50;
+        }
 
-        private void set_state_info ()
+        public override void render (Cairo.Context ctx,
+                                     Gtk.Widget widget,
+                                     Gdk.Rectangle background_area,
+                                     Gdk.Rectangle cell_area,
+                                     Gtk.CellRendererState flags)
+        {
+
+            draw_state_rectangle (ctx, message, cell_area);
+
+            ctx.set_source_rgb (0, 0, 0);
+
+            Pango.Layout layout_original = create_original_layout (ctx, message, cell_area);
+            ctx.move_to (cell_area.x + 30, cell_area.y + 5);
+            Pango.cairo_show_layout (ctx, layout_original);
+
+            Pango.Layout layout_translation = create_translation_layout (ctx, message, cell_area);
+            ctx.move_to (cell_area.x + 30, cell_area.y + 25);
+            Pango.cairo_show_layout (ctx, layout_translation);
+        }
+
+        private void draw_state_rectangle (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
         {
             switch (message.state)
             {
             case MessageState.TRANSLATED:
-                state_image.icon_name = "emblem-default-symbolic";
-                state_image.tooltip_text = _("Translated");
+                Gdk.cairo_set_source_rgba (ctx, {0, 1, 0, 1});
                 break;
             case MessageState.UNTRANSLATED:
-                state_image.icon_name = "window-close-symbolic";
-                state_image.tooltip_text = _("Untranslated");
+                Gdk.cairo_set_source_rgba (ctx, {1, 0, 0, 1});
                 break;
             case MessageState.FUZZY:
-                state_image.icon_name = "dialog-question-symbolic";
-                state_image.tooltip_text = _("Fuzzy");
+                Gdk.cairo_set_source_rgba (ctx, {0, 1, 1, 1});
                 break;
             }
+
+            Gdk.cairo_rectangle (ctx, {5, 5,cell_area.x + 20, cell_area.y + 40});
+            ctx.fill ();
+
         }
 
-        private void set_texts_info ()
+        private Pango.Layout create_original_layout (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
         {
-            if (message.get_original_singular () != null)
-            {
-                original.set_text (message.get_original_singular ());
-            }
+            Pango.FontDescription font_desc = Pango.FontDescription.from_string (settings.get_string ("font"));
+            font_desc.set_weight (Pango.Weight.ULTRAHEAVY);
 
-            if (message.get_translation (0) != null)
-            {
-                translation.set_text (message.get_translation (0));
-            }
+            Pango.AttrList attributes_original = new Pango.AttrList ();
+            attributes_original.change (new Pango.AttrFontDesc (font_desc));
+
+            Pango.Layout layout_original =  Pango.cairo_create_layout (ctx);
+            string orig = message.get_original_singular ();
+            layout_original.set_text (orig, orig.length);
+            layout_original.set_ellipsize (Pango.EllipsizeMode.END);
+            layout_original.set_width((cell_area.width - 40) * Pango.SCALE);
+            layout_original.set_attributes (attributes_original);
+            return layout_original;
         }
 
-        private void set_tips_info ()
+        private Pango.Layout create_translation_layout (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
         {
-            int number_info_tips = 0, number_warning_tips = 0, number_error_tips = 0;
 
-            foreach (MessageTip t in this.message.tips)
-            {
-                switch (t.level)
-                {
-                case TipLevel.INFO:
-                    number_info_tips++;
-                    break;
-                case TipLevel.ERROR:
-                    number_error_tips++;
-                    break;
-                case TipLevel.WARNING:
-                    number_warning_tips++;
-                    break;
-                }
-            }
+            Pango.FontDescription font_desc = Pango.FontDescription.from_string (settings.get_string ("font"));
 
-            this.info_image.visible = number_info_tips > 0;
-            this.info_image.tooltip_text = ngettext ("There is %i info tip",
-                "There are %i info tips.",number_info_tips).printf (number_info_tips);
+            Pango.AttrList attributes_translation = new Pango.AttrList ();
+            attributes_translation.change (new Pango.AttrFontDesc (font_desc));
 
-            this.warning_image.visible = number_warning_tips > 0;
-            this.warning_image.tooltip_text = ngettext ("Ther is %i warning tip.",
-                "There are %i warning tips.", number_warning_tips).printf (number_warning_tips);
+            Pango.Layout layout_translation = Pango.cairo_create_layout (ctx);
+            string? trans = message.get_translation (0);
+            if (trans == null) trans = "";
+            layout_translation.set_text (trans, trans.length);
+            layout_translation.set_ellipsize (Pango.EllipsizeMode.END);
+            layout_translation.set_width((cell_area.width - 40) * Pango.SCALE);
+            layout_translation.set_attributes (attributes_translation);
 
-            this.error_image.visible = number_error_tips > 0;
-            this.error_image.tooltip_text = ngettext ("There is %i error tip.",
-                "There are %i error tips.", number_error_tips).printf (number_error_tips);
+            return layout_translation;
         }
 
-        private void on_message_changed ()
-        {
-            set_texts_info ();
-            set_state_info ();
-            set_tips_info ();
-        }
-
-        [GtkCallback]
-        private bool on_clicked (Gdk.EventButton e)
-        {
-            (get_parent() as ListBox).row_selected (this);
-            return false;
-        }
-
-        [GtkCallback]
-        private void on_entry_selected ()
-        {
-            (get_parent() as ListBox).row_selected (this);
-        }
     }
 }

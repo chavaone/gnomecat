@@ -2,7 +2,6 @@
 <gresources>
     <gresource prefix="/org/gnome/gnomecat">
         <file compressed="true" preprocess="xml-stripblanks">ui/messagelist.ui</file>
-        <file compressed="true" preprocess="xml-stripblanks">ui/messagelistrow.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditor.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messageeditortab.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/messagetiprow.ui</file>

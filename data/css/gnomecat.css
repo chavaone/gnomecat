@@ -5,11 +5,3 @@ GNOMECATUIMessageTipRow:selected {
  	background-color: transparent;
 }
 
-GNOMECATUIMessageListRow:selected {
-	color: black;
- 	background-color: #ABBAE3;
-}
-
-GNOMECATUIMessageListRow:hover {
- 	background-color: #BAD0E8;
-}

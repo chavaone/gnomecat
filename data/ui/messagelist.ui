@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <template class="GNOMECATUIMessageListWidget" parent="GtkBox">
@@ -27,16 +27,21 @@
       <object class="GtkScrolledWindow" id="scrolled_window">
         <property name="visible">True</property>
         <property name="can_focus">True</property>
-        <property name="margin_left">5</property>
-        <property name="margin_right">5</property>
-        <property name="margin_bottom">5</property>
         <property name="shadow_type">in</property>
         <child>
-          <object class="GtkListBox" id="messages_list_box">
+          <object class="GtkTreeView" id="messages">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="selection_mode">browse</property>
-            <signal name="row-selected" handler="on_row_selected" swapped="no"/>
+            <property name="can_focus">True</property>
+            <property name="enable_search">False</property>
+            <property name="headers_visible">False</property>
+            <property name="headers_clickable">False</property>
+            <property name="fixed_height_mode">True</property>
+            <child internal-child="selection">
+              <object class="GtkTreeSelection" id="selection">
+                <property name="mode">GTK_SELECTION_SINGLE</property>
+                <signal name="changed" handler="on_selection_changed" swapped="no"/>
+              </object>
+            </child>
           </object>
         </child>
       </object>
