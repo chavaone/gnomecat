@@ -32,7 +32,7 @@ PKG_PROG_PKG_CONFIG([0.22])
 
 VALA_CHECK_MODULES(GNOMECAT, [
     glib-2.0 >= 2.38
-    gtk+-3.0 >= 3.9.16
+    gtk+-3.0 >= 3.12
     gtksourceview-3.0 >= 3.0.0
     gee-0.8
     json-glib-1.0
@@ -41,13 +41,13 @@ VALA_CHECK_MODULES(GNOMECAT, [
 ])
 
 VALA_CHECK_MODULES(LIBGNOMECAT, [
-    gtk+-3.0
+    gtk+-3.0 >= 3.12
     gee-0.8
     libpeas-1.0
 ])
 
 VALA_CHECK_MODULES(GNOMECATPLUGINS, [
-    gtk+-3.0
+    gtk+-3.0 > 3.12
     libpeas-1.0
     libpeas-gtk-1.0
     gee-0.8
