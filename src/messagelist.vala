@@ -155,7 +155,6 @@ namespace GNOMECAT.UI
     public class CellRendererMessage : Gtk.CellRenderer
     {
 
-
         private GLib.Settings settings;
 
         public GNOMECAT.Message message {get; set;}
@@ -176,8 +175,8 @@ namespace GNOMECAT.UI
         {
             x_offset = 0;
             y_offset = 0;
-            width = 280;
-            height = 50;
+            width = 300;
+            height = 60;
         }
 
         public override void render (Cairo.Context ctx,
@@ -186,42 +185,60 @@ namespace GNOMECAT.UI
                                      Gdk.Rectangle cell_area,
                                      Gtk.CellRendererState flags)
         {
+            draw_state (ctx, message, cell_area);
 
-            draw_state_rectangle (ctx, message, cell_area);
+            draw_original (ctx, message, cell_area);
 
-            ctx.set_source_rgb (0, 0, 0);
+            draw_translation (ctx, message, cell_area);
 
-            Pango.Layout layout_original = create_original_layout (ctx, message, cell_area);
-            ctx.move_to (cell_area.x + 30, cell_area.y + 5);
-            Pango.cairo_show_layout (ctx, layout_original);
-
-            Pango.Layout layout_translation = create_translation_layout (ctx, message, cell_area);
-            ctx.move_to (cell_area.x + 30, cell_area.y + 25);
-            Pango.cairo_show_layout (ctx, layout_translation);
+            draw_tips (ctx, message, cell_area);
         }
 
-        private void draw_state_rectangle (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
+        private void draw_state (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
         {
-            switch (message.state)
+            Gdk.Pixbuf icon = null;
+            Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
+
+            try
             {
-            case MessageState.TRANSLATED:
-                Gdk.cairo_set_source_rgba (ctx, {0, 1, 0, 1});
-                break;
-            case MessageState.UNTRANSLATED:
-                Gdk.cairo_set_source_rgba (ctx, {1, 0, 0, 1});
-                break;
-            case MessageState.FUZZY:
-                Gdk.cairo_set_source_rgba (ctx, {0, 1, 1, 1});
-                break;
+                switch (message.state)
+                {
+                case MessageState.TRANSLATED:
+                    icon = icon_theme.load_icon ("emblem-default-symbolic", 16,
+                        Gtk.IconLookupFlags.GENERIC_FALLBACK);
+                    break;
+                case MessageState.UNTRANSLATED:
+                    icon = icon_theme.load_icon ("window-close-symbolic", 16,
+                        Gtk.IconLookupFlags.GENERIC_FALLBACK);
+                    break;
+                case MessageState.FUZZY:
+                    icon = icon_theme.load_icon ("dialog-question-symbolic", 16,
+                        Gtk.IconLookupFlags.GENERIC_FALLBACK);
+                    break;
+                }
+            }
+            catch (Error e)
+            {
+                print ("ERROR!!!\n");
+                return;
             }
 
-            Gdk.cairo_rectangle (ctx, {5, 5,cell_area.x + 20, cell_area.y + 40});
-            ctx.fill ();
+            Gdk.cairo_rectangle (ctx, {cell_area.x + 5,
+                                       cell_area.y + 22,
+                                       16,
+                                       16});
 
+            Gdk.cairo_set_source_pixbuf (ctx,
+                                         icon,
+                                         cell_area.x + 5,
+                                         cell_area.y + 22);
+            ctx.fill ();
         }
 
-        private Pango.Layout create_original_layout (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
+        private void draw_original (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
         {
+            ctx.set_source_rgb (0, 0, 0);
+
             Pango.FontDescription font_desc = Pango.FontDescription.from_string (settings.get_string ("font"));
             font_desc.set_weight (Pango.Weight.ULTRAHEAVY);
 
@@ -232,13 +249,18 @@ namespace GNOMECAT.UI
             string orig = message.get_original_singular ();
             layout_original.set_text (orig, orig.length);
             layout_original.set_ellipsize (Pango.EllipsizeMode.END);
-            layout_original.set_width((cell_area.width - 40) * Pango.SCALE);
+            layout_original.set_width ((cell_area.width - 60) * Pango.SCALE);
+            layout_original.set_height (20 * Pango.SCALE);
             layout_original.set_attributes (attributes_original);
-            return layout_original;
+
+            ctx.move_to (cell_area.x + 30, cell_area.y + 5);
+            Pango.cairo_show_layout (ctx, layout_original);
+
         }
 
-        private Pango.Layout create_translation_layout (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
+        private void draw_translation (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
         {
+            ctx.set_source_rgb (0, 0, 0);
 
             Pango.FontDescription font_desc = Pango.FontDescription.from_string (settings.get_string ("font"));
 
@@ -250,10 +272,88 @@ namespace GNOMECAT.UI
             if (trans == null) trans = "";
             layout_translation.set_text (trans, trans.length);
             layout_translation.set_ellipsize (Pango.EllipsizeMode.END);
-            layout_translation.set_width((cell_area.width - 40) * Pango.SCALE);
+            layout_translation.set_width ((cell_area.width - 60) * Pango.SCALE);
+            layout_translation.set_height (20 * Pango.SCALE);
             layout_translation.set_attributes (attributes_translation);
 
-            return layout_translation;
+            ctx.move_to (cell_area.x + 30, cell_area.y + 35);
+            Pango.cairo_show_layout (ctx, layout_translation);
+        }
+
+        private void draw_tips (Cairo.Context ctx, GNOMECAT.Message message, Gdk.Rectangle cell_area)
+        {
+            bool has_info_tips = false, has_warning_tips = false, has_error_tips = false;
+            Gdk.Pixbuf icon = null;
+            Gtk.IconTheme icon_theme = Gtk.IconTheme.get_default ();
+
+            for (int i = 0; i < message.tips.size && ! (has_error_tips &&
+                has_warning_tips && has_info_tips); i++)
+            {
+                GNOMECAT.MessageTip t = message.tips.get (i);
+                switch (t.level)
+                {
+                case TipLevel.INFO:
+                    has_info_tips = true;
+                    break;
+                case TipLevel.ERROR:
+                    has_error_tips = true;
+                    break;
+                case TipLevel.WARNING:
+                    has_warning_tips = true;
+                    break;
+                }
+            }
+
+            if (has_info_tips)
+            {
+                icon = icon_theme.load_icon ("dialog-information-symbolic", 11,
+                        Gtk.IconLookupFlags.GENERIC_FALLBACK);
+
+                Gdk.cairo_rectangle (ctx, {cell_area.x + cell_area.width - 15,
+                                       cell_area.y + 8,
+                                       11,
+                                       11});
+
+                Gdk.cairo_set_source_pixbuf (ctx,
+                                         icon,
+                                         cell_area.x + cell_area.width - 15,
+                                         cell_area.y + 8);
+                ctx.fill ();
+            }
+
+            if (has_warning_tips)
+            {
+                icon = icon_theme.load_icon ("dialog-warning-symbolic", 11,
+                        Gtk.IconLookupFlags.GENERIC_FALLBACK);
+
+                Gdk.cairo_rectangle (ctx, {cell_area.x + cell_area.width - 15,
+                                       cell_area.y + 25,
+                                       11,
+                                       11});
+
+                Gdk.cairo_set_source_pixbuf (ctx,
+                                         icon,
+                                         cell_area.x + cell_area.width - 15,
+                                         cell_area.y + 25);
+                ctx.fill ();
+            }
+
+            if (has_error_tips)
+            {
+                icon = icon_theme.load_icon ("dialog-error-symbolic", 11,
+                        Gtk.IconLookupFlags.GENERIC_FALLBACK);
+
+                Gdk.cairo_rectangle (ctx, {cell_area.x + cell_area.width - 15,
+                                       cell_area.y + 42,
+                                       11,
+                                       11});
+
+                Gdk.cairo_set_source_pixbuf (ctx,
+                                         icon,
+                                         cell_area.x + cell_area.width - 15,
+                                         cell_area.y + 42);
+                ctx.fill ();
+            }
         }
 
     }
