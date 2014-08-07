@@ -39,11 +39,15 @@ namespace GNOMECAT.UI
         Gtk.TextView context;
 
         [GtkChild]
-<<<<<<< HEAD
         Gtk.Image img_btn_state;
 
         [GtkChild]
         Gtk.Button btn_state;
+
+        [GtkChild]
+        Gtk.Button btn_origins;
+
+        GNOMECAT.UI.OriginsPopover origins;
 
 
         private GLib.Settings settings;
@@ -60,12 +64,6 @@ namespace GNOMECAT.UI
 
             }
         }
-=======
-        Gtk.Button btn_origins;
-
-        GNOMECAT.UI.OriginsPopover origins;
-
->>>>>>> Implement popover to show each message origins.
 
         private Message _message;
         public Message message
@@ -101,14 +99,12 @@ namespace GNOMECAT.UI
                 this.message.notify["state"].connect (on_state_changed);
                 this.message.message_changed.connect (on_message_changed);
 
-<<<<<<< HEAD
                 on_state_changed ();
-=======
+
                 if (origins == null) init_origins_popover ();
 
                 origins.message = value;
 
->>>>>>> Implement popover to show each message origins.
                 reload_tips ();
             }
         }

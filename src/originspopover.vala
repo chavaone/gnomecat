@@ -29,8 +29,8 @@ namespace GNOMECAT.UI
         [GtkChild]
         Gtk.ListBox origins;
 
-        private GNOMECAT.FileProject.Message _message;
-        public GNOMECAT.FileProject.Message message
+        private GNOMECAT.Message _message;
+        public GNOMECAT.Message message
         {
             get
             {
