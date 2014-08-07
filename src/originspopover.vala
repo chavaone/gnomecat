@@ -40,7 +40,7 @@ namespace GNOMECAT.UI
             set
             {
                 _message = value;
-                origins.foreach ( (w) => {origins.remove(w);});
+                origins.foreach ( (w) => {origins.remove (w);});
                 foreach (var x in value.origins)
                 {
                     origins.add (new OriginRow (x.file, x.line));

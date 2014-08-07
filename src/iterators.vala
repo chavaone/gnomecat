@@ -187,8 +187,8 @@ namespace GNOMECAT
             if (aux_index == 0)
                 return true;
 
-            for(aux_index--; aux_index >= 0; aux_index--)
-                if (check_function (messages.get(aux_index)))
+            for (aux_index--; aux_index >= 0; aux_index--)
+                if (check_function (messages.get (aux_index)))
                     return false;
             return true;
         }
@@ -203,8 +203,8 @@ namespace GNOMECAT
             if (aux_index == messages.size - 1)
                 return true;
 
-            for(aux_index++; aux_index < messages.size; aux_index++)
-                if (check_function (messages.get(aux_index)))
+            for (aux_index++; aux_index < messages.size; aux_index++)
+                if (check_function (messages.get (aux_index)))
                     return false;
             return false;
         }

@@ -31,8 +31,8 @@ namespace GNOMECAT.UI
 
         public override void on_done (GNOMECAT.UI.Window window)
         {
-        	base.on_done(window);
-        	window.set_panel(WindowStatus.OPENEDFILES);
+        	base.on_done (window);
+        	window.set_panel (WindowStatus.OPENEDFILES);
             window.window_panels.remove_page (window_page);
         }
 

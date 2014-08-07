@@ -40,7 +40,7 @@ namespace GNOMECAT
             {
                 if (_name == null)
                 {
-                    int bar = path.last_index_of_char('/');
+                    int bar = path.last_index_of_char ('/');
                     _name = path.substring (bar + 1);
                 }
                 return _name;

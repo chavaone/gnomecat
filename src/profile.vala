@@ -75,13 +75,13 @@ namespace GNOMECAT
         {
             get
             {
-                GNOMECAT.Application app = GNOMECAT.Application.get_default();
+                GNOMECAT.Application app = GNOMECAT.Application.get_default ();
                 Profile? p = app.enabled_profile;
                 return p != null && p.uuid == this.uuid;
             }
             set
             {
-                GNOMECAT.Application app = GNOMECAT.Application.get_default();
+                GNOMECAT.Application app = GNOMECAT.Application.get_default ();
 
                 if (value)
                 {
@@ -127,7 +127,7 @@ namespace GNOMECAT
 
         public Profile.from_uuid (string uuid)
         {
-            string new_path = "/org/gnome/gnomecat/profiles:/:%s/".printf(uuid);
+            string new_path = "/org/gnome/gnomecat/profiles:/:%s/".printf (uuid);
             GLib.Settings set_prof = new GLib.Settings.with_path ("org.gnome.gnomecat.Profile",
                 new_path);
 

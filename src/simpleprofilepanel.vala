@@ -91,7 +91,7 @@ namespace GNOMECAT.UI
             {
                 Gtk.TreeIter iter;
 
-                if (! encoding_combobox.get_active_iter(out iter))
+                if (! encoding_combobox.get_active_iter (out iter))
                     return "";
 
                 Value enc_val;
@@ -109,7 +109,7 @@ namespace GNOMECAT.UI
 
                 Gtk.TreeIter iter;
 
-                encoding_combobox.model.get_iter_first(out iter);
+                encoding_combobox.model.get_iter_first (out iter);
 
                 do
                 {
@@ -120,7 +120,7 @@ namespace GNOMECAT.UI
                         encoding_combobox.set_active_iter (iter);
                         return;
                     }
-                } while(encoding_combobox.model.iter_next (ref iter));
+                } while (encoding_combobox.model.iter_next (ref iter));
                 encoding_combobox.active = -1;
             }
         }
@@ -134,7 +134,7 @@ namespace GNOMECAT.UI
             {
                 Gtk.TreeIter iter;
 
-                if (! language_combobox.get_active_iter(out iter))
+                if (! language_combobox.get_active_iter (out iter))
                     return null;
 
                 Value lang_code;
@@ -154,7 +154,7 @@ namespace GNOMECAT.UI
 
                 Gtk.TreeIter iter;
 
-                language_combobox.model.get_iter_first(out iter);
+                language_combobox.model.get_iter_first (out iter);
 
                 do
                 {
@@ -166,7 +166,7 @@ namespace GNOMECAT.UI
                         language_combobox.set_active_iter (iter);
                         return;
                     }
-                } while(language_combobox.model.iter_next (ref iter));
+                } while (language_combobox.model.iter_next (ref iter));
                 language_combobox.active = -1;
             }
         }
@@ -181,7 +181,7 @@ namespace GNOMECAT.UI
 
                 Gtk.TreeIter iter;
 
-                if (! plural_form_combobox.get_active_iter(out iter))
+                if (! plural_form_combobox.get_active_iter (out iter))
                     return null;
 
                 Value exp;
@@ -212,7 +212,7 @@ namespace GNOMECAT.UI
                         plural_form_combobox.set_active_iter (iter);
                         return;
                     }
-                } while(plural_form_combobox.model.iter_next (ref iter));
+                } while (plural_form_combobox.model.iter_next (ref iter));
 
                 plural_form_combobox.active = -1;
             }
@@ -265,18 +265,18 @@ namespace GNOMECAT.UI
         {
             Gtk.TreeIter iter;
 
-            Gtk.CellRendererText cell = new Gtk.CellRendererText();
+            Gtk.CellRendererText cell = new Gtk.CellRendererText ();
             language_combobox.pack_start (cell, true);
             language_combobox.add_attribute (cell, "text", 0);
             (language_combobox.model as Gtk.ListStore).set_sort_column_id (0, Gtk.SortType.ASCENDING);
 
-            cell = new Gtk.CellRendererText();
+            cell = new Gtk.CellRendererText ();
             cell.ellipsize = Pango.EllipsizeMode.END;
             cell.ellipsize_set = true;
             plural_form_combobox.pack_start (cell, true);
             plural_form_combobox.add_attribute (cell, "text", 0);
 
-            cell = new Gtk.CellRendererText();
+            cell = new Gtk.CellRendererText ();
             encoding_combobox.pack_start (cell, true);
             encoding_combobox.add_attribute (cell, "text", 0);
 
@@ -305,7 +305,7 @@ namespace GNOMECAT.UI
                     this.translator_name, this.translator_email,
                     this.language, this.plural_form, "8-bits",
                     this.encoding, this.team_email);
-                new_prof.save();
+                new_prof.save ();
 
                 if (GNOMECAT.Application.get_default ().enabled_profile == null)
                     new_prof.enabled = true;
@@ -322,7 +322,7 @@ namespace GNOMECAT.UI
                 profile.team_email = this.team_email;
             }
 
-            (window.window_panels.get_nth_page(WindowStatus.PREFERENCES) as PreferencesPanel).reload_data ();
+            (window.window_panels.get_nth_page (WindowStatus.PREFERENCES) as PreferencesPanel).reload_data ();
             on_back (window);
         }
 

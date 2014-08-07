@@ -38,13 +38,13 @@
         {
             get
             {
-                return this.get_parent().get_parent().get_parent () as GNOMECAT.UI.Window;
+                return this.get_parent ().get_parent ().get_parent () as GNOMECAT.UI.Window;
             }
         }
 
         public void on_back (GNOMECAT.UI.Window window)
         {
-            window.set_panel(WindowStatus.OPENEDFILES);
+            window.set_panel (WindowStatus.OPENEDFILES);
         }
 
         [GtkCallback]
@@ -66,7 +66,7 @@
 
             if (chooser.run () == Gtk.ResponseType.ACCEPT)
             {
-                do_open_file (chooser.get_file());
+                do_open_file (chooser.get_file ());
             }
 
             chooser.destroy ();

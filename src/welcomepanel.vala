@@ -48,13 +48,13 @@ namespace GNOMECAT.UI
 
         public WelcomePanel ()
         {
-            fstprofilepanel = new GNOMECAT.UI.FirstProfilePanel();
+            fstprofilepanel = new GNOMECAT.UI.FirstProfilePanel ();
         }
 
         [GtkCallback]
         private void on_create_profile (Gtk.Widget w)
         {
-            window.set_panel(WindowStatus.OTHER, fstprofilepanel);
+            window.set_panel (WindowStatus.OTHER, fstprofilepanel);
             window.window_panels.remove_page (window_page);
         }
 

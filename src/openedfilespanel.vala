@@ -58,7 +58,7 @@
                 {
                     if ((fr as GNOMECAT.UI.PoFileRow).file == file)
                     {
-                        files.remove(fr);
+                        files.remove (fr);
                     }
                 }
             );
@@ -66,7 +66,7 @@
 
         public void on_open_file (GNOMECAT.UI.Window window)
         {
-            window.set_panel(WindowStatus.OPEN);
+            window.set_panel (WindowStatus.OPEN);
         }
 
         [GtkCallback]

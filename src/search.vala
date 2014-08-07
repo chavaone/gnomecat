@@ -70,7 +70,7 @@
             }
             set {
 
-                assert(value == edit_panel.file);
+                assert (value == edit_panel.file);
 
                 _file = value;
 

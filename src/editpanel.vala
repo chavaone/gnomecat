@@ -51,9 +51,9 @@ namespace GNOMECAT.UI {
             {
                 _file = value;
                 message_list.file = value;
-                _file.file_changed.connect(() =>
+                _file.file_changed.connect (() =>
                     {
-                        file_changed(_file);
+                        file_changed (_file);
                     }
                 );
 
@@ -117,7 +117,7 @@ namespace GNOMECAT.UI {
         {
             if (search_info != null)
             {
-                GNOMECAT.UI.Window window = get_parent().get_parent().get_parent ()
+                GNOMECAT.UI.Window window = get_parent ().get_parent ().get_parent ()
                     as GNOMECAT.UI.Window;
 
                 if (active_search != null) active_search.deselect ();
@@ -130,7 +130,7 @@ namespace GNOMECAT.UI {
             }
             else
             {
-                active_search.deselect();
+                active_search.deselect ();
                 active_search = null;
             }
         }

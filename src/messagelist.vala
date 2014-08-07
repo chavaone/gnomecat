@@ -114,7 +114,7 @@ namespace GNOMECAT.UI
                     return messages.model.get_path (iter);
                 }
 
-            } while(messages.model.iter_next (ref iter));
+            } while (messages.model.iter_next (ref iter));
 
             return null;
         }

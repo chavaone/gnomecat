@@ -118,7 +118,7 @@ namespace GNOMECAT.UI
 
         private void clean_tabs ()
         {
-            edit_notebook.foreach ( (w) => {edit_notebook.remove(w);});
+            edit_notebook.foreach ( (w) => {edit_notebook.remove (w);});
         }
 
         private void add_tab (MessageEditorTab t)
@@ -604,7 +604,7 @@ namespace GNOMECAT.UI
             else
             {
                 tip_description.visible = true;
-                (this.get_parent() as ListBox).row_activated (this);
+                (this.get_parent () as ListBox).row_activated (this);
             }
 
             return false;

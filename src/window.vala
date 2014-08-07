@@ -53,7 +53,7 @@ namespace GNOMECAT.UI
                 return (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file;
             }
             set {
-                set_panel(WindowStatus.EDIT);
+                set_panel (WindowStatus.EDIT);
                 (window_panels.get_nth_page (WindowStatus.EDIT) as GNOMECAT.UI.EditPanel).file = value;
                 on_file_changed (file);
             }
@@ -92,15 +92,15 @@ namespace GNOMECAT.UI
         {
             Object (application: app);
 
-            headerbar = new ToolBar();
-            set_titlebar(headerbar);
+            headerbar = new ToolBar ();
+            set_titlebar (headerbar);
 
             headerbar.searchbutton.bind_property ("active",
-                window_panels.get_nth_page(WindowStatus.EDIT) as EditPanel,
+                window_panels.get_nth_page (WindowStatus.EDIT) as EditPanel,
                 "search_enabled", BindingFlags.BIDIRECTIONAL);
 
             //FIXME: Include this insert into the ui file.
-            window_panels.insert_page (new SimpleProfilePanel(), null, WindowStatus.PROFILE);
+            window_panels.insert_page (new SimpleProfilePanel (), null, WindowStatus.PROFILE);
 
             (window_panels.get_nth_page (WindowStatus.PREFERENCES) as PreferencesPanel).reload_data ();
         }
@@ -136,10 +136,10 @@ namespace GNOMECAT.UI
             Panel old_panel = window_panels.get_nth_page (window_panels.page) as Panel;
             old_panel.clean_headerbar (headerbar);
 
-            if (status == WindowStatus.PREFERENCES && get_panel() != WindowStatus.PROFILE)
+            if (status == WindowStatus.PREFERENCES && get_panel () != WindowStatus.PROFILE)
                 last_page = get_panel ();
 
-            int page_num = status == WindowStatus.OTHER ? window_panels.append_page(custom_panel as Gtk.Widget, null) : status;
+            int page_num = status == WindowStatus.OTHER ? window_panels.append_page (custom_panel as Gtk.Widget, null) : status;
             window_panels.page = page_num;
 
             Panel new_panel = window_panels.get_nth_page (page_num) as Panel;
@@ -150,107 +150,107 @@ namespace GNOMECAT.UI
 
         private void on_go_next ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_next (this);
         }
 
         private void on_go_previous ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_previous (this);
         }
 
         private void on_go_next_fuzzy ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next_fuzzy (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_next_fuzzy (this);
         }
 
         private void on_go_previous_fuzzy ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_fuzzy (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_previous_fuzzy (this);
         }
 
         private void on_go_next_translated ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next_translated (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_next_translated (this);
         }
 
         private void on_go_previous_translated ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_translated (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_previous_translated (this);
         }
 
         private void on_go_next_untranslated ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_next_untranslated (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_next_untranslated (this);
         }
 
         private void on_go_previous_untranslated ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_go_previous_untranslated (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_go_previous_untranslated (this);
         }
 
         private void on_edit_save ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_edit_save (this);
         }
 
         private void on_edit_save_back ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_save_back (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_edit_save_back (this);
         }
 
         private void on_edit_undo ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_undo (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_edit_undo (this);
         }
 
         private void on_edit_redo ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_edit_redo (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_edit_redo (this);
         }
 
         private void on_search_next ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_search_next (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_search_next (this);
         }
 
         private void on_search_previous ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_search_previous (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_search_previous (this);
         }
 
         private void on_search_replace ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_search_replace (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_search_replace (this);
         }
 
         private void on_open_file ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_open_file (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_open_file (this);
         }
 
         private void on_done ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_done (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_done (this);
         }
 
         private void on_back ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_back (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_back (this);
         }
 
         private void on_preferences ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_preferences (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_preferences (this);
         }
 
         private void on_search ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_search (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_search (this);
         }
 
         private void on_change_state ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_change_state (this);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_change_state (this);
         }
 
         public void on_about ()
@@ -276,22 +276,22 @@ namespace GNOMECAT.UI
 
         public void on_hint1 ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 1);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_hint (this, 1);
         }
 
         public void on_hint2 ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 2);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_hint (this, 2);
         }
 
         public void on_hint3 ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 3);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_hint (this, 3);
         }
 
         public void on_hint4 ()
         {
-            (window_panels.get_nth_page(window_panels.page) as Panel).on_hint (this, 4);
+            (window_panels.get_nth_page (window_panels.page) as Panel).on_hint (this, 4);
         }
 
         [GtkCallback]

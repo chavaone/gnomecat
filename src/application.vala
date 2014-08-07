@@ -117,7 +117,7 @@ namespace GNOMECAT
         {
             foreach (var accel in entries)
             {
-                add_accelerator(accel.accel, accel.name, null);
+                add_accelerator (accel.accel, accel.name, null);
             }
         }
 
@@ -152,7 +152,7 @@ namespace GNOMECAT
 
         public GNOMECAT.Project? open_project (string path)
         {
-            GNOMECAT.Project p = new GNOMECAT.Project(path);
+            GNOMECAT.Project p = new GNOMECAT.Project (path);
             scan_files (p);
             return p;
         }
@@ -160,7 +160,7 @@ namespace GNOMECAT
         private void scan_files (GNOMECAT.Project p)
         {
             GLib.File dir = GLib.File.new_for_path (p.path);
-            dir.query_info_async.begin("standard::type", 0, Priority.DEFAULT, null, (obj, res) => {
+            dir.query_info_async.begin ("standard::type", 0, Priority.DEFAULT, null, (obj, res) => {
                 try
                 {
                     FileInfo info = dir.query_info_async.end (res);
@@ -226,11 +226,11 @@ namespace GNOMECAT
 
             if (enabled_profile == null)
             {
-                window.set_panel(WindowStatus.OTHER, new GNOMECAT.UI.WelcomePanel());
+                window.set_panel (WindowStatus.OTHER, new GNOMECAT.UI.WelcomePanel ());
             }
             else
             {
-                window.set_panel(WindowStatus.OPENEDFILES);
+                window.set_panel (WindowStatus.OPENEDFILES);
             }
 
             window.show ();
@@ -260,12 +260,12 @@ namespace GNOMECAT
 
             var css_provider = new Gtk.CssProvider ();
             try {
-                var file = GLib.File.new_for_uri("resource:///org/gnome/gnomecat/css/gnomecat.css");
+                var file = GLib.File.new_for_uri ("resource:///org/gnome/gnomecat/css/gnomecat.css");
                 css_provider.load_from_file (file);
             } catch (Error e) {
                 warning ("loading css: %s", e.message);
             }
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default(),
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (),
                 css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             var builder = new Gtk.Builder ();
@@ -282,25 +282,25 @@ namespace GNOMECAT
         //This is a workaround to be able to use custom templates inside another templates.
         private void initialize_workaround ()
         {
-            new GNOMECAT.UI.SearchBar();
-            new GNOMECAT.UI.MessageListWidget();
-            new GNOMECAT.UI.HintsWidget();
-            new GNOMECAT.UI.ToolBar();
-            new GNOMECAT.UI.OpenedFilesPanel();
+            new GNOMECAT.UI.SearchBar ();
+            new GNOMECAT.UI.MessageListWidget ();
+            new GNOMECAT.UI.HintsWidget ();
+            new GNOMECAT.UI.ToolBar ();
+            new GNOMECAT.UI.OpenedFilesPanel ();
             new GNOMECAT.UI.MessageEditor ();
-            new GNOMECAT.UI.EditPanel();
+            new GNOMECAT.UI.EditPanel ();
             new PeasGtk.PluginManagerView (null);
-            new GNOMECAT.UI.PreferencesPanel();
-            new GNOMECAT.PluralForm (0, "", new Gee.HashMap<int, string>());
+            new GNOMECAT.UI.PreferencesPanel ();
+            new GNOMECAT.PluralForm (0, "", new Gee.HashMap<int, string> ());
             new GNOMECAT.Language ("", "", "", "");
             new GNOMECAT.UI.RecentFilesWidget ();
-            new GNOMECAT.UI.OpenFilePanel();
+            new GNOMECAT.UI.OpenFilePanel ();
         }
 
         public void on_quit ()
         {
             foreach (var w in get_windows ())
-                w.destroy();
+                w.destroy ();
         }
 
         public static int main (string[] args)

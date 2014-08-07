@@ -47,12 +47,12 @@ namespace GNOMECAT
             }
 
             /* Our extension set */
-            Parameter param = Parameter();
+            Parameter param = Parameter ();
             param.value = app;
             param.name = "object";
 
-            exts = new Peas.ExtensionSet (engine, typeof(Peas.Activatable), "object", app, null);
-            exts.extension_removed.connect(on_extension_removed);
+            exts = new Peas.ExtensionSet (engine, typeof (Peas.Activatable), "object", app, null);
+            exts.extension_removed.connect (on_extension_removed);
             exts.foreach (extension_foreach);
 
         }

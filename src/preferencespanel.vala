@@ -81,7 +81,7 @@ namespace GNOMECAT.UI
 
 
             ArrayList<Profile> profs = GNOMECAT.Profile.get_profiles ();
-            profiles_list.forall((w) => {profiles_list.remove(w);});
+            profiles_list.forall ((w) => {profiles_list.remove (w);});
             foreach (Profile p in profs)
                 profiles_list.add (new ProfileRow (p));
         }
@@ -120,7 +120,7 @@ namespace GNOMECAT.UI
 
         public void on_done (GNOMECAT.UI.Window window)
         {
-            window.set_panel(window.last_page);
+            window.set_panel (window.last_page);
         }
 
         public void on_preferences (GNOMECAT.UI.Window window)
@@ -181,7 +181,7 @@ namespace GNOMECAT.UI
             }
             set
             {
-                enabled.set_text(value ? _("(enabled)") : "");
+                enabled.set_text (value ? _("(enabled)") : "");
             }
         }
 

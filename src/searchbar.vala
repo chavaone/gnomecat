@@ -93,11 +93,11 @@
                     translation_text.active,
                     plurals_text.active,
                     search_entry.get_text (),
-                    replace_entry.get_text()
+                    replace_entry.get_text ()
                     );
             }
 
-            search_changed(search);
+            search_changed (search);
         }
     }
  }

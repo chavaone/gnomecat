@@ -160,7 +160,7 @@ namespace GNOMECAT
 
         public MessageOrigin (string file, size_t line)
         {
-            Object(file:file, line:line);
+            Object (file:file, line:line);
         }
     }
 
