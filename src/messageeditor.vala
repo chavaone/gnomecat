@@ -390,7 +390,7 @@ namespace GNOMECAT.UI
             settings = new GLib.Settings ("org.gnome.gnomecat.Editor");
 
             settings.bind ("highlight", this, "highlight_syntax", SettingsBindFlags.GET);
-            settings.bind ("visible-whitespace", this, "visible_whitespace",SettingsBindFlags.GET);
+            settings.bind ("visible-whitespace", this, "visible_whitespace", SettingsBindFlags.GET);
             settings.bind ("font", this, "font", SettingsBindFlags.GET);
         }
 

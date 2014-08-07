@@ -22,7 +22,7 @@ namespace GNOMECAT
 {
     public class Language : GLib.Object
     {
-        public static Gee.HashMap<string,Language> languages {get; private set;}
+        public static Gee.HashMap<string, Language> languages {get; private set;}
 
         public string name {get; private set;}
         public string code {get; private set;}
@@ -88,7 +88,7 @@ namespace GNOMECAT
                 }
             } catch (Error e) {
                 //TODO: print some error info.
-                stderr.printf ("ERROR: %s\n",e.message);
+                stderr.printf ("ERROR: %s\n", e.message);
             }
         }
     }
