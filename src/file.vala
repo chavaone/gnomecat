@@ -32,315 +32,6 @@ namespace GNOMECAT
         public abstract File? open_file (string path, Project? p);
     }
 
-
-    /**
-     * Enum for the levels of Message Tips.
-     */
-    public enum TipLevel
-    {
-        INFO,
-        WARNING,
-        ERROR
-    }
-
-
-    /**
-     * This class represents information that can be added to Messages in order
-     *  to indicate that they have some failure or something that can be
-     *  improved.
-     */
-    public class MessageTip : Object
-    {
-
-        /**
-         * Name of the MessageTip.
-         */
-        public string name {get; private set;}
-
-        /*
-         * Description of the MessageTip.
-         */
-        public string description {get; private set;}
-
-        /*
-         * Description of the MessageTip. It can be **INFO**, **WARNING** or **ERROR**.
-         */
-        public TipLevel level {get; private set;}
-
-        /**
-         * Tags that can be added to the original string.
-         */
-        public ArrayList<GNOMECAT.TextTag> tags_original {get; private set;}
-
-        /**
-         * Tags that can be added to the translated string.
-         */
-        public ArrayList<GNOMECAT.TextTag> tags_translation {get; private set;}
-
-        /**
-         * Plural form this tip references.
-         */
-        public int plural_number {get; private set;}
-
-
-        /**
-         * Contructor.
-         *
-         * @param name
-         * @param description
-         * @param level
-         * @param tags_original
-         * @param tags_translation
-         */
-        public MessageTip (string name,
-                string? description,
-                TipLevel level,
-                ArrayList<GNOMECAT.TextTag>? tags_original=null,
-                ArrayList<GNOMECAT.TextTag>? tags_translation=null)
-        {
-            this.name = name;
-            this.description = description;
-            this.level = level;
-            this.tags_original = tags_original != null ? tags_original : new ArrayList<GNOMECAT.TextTag> ();
-            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<GNOMECAT.TextTag> ();
-        }
-    }
-
-    /**
-     * Object that represents certain portion of a message.
-     */
-    public class MessageFragment : Object
-    {
-
-        public Message message {get; private set;}
-        public int plural_number {get; private set;}
-        public bool is_original {get; private set;}
-        public int index {get; private set;}
-        public int length {get; private set;}
-        public File file
-        {
-            get
-            {
-                return this.message.file;
-            }
-        }
-        public Project? project
-        {
-            get
-            {
-                if (this.message.file != null)
-                {
-                    return this.message.file.project;
-                }
-                return null;
-            }
-        }
-
-        public MessageFragment (Message m, int plural_number, bool is_original, int index, int length)
-        {
-            this.message = m;
-            this.plural_number = plural_number;
-            this.is_original = is_original;
-            this.index = index;
-            this.length = length;
-        }
-    }
-
-
-    /**
-     * State of a message.
-     */
-    public enum MessageState
-    {
-        TRANSLATED,
-        UNTRANSLATED,
-        FUZZY,
-        OBSOLETE
-    }
-
-    public class MessageOrigin : Object
-    {
-        public string file {get; set construct;}
-        public size_t line {get; set construct;}
-
-        public MessageOrigin (string file, size_t line)
-        {
-            Object(file:file, line:line);
-        }
-    }
-
-
-    /**
-     * Represents a instace of each message to be translated.
-     */
-    public abstract class Message : Object
-    {
-
-        /**
-         * File which is the owner of this message.
-         */
-        public File file {get; private set; default = null;}
-
-        /**
-         * State of the message.
-         */
-        public abstract MessageState state
-        {
-            get;
-            set;
-        }
-
-        public abstract ArrayList<GNOMECAT.MessageOrigin> origins
-        {
-            get;
-        }
-
-        /*
-         * List of tips that this message has.
-         */
-        public ArrayList<MessageTip> tips {get; private set; default = null;}
-
-
-        /*
-         * Contructor for Message objects.
-         *
-         * @param owner_file
-         */
-        public Message (File owner_file)
-        {
-            this.file = owner_file;
-            this.tips = new ArrayList<MessageTip> ();
-        }
-
-        /**
-         * Signal emited when a new tip is added to this message.
-         *
-         * @param tip Added tip.
-         */
-        public signal void added_tip (MessageTip tip);
-
-        /**
-         * Signal emited when a new tip is deleted from this message.
-         *
-         * @param tip Deleted tip.
-         */
-        public signal void removed_tip (MessageTip tip);
-
-        /**
-         * Signal emited when the message changed.
-         */
-        public signal void message_changed ();
-
-        /**
-         * Signal emited when the message changed.
-         */
-        public signal void state_changed (MessageState old_state, MessageState new_state);
-
-        /**
-         * Method that indicates if this string has or has not
-         *  a plural form.
-         */
-        public abstract bool has_plural ();
-
-        /**
-         * Returns the originals singular text of this message.
-         */
-        public abstract string get_original_singular ();
-
-        /**
-         * Returns the original plural text of this message or
-         *  \\null\\ if there is no plural.
-         */
-        public abstract string get_original_plural ();
-
-        /*
-         * Gets the translated string that has the number
-         *  provided by parameter.
-         *
-         * @param index Number of the requested translation.
-         * @return The translated string.
-         */
-        public abstract string get_translation (int index);
-
-        /*
-         * Modifies the translated string that has the number
-         *  provided by paramenter.
-         *
-         * @param index
-         * @param translation
-         */
-        public void set_translation (int index,
-                                    string? translation)
-        {
-            set_translation_impl (index, translation);
-
-            if (translation != null)
-            {
-                string message_changed_state = new GLib.Settings ("org.gnome.gnomecat.Editor")
-                    .get_string ("message-changed-state");
-
-                state = message_changed_state == "fuzzy" ? MessageState.FUZZY : MessageState.TRANSLATED;
-            }
-            else
-            {
-                state = MessageState.UNTRANSLATED;
-            }
-
-            message_changed ();
-        }
-
-        public abstract void set_translation_impl (int index,
-                                            string? translation);
-
-        /**
-         * Method that returns a string containing additional
-         * information of this message such as context, translator
-         * comments, etc.
-         */
-         public abstract string get_context ();
-
-        /*
-         * Method which adds a MessageTip to this message.
-         *
-         * @param tip Message to add.
-         */
-        public void add_tip (MessageTip tip)
-        {
-            tips.add (tip);
-            this.added_tip (tip);
-        }
-
-        /*
-         * Method that removes the MessageTip provided
-         *  as parameter.
-         *
-         * @param tip Tip to be removed.
-         */
-        public void remove_tip (MessageTip tip)
-        {
-            tips.remove (tip);
-            this.removed_tip (tip);
-        }
-
-        /**
-         * Method that returns the tips corresponding the plural form provided as parameter.
-         *
-         */
-        public ArrayList<MessageTip> get_tips_plural_form (int plural_form)
-        {
-            ArrayList<MessageTip> aux = new ArrayList<MessageTip> ();
-
-            foreach (MessageTip t in this.tips)
-            {
-                if (t.plural_number == plural_form)
-                    aux.add (t);
-            }
-
-            return aux;
-        }
-    }
-
-
     /**
      * Represents a File that stores messages to be translated.
      */
@@ -351,7 +42,7 @@ namespace GNOMECAT
          * Readable name of the file that is going to be displayed
          *  on some parts of the UI.
          */
-         public string name {get; protected set;}
+        public string name {get; protected set;}
 
         /*
          * Project which belongs this file or \\null\\ if there is no project.
@@ -371,35 +62,17 @@ namespace GNOMECAT
         /**
          * Number of untranlated messages.
          */
-        public int number_of_untranslated
-            {
-                get
-                {
-                    return cache_number_of_untranslated;
-                }
-            }
+        public int number_of_untranslated {get; protected set; default = 0;}
 
         /**
          * Number of translated messages.
          */
-        public int number_of_translated
-            {
-                get
-                {
-                    return cache_number_of_translated;
-                }
-            }
+        public int number_of_translated {get; protected set; default = 0;}
 
         /**
          * Number of fuzzy messages.
          */
-        public int number_of_fuzzy
-            {
-                get
-                {
-                    return cache_number_of_fuzzy;
-                }
-            }
+        public int number_of_fuzzy {get; protected set; default = 0;}
 
         /**
          * Total number of messages.
@@ -408,23 +81,24 @@ namespace GNOMECAT
             {
                 get
                 {
-                    return cache_number_of_untranslated +
-                        cache_number_of_translated +
-                        cache_number_of_fuzzy;
+                    return number_of_untranslated +
+                        number_of_translated +
+                        number_of_fuzzy;
                 }
             }
 
+        /**
+         * Indicates if the file has changed.
+         */
         public bool has_changed {get; set;}
 
-        protected int cache_number_of_untranslated;
-        protected int cache_number_of_fuzzy;
-        protected int cache_number_of_translated;
-
-
+        /**
+         * Signal emmited when the file has changed.
+         */
         public signal void file_changed ();
 
         /**
-         * Simple constructor. Initializes an empty isntance.
+         * Simple constructor. Initializes an empty instance.
          */
         public File ()
         {
@@ -432,19 +106,16 @@ namespace GNOMECAT
         }
 
         /**
-         * Creates a new File using the file path
-         *  provided as parameter.
+         * Constructor providing file path.
          */
         public File.with_file_path (string file_path)
         {
             this.full (file_path, null);
         }
 
-        public File.with_project (Project proj)
-        {
-            this.full (null, proj);
-        }
-
+        /**
+         * Constructor providing file path and project.
+         */
         public File.full (string? file_path, Project? proj)
         {
             messages = new ArrayList<Message> ();
@@ -459,7 +130,6 @@ namespace GNOMECAT
             }
         }
 
-
         /**
          * Method that adds a new message to the file.
          *
@@ -472,13 +142,13 @@ namespace GNOMECAT
             switch (m.state)
             {
             case MessageState.TRANSLATED:
-                this.cache_number_of_translated++;
+                this.number_of_translated++;
                 break;
             case MessageState.UNTRANSLATED:
-                this.cache_number_of_untranslated++;
+                this.number_of_untranslated++;
                 break;
             case MessageState.FUZZY:
-                this.cache_number_of_fuzzy++;
+                this.number_of_fuzzy++;
                 break;
             }
 
@@ -503,47 +173,20 @@ namespace GNOMECAT
             switch (m.state) //Updates file statistics.
             {
             case MessageState.TRANSLATED:
-                this.cache_number_of_translated--;
+                this.number_of_translated--;
                 break;
             case MessageState.UNTRANSLATED:
-                this.cache_number_of_untranslated--;
+                this.number_of_untranslated--;
                 break;
             case MessageState.FUZZY:
-                this.cache_number_of_fuzzy--;
+                this.number_of_fuzzy--;
                 break;
             }
         }
 
-        private void on_state_changed (MessageState old_state, MessageState new_state)
-        {
-            switch (old_state)
-            {
-            case MessageState.TRANSLATED:
-                this.cache_number_of_translated--;
-                break;
-            case MessageState.UNTRANSLATED:
-                this.cache_number_of_untranslated--;
-                break;
-            case MessageState.FUZZY:
-                this.cache_number_of_fuzzy--;
-                break;
-            }
-
-            switch (new_state) //Updates file statistics.
-            {
-            case MessageState.TRANSLATED:
-                this.cache_number_of_translated++;
-                break;
-            case MessageState.UNTRANSLATED:
-                this.cache_number_of_untranslated++;
-                break;
-            case MessageState.FUZZY:
-                this.cache_number_of_fuzzy++;
-                break;
-            }
-        }
-
-
+        /**
+         * Saves a file in the path provided by parameter.
+         */
         public void save (string? file_path)
         {
             save_file (file_path == null ? path : file_path);
@@ -551,116 +194,75 @@ namespace GNOMECAT
             file_changed ();
         }
 
+        /**
+         * Method that parses a file in order to populate
+         *  this instance of File.
+         * @parameter path Path of the file to parse.
+         */
+        public abstract void parse (string path);
+
+        /**
+         * Provides info about file. It works as a key-value map.
+         * This is the default implementation that always returns null.
+         *
+         * @param key
+         */
         public virtual string? get_info (string key)
         {
             return null;
         }
 
+        /**
+         * Sets info about a file. It works as a key-value map.
+         * This is the default implementation that does nothing.
+         *
+         * @param key
+         * @param value
+         */
         public virtual void set_info (string key, string value)
         {}
 
+        /**
+         * Actual implementation of save files.
+         *
+         * @param file_path
+         */
         protected abstract void save_file (string file_path);
 
         /**
-         * Method that parses a file in order to populate
-         *  this instance of File.
-         */
-        public abstract void parse (string path);
-    }
-
-
-    /**
-     * Project that contains files.
-     */
-    public class Project : Object
-    {
-
-        /**
-         * List of files of the project.
-         */
-        public ArrayList<File> files {get; private set;}
-
-        private string _name;
-        public string name
-        {
-            get
-            {
-                if (_name == null)
-                {
-                    int bar = path.last_index_of_char('/');
-                    _name = path.substring (bar + 1);
-                }
-                return _name;
-            }
-        }
-
-        public string path {get; private set;}
-
-        public int _number_of_messages;
-        public int number_of_messages
-        {
-            get
-            {
-                _number_of_messages = 0;
-                foreach (File f in files)
-                    _number_of_messages += f.number_of_messages;
-                return _number_of_messages;
-            }
-        }
-
-        public int _number_of_translated;
-        public int number_of_translated
-        {
-            get
-            {
-                _number_of_translated = 0;
-                foreach (File f in files)
-                    _number_of_translated += f.number_of_translated;
-                return _number_of_translated;
-            }
-        }
-
-        public int _number_of_untranslated;
-        public int number_of_untranslated
-        {
-            get
-            {
-                _number_of_untranslated = 0;
-                foreach (File f in files)
-                    _number_of_untranslated += f.number_of_untranslated;
-                return _number_of_untranslated;
-            }
-        }
-
-        public int _number_of_fuzzy;
-        public int number_of_fuzzy
-        {
-            get
-            {
-                _number_of_fuzzy = 0;
-                foreach (File f in files)
-                    _number_of_fuzzy += f.number_of_fuzzy;
-                return _number_of_fuzzy;
-            }
-        }
-
-        public signal void project_changed ();
-        public signal void file_added (File file);
-
-        /**
-         * Creates a new project in a directory.
+         * Handler for message state changed signal.
+         * It updates the file statistics.
          *
-         * @param folder_path Path to the folder project.
-         * @param name Name of the new project.
+         * @param old_state
+         * @param new_state
          */
-        public Project (string folder_path)
+        private void on_state_changed (MessageState old_state, MessageState new_state)
         {
-            path = folder_path;
-            file_added.connect ((f) =>
-                {
-                    project_changed ();
-                });
-        }
+            switch (old_state)
+            {
+            case MessageState.TRANSLATED:
+                this.number_of_translated--;
+                break;
+            case MessageState.UNTRANSLATED:
+                this.number_of_untranslated--;
+                break;
+            case MessageState.FUZZY:
+                this.number_of_fuzzy--;
+                break;
+            }
 
+            switch (new_state)
+            {
+            case MessageState.TRANSLATED:
+                this.number_of_translated++;
+                break;
+            case MessageState.UNTRANSLATED:
+                this.number_of_untranslated++;
+                break;
+            case MessageState.FUZZY:
+                this.number_of_fuzzy++;
+                break;
+            }
+        }
     }
 }

@@ -345,9 +345,9 @@ namespace GNOMECAT.PoFiles
             XErrorHandler err_hand = XErrorHandler ();
             this.file = GettextPo.File.file_read (path, err_hand);
 
-            cache_number_of_untranslated = 0;
-            cache_number_of_fuzzy = 0;
-            cache_number_of_translated = 0;
+            number_of_untranslated = 0;
+            number_of_fuzzy = 0;
+            number_of_translated = 0;
 
             foreach (string d in this.file.domains ())
             {
@@ -366,13 +366,13 @@ namespace GNOMECAT.PoFiles
                         switch (msg.state)
                         {
                         case MessageState.TRANSLATED:
-                            this.cache_number_of_translated++;
+                            number_of_translated++;
                             break;
                         case MessageState.UNTRANSLATED:
-                            this.cache_number_of_untranslated++;
+                            number_of_untranslated++;
                             break;
                         case MessageState.FUZZY:
-                            this.cache_number_of_fuzzy++;
+                            number_of_fuzzy++;
                             break;
                         }
                     }

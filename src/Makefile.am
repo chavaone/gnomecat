@@ -25,6 +25,8 @@ VALASOURCES = \
 	profile.vala \
 	language.vala \
 	file.vala \
+	message.vala \
+	project.vala \
 	iterators.vala \
 	search.vala \
 	navigator.vala \
@@ -90,6 +92,8 @@ lib_LTLIBRARIES = libgnomecat.la
 libgnomecat_la_VALASOURCES = \
 	hints.vala \
 	file.vala \
+	message.vala \
+	project.vala \
 	api.vala \
 	select.vala \
 	plugins.vala
