@@ -20,10 +20,9 @@
 
 
 using Gee;
-using GNOMECAT.Iterators;
 using GNOMECAT.UI;
 
-namespace GNOMECAT.Navigator
+namespace GNOMECAT
 {
     public class FileNavigator : Navigator
     {

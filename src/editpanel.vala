@@ -20,9 +20,6 @@
 
 
 using GNOMECAT.UI;
-using GNOMECAT.Search;
-using GNOMECAT.Navigator;
-using GNOMECAT.Iterators;
 using Gee;
 
 namespace GNOMECAT.UI {
@@ -100,11 +97,11 @@ namespace GNOMECAT.UI {
             }
         }
 
-        private GNOMECAT.Navigator.FileNavigator navigator_fuzzy;
-        private GNOMECAT.Navigator.FileNavigator navigator_translated;
-        private GNOMECAT.Navigator.FileNavigator navigator_untranslated;
-        private GNOMECAT.Navigator.FileNavigator navigator_all;
-        private GNOMECAT.Search.Search active_search;
+        private GNOMECAT.FileNavigator navigator_fuzzy;
+        private GNOMECAT.FileNavigator navigator_translated;
+        private GNOMECAT.FileNavigator navigator_untranslated;
+        private GNOMECAT.FileNavigator navigator_all;
+        private GNOMECAT.Search active_search;
 
         public signal void file_changed (GNOMECAT.File? file);
 
@@ -124,7 +121,7 @@ namespace GNOMECAT.UI {
                     as GNOMECAT.UI.Window;
 
                 if (active_search != null) active_search.deselect ();
-                active_search = new GNOMECAT.Search.Search(this, search_info);
+                active_search = new GNOMECAT.Search (this, search_info);
 
                 if (! active_search.first ())
                     window.show_notification (_("There isn't any message which follows the search criteria."));

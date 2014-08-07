@@ -18,7 +18,7 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace GNOMECAT.Navigator
+namespace GNOMECAT
 {
     public abstract class Navigator : Object
     {

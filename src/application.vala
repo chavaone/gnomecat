@@ -46,8 +46,8 @@ namespace GNOMECAT
             }
         }
 
-        private GNOMECAT.Profiles.Profile? _enabled_profile;
-        public GNOMECAT.Profiles.Profile? enabled_profile
+        private GNOMECAT.Profile? _enabled_profile;
+        public GNOMECAT.Profile? enabled_profile
         {
             get
             {
@@ -55,7 +55,7 @@ namespace GNOMECAT
                 if (_enabled_profile == null)
                 {
                     string prof_uuid = prof_set.get_string ("default");
-                    _enabled_profile = prof_uuid == "" ? null : new GNOMECAT.Profiles.Profile.from_uuid (prof_uuid);
+                    _enabled_profile = prof_uuid == "" ? null : new GNOMECAT.Profile.from_uuid (prof_uuid);
                 }
                 return _enabled_profile;
             }

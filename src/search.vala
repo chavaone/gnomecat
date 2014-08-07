@@ -21,10 +21,7 @@
  using Gtk;
  using Gee;
 
- using GNOMECAT.Iterators;
- using GNOMECAT.Search;
-
- namespace GNOMECAT.Search
+ namespace GNOMECAT
  {
 
     public class SearchInfo : Object {
@@ -53,7 +50,7 @@
         }
     }
 
-    public class Search : GNOMECAT.Navigator.Navigator
+    public class Search : GNOMECAT.Navigator
     {
 
         private string search_text;

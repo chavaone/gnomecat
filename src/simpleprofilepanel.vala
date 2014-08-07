@@ -228,8 +228,8 @@ namespace GNOMECAT.UI
 
         public int window_page {get; set;}
 
-        private GNOMECAT.Profiles.Profile? _profile;
-        public GNOMECAT.Profiles.Profile? profile
+        private GNOMECAT.Profile? _profile;
+        public GNOMECAT.Profile? profile
         {
             get
             {
@@ -301,7 +301,7 @@ namespace GNOMECAT.UI
         {
             if (profile == null)
             {
-                GNOMECAT.Profiles.Profile new_prof = new GNOMECAT.Profiles.Profile (this.profile_name,
+                GNOMECAT.Profile new_prof = new GNOMECAT.Profile (this.profile_name,
                     this.translator_name, this.translator_email,
                     this.language, this.plural_form, "8-bits",
                     this.encoding, this.team_email);

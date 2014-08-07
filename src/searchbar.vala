@@ -18,8 +18,6 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GNOMECAT.Search;
-
  namespace GNOMECAT.UI
  {
 
@@ -70,7 +68,7 @@ using GNOMECAT.Search;
             }
         }
 
-        public signal void search_changed (SearchInfo? serch);
+        public signal void search_changed (GNOMECAT.SearchInfo? serch);
 
         construct {
             advanced_search_button.bind_property ("active", this,

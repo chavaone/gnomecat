@@ -18,7 +18,6 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GNOMECAT.Profiles;
 using Gee;
 
 namespace GNOMECAT.UI
@@ -81,7 +80,7 @@ namespace GNOMECAT.UI
             settings.bind ("message-changed-state", changed_state, "active_id", SettingsBindFlags.DEFAULT);
 
 
-            ArrayList<Profile> profs = GNOMECAT.Profiles.Profile.get_profiles ();
+            ArrayList<Profile> profs = GNOMECAT.Profile.get_profiles ();
             profiles_list.forall((w) => {profiles_list.remove(w);});
             foreach (Profile p in profs)
                 profiles_list.add (new ProfileRow (p));
@@ -97,7 +96,7 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_remove_profile ()
         {
-            if (GNOMECAT.Profiles.Profile.get_profiles ().size == 1)
+            if (GNOMECAT.Profile.get_profiles ().size == 1)
             {
                 //TODO: display message.
                 return;

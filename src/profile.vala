@@ -20,7 +20,7 @@
 
 using Gee;
 
-namespace GNOMECAT.Profiles
+namespace GNOMECAT
 {
 
     string string_random (int length = 8, string charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890")

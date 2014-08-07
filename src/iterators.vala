@@ -21,7 +21,7 @@
 using Gee;
 
 
-namespace GNOMECAT.Iterators
+namespace GNOMECAT
 {
 
     public delegate bool CheckMessageFunction (GNOMECAT.Message msg);

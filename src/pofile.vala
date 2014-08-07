@@ -18,8 +18,6 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using GettextPo;
-
 
 namespace GNOMECAT.PoFiles
 {
@@ -249,7 +247,7 @@ namespace GNOMECAT.PoFiles
          */
         protected override void save_file (string file_path)
         {
-            XErrorHandler err_hand = XErrorHandler ();
+            GettextPo.XErrorHandler err_hand = GettextPo.XErrorHandler ();
             update_header_info ();
             GettextPo.File.file_write (file, file_path, err_hand);
         }
@@ -260,11 +258,11 @@ namespace GNOMECAT.PoFiles
          */
         public override void parse (string path)
         {
-            XErrorHandler err_hand = XErrorHandler ();
+            GettextPo.XErrorHandler err_hand = GettextPo.XErrorHandler ();
             this.file = GettextPo.File.file_read (path, err_hand);
             foreach (string d in this.file.domains ())
             {
-                MessageIterator mi = this.file.message_iterator (d);
+                GettextPo.MessageIterator mi = this.file.message_iterator (d);
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
@@ -294,7 +292,7 @@ namespace GNOMECAT.PoFiles
 
         private void update_header_info ()
         {
-            GNOMECAT.Profiles.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
+            GNOMECAT.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
             string last_translator = "%s <%s>".printf (profile.translator_name, profile.translator_email);
             set_info ("Last-Translator", last_translator);
 
@@ -342,7 +340,7 @@ namespace GNOMECAT.PoFiles
 
         public override void parse (string path)
         {
-            XErrorHandler err_hand = XErrorHandler ();
+            GettextPo.XErrorHandler err_hand = GettextPo.XErrorHandler ();
             this.file = GettextPo.File.file_read (path, err_hand);
 
             number_of_untranslated = 0;
@@ -351,7 +349,7 @@ namespace GNOMECAT.PoFiles
 
             foreach (string d in this.file.domains ())
             {
-                MessageIterator mi = this.file.message_iterator (d);
+                GettextPo.MessageIterator mi = this.file.message_iterator (d);
                 unowned GettextPo.Message m;
                 while ((m = mi.next_message ()) != null)
                 {
