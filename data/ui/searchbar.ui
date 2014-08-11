@@ -54,6 +54,7 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 								<property name="primary_icon_activatable">False</property>
 								<property name="primary_icon_sensitive">False</property>
 								<property name="secondary_icon_tooltip_markup" translatable="yes">Replace...</property>
+								<signal name="changed" handler="on_search_changed" swapped="no"/>
 							</object>
 							<packing>
 								<property name="expand">True</property>
