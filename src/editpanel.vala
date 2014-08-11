@@ -18,8 +18,6 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-using GNOMECAT.UI;
 using Gee;
 
 namespace GNOMECAT.UI {

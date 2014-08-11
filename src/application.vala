@@ -18,9 +18,6 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gtk;
-using GNOMECAT.UI;
-
 using Gee;
 
 namespace GNOMECAT
@@ -226,11 +223,11 @@ namespace GNOMECAT
 
             if (enabled_profile == null)
             {
-                window.set_panel (WindowStatus.OTHER, new GNOMECAT.UI.WelcomePanel ());
+                window.set_panel (GNOMECAT.UI.WindowStatus.OTHER, new GNOMECAT.UI.WelcomePanel ());
             }
             else
             {
-                window.set_panel (WindowStatus.OPENEDFILES);
+                window.set_panel (GNOMECAT.UI.WindowStatus.OPENEDFILES);
             }
 
             window.show ();

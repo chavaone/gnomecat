@@ -18,9 +18,6 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gtk;
-
-
 namespace GNOMECAT.UI
 {
     /**
@@ -72,7 +69,7 @@ namespace GNOMECAT.UI
                 GNOMECAT.UI.CellRendererMessage cell = new GNOMECAT.UI.CellRendererMessage ();
                 messages.insert_column_with_attributes (0, null, cell, "message", 0);
 
-                selection.select_path (new TreePath.from_indices (0));
+                selection.select_path (new Gtk.TreePath.from_indices (0));
             }
         }
 
@@ -87,7 +84,7 @@ namespace GNOMECAT.UI
         {
             assert (fragment != null && fragment.message != null);
 
-            TreePath path = get_path_by_message (fragment.message);
+            Gtk.TreePath path = get_path_by_message (fragment.message);
             if (path == null)
                 return;
 
@@ -99,9 +96,9 @@ namespace GNOMECAT.UI
         {}
 
 
-        public TreePath? get_path_by_message (GNOMECAT.Message msg)
+        public Gtk.TreePath? get_path_by_message (GNOMECAT.Message msg)
         {
-            TreeIter iter;
+            Gtk.TreeIter iter;
             GNOMECAT.Message curr_msg;
 
             messages.model.get_iter_first (out iter);
@@ -123,8 +120,8 @@ namespace GNOMECAT.UI
         [GtkCallback]
         private void on_selection_changed ()
         {
-            TreeModel model;
-            TreeIter iter;
+            Gtk.TreeModel model;
+            Gtk.TreeIter iter;
             GNOMECAT.Message msg;
 
             if (selection.get_selected (out model, out iter))
@@ -142,7 +139,7 @@ namespace GNOMECAT.UI
         {
             int index = path.get_indices () [0];
 
-            Adjustment adj = scrolled_window.vadjustment;
+            Gtk.Adjustment adj = scrolled_window.vadjustment;
 
             double new_value = ((adj.upper - adj.lower) / number_of_msgs) * index;
 

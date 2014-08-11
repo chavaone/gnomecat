@@ -18,15 +18,13 @@
  * along with GNOMECAT. If not, see <http://www.gnu.org/licenses/>.
  */
 
-using Gtk;
-
 using Gee;
 
 namespace GNOMECAT.UI
 {
 
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditor.ui")]
-    public class MessageEditor : Box
+    public class MessageEditor : Gtk.Box
     {
 
         [GtkChild]
@@ -166,7 +164,7 @@ namespace GNOMECAT.UI
         }
 
         [GtkCallback]
-        private void on_tip_enabled (ListBox source, ListBoxRow row)
+        private void on_tip_enabled (Gtk.ListBox source, Gtk.ListBoxRow row)
         {
             get_active_tab ().replace_tags_original_string ((row as MessageTipRow).tip.tags_original);
             get_active_tab ().replace_tags_translation_string ((row as MessageTipRow).tip.tags_translation);
@@ -250,16 +248,16 @@ namespace GNOMECAT.UI
 
 
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messageeditortab.ui")]
-    public class MessageEditorTab : Box
+    public class MessageEditorTab : Gtk.Box
     {
-        public Label label {get; private set;}
+        public Gtk.Label label {get; private set;}
         public Message message {get; private set;}
         public int plural_number {get; private set;}
 
         [GtkChild]
-        private SourceView textview_original_text;
+        private Gtk.SourceView textview_original_text;
         [GtkChild]
-        private SourceView textview_translated_text;
+        private Gtk.SourceView textview_translated_text;
 
         private string _original_text;
         public string original_text
@@ -293,19 +291,19 @@ namespace GNOMECAT.UI
             get
             {
                 assert (textview_translated_text.draw_spaces == textview_original_text.draw_spaces);
-                return textview_translated_text.draw_spaces == SourceDrawSpacesFlags.ALL;
+                return textview_translated_text.draw_spaces == Gtk.SourceDrawSpacesFlags.ALL;
             }
             set
             {
                 if (value)
                 {
-                    textview_translated_text.draw_spaces = SourceDrawSpacesFlags.ALL;
-                    textview_original_text.draw_spaces = SourceDrawSpacesFlags.ALL;
+                    textview_translated_text.draw_spaces = Gtk.SourceDrawSpacesFlags.ALL;
+                    textview_original_text.draw_spaces = Gtk.SourceDrawSpacesFlags.ALL;
                 }
                 else
                 {
-                    textview_translated_text.draw_spaces = SourceDrawSpacesFlags.LEADING;
-                    textview_original_text.draw_spaces = SourceDrawSpacesFlags.LEADING;
+                    textview_translated_text.draw_spaces = Gtk.SourceDrawSpacesFlags.LEADING;
+                    textview_original_text.draw_spaces = Gtk.SourceDrawSpacesFlags.LEADING;
                 }
             }
         }
@@ -314,14 +312,14 @@ namespace GNOMECAT.UI
         {
             get
             {
-                assert ((textview_translated_text.buffer as SourceBuffer).highlight_syntax ==
-                    (textview_original_text.buffer as SourceBuffer).highlight_syntax);
-                return (textview_translated_text.buffer as SourceBuffer).highlight_syntax;
+                assert ((textview_translated_text.buffer as Gtk.SourceBuffer).highlight_syntax ==
+                    (textview_original_text.buffer as Gtk.SourceBuffer).highlight_syntax);
+                return (textview_translated_text.buffer as Gtk.SourceBuffer).highlight_syntax;
             }
             construct set
             {
-                (textview_translated_text.buffer as SourceBuffer).highlight_syntax = value;
-                (textview_original_text.buffer as SourceBuffer).highlight_syntax = value;
+                (textview_translated_text.buffer as Gtk.SourceBuffer).highlight_syntax = value;
+                (textview_original_text.buffer as Gtk.SourceBuffer).highlight_syntax = value;
             }
         }
 
@@ -351,11 +349,11 @@ namespace GNOMECAT.UI
                                  Message message,
                                  int plural_number)
         {
-            label = new Label (label_text);
+            label = new Gtk.Label (label_text);
             this.message = message;
             this.plural_number = plural_number;
 
-            SourceLanguageManager lang_manager = new SourceLanguageManager ();
+            Gtk.SourceLanguageManager lang_manager = new Gtk.SourceLanguageManager ();
             weak string[] old_path = lang_manager.get_search_path ();
 
             string[] new_path = {};
@@ -365,18 +363,18 @@ namespace GNOMECAT.UI
 
             lang_manager.set_search_path (new_path);
 
-            SourceLanguage lang = lang_manager.get_language ("gtranslator");
+            Gtk.SourceLanguage lang = lang_manager.get_language ("gtranslator");
 
-            textview_original_text.buffer = new SourceBuffer.with_language (lang);
+            textview_original_text.buffer = new Gtk.SourceBuffer.with_language (lang);
             textview_original_text.buffer.set_text (original_text);
 
-            textview_translated_text.buffer = new SourceBuffer.with_language (lang);
+            textview_translated_text.buffer = new Gtk.SourceBuffer.with_language (lang);
 
             if (translation_text != null)
             {
-                (textview_translated_text.buffer as SourceBuffer).begin_not_undoable_action ();
+                (textview_translated_text.buffer as Gtk.SourceBuffer).begin_not_undoable_action ();
                 textview_translated_text.buffer.set_text (this.translation_text);
-                (textview_translated_text.buffer as SourceBuffer).end_not_undoable_action ();
+                (textview_translated_text.buffer as Gtk.SourceBuffer).end_not_undoable_action ();
             }
 
             original_text_tags = new ArrayList<GNOMECAT.TextTag> ();
@@ -440,34 +438,34 @@ namespace GNOMECAT.UI
 
         public void undo ()
         {
-            SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
+            Gtk.SourceBuffer source_buffer = this.textview_translated_text.buffer as Gtk.SourceBuffer;
             if (source_buffer.get_undo_manager ().can_undo ())
                 source_buffer.get_undo_manager ().undo ();
         }
 
         public void redo ()
         {
-            SourceBuffer source_buffer = this.textview_translated_text.buffer as SourceBuffer;
+            Gtk.SourceBuffer source_buffer = this.textview_translated_text.buffer as Gtk.SourceBuffer;
             if (source_buffer.get_undo_manager ().can_redo ())
                 source_buffer.get_undo_manager ().redo ();
         }
 
 
-        private void update_translation (TextBuffer buff)
+        private void update_translation (Gtk.TextBuffer buff)
         {
             string? new_text = buff.text;
             translation_text = new_text == "" ? null : new_text;
         }
 
-        private void add_tag_to_buffer (GNOMECAT.TextTag tag, TextBuffer buffer, int text_size)
+        private void add_tag_to_buffer (GNOMECAT.TextTag tag, Gtk.TextBuffer buffer, int text_size)
         {
-            TextIter ini_iter = TextIter ();
+            Gtk.TextIter ini_iter = Gtk.TextIter ();
             if (tag.ini_offset == -1)
                 buffer.get_iter_at_offset (out ini_iter, 0);
             else
                 buffer.get_iter_at_offset (out ini_iter, tag.ini_offset);
 
-            TextIter end_iter = TextIter ();
+            Gtk.TextIter end_iter = Gtk.TextIter ();
             if (tag.end_offset == -1)
                 buffer.get_iter_at_offset (out end_iter, text_size - 1);
             else
@@ -478,15 +476,15 @@ namespace GNOMECAT.UI
         }
 
 
-        public void remove_tag_from_buffer (GNOMECAT.TextTag tag, TextBuffer buffer, int text_size)
+        public void remove_tag_from_buffer (GNOMECAT.TextTag tag, Gtk.TextBuffer buffer, int text_size)
         {
-            TextIter ini_iter = TextIter ();
+            Gtk.TextIter ini_iter = Gtk.TextIter ();
             if (tag.ini_offset == -1)
                 buffer.get_iter_at_offset (out ini_iter, 0);
             else
                 buffer.get_iter_at_offset (out ini_iter, tag.ini_offset);
 
-            TextIter end_iter = TextIter ();
+            Gtk.TextIter end_iter = Gtk.TextIter ();
             if (tag.end_offset == -1)
                 buffer.get_iter_at_offset (out end_iter, text_size - 1);
             else
@@ -537,13 +535,13 @@ namespace GNOMECAT.UI
      * Rows of the tips displaying box.
      */
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/messagetiprow.ui")]
-    public class MessageTipRow : ListBoxRow
+    public class MessageTipRow : Gtk.ListBoxRow
     {
 
         public MessageTip tip {get; private set;}
 
         [GtkChild]
-        private Image icon;
+        private Gtk.Image icon;
         [GtkChild]
         private Gtk.TextView tip_description;
         [GtkChild]
@@ -604,7 +602,7 @@ namespace GNOMECAT.UI
             else
             {
                 tip_description.visible = true;
-                (this.get_parent () as ListBox).row_activated (this);
+                (this.get_parent () as Gtk.ListBox).row_activated (this);
             }
 
             return false;

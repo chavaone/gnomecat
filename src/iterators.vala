@@ -20,7 +20,6 @@
 
 using Gee;
 
-
 namespace GNOMECAT
 {
 
