@@ -291,5 +291,10 @@ namespace GNOMECAT.UI {
                 message_editor.deselect (level, fragment);
             }
         }
+
+        public void on_file_changed (GNOMECAT.File? file)
+        {
+            message_list.on_file_changed (file);
+        }
     }
 }

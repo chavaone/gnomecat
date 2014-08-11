@@ -33,6 +33,8 @@ namespace GNOMECAT.UI
         private Gtk.ScrolledWindow scrolled_window;
         [GtkChild]
         public Gtk.TreeSelection selection;
+        [GtkChild]
+        public Gtk.ProgressBar file_stats;
 
         public signal void message_selected (Message m);
 
@@ -146,6 +148,16 @@ namespace GNOMECAT.UI
             if (new_value < adj.value || new_value > adj.value + adj.page_size)
                 adj.value = new_value;
         }
+
+
+        public void on_file_changed (GNOMECAT.File file)
+        {
+            file_stats.set_text (_("%iT + %iU + %iF").printf (file.number_of_translated,
+                file.number_of_untranslated, file.number_of_fuzzy));
+            double total = file.number_of_translated + file.number_of_untranslated + file.number_of_fuzzy;
+            file_stats.fraction = file.number_of_translated / total;
+        }
+
     }
 
 

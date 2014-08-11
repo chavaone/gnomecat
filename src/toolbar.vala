@@ -33,7 +33,7 @@ namespace GNOMECAT.UI
     {
 
         [GtkChild]
-        public Gtk.ProgressBar progressbar_title;
+        public Gtk.Label file_title;
         [GtkChild]
         public Gtk.ToggleButton searchbutton;
         [GtkChild]
@@ -69,18 +69,7 @@ namespace GNOMECAT.UI
 
         public void on_file_changed (GNOMECAT.File? file)
         {
-            if (file == null)
-            {
-                progressbar_title.hide ();
-                return;
-            }
-
-            progressbar_title.show ();
-            progressbar_title.set_text (_("%iT + %iU + %iF").printf (file.number_of_translated,
-                file.number_of_untranslated, file.number_of_fuzzy));
-            double total = file.number_of_translated + file.number_of_untranslated + file.number_of_fuzzy;
-            progressbar_title.fraction = file.number_of_translated / total;
-
+            file_title.label = file == null ? "GNOMECAT" : file.name;
             edit_bar_save_back_img.icon_name = file.has_changed ? "document-save-symbolic" : "go-previous-symbolic";
         }
 

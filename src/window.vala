@@ -297,6 +297,7 @@ namespace GNOMECAT.UI
         {
             this.title = "GNOMECAT" + (file != null ? " - " + file.name : "");
             headerbar.on_file_changed (file);
+            (window_panels.get_nth_page (WindowStatus.EDIT) as EditPanel).on_file_changed (file);
         }
 
         [GtkCallback]
