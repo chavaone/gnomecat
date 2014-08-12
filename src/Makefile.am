@@ -51,6 +51,7 @@ VALASOURCES = \
 	hintswidget.vala \
 	api.vala \
 	welcomepanel.vala \
+	messagesfilterpopover.vala \
 	originspopover.vala
 
 gnomecat_SOURCES = \

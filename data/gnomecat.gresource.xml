@@ -21,6 +21,7 @@
         <file compressed="true" preprocess="xml-stripblanks">ui/welcomepanel.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/originspopover.ui</file>
         <file compressed="true" preprocess="xml-stripblanks">ui/originsrow.ui</file>
+        <file compressed="true" preprocess="xml-stripblanks">ui/messagesfilterpopover.ui</file>
         <file>languages.json</file>
         <file>plurals.json</file>
         <file>css/gnomecat.css</file>

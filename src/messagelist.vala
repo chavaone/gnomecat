@@ -35,10 +35,31 @@ namespace GNOMECAT.UI
         public Gtk.TreeSelection selection;
         [GtkChild]
         public Gtk.ProgressBar file_stats;
+        [GtkChild]
+        private Gtk.Button btn_filter;
+
+        private GNOMECAT.UI.MessagesFilterPopover filter_popover;
 
         public signal void message_selected (Message m);
 
         private uint number_of_msgs;
+        private Gtk.ListStore list_store;
+        private Gtk.TreeModelFilter filter_model;
+
+
+        private CheckMessageFunction _filter_function;
+        public CheckMessageFunction filter_function
+        {
+            get
+            {
+                return _filter_function;
+            }
+
+            set
+            {
+                _filter_function = value;
+            }
+        }
 
         private GNOMECAT.File? _file;
         public GNOMECAT.File? file
@@ -56,9 +77,8 @@ namespace GNOMECAT.UI
 
                 number_of_msgs = 0;
 
-                Gtk.ListStore list_store = new Gtk.ListStore (1, typeof (GNOMECAT.Message));
+                list_store = new Gtk.ListStore (1, typeof (GNOMECAT.Message));
 
-                messages.model = list_store;
                 Gtk.TreeIter iter;
 
                 foreach (GNOMECAT.Message m in msgs)
@@ -68,6 +88,20 @@ namespace GNOMECAT.UI
                     list_store.set (iter, 0, m, -1);
                 }
 
+                filter_model = new Gtk.TreeModelFilter (list_store, null);
+
+                filter_model.set_visible_func (
+                    (model, iter) =>
+                    {
+                        GNOMECAT.Message m;
+                        model.get (iter, 0, out m, -1);
+
+                        return filter_function (m);
+                    }
+                );
+
+                messages.model = filter_model;
+
                 GNOMECAT.UI.CellRendererMessage cell = new GNOMECAT.UI.CellRendererMessage ();
                 messages.insert_column_with_attributes (0, null, cell, "message", 0);
 
@@ -75,10 +109,13 @@ namespace GNOMECAT.UI
             }
         }
 
-        public MessageListWidget.with_file (GNOMECAT.File f)
+
+        construct
         {
-            this ();
-            this.file = f;
+            filter_popover = new GNOMECAT.UI.MessagesFilterPopover ();
+            filter_popover.relative_to = btn_filter;
+            filter_popover.filter_changed.connect (on_filter_changed);
+            filter_function = (m) => {return true;};
         }
 
         public void select (GNOMECAT.SelectLevel level,
@@ -156,6 +193,25 @@ namespace GNOMECAT.UI
                 file.number_of_untranslated, file.number_of_fuzzy));
             double total = file.number_of_translated + file.number_of_untranslated + file.number_of_fuzzy;
             file_stats.fraction = file.number_of_translated / total;
+
+            filter_model.refilter ();
+        }
+
+        [GtkCallback]
+        public void on_filter (Gtk.Widget w)
+        {
+            filter_popover.visible = ! filter_popover.visible;
+        }
+
+        public void on_filter_changed (bool translated, bool untranslated, bool fuzzy)
+        {
+            filter_function = (m) => {
+                return (translated && m.state == GNOMECAT.MessageState.TRANSLATED) ||
+                    (untranslated && m.state == GNOMECAT.MessageState.UNTRANSLATED) ||
+                    (fuzzy && m.state == GNOMECAT.MessageState.FUZZY);
+            };
+
+            filter_model.refilter ();
         }
 
     }
