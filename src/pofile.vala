@@ -258,6 +258,7 @@ namespace GNOMECAT.PoFiles
          */
         public override void parse (string path)
         {
+            int index = 0;
             GettextPo.XErrorHandler err_hand = GettextPo.XErrorHandler ();
             this.file = GettextPo.File.file_read (path, err_hand);
             foreach (string d in this.file.domains ())
@@ -267,9 +268,15 @@ namespace GNOMECAT.PoFiles
                 while ((m = mi.next_message ()) != null)
                 {
                     if (m.msgid () == "")
+                    {
                         this.header = new PoHeader (this, m);
+                    }
                     else if (! m.is_obsolete ())
-                        this.add_message (new PoMessage (this, m));
+                    {
+                        GNOMECAT.Message msg = new PoMessage (this, m);
+                        msg.natural_order_value = index++;
+                        add_message (msg);
+                    }
                 }
             }
         }

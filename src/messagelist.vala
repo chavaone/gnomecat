@@ -37,6 +37,8 @@ namespace GNOMECAT.UI
         public Gtk.ProgressBar file_stats;
         [GtkChild]
         private Gtk.Button btn_filter;
+        [GtkChild]
+        private Gtk.ToggleButton btn_sort;
 
         private GNOMECAT.UI.MessagesFilterPopover filter_popover;
 
@@ -44,7 +46,11 @@ namespace GNOMECAT.UI
 
         private uint number_of_msgs;
         private Gtk.ListStore list_store;
+        private Gtk.TreeModelSort sort_model;
         private Gtk.TreeModelFilter filter_model;
+
+        private Gtk.TreeIterCompareFunc default_order_func;
+        private Gtk.TreeIterCompareFunc un_fu_tr_order_func;
 
 
         private CheckMessageFunction _filter_function;
@@ -100,7 +106,11 @@ namespace GNOMECAT.UI
                     }
                 );
 
-                messages.model = filter_model;
+                sort_model = new Gtk.TreeModelSort.with_model (filter_model);
+                sort_model.set_sort_column_id (0, Gtk.SortType.ASCENDING);
+                sort_model.set_sort_func (0, btn_sort.active ? un_fu_tr_order_func : default_order_func);
+
+                messages.model = sort_model;
 
                 GNOMECAT.UI.CellRendererMessage cell = new GNOMECAT.UI.CellRendererMessage ();
                 messages.insert_column_with_attributes (0, null, cell, "message", 0);
@@ -116,6 +126,36 @@ namespace GNOMECAT.UI
             filter_popover.relative_to = btn_filter;
             filter_popover.filter_changed.connect (on_filter_changed);
             filter_function = (m) => {return true;};
+
+            un_fu_tr_order_func = (model, iter1, iter2) =>
+            {
+
+                GNOMECAT.Message msg1, msg2;
+                int msg1_v, msg2_v;
+
+                model.get (iter1, 0, out msg1, -1);
+                model.get (iter2, 0, out msg2, -1);
+
+                msg1_v = msg1.state == MessageState.TRANSLATED ? 1 : msg1.state == MessageState.FUZZY ? 0 : -1;
+                msg2_v = msg2.state == MessageState.TRANSLATED ? 1 : msg2.state == MessageState.FUZZY ? 0 : -1;
+
+                return msg2_v == msg1_v ? 0 : msg1_v > msg2_v ? 1 : -1;
+            };
+
+            default_order_func  = (model, iter1, iter2) =>
+            {
+
+                GNOMECAT.Message msg1, msg2;
+                int msg1_v, msg2_v;
+
+                model.get (iter1, 0, out msg1, -1);
+                model.get (iter2, 0, out msg2, -1);
+
+                msg1_v = msg1.natural_order_value;
+                msg2_v = msg2.natural_order_value;
+
+                return msg2_v == msg1_v ? 0 : msg1_v > msg2_v ? 1 : -1;
+            };
         }
 
         public void select (GNOMECAT.SelectLevel level,
@@ -198,9 +238,15 @@ namespace GNOMECAT.UI
         }
 
         [GtkCallback]
-        public void on_filter (Gtk.Widget w)
+        public void on_filter_clicked (Gtk.Widget w)
         {
             filter_popover.visible = ! filter_popover.visible;
+        }
+
+        [GtkCallback]
+        public void on_sort_clicked (Gtk.Widget w)
+        {
+            sort_model.set_sort_func (0, btn_sort.active ? un_fu_tr_order_func : default_order_func);
         }
 
         public void on_filter_changed (bool translated, bool untranslated, bool fuzzy)

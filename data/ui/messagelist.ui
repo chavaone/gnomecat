@@ -80,7 +80,7 @@
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">View</property>
-            <signal name="clicked" handler="on_filter" swapped="no"/>
+            <signal name="clicked" handler="on_filter_clicked" swapped="no"/>
             <child>
               <object class="GtkImage" id="image2">
                 <property name="visible">True</property>
@@ -97,12 +97,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkToggleButton" id="button1">
+          <object class="GtkToggleButton" id="btn_sort">
             <property name="visible">True</property>
-            <property name="sensitive">False</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
             <property name="tooltip_text" translatable="yes">Sort</property>
+            <signal name="clicked" handler="on_sort_clicked" swapped="no"/>
             <child>
               <object class="GtkImage" id="image1">
                 <property name="visible">True</property>

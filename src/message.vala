@@ -198,6 +198,11 @@ namespace GNOMECAT
          */
         public ArrayList<MessageTip> tips {get; private set; default = null;}
 
+        /**
+         * Indicates the order of this message inside its file.
+         */
+        public int natural_order_value {get; set;}
+
         /*
          * Contructor for Message objects.
          *
