@@ -234,7 +234,15 @@ namespace GNOMECAT.UI
             double total = file.number_of_translated + file.number_of_untranslated + file.number_of_fuzzy;
             file_stats.fraction = file.number_of_translated / total;
 
-            filter_model.refilter ();
+            Gtk.TreeModel model;
+            Gtk.TreeIter iter;
+            Gtk.TreePath path;
+
+            if (! selection.get_selected (out model, out iter))
+                return;
+
+            path = model.get_path (iter);
+            model.row_changed (path, iter);
         }
 
         [GtkCallback]
