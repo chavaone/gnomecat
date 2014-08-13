@@ -12,7 +12,8 @@ libdemochecker_la_CFLAGS = \
 	$(GNOMECATPLUGINS_CFLAGS)
 
 libdemochecker_la_LIBADD = \
-	$(GNOMECATPLUGINS_LIBS)
+	$(GNOMECATPLUGINS_LIBS) \
+	$(pkglibdir)/libgnomecat.la
 
 libdemochecker_la_VALAFLAGS = \
 	$(GNOMECATPLUGINS_VALAFLAGS) \

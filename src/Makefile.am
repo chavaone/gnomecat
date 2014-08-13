@@ -88,7 +88,7 @@ gschemas.compiled: $(top_srcdir)/data/gnomecat.gschema.xml
 
 BUILT_SOURCES = .libgnomecat.vala.stamp
 
-lib_LTLIBRARIES = libgnomecat.la
+pkglib_LTLIBRARIES = libgnomecat.la
 
 libgnomecat_la_VALASOURCES = \
 	hints.vala \
