@@ -102,18 +102,19 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 					</packing>
 				</child>
 				<child>
-					<object class="GtkToggleButton" id="searchbutton">
+					<object class="GtkButton" id="preferencesbutton">
 						<property name="visible">True</property>
 						<property name="valign">center</property>
 						<property name="can_focus">True</property>
+						<property name="action_name">win.preferences</property>
 						<style>
 							<class name="image-button"/>
 						</style>
 						<child>
-							<object class="GtkImage" id="search_button_image">
+							<object class="GtkImage" id="preferences_button_image">
 								<property name="visible">True</property>
 								<property name="icon_size">1</property>
-								<property name="icon_name">edit-find-symbolic</property>
+								<property name="icon_name">emblem-system-symbolic</property>
 							</object>
 						</child>
 					</object>
@@ -145,19 +146,18 @@ along with GNOMECAT.  If not, see <http://www.gnu.org/licenses/>.
 					</packing>
 				</child>
 				<child>
-					<object class="GtkButton" id="preferencesbutton">
+					<object class="GtkToggleButton" id="searchbutton">
 						<property name="visible">True</property>
 						<property name="valign">center</property>
 						<property name="can_focus">True</property>
-						<property name="action_name">win.preferences</property>
 						<style>
 							<class name="image-button"/>
 						</style>
 						<child>
-							<object class="GtkImage" id="preferences_button_image">
+							<object class="GtkImage" id="search_button_image">
 								<property name="visible">True</property>
 								<property name="icon_size">1</property>
-								<property name="icon_name">emblem-system-symbolic</property>
+								<property name="icon_name">edit-find-symbolic</property>
 							</object>
 						</child>
 					</object>
