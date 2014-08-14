@@ -187,9 +187,9 @@ namespace GNOMECAT
         /**
          * Saves a file in the path provided by parameter.
          */
-        public void save (string? file_path)
+        public void save (string? file_path, string? translator_name, string? translator_email)
         {
-            save_file (file_path == null ? path : file_path);
+            save_file (file_path == null ? path : file_path, translator_name, translator_email);
             has_changed = false;
             file_changed ();
         }
@@ -227,7 +227,7 @@ namespace GNOMECAT
          *
          * @param file_path
          */
-        protected abstract void save_file (string file_path);
+        protected abstract void save_file (string file_path, string? translator_name, string? translator_email);
 
         /**
          * Handler for message state changed signal.

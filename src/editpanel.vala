@@ -239,7 +239,9 @@ namespace GNOMECAT.UI {
         {
             if (file.has_changed)
             {
-                file.save (null);
+                GNOMECAT.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
+
+                file.save (null, profile.translator_name, profile.translator_email);
             }
         }
 
@@ -247,7 +249,9 @@ namespace GNOMECAT.UI {
         {
             if (file.has_changed)
             {
-                file.save (null);
+                GNOMECAT.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
+
+                file.save (null, profile.translator_name, profile.translator_email);
             }
             else
             {

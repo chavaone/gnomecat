@@ -245,10 +245,13 @@ namespace GNOMECAT.PoFiles
          * Method that saves the instance of this File into
          *  a file indicated as parameter.
          */
-        protected override void save_file (string file_path)
+        protected override void save_file (string file_path, string? translator_name, string? translator_email)
         {
             GettextPo.XErrorHandler err_hand = GettextPo.XErrorHandler ();
-            update_header_info ();
+
+            if (translator_name != null && translator_email != null)
+                update_header_info (translator_name, translator_email);
+
             GettextPo.File.file_write (file, file_path, err_hand);
         }
 
@@ -297,16 +300,15 @@ namespace GNOMECAT.PoFiles
             header.set_info (key, value);
         }
 
-        private void update_header_info ()
+        private void update_header_info (string translator_name, string translator_email)
         {
-            GNOMECAT.Profile profile = GNOMECAT.Application.get_default ().enabled_profile;
-            string last_translator = "%s <%s>".printf (profile.translator_name, profile.translator_email);
+            string last_translator = "%s <%s>".printf (translator_name, translator_email);
             set_info ("Last-Translator", last_translator);
 
             set_info ("X-Generator", "GNOMECAT " + Config.VERSION);
 
             DateTime now = new DateTime.now_local ();
-            header.set_comment (profile.translator_name, profile.translator_email, now.get_year ());
+            header.set_comment (translator_name, translator_email, now.get_year ());
         }
     }
 
@@ -342,7 +344,7 @@ namespace GNOMECAT.PoFiles
             base.full (path, p);
         }
 
-        protected override void save_file (string file_path)
+        protected override void save_file (string file_path, string? translator_name, string? translator_email)
         {}
 
         public override void parse (string path)
