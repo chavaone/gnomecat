@@ -79,7 +79,7 @@ namespace GNOMECAT.UI
     }
 
     [GtkTemplate (ui = "/org/gnome/gnomecat/ui/hintswidget.ui")]
-    public class HintsWidget : Gtk.Box, ChangedMessageSensible, HintViewer
+    public class HintsWidget : Gtk.Box, HintViewer
     {
         [GtkChild]
         private Gtk.ListBox hints_list;
