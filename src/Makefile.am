@@ -52,6 +52,7 @@ VALASOURCES = \
 	api.vala \
 	welcomepanel.vala \
 	messagesfilterpopover.vala \
+	tip.vala \
 	originspopover.vala
 
 gnomecat_SOURCES = \
@@ -97,6 +98,7 @@ libgnomecat_la_VALASOURCES = \
 	project.vala \
 	api.vala \
 	select.vala \
+	tip.vala \
 	plugins.vala
 
 libgnomecat_la_SOURCES = \

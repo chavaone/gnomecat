@@ -24,80 +24,6 @@ namespace GNOMECAT
 {
 
     /**
-     * Enum for the levels of Message Tips.
-     */
-    public enum TipLevel
-    {
-        INFO,
-        WARNING,
-        ERROR
-    }
-
-
-    /**
-     * This class represents information that can be added to Messages in order
-     *  to indicate that they have some failure or something that can be
-     *  improved.
-     */
-    public class MessageTip : Object
-    {
-
-        /**
-         * Name of the MessageTip.
-         */
-        public string name {get; private set;}
-
-        /*
-         * Description of the MessageTip.
-         */
-        public string description {get; private set;}
-
-        /*
-         * Description of the MessageTip. It can be **INFO**, **WARNING** or **ERROR**.
-         */
-        public TipLevel level {get; private set;}
-
-        /**
-         * Tags that can be added to the original string.
-         */
-        public ArrayList<GNOMECAT.TextTag> tags_original {get; private set;}
-
-        /**
-         * Tags that can be added to the translated string.
-         */
-        public ArrayList<GNOMECAT.TextTag> tags_translation {get; private set;}
-
-        /**
-         * Plural form this tip references.
-         */
-        public int plural_number {get; private set;}
-
-
-        /**
-         * Contructor.
-         *
-         * @param name
-         * @param description
-         * @param level
-         * @param tags_original
-         * @param tags_translation
-         */
-        public MessageTip (string name,
-                string? description,
-                TipLevel level,
-                ArrayList<GNOMECAT.TextTag>? tags_original=null,
-                ArrayList<GNOMECAT.TextTag>? tags_translation=null)
-        {
-            this.name = name;
-            this.description = description;
-            this.level = level;
-            this.tags_original = tags_original != null ? tags_original : new ArrayList<GNOMECAT.TextTag> ();
-            this.tags_translation = tags_translation != null ? tags_translation : new ArrayList<GNOMECAT.TextTag> ();
-        }
-    }
-
-
-    /**
      * Object that represents certain portion of a message.
      */
     public class MessageFragment : Object
@@ -196,7 +122,7 @@ namespace GNOMECAT
         /*
          * List of tips that this message has.
          */
-        public ArrayList<MessageTip> tips {get; private set; default = null;}
+        public ArrayList<GNOMECAT.MessageTip> tips {get; private set; default = null;}
 
         /**
          * Indicates the order of this message inside its file.
@@ -219,14 +145,14 @@ namespace GNOMECAT
          *
          * @param tip Added tip.
          */
-        public signal void added_tip (MessageTip tip);
+        public signal void added_tip (GNOMECAT.MessageTip tip);
 
         /**
          * Signal emited when a new tip is deleted from this message.
          *
          * @param tip Deleted tip.
          */
-        public signal void removed_tip (MessageTip tip);
+        public signal void removed_tip (GNOMECAT.MessageTip tip);
 
         /**
          * Signal emited when the message changed.
@@ -309,7 +235,7 @@ namespace GNOMECAT
          *
          * @param tip Message to add.
          */
-        public void add_tip (MessageTip tip)
+        public void add_tip (GNOMECAT.MessageTip tip)
         {
             tips.add (tip);
             this.added_tip (tip);
@@ -321,7 +247,7 @@ namespace GNOMECAT
          *
          * @param tip Tip to be removed.
          */
-        public void remove_tip (MessageTip tip)
+        public void remove_tip (GNOMECAT.MessageTip tip)
         {
             tips.remove (tip);
             this.removed_tip (tip);
@@ -331,11 +257,11 @@ namespace GNOMECAT
          * Method that returns the tips corresponding the plural form provided as parameter.
          *
          */
-        public ArrayList<MessageTip> get_tips_plural_form (int plural_form)
+        public ArrayList<GNOMECAT.MessageTip> get_tips_plural_form (int plural_form)
         {
-            ArrayList<MessageTip> aux = new ArrayList<MessageTip> ();
+            ArrayList<GNOMECAT.MessageTip> aux = new ArrayList<MessageTip> ();
 
-            foreach (MessageTip t in this.tips)
+            foreach (GNOMECAT.MessageTip t in this.tips)
             {
                 if (t.plural_number == plural_form)
                     aux.add (t);
