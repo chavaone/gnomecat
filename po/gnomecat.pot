@@ -8,15 +8,804 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/chavaone/gnomecat/issues\n"
-"POT-Creation-Date: 2014-07-03 12:04+0200\n"
+"POT-Creation-Date: 2015-05-30 20:24+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ../data/languages.json:5
+msgid "Abkhazian"
+msgstr ""
+
+#: ../data/languages.json:11
+msgid "Afar"
+msgstr ""
+
+#: ../data/languages.json:17
+msgid "Afrikaans"
+msgstr ""
+
+#: ../data/languages.json:23
+msgid "Akan"
+msgstr ""
+
+#: ../data/languages.json:29
+msgid "Albanian"
+msgstr ""
+
+#: ../data/languages.json:35
+msgid "Amharic"
+msgstr ""
+
+#: ../data/languages.json:41
+msgid "Arabic"
+msgstr ""
+
+#: ../data/languages.json:47
+msgid "Aragonese"
+msgstr ""
+
+#: ../data/languages.json:53
+msgid "Armenian"
+msgstr ""
+
+#: ../data/languages.json:59
+msgid "Assamese"
+msgstr ""
+
+#: ../data/languages.json:65
+msgid "Avaric"
+msgstr ""
+
+#: ../data/languages.json:71
+msgid "Avestan"
+msgstr ""
+
+#: ../data/languages.json:77
+msgid "Aymara"
+msgstr ""
+
+#: ../data/languages.json:83
+msgid "Azerbaijani"
+msgstr ""
+
+#: ../data/languages.json:89
+msgid "Bambara"
+msgstr ""
+
+#: ../data/languages.json:95
+msgid "Bashkir"
+msgstr ""
+
+#: ../data/languages.json:101
+msgid "Basque"
+msgstr ""
+
+#: ../data/languages.json:107
+msgid "Belarusian"
+msgstr ""
+
+#: ../data/languages.json:113
+msgid "Bengali"
+msgstr ""
+
+#: ../data/languages.json:119
+msgid "Bihari languages"
+msgstr ""
+
+#: ../data/languages.json:125
+msgid "Bislama"
+msgstr ""
+
+#: ../data/languages.json:131
+msgid "Bokmål, Norwegian; Norwegian Bokmål"
+msgstr ""
+
+#: ../data/languages.json:137
+msgid "Bosnian"
+msgstr ""
+
+#: ../data/languages.json:143
+msgid "Breton"
+msgstr ""
+
+#: ../data/languages.json:149
+msgid "Bulgarian"
+msgstr ""
+
+#: ../data/languages.json:155
+msgid "Burmese"
+msgstr ""
+
+#: ../data/languages.json:161
+msgid "Catalan; Valencian"
+msgstr ""
+
+#: ../data/languages.json:167
+msgid "Central Khmer"
+msgstr ""
+
+#: ../data/languages.json:173
+msgid "Chamorro"
+msgstr ""
+
+#: ../data/languages.json:179
+msgid "Chechen"
+msgstr ""
+
+#: ../data/languages.json:185
+msgid "Chichewa; Chewa; Nyanja"
+msgstr ""
+
+#: ../data/languages.json:191
+msgid "Chinese"
+msgstr ""
+
+#: ../data/languages.json:197
+msgid ""
+"Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church "
+"Slavonic"
+msgstr ""
+
+#: ../data/languages.json:203
+msgid "Chuvash"
+msgstr ""
+
+#: ../data/languages.json:209
+msgid "Cornish"
+msgstr ""
+
+#: ../data/languages.json:215
+msgid "Corsican"
+msgstr ""
+
+#: ../data/languages.json:221
+msgid "Cree"
+msgstr ""
+
+#: ../data/languages.json:227
+msgid "Croatian"
+msgstr ""
+
+#: ../data/languages.json:233
+msgid "Czech"
+msgstr ""
+
+#: ../data/languages.json:239
+msgid "Danish"
+msgstr ""
+
+#: ../data/languages.json:245
+msgid "Divehi; Dhivehi; Maldivian"
+msgstr ""
+
+#: ../data/languages.json:251
+msgid "Dutch; Flemish"
+msgstr ""
+
+#: ../data/languages.json:257
+msgid "Dzongkha"
+msgstr ""
+
+#: ../data/languages.json:263
+msgid "English"
+msgstr ""
+
+#: ../data/languages.json:269
+msgid "Esperanto"
+msgstr ""
+
+#: ../data/languages.json:275
+msgid "Estonian"
+msgstr ""
+
+#: ../data/languages.json:281
+msgid "Ewe"
+msgstr ""
+
+#: ../data/languages.json:287
+msgid "Faroese"
+msgstr ""
+
+#: ../data/languages.json:293
+msgid "Fijian"
+msgstr ""
+
+#: ../data/languages.json:299
+msgid "Finnish"
+msgstr ""
+
+#: ../data/languages.json:305
+msgid "French"
+msgstr ""
+
+#: ../data/languages.json:311
+msgid "Fulah"
+msgstr ""
+
+#: ../data/languages.json:317
+msgid "Gaelic; Scottish Gaelic"
+msgstr ""
+
+#: ../data/languages.json:323
+msgid "Galician"
+msgstr ""
+
+#: ../data/languages.json:329
+msgid "Ganda"
+msgstr ""
+
+#: ../data/languages.json:335
+msgid "Georgian"
+msgstr ""
+
+#: ../data/languages.json:341
+msgid "German"
+msgstr ""
+
+#: ../data/languages.json:347
+msgid "Greek, Modern (1453-)"
+msgstr ""
+
+#: ../data/languages.json:353
+msgid "Guarani"
+msgstr ""
+
+#: ../data/languages.json:359
+msgid "Gujarati"
+msgstr ""
+
+#: ../data/languages.json:365
+msgid "Haitian; Haitian Creole"
+msgstr ""
+
+#: ../data/languages.json:371
+msgid "Hausa"
+msgstr ""
+
+#: ../data/languages.json:377
+msgid "Hebrew"
+msgstr ""
+
+#: ../data/languages.json:383
+msgid "Herero"
+msgstr ""
+
+#: ../data/languages.json:389
+msgid "Hindi"
+msgstr ""
+
+#: ../data/languages.json:395
+msgid "Hiri Motu"
+msgstr ""
+
+#: ../data/languages.json:401
+msgid "Hungarian"
+msgstr ""
+
+#: ../data/languages.json:407
+msgid "Icelandic"
+msgstr ""
+
+#: ../data/languages.json:413
+msgid "Ido"
+msgstr ""
+
+#: ../data/languages.json:419
+msgid "Igbo"
+msgstr ""
+
+#: ../data/languages.json:425
+msgid "Indonesian"
+msgstr ""
+
+#: ../data/languages.json:431
+msgid "Interlingua (International Auxiliary Language Association)"
+msgstr ""
+
+#: ../data/languages.json:437
+msgid "Interlingue; Occidental"
+msgstr ""
+
+#: ../data/languages.json:443
+msgid "Inuktitut"
+msgstr ""
+
+#: ../data/languages.json:449
+msgid "Inupiaq"
+msgstr ""
+
+#: ../data/languages.json:455
+msgid "Irish"
+msgstr ""
+
+#: ../data/languages.json:461
+msgid "Italian"
+msgstr ""
+
+#: ../data/languages.json:467
+msgid "Japanese"
+msgstr ""
+
+#: ../data/languages.json:473
+msgid "Javanese"
+msgstr ""
+
+#: ../data/languages.json:479
+msgid "Kalaallisut; Greenlandic"
+msgstr ""
+
+#: ../data/languages.json:485
+msgid "Kannada"
+msgstr ""
+
+#: ../data/languages.json:491
+msgid "Kanuri"
+msgstr ""
+
+#: ../data/languages.json:497
+msgid "Kashmiri"
+msgstr ""
+
+#: ../data/languages.json:503
+msgid "Kazakh"
+msgstr ""
+
+#: ../data/languages.json:509
+msgid "Kikuyu; Gikuyu"
+msgstr ""
+
+#: ../data/languages.json:515
+msgid "Kinyarwanda"
+msgstr ""
+
+#: ../data/languages.json:521
+msgid "Kirghiz; Kyrgyz"
+msgstr ""
+
+#: ../data/languages.json:527
+msgid "Komi"
+msgstr ""
+
+#: ../data/languages.json:533
+msgid "Kongo"
+msgstr ""
+
+#: ../data/languages.json:539
+msgid "Korean"
+msgstr ""
+
+#: ../data/languages.json:545
+msgid "Kuanyama; Kwanyama"
+msgstr ""
+
+#: ../data/languages.json:551
+msgid "Kurdish"
+msgstr ""
+
+#: ../data/languages.json:557
+msgid "Lao"
+msgstr ""
+
+#: ../data/languages.json:563
+msgid "Latin"
+msgstr ""
+
+#: ../data/languages.json:569
+msgid "Latvian"
+msgstr ""
+
+#: ../data/languages.json:575
+msgid "Limburgan; Limburger; Limburgish"
+msgstr ""
+
+#: ../data/languages.json:581
+msgid "Lingala"
+msgstr ""
+
+#: ../data/languages.json:587
+msgid "Lithuanian"
+msgstr ""
+
+#: ../data/languages.json:593
+msgid "Luba-Katanga"
+msgstr ""
+
+#: ../data/languages.json:599
+msgid "Luxembourgish; Letzeburgesch"
+msgstr ""
+
+#: ../data/languages.json:605
+msgid "Macedonian"
+msgstr ""
+
+#: ../data/languages.json:611
+msgid "Malagasy"
+msgstr ""
+
+#: ../data/languages.json:617
+msgid "Malay"
+msgstr ""
+
+#: ../data/languages.json:623
+msgid "Malayalam"
+msgstr ""
+
+#: ../data/languages.json:629
+msgid "Maltese"
+msgstr ""
+
+#: ../data/languages.json:635
+msgid "Manx"
+msgstr ""
+
+#: ../data/languages.json:641
+msgid "Maori"
+msgstr ""
+
+#: ../data/languages.json:647
+msgid "Marathi"
+msgstr ""
+
+#: ../data/languages.json:653
+msgid "Marshallese"
+msgstr ""
+
+#: ../data/languages.json:659
+msgid "Moldavian; Moldovan"
+msgstr ""
+
+#: ../data/languages.json:665
+msgid "Mongolian"
+msgstr ""
+
+#: ../data/languages.json:671
+msgid "Nauru"
+msgstr ""
+
+#: ../data/languages.json:677
+msgid "Navajo; Navaho"
+msgstr ""
+
+#: ../data/languages.json:683
+msgid "Ndebele, North; North Ndebele"
+msgstr ""
+
+#: ../data/languages.json:689
+msgid "Ndebele, South; South Ndebele"
+msgstr ""
+
+#: ../data/languages.json:695
+msgid "Ndonga"
+msgstr ""
+
+#: ../data/languages.json:701
+msgid "Nepali"
+msgstr ""
+
+#: ../data/languages.json:707
+msgid "Northern Sami"
+msgstr ""
+
+#: ../data/languages.json:713
+msgid "Norwegian"
+msgstr ""
+
+#: ../data/languages.json:719
+msgid "Norwegian Nynorsk; Nynorsk, Norwegian"
+msgstr ""
+
+#: ../data/languages.json:725
+msgid "Occitan (post 1500)"
+msgstr ""
+
+#: ../data/languages.json:731
+msgid "Ojibwa"
+msgstr ""
+
+#: ../data/languages.json:737
+msgid "Oriya"
+msgstr ""
+
+#: ../data/languages.json:743
+msgid "Oromo"
+msgstr ""
+
+#: ../data/languages.json:749
+msgid "Ossetian; Ossetic"
+msgstr ""
+
+#: ../data/languages.json:755
+msgid "Pali"
+msgstr ""
+
+#: ../data/languages.json:761
+msgid "Panjabi; Punjabi"
+msgstr ""
+
+#: ../data/languages.json:767
+msgid "Persian"
+msgstr ""
+
+#: ../data/languages.json:773
+msgid "Polish"
+msgstr ""
+
+#: ../data/languages.json:779
+msgid "Portuguese"
+msgstr ""
+
+#: ../data/languages.json:785
+msgid "Pushto; Pashto"
+msgstr ""
+
+#: ../data/languages.json:791
+msgid "Quechua"
+msgstr ""
+
+#: ../data/languages.json:797
+msgid "Romanian"
+msgstr ""
+
+#: ../data/languages.json:803
+msgid "Romansh"
+msgstr ""
+
+#: ../data/languages.json:809
+msgid "Rundi"
+msgstr ""
+
+#: ../data/languages.json:815
+msgid "Russian"
+msgstr ""
+
+#: ../data/languages.json:821
+msgid "Samoan"
+msgstr ""
+
+#: ../data/languages.json:827
+msgid "Sango"
+msgstr ""
+
+#: ../data/languages.json:833
+msgid "Sanskrit"
+msgstr ""
+
+#: ../data/languages.json:839
+msgid "Sardinian"
+msgstr ""
+
+#: ../data/languages.json:845
+msgid "Serbian"
+msgstr ""
+
+#: ../data/languages.json:851
+msgid "Shona"
+msgstr ""
+
+#: ../data/languages.json:857
+msgid "Sichuan Yi; Nuosu"
+msgstr ""
+
+#: ../data/languages.json:863
+msgid "Sindhi"
+msgstr ""
+
+#: ../data/languages.json:869
+msgid "Sinhala; Sinhalese"
+msgstr ""
+
+#: ../data/languages.json:875
+msgid "Slovak"
+msgstr ""
+
+#: ../data/languages.json:881
+msgid "Slovenian"
+msgstr ""
+
+#: ../data/languages.json:887
+msgid "Somali"
+msgstr ""
+
+#: ../data/languages.json:893
+msgid "Sotho, Southern"
+msgstr ""
+
+#: ../data/languages.json:899
+msgid "Spanish; Castilian"
+msgstr ""
+
+#: ../data/languages.json:905
+msgid "Sundanese"
+msgstr ""
+
+#: ../data/languages.json:911
+msgid "Swahili"
+msgstr ""
+
+#: ../data/languages.json:917
+msgid "Swati"
+msgstr ""
+
+#: ../data/languages.json:923
+msgid "Swedish"
+msgstr ""
+
+#: ../data/languages.json:929
+msgid "Tagalog"
+msgstr ""
+
+#: ../data/languages.json:935
+msgid "Tahitian"
+msgstr ""
+
+#: ../data/languages.json:941
+msgid "Tajik"
+msgstr ""
+
+#: ../data/languages.json:947
+msgid "Tamil"
+msgstr ""
+
+#: ../data/languages.json:953
+msgid "Tatar"
+msgstr ""
+
+#: ../data/languages.json:959
+msgid "Telugu"
+msgstr ""
+
+#: ../data/languages.json:965
+msgid "Thai"
+msgstr ""
+
+#: ../data/languages.json:971
+msgid "Tibetan"
+msgstr ""
+
+#: ../data/languages.json:977
+msgid "Tigrinya"
+msgstr ""
+
+#: ../data/languages.json:983
+msgid "Tonga (Tonga Islands)"
+msgstr ""
+
+#: ../data/languages.json:989
+msgid "Tsonga"
+msgstr ""
+
+#: ../data/languages.json:995
+msgid "Tswana"
+msgstr ""
+
+#: ../data/languages.json:1001
+msgid "Turkish"
+msgstr ""
+
+#: ../data/languages.json:1007
+msgid "Turkmen"
+msgstr ""
+
+#: ../data/languages.json:1013
+msgid "Twi"
+msgstr ""
+
+#: ../data/languages.json:1019
+msgid "Uighur; Uyghur"
+msgstr ""
+
+#: ../data/languages.json:1025
+msgid "Ukrainian"
+msgstr ""
+
+#: ../data/languages.json:1031
+msgid "Urdu"
+msgstr ""
+
+#: ../data/languages.json:1037
+msgid "Uzbek"
+msgstr ""
+
+#: ../data/languages.json:1043
+msgid "Venda"
+msgstr ""
+
+#: ../data/languages.json:1049
+msgid "Vietnamese"
+msgstr ""
+
+#: ../data/languages.json:1055
+msgid "Volapük"
+msgstr ""
+
+#: ../data/languages.json:1061
+msgid "Walloon"
+msgstr ""
+
+#: ../data/languages.json:1067
+msgid "Welsh"
+msgstr ""
+
+#: ../data/languages.json:1073
+msgid "Western Frisian"
+msgstr ""
+
+#: ../data/languages.json:1079
+msgid "Wolof"
+msgstr ""
+
+#: ../data/languages.json:1085
+msgid "Xhosa"
+msgstr ""
+
+#: ../data/languages.json:1091
+msgid "Yiddish"
+msgstr ""
+
+#: ../data/languages.json:1097
+msgid "Yoruba"
+msgstr ""
+
+#: ../data/languages.json:1103
+msgid "Zhuang; Chuang"
+msgstr ""
+
+#: ../data/languages.json:1109
+msgid "Zulu"
+msgstr ""
+
+#: ../data/plurals.json:9
+msgid "Equal to 0 or 1"
+msgstr ""
+
+#: ../data/plurals.json:13
+msgid "Greater than 1"
+msgstr ""
+
+#: ../data/plurals.json:317
+msgid " "
+msgstr ""
+
+#: ../data/plurals.json:327
+msgid "Equal to 1"
+msgstr ""
+
+#: ../data/plurals.json:77
+msgid "Between 2 and 4 (included)"
+msgstr ""
+
+#: ../data/plurals.json:215
+msgid "Ending in 2, 3 or 4"
+msgstr ""
+
+#: ../data/plurals.json:219
+msgid "Other numbers"
+msgstr ""
+
+#: ../data/plurals.json:251
+msgid "Ending in 1 but not in 11"
+msgstr ""
+
+#: ../data/plurals.json:255
+msgid "Equal to 0"
+msgstr ""
+
+#: ../data/plurals.json:273
+msgid "0 or ending in a number between 0 and 20"
+msgstr ""
+
+#: ../data/plurals.json:277
+msgid "Other Numbers"
+msgstr ""
+
+#: ../data/plurals.json:331
+msgid "0 or greater than 1"
+msgstr ""
 
 #: ../data/ui/appmenu.ui.h:1
 msgid "_Preferences"
@@ -30,15 +819,15 @@ msgstr ""
 msgid "_Quit"
 msgstr ""
 
-#: ../data/ui/hintpanelrow.ui.h:1
+#: ../data/ui/hintswidgetrow.ui.h:1
 msgid "Accuracy"
 msgstr ""
 
-#: ../data/ui/hintpanelrow.ui.h:2
+#: ../data/ui/hintswidgetrow.ui.h:2
 msgid "Origin"
 msgstr ""
 
-#: ../data/ui/hintpanelwidget.ui.h:1
+#: ../data/ui/hintswidget.ui.h:1
 msgid "Hints:"
 msgstr ""
 
@@ -64,6 +853,14 @@ msgstr ""
 
 #: ../data/ui/messagelist.ui.h:1
 msgid "Messages:"
+msgstr ""
+
+#: ../data/ui/messagelist.ui.h:2
+msgid "View"
+msgstr ""
+
+#: ../data/ui/messagelist.ui.h:3
+msgid "Sort"
 msgstr ""
 
 #: ../data/ui/openedfilespanel.ui.h:1
@@ -110,11 +907,11 @@ msgstr ""
 msgid "Message Changed State:"
 msgstr ""
 
-#: ../data/ui/preferencespanel.ui.h:8 ../src/messagelist.vala:211
+#: ../data/ui/preferencespanel.ui.h:8
 msgid "Fuzzy"
 msgstr ""
 
-#: ../data/ui/preferencespanel.ui.h:9 ../src/messagelist.vala:203
+#: ../data/ui/preferencespanel.ui.h:9
 msgid "Translated"
 msgstr ""
 
@@ -122,8 +919,8 @@ msgstr ""
 msgid "Check _spelling"
 msgstr ""
 
-#: ../data/ui/profilerow.ui.h:1 ../src/preferencespanel.vala:161
-#: ../src/preferencespanel.vala:165
+#: ../data/ui/profilerow.ui.h:1 ../src/preferencespanel.vala:180
+#: ../src/preferencespanel.vala:184
 msgid "(enabled)"
 msgstr ""
 
@@ -153,10 +950,6 @@ msgstr ""
 
 #: ../data/ui/searchbar.ui.h:7
 msgid "Plurals Text"
-msgstr ""
-
-#: ../data/ui/searchbar.ui.h:8
-msgid "Search in Current Project"
 msgstr ""
 
 #: ../data/ui/simpleprofilepanel.ui.h:1
@@ -245,40 +1038,20 @@ msgstr ""
 msgid "Create Profile"
 msgstr ""
 
-#: ../src/messageeditor.vala:77
+#: ../src/messageeditor.vala:79
 #, c-format
 msgid "Singular (%s)"
 msgstr ""
 
-#: ../src/messageeditor.vala:86
+#: ../src/messageeditor.vala:88
 #, c-format
 msgid "Plural %i (%s)"
 msgstr ""
 
-#: ../src/messagelist.vala:207
-msgid "Untranslated"
+#: ../src/messagelist.vala:232
+#, c-format
+msgid "%iT + %iU + %iF"
 msgstr ""
-
-#: ../src/messagelist.vala:247
-#, c-format
-msgid "There is %i info tip"
-msgid_plural "There are %i info tips."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../src/messagelist.vala:254
-#, c-format
-msgid "Ther is %i warning tip."
-msgid_plural "There are %i warning tips."
-msgstr[0] ""
-msgstr[1] ""
-
-#: ../src/messagelist.vala:261
-#, c-format
-msgid "There is %i error tip."
-msgid_plural "There are %i error tips."
-msgstr[0] ""
-msgstr[1] ""
 
 #: ../src/openfilepanel.vala:53
 msgid "Select a file to open."
@@ -292,15 +1065,10 @@ msgstr ""
 msgid "Open"
 msgstr ""
 
-#: ../src/toolbar.vala:79
-#, c-format
-msgid "%iT + %iU + %iF"
-msgstr ""
-
-#: ../src/window.vala:257
+#: ../src/window.vala:264
 msgid "GNOMECAT"
 msgstr ""
 
-#: ../src/window.vala:264
+#: ../src/window.vala:271
 msgid "translator-credits"
 msgstr ""

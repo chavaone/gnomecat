@@ -1,1114 +1,1114 @@
 {
-	"languages" : [
+	'languages' : [
 	{
-		"code" : "ab",
-		"name" : "Abkhazian",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ab',
+		'name' : "Abkhazian",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "aa",
-		"name" : "Afar",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'aa',
+		'name' : "Afar",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "af",
-		"name" : "Afrikaans",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'af',
+		'name' : "Afrikaans",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ak",
-		"name" : "Akan",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ak',
+		'name' : "Akan",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sq",
-		"name" : "Albanian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'sq',
+		'name' : "Albanian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "am",
-		"name" : "Amharic",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'am',
+		'name' : "Amharic",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ar",
-		"name" : "Arabic",
-		"pluralform" : "nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;",
-		"default-team-email": "doc@arabeyes.org"
+		'code' : 'ar',
+		'name' : "Arabic",
+		'pluralform' : 'nplurals=6; plural= n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;',
+		'default-team-email': 'doc@arabeyes.org'
 	},
 	{
-		"code" : "an",
-		"name" : "Aragonese",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'an',
+		'name' : "Aragonese",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "hy",
-		"name" : "Armenian",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'hy',
+		'name' : "Armenian",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "as",
-		"name" : "Assamese",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'as',
+		'name' : "Assamese",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "av",
-		"name" : "Avaric",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'av',
+		'name' : "Avaric",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ae",
-		"name" : "Avestan",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ae',
+		'name' : "Avestan",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ay",
-		"name" : "Aymara",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ay',
+		'name' : "Aymara",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "az",
-		"name" : "Azerbaijani",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'az',
+		'name' : "Azerbaijani",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bm",
-		"name" : "Bambara",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'bm',
+		'name' : "Bambara",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ba",
-		"name" : "Bashkir",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ba',
+		'name' : "Bashkir",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "eu",
-		"name" : "Basque",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'eu',
+		'name' : "Basque",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "be",
-		"name" : "Belarusian",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'be',
+		'name' : "Belarusian",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bn",
-		"name" : "Bengali",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'bn',
+		'name' : "Bengali",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bh",
-		"name" : "Bihari languages",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'bh',
+		'name' : "Bihari languages",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bi",
-		"name" : "Bislama",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'bi',
+		'name' : "Bislama",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "nb",
-		"name" : "Bokmål, Norwegian; Norwegian Bokmål",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'nb',
+		'name' : "Bokmål, Norwegian; Norwegian Bokmål",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bs",
-		"name" : "Bosnian",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'bs',
+		'name' : "Bosnian",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "br",
-		"name" : "Breton",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'br',
+		'name' : "Breton",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bg",
-		"name" : "Bulgarian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'bg',
+		'name' : "Bulgarian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "my",
-		"name" : "Burmese",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'my',
+		'name' : "Burmese",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ca",
-		"name" : "Catalan; Valencian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ca',
+		'name' : "Catalan; Valencian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "km",
-		"name" : "Central Khmer",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'km',
+		'name' : "Central Khmer",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ch",
-		"name" : "Chamorro",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ch',
+		'name' : "Chamorro",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ce",
-		"name" : "Chechen",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ce',
+		'name' : "Chechen",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ny",
-		"name" : "Chichewa; Chewa; Nyanja",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ny',
+		'name' : "Chichewa; Chewa; Nyanja",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "zh",
-		"name" : "Chinese",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'zh',
+		'name' : "Chinese",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "cu",
-		"name" : "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'cu',
+		'name' : "Church Slavic; Old Slavonic; Church Slavonic; Old Bulgarian; Old Church Slavonic",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "cv",
-		"name" : "Chuvash",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'cv',
+		'name' : "Chuvash",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kw",
-		"name" : "Cornish",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'kw',
+		'name' : "Cornish",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "co",
-		"name" : "Corsican",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'co',
+		'name' : "Corsican",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "cr",
-		"name" : "Cree",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'cr',
+		'name' : "Cree",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "hr",
-		"name" : "Croatian",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'hr',
+		'name' : "Croatian",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "cs",
-		"name" : "Czech",
-		"pluralform" : "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;",
-		"default-team-email": ""
+		'code' : 'cs',
+		'name' : "Czech",
+		'pluralform' : 'nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "da",
-		"name" : "Danish",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'da',
+		'name' : "Danish",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "dv",
-		"name" : "Divehi; Dhivehi; Maldivian",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'dv',
+		'name' : "Divehi; Dhivehi; Maldivian",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "nl",
-		"name" : "Dutch; Flemish",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'nl',
+		'name' : "Dutch; Flemish",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "dz",
-		"name" : "Dzongkha",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'dz',
+		'name' : "Dzongkha",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "en",
-		"name" : "English",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'en',
+		'name' : "English",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "eo",
-		"name" : "Esperanto",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'eo',
+		'name' : "Esperanto",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "et",
-		"name" : "Estonian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'et',
+		'name' : "Estonian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ee",
-		"name" : "Ewe",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ee',
+		'name' : "Ewe",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "fo",
-		"name" : "Faroese",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'fo',
+		'name' : "Faroese",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "fj",
-		"name" : "Fijian",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'fj',
+		'name' : "Fijian",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "fi",
-		"name" : "Finnish",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'fi',
+		'name' : "Finnish",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "fr",
-		"name" : "French",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'fr',
+		'name' : "French",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ff",
-		"name" : "Fulah",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ff',
+		'name' : "Fulah",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "gd",
-		"name" : "Gaelic; Scottish Gaelic",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'gd',
+		'name' : "Gaelic; Scottish Gaelic",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "gl",
-		"name" : "Galician",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": "gnome-gl-list@gnome.org"
+		'code' : 'gl',
+		'name' : "Galician",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': 'gnome-gl-list@gnome.org'
 	},
 	{
-		"code" : "lg",
-		"name" : "Ganda",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'lg',
+		'name' : "Ganda",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ka",
-		"name" : "Georgian",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'ka',
+		'name' : "Georgian",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "de",
-		"name" : "German",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'de',
+		'name' : "German",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "el",
-		"name" : "Greek, Modern (1453-)",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'el',
+		'name' : "Greek, Modern (1453-)",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "gn",
-		"name" : "Guarani",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'gn',
+		'name' : "Guarani",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "gu",
-		"name" : "Gujarati",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'gu',
+		'name' : "Gujarati",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ht",
-		"name" : "Haitian; Haitian Creole",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ht',
+		'name' : "Haitian; Haitian Creole",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ha",
-		"name" : "Hausa",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ha',
+		'name' : "Hausa",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "he",
-		"name" : "Hebrew",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'he',
+		'name' : "Hebrew",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "hz",
-		"name" : "Herero",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'hz',
+		'name' : "Herero",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "hi",
-		"name" : "Hindi",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'hi',
+		'name' : "Hindi",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ho",
-		"name" : "Hiri Motu",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ho',
+		'name' : "Hiri Motu",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "hu",
-		"name" : "Hungarian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'hu',
+		'name' : "Hungarian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "is",
-		"name" : "Icelandic",
-		"pluralform" : "nplurals=2; plural=(n % 100 != 1 && n % 100 != 21 && n % 100 != 31 && n % 100 != 41 && n % 100 != 51 && n % 100 != 61 && n % 100 != 71 && n % 100 != 81 && n % 100 != 91);",
-		"default-team-email": ""
+		'code' : 'is',
+		'name' : "Icelandic",
+		'pluralform' : 'nplurals=2; plural=(n % 100 != 1 && n % 100 != 21 && n % 100 != 31 && n % 100 != 41 && n % 100 != 51 && n % 100 != 61 && n % 100 != 71 && n % 100 != 81 && n % 100 != 91);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "io",
-		"name" : "Ido",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'io',
+		'name' : "Ido",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ig",
-		"name" : "Igbo",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ig',
+		'name' : "Igbo",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "id",
-		"name" : "Indonesian",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'id',
+		'name' : "Indonesian",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ia",
-		"name" : "Interlingua (International Auxiliary Language Association)",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ia',
+		'name' : "Interlingua (International Auxiliary Language Association)",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ie",
-		"name" : "Interlingue; Occidental",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ie',
+		'name' : "Interlingue; Occidental",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "iu",
-		"name" : "Inuktitut",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'iu',
+		'name' : "Inuktitut",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ik",
-		"name" : "Inupiaq",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ik',
+		'name' : "Inupiaq",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ga",
-		"name" : "Irish",
-		"pluralform" : "nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4;",
-		"default-team-email": ""
+		'code' : 'ga',
+		'name' : "Irish",
+		'pluralform' : 'nplurals=5; plural=n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "it",
-		"name" : "Italian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'it',
+		'name' : "Italian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ja",
-		"name" : "Japanese",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'ja',
+		'name' : "Japanese",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "jv",
-		"name" : "Javanese",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'jv',
+		'name' : "Javanese",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kl",
-		"name" : "Kalaallisut; Greenlandic",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'kl',
+		'name' : "Kalaallisut; Greenlandic",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kn",
-		"name" : "Kannada",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'kn',
+		'name' : "Kannada",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kr",
-		"name" : "Kanuri",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'kr',
+		'name' : "Kanuri",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ks",
-		"name" : "Kashmiri",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ks',
+		'name' : "Kashmiri",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kk",
-		"name" : "Kazakh",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'kk',
+		'name' : "Kazakh",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ki",
-		"name" : "Kikuyu; Gikuyu",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ki',
+		'name' : "Kikuyu; Gikuyu",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "rw",
-		"name" : "Kinyarwanda",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'rw',
+		'name' : "Kinyarwanda",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ky",
-		"name" : "Kirghiz; Kyrgyz",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'ky',
+		'name' : "Kirghiz; Kyrgyz",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kv",
-		"name" : "Komi",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'kv',
+		'name' : "Komi",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kg",
-		"name" : "Kongo",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'kg',
+		'name' : "Kongo",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ko",
-		"name" : "Korean",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'ko',
+		'name' : "Korean",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "kj",
-		"name" : "Kuanyama; Kwanyama",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'kj',
+		'name' : "Kuanyama; Kwanyama",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ku",
-		"name" : "Kurdish",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ku',
+		'name' : "Kurdish",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "lo",
-		"name" : "Lao",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'lo',
+		'name' : "Lao",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "la",
-		"name" : "Latin",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'la',
+		'name' : "Latin",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "lv",
-		"name" : "Latvian",
-		"pluralform" : "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);",
-		"default-team-email": ""
+		'code' : 'lv',
+		'name' : "Latvian",
+		'pluralform' : 'nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "li",
-		"name" : "Limburgan; Limburger; Limburgish",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'li',
+		'name' : "Limburgan; Limburger; Limburgish",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ln",
-		"name" : "Lingala",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ln',
+		'name' : "Lingala",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "lt",
-		"name" : "Lithuanian",
-		"pluralform" : "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);",
-		"default-team-email": ""
+		'code' : 'lt',
+		'name' : "Lithuanian",
+		'pluralform' : 'nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "lu",
-		"name" : "Luba-Katanga",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'lu',
+		'name' : "Luba-Katanga",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "lb",
-		"name" : "Luxembourgish; Letzeburgesch",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'lb',
+		'name' : "Luxembourgish; Letzeburgesch",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mk",
-		"name" : "Macedonian",
-		"pluralform" : "nplurals=2; plural= n==1 || n%10==1 ? 0 : 1;",
-		"default-team-email": ""
+		'code' : 'mk',
+		'name' : "Macedonian",
+		'pluralform' : 'nplurals=2; plural= n==1 || n%10==1 ? 0 : 1;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mg",
-		"name" : "Malagasy",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'mg',
+		'name' : "Malagasy",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ms",
-		"name" : "Malay",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'ms',
+		'name' : "Malay",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ml",
-		"name" : "Malayalam",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ml',
+		'name' : "Malayalam",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mt",
-		"name" : "Maltese",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'mt',
+		'name' : "Maltese",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "gv",
-		"name" : "Manx",
-		"pluralform" : "nplurals=3; plural=n == 1 ? 0 : (n == 2 ? 1 : 2);",
-		"default-team-email": ""
+		'code' : 'gv',
+		'name' : "Manx",
+		'pluralform' : 'nplurals=3; plural=n == 1 ? 0 : (n == 2 ? 1 : 2);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mi",
-		"name" : "Maori",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'mi',
+		'name' : "Maori",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mr",
-		"name" : "Marathi",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'mr',
+		'name' : "Marathi",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mh",
-		"name" : "Marshallese",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'mh',
+		'name' : "Marshallese",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mo",
-		"name" : "Moldavian; Moldovan",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'mo',
+		'name' : "Moldavian; Moldovan",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "mn",
-		"name" : "Mongolian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'mn',
+		'name' : "Mongolian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "na",
-		"name" : "Nauru",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'na',
+		'name' : "Nauru",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "nv",
-		"name" : "Navajo; Navaho",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'nv',
+		'name' : "Navajo; Navaho",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "nd",
-		"name" : "Ndebele, North; North Ndebele",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'nd',
+		'name' : "Ndebele, North; North Ndebele",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "nr",
-		"name" : "Ndebele, South; South Ndebele",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'nr',
+		'name' : "Ndebele, South; South Ndebele",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ng",
-		"name" : "Ndonga",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ng',
+		'name' : "Ndonga",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ne",
-		"name" : "Nepali",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ne',
+		'name' : "Nepali",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "se",
-		"name" : "Northern Sami",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'se',
+		'name' : "Northern Sami",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "no",
-		"name" : "Norwegian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'no',
+		'name' : "Norwegian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "nn",
-		"name" : "Norwegian Nynorsk; Nynorsk, Norwegian",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'nn',
+		'name' : "Norwegian Nynorsk; Nynorsk, Norwegian",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "oc",
-		"name" : "Occitan (post 1500)",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'oc',
+		'name' : "Occitan (post 1500)",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "oj",
-		"name" : "Ojibwa",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'oj',
+		'name' : "Ojibwa",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "or",
-		"name" : "Oriya",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'or',
+		'name' : "Oriya",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "om",
-		"name" : "Oromo",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'om',
+		'name' : "Oromo",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "os",
-		"name" : "Ossetian; Ossetic",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'os',
+		'name' : "Ossetian; Ossetic",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "pi",
-		"name" : "Pali",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'pi',
+		'name' : "Pali",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "pa",
-		"name" : "Panjabi; Punjabi",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'pa',
+		'name' : "Panjabi; Punjabi",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "fa",
-		"name" : "Persian",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'fa',
+		'name' : "Persian",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "pl",
-		"name" : "Polish",
-		"pluralform" : "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);",
-		"default-team-email": ""
+		'code' : 'pl',
+		'name' : "Polish",
+		'pluralform' : 'nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "pt",
-		"name" : "Portuguese",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'pt',
+		'name' : "Portuguese",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ps",
-		"name" : "Pushto; Pashto",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ps',
+		'name' : "Pushto; Pashto",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "qu",
-		"name" : "Quechua",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'qu',
+		'name' : "Quechua",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ro",
-		"name" : "Romanian",
-		"pluralform" : "nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);",
-		"default-team-email": ""
+		'code' : 'ro',
+		'name' : "Romanian",
+		'pluralform' : 'nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "rm",
-		"name" : "Romansh",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'rm',
+		'name' : "Romansh",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "rn",
-		"name" : "Rundi",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'rn',
+		'name' : "Rundi",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ru",
-		"name" : "Russian",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'ru',
+		'name' : "Russian",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sm",
-		"name" : "Samoan",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'sm',
+		'name' : "Samoan",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sg",
-		"name" : "Sango",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'sg',
+		'name' : "Sango",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sa",
-		"name" : "Sanskrit",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'sa',
+		'name' : "Sanskrit",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sc",
-		"name" : "Sardinian",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'sc',
+		'name' : "Sardinian",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sr",
-		"name" : "Serbian",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'sr',
+		'name' : "Serbian",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sn",
-		"name" : "Shona",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'sn',
+		'name' : "Shona",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ii",
-		"name" : "Sichuan Yi; Nuosu",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ii',
+		'name' : "Sichuan Yi; Nuosu",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sd",
-		"name" : "Sindhi",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'sd',
+		'name' : "Sindhi",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "si",
-		"name" : "Sinhala; Sinhalese",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'si',
+		'name' : "Sinhala; Sinhalese",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sk",
-		"name" : "Slovak",
-		"pluralform" : "nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;",
-		"default-team-email": ""
+		'code' : 'sk',
+		'name' : "Slovak",
+		'pluralform' : 'nplurals=3; plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sl",
-		"name" : "Slovenian",
-		"pluralform" : "nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 or n%100==4 ? 3 : 0);",
-		"default-team-email": ""
+		'code' : 'sl',
+		'name' : "Slovenian",
+		'pluralform' : 'nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 or n%100==4 ? 3 : 0);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "so",
-		"name" : "Somali",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'so',
+		'name' : "Somali",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "st",
-		"name" : "Sotho, Southern",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'st',
+		'name' : "Sotho, Southern",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "es",
-		"name" : "Spanish; Castilian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": "gnome-es-list@gnome.org"
+		'code' : 'es',
+		'name' : "Spanish; Castilian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': 'gnome-es-list@gnome.org'
 	},
 	{
-		"code" : "su",
-		"name" : "Sundanese",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'su',
+		'name' : "Sundanese",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sw",
-		"name" : "Swahili",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'sw',
+		'name' : "Swahili",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ss",
-		"name" : "Swati",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ss',
+		'name' : "Swati",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "sv",
-		"name" : "Swedish",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'sv',
+		'name' : "Swedish",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tl",
-		"name" : "Tagalog",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'tl',
+		'name' : "Tagalog",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ty",
-		"name" : "Tahitian",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ty',
+		'name' : "Tahitian",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tg",
-		"name" : "Tajik",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'tg',
+		'name' : "Tajik",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ta",
-		"name" : "Tamil",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ta',
+		'name' : "Tamil",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tt",
-		"name" : "Tatar",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'tt',
+		'name' : "Tatar",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "te",
-		"name" : "Telugu",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'te',
+		'name' : "Telugu",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "th",
-		"name" : "Thai",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'th',
+		'name' : "Thai",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "bo",
-		"name" : "Tibetan",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'bo',
+		'name' : "Tibetan",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ti",
-		"name" : "Tigrinya",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'ti',
+		'name' : "Tigrinya",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "to",
-		"name" : "Tonga (Tonga Islands)",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'to',
+		'name' : "Tonga (Tonga Islands)",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ts",
-		"name" : "Tsonga",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ts',
+		'name' : "Tsonga",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tn",
-		"name" : "Tswana",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'tn',
+		'name' : "Tswana",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tr",
-		"name" : "Turkish",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'tr',
+		'name' : "Turkish",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tk",
-		"name" : "Turkmen",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'tk',
+		'name' : "Turkmen",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "tw",
-		"name" : "Twi",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'tw',
+		'name' : "Twi",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ug",
-		"name" : "Uighur; Uyghur",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'ug',
+		'name' : "Uighur; Uyghur",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "uk",
-		"name" : "Ukrainian",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'uk',
+		'name' : "Ukrainian",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ur",
-		"name" : "Urdu",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'ur',
+		'name' : "Urdu",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "uz",
-		"name" : "Uzbek",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'uz',
+		'name' : "Uzbek",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "ve",
-		"name" : "Venda",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 've',
+		'name' : "Venda",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "vi",
-		"name" : "Vietnamese",
-		"pluralform" : "nplurals=1; plural=0;",
-		"default-team-email": ""
+		'code' : 'vi',
+		'name' : "Vietnamese",
+		'pluralform' : 'nplurals=1; plural=0;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "vo",
-		"name" : "Volapük",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'vo',
+		'name' : "Volapük",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "wa",
-		"name" : "Walloon",
-		"pluralform" : "nplurals=2; plural=(n > 1);",
-		"default-team-email": ""
+		'code' : 'wa',
+		'name' : "Walloon",
+		'pluralform' : 'nplurals=2; plural=(n > 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "cy",
-		"name" : "Welsh",
-		"pluralform" : "nplurals=4; plural= (n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;",
-		"default-team-email": ""
+		'code' : 'cy',
+		'name' : "Welsh",
+		'pluralform' : 'nplurals=4; plural= (n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;',
+		'default-team-email': ''
 	},
 	{
-		"code" : "fy",
-		"name" : "Western Frisian",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'fy',
+		'name' : "Western Frisian",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "wo",
-		"name" : "Wolof",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'wo',
+		'name' : "Wolof",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "xh",
-		"name" : "Xhosa",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'xh',
+		'name' : "Xhosa",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "yi",
-		"name" : "Yiddish",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'yi',
+		'name' : "Yiddish",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "yo",
-		"name" : "Yoruba",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'yo',
+		'name' : "Yoruba",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	},
 	{
-		"code" : "za",
-		"name" : "Zhuang; Chuang",
-		"pluralform" : "",
-		"default-team-email": ""
+		'code' : 'za',
+		'name' : "Zhuang; Chuang",
+		'pluralform' : '',
+		'default-team-email': ''
 	},
 	{
-		"code" : "zu",
-		"name" : "Zulu",
-		"pluralform" : "nplurals=2; plural=(n != 1);",
-		"default-team-email": ""
+		'code' : 'zu',
+		'name' : "Zulu",
+		'pluralform' : 'nplurals=2; plural=(n != 1);',
+		'default-team-email': ''
 	}
 	]
 }
