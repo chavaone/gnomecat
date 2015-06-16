@@ -11,8 +11,7 @@ libdemohintprovider_la_CFLAGS = \
 	$(GNOMECATPLUGINS_CFLAGS)
 
 libdemohintprovider_la_LIBADD = \
-	$(GNOMECATPLUGINS_LIBS) \
-	$(pkglibdir)/libgnomecat.la
+	$(GNOMECATPLUGINS_LIBS)
 
 libdemohintprovider_la_VALAFLAGS = \
 	$(GNOMECATPLUGINS_VALAFLAGS) \
